@@ -84,10 +84,10 @@ fun showMainWindow(
 private fun KeyEvent.toKeyPressed(): KeyPressed? =
     if (type == KeyEventType.KeyDown) {
         when (key) {
-            Key.Escape -> KeyPressed.Escape
-            Key.Enter -> KeyPressed.Enter
-            Key.One -> KeyPressed.Printable(PrintChar.Numeric.One)
-            Key.Two -> KeyPressed.Printable(PrintChar.Numeric.Two)
+            Key.Escape -> KeyPressed.Command.Escape
+            Key.Enter -> KeyPressed.Command.Enter
+            Key.One -> KeyPressed.Symbol(PrintChar.Numeric.One)
+            Key.Two -> KeyPressed.Symbol(PrintChar.Numeric.Two)
             else -> {
                 log.debug { "Unhandled key: $key" }
                 null

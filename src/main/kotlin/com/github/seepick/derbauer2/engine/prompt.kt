@@ -10,20 +10,26 @@ sealed class PrintChar(val char: Char) {
         object One : Numeric(1)
         object Two : Numeric(2)
     }
+
+    override fun equals(other: Any?) = other is PrintChar && other.char == char
+    override fun hashCode() = char.hashCode()
 }
 
 sealed interface KeyPressed {
-    class Printable(val char: PrintChar) : KeyPressed
-    object Enter : KeyPressed
-    object Escape : KeyPressed
+    data class Symbol(val char: PrintChar) : KeyPressed
+    sealed class Command(val key: String) : KeyPressed {
+        object Enter : Command("ENTER")
+        object Escape : Command("ESCAPE")
+    }
 
     companion object {}
 }
 
-val KeyPressed.Companion.one get() = KeyPressed.Printable(PrintChar.Numeric.One)
+val KeyPressed.Companion.one get() = KeyPressed.Symbol(PrintChar.Numeric.One)
 
 sealed interface Prompt : KeyListener {
 
+    val footer: String
     fun renderText(): String
 
     class Select(
@@ -34,9 +40,12 @@ sealed interface Prompt : KeyListener {
             require(options.size in 1..9)
         }
 
+        override val footer = "1-${options.size}"
+
         override fun onKeyPressed(key: KeyPressed): Boolean {
-            if (key is KeyPressed.Printable && key.char is PrintChar.Numeric && key.char.char in '1'..options.size.toString()
-                    .first()
+            if (key is KeyPressed.Symbol &&
+                key.char is PrintChar.Numeric &&
+                key.char.char in '1'..options.size.toString().first()
             ) {
                 val option = options[key.char.int - 1]
                 println("selected: $option")
@@ -49,7 +58,7 @@ sealed interface Prompt : KeyListener {
         override fun renderText(): String {
             return "$title\n\n${
                 options.mapIndexed { idx, opt -> "[${idx + 1}] ${opt.label}" }.joinToString("\n")
-            }\n\n>> ❓"
+            }"
         }
     }
 }

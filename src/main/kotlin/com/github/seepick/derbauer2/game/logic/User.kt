@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.logic
 
 object Mechanics {
-    val startingMoney = 1000
+    val startingMoney = 1000.units
 }
 
 class User(
-    var money: Int = Mechanics.startingMoney,
+    var money: Units = Mechanics.startingMoney,
 ) {
 }

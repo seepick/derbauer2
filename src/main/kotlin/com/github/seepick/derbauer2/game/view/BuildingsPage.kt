@@ -8,14 +8,16 @@ import com.github.seepick.derbauer2.game.logic.User
 class BuildingsPage(
     private val user: User,
     private val currentPage: CurrentPage,
+    private val windowedRenderer: WindowedRenderer,
+
 ) : Page {
-    override fun renderText(): String {
-        return "You are in buildings...\n\n" +
-                "Money: ${user.money}"
+    private val continueKey = KeyPressed.Command.Enter
+    override fun renderText() = windowedRenderer.render(listOf(FooterOption("ENTER", "Back"))) {
+        "Buildings to come..."
     }
 
     override fun onKeyPressed(key: KeyPressed): Boolean {
-        if(key == KeyPressed.Escape) {
+        if(key == continueKey) {
             currentPage.page = HomePage::class
             return true
         }
