@@ -1,10 +1,11 @@
 package com.github.seepick.derbauer2.game
 
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
-import androidx.compose.runtime.Composable
-import com.github.seepick.derbauer2.engine.MainWindow
+import com.github.seepick.derbauer2.engine.view.showMainWindow
+import com.github.seepick.derbauer2.game.logic.gameLogicModule
+import com.github.seepick.derbauer2.game.view.HomePage
+import com.github.seepick.derbauer2.game.view.gameViewModule
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import org.koin.dsl.module
 
 object DerBauer2 {
     private val log = logger {}
@@ -12,21 +13,14 @@ object DerBauer2 {
     @JvmStatic
     fun main(args: Array<String>) {
         log.info { "Starting Der Bauer 2" }
-
-        MainWindow(
+        showMainWindow(
             title = "Der Bauer 2",
-        ).show()
+            mainModule = gameModule(),
+            initPage = HomePage::class,
+        )
     }
 }
 
-@Composable
-fun MainView(
-//    viewModel: MainViewModel = koinViewModel(),
-//    sharedModel: SharedModel = koinInject(),
-) {
-    TextButton(
-        onClick = { println("click") }
-    ) {
-        Text("Hello World!")
-    }
+fun gameModule() = module {
+    includes(gameLogicModule(), gameViewModule())
 }
