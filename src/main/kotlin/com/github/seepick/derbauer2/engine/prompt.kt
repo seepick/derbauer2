@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.engine
 
+import io.github.oshai.kotlinlogging.KotlinLogging
+
 data class SelectOption(
     val label: String,
     val onSelected: () -> Unit,
@@ -30,12 +32,13 @@ val KeyPressed.Companion.one get() = KeyPressed.Symbol(PrintChar.Numeric.One)
 sealed interface Prompt : KeyListener {
 
     val footer: String
-    fun renderText(): String
+    fun render(textmap: Textmap)
 
     class Select(
         val title: String,
         val options: List<SelectOption>,
     ) : Prompt {
+        private val log = KotlinLogging.logger {}
         init {
             require(options.size in 1..9)
         }
@@ -48,17 +51,20 @@ sealed interface Prompt : KeyListener {
                 key.char.char in '1'..options.size.toString().first()
             ) {
                 val option = options[key.char.int - 1]
-                println("selected: $option")
+                log.debug { "Selected: $option" }
                 option.onSelected()
                 return true
             }
             return false
         }
 
-        override fun renderText(): String {
-            return "$title\n\n${
-                options.mapIndexed { idx, opt -> "[${idx + 1}] ${opt.label}" }.joinToString("\n")
-            }"
+        override fun render(textmap: Textmap) {
+            textmap.printLine(title)
+            textmap.printEmptyLine()
+            options.mapIndexed { idx, opt ->
+                // TODO support arrow up/down selection
+                textmap.printLine("[${idx + 1}] ${opt.label}")
+            }
         }
     }
 }

@@ -4,6 +4,6 @@ import org.koin.dsl.module
 
 fun gameViewModule() = module {
     single { HomePage(get(), get()) }
-    single { WindowedRenderer(get()) }
-    single { BuildingsPage(get(), get(), get()) }
+    single { GameRenderer(get()) }
+    single { BuildingsPage(get(), get()) }
 }

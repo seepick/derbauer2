@@ -24,8 +24,10 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.github.seepick.derbauer2.engine.CurrentPage
 import com.github.seepick.derbauer2.engine.KeyPressed
+import com.github.seepick.derbauer2.engine.MatrixSize
 import com.github.seepick.derbauer2.engine.Page
 import com.github.seepick.derbauer2.engine.PrintChar
+import com.github.seepick.derbauer2.engine.Textmap
 import com.github.seepick.derbauer2.engine.engineModule
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
@@ -36,21 +38,24 @@ import kotlin.reflect.KClass
 
 private val log = logger {}
 
-private val windowSize = DpSize(900.dp, 600.dp)
-
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
     initPage: KClass<out Page>,
+    windowSize: MatrixSize,
 ) {
     application {
         KoinApplication(application = {
-            modules(engineModule(initPage), mainModule)
+            modules(engineModule(initPage, windowSize), mainModule)
         }) {
-            val state = rememberWindowState(size = windowSize)
+            // FIXME adjust window size, correlate with textmap size
+            val windowDpSize = DpSize(1040.dp, 530.dp)
+
+            val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
             val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().page)
             log.debug { "tick #$tick / Current page: ${page::class.simpleName}" }
+            val textmap = koinInject<Textmap>()
 
             Window(
                 title = title,
@@ -74,12 +79,15 @@ fun showMainWindow(
                             }
                         }
                 ) {
-                    MainTextArea(text = page.renderText())
+                    page.renderText(textmap)
+                    MainTextArea(text = textmap.toFullString())
+                    textmap.reset()
                 }
             }
         }
     }
 }
+
 
 private fun KeyEvent.toKeyPressed(): KeyPressed? =
     if (type == KeyEventType.KeyDown) {

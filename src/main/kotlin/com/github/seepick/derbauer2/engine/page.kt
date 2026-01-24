@@ -11,7 +11,7 @@ interface KeyListener {
 }
 
 interface Renderer {
-    fun renderText(): String
+    fun renderText(textmap: Textmap)
 }
 
 class CurrentPage(

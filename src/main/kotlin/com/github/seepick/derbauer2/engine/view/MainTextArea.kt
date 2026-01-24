@@ -22,7 +22,7 @@ fun MainTextArea(
             fontSize = 14.sp,
             fontWeight = FontWeight.Medium,
             fontStyle = FontStyle.Normal,
-            lineHeight = 18.sp
+//            lineHeight = 15.sp,
         ),
     )
 }

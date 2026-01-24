@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game
 
+import com.github.seepick.derbauer2.engine.MatrixSize
 import com.github.seepick.derbauer2.engine.view.showMainWindow
 import com.github.seepick.derbauer2.game.logic.gameLogicModule
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -17,6 +18,7 @@ object DerBauer2 {
             title = "Der Bauer 2",
             mainModule = gameModule(),
             initPage = HomePage::class,
+            windowSize = MatrixSize(120, 30),
         )
     }
 }
