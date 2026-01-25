@@ -1,6 +1,8 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.HomePage
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
+import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
@@ -35,13 +37,33 @@ class TradingPage(
         currentPage.page = HomePage::class
     }
 
-    fun trade(op: TradeOperation, targetType: KClass<out Resource>, vararg counters: Pair<KClass<out Resource>, Units>): SelectOption {
+    private val prompt
+        get() = Prompt.Select( // TODO maybe more performant possible... unnecessary recreation...
+            title = "What is it your greed desires?",
+            options = buildList {
+                add(setupTrade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.units))
+                add(setupTrade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.units))
+                if (user.hasFeature(FeatureDescriptor.TradeLand)) {
+                    add(setupTrade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.units))
+                }
+            }
+        )
+
+    private fun setupTrade(
+        op: TradeOperation,
+        targetType: KClass<out Resource>,
+        vararg counters: Pair<KClass<out Resource>, Units>
+    ): SelectOption {
         val targetResource = user.resource(targetType)
         return SelectOption({
             "${op.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
                         val counterResource = user.resource(counterResource)
-                        "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${counterResource.labelFor(counterAmount)}"
+                        "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${
+                            counterResource.labelFor(
+                                counterAmount
+                            )
+                        }"
                     }
         }) {
             resultHandler.handleTrade(
@@ -54,15 +76,6 @@ class TradingPage(
             )
         }
     }
-
-    private val prompt = Prompt.Select(
-        title = "What is it your greed desires?",
-        listOf(
-            trade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.units),
-            trade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.units),
-            trade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.units),
-        )
-    )
 
     private fun ResultHandler.handleTrade(result: TradeResult) {
         handle(

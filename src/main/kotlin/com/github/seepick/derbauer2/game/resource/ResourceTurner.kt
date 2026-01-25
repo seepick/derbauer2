@@ -17,6 +17,7 @@ class ResourceTurner(
             val producing = producer.resourceProductionAmount
 
             val added = if (resource is StorableResource) {
+                // FIXME centralize max storage logic in single place!
                 val available = user.storageFor(resource) - resource.owned
                 producing.single.coerceAtMost(available.single).units
             } else {

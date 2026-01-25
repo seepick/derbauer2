@@ -4,13 +4,11 @@ import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.view.MultiViewItem
 import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.random.Random
 
-interface Happening  {
-    fun render(textmap: Textmap)
-    fun execute(user: User)
-}
+interface Happening : MultiViewItem
 
 class FoundGoldHappening(val goldFound: Units) : Happening {
     override fun render(textmap: Textmap) {

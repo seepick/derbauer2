@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.citizen.CitizenTurner
+import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
@@ -22,6 +23,7 @@ class TurnerTest : DescribeSpec({
         happeningTurner = HappeningTurner(user),
         resourceTurner = ResourceTurner(user),
         citizenTurner = CitizenTurner(user),
+        featureTurner = FeatureTurner(user),
     )
     beforeTest {
         user = User()
@@ -29,6 +31,7 @@ class TurnerTest : DescribeSpec({
             happeningTurner = HappeningTurner(user),
             resourceTurner = ResourceTurner(user),
             citizenTurner = CitizenTurner(user),
+            featureTurner = FeatureTurner(user),
         )
     }
 

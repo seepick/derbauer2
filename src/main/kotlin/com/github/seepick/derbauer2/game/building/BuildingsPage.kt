@@ -29,7 +29,7 @@ class BuildingsPage(
     private val prompt = Prompt.Select(
         title = "What shall we build next, Sire?",
         user.buildings.map { building ->
-            SelectOption({ "Build ${building.labelSingular} - ${Gold.EMOJI} ${building.costsGold} | ${Land.EMOJI} ${building.landUse} (owned: ${building.owned})" }) {
+            SelectOption({ "Build ${building.labelSingular} - ${Gold.EMOJI} ${building.costsGold} | ${Land.Text.emoji} ${building.landUse} (owned: ${building.owned})" }) {
                 resultHandler.handleBuilding(builder.build(building))
             }
         }

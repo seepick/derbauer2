@@ -5,6 +5,6 @@ import org.koin.dsl.module
 
 fun happeningModule() = module {
     singleOf(::HappeningPage)
-    singleOf(::HappeningController)
+    singleOf(::HappeningMultiView)
     singleOf(::HappeningTurner)
 }

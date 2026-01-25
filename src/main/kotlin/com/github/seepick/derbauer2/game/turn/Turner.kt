@@ -7,7 +7,6 @@ import com.github.seepick.derbauer2.game.logic.TurnReport
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-
 class Turner(
     private val happeningTurner: HappeningTurner,
     private val resourceTurner: ResourceTurner,
@@ -28,7 +27,6 @@ class Turner(
         val happenings = happeningTurner.turn()
         val newFeatures = featureTurner.turn()
         return TurnReport(
-            // FIXME clean list: if two different types, then accumulaten result!
             resourceChanges = resourceChanges.merge(citizenReport).changes,
             happenings = happenings,
             newFeatures = newFeatures,

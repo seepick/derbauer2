@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.HomePage
-import com.github.seepick.derbauer2.game.happening.HappeningController
-import com.github.seepick.derbauer2.game.happening.HappeningPage
+import com.github.seepick.derbauer2.game.feature.FeatureMultiView
+import com.github.seepick.derbauer2.game.happening.HappeningMultiView
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.MetaOption
 import com.github.seepick.derbauer2.ifDo
@@ -14,8 +14,9 @@ import com.github.seepick.derbauer2.textengine.Textmap
 class ReportPage(
     private val turner: Turner,
     private val gameRenderer: GameRenderer,
-    private val currentPage: CurrentPage,
-    private val happeningController: HappeningController,
+    private val current: CurrentPage,
+    private val happeningMultiView: HappeningMultiView,
+    private val featureMultiView: FeatureMultiView
 ) : Page {
 
     private val continueKey = KeyPressed.Command.Space
@@ -34,12 +35,10 @@ class ReportPage(
 
     override fun onKeyPressed(key: KeyPressed) =
         ifDo(key == continueKey) {
-            val happenings = turner.reports.last().happenings
-            currentPage.page = if(happenings.isEmpty()) {
-                HomePage::class
-            } else {
-                happeningController.process(happenings)
-                HappeningPage::class
+            happeningMultiView.process(turner.reports.last().happenings) {
+                featureMultiView.process(turner.reports.last().newFeatures) {
+                    current.page = HomePage::class
+                }
             }
         }
 }

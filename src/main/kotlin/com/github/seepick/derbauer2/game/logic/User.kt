@@ -4,17 +4,20 @@ import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.buildings
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.resources
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
 class User {
 
+    private val log = logger {}
     private val _all = mutableListOf<Entity>()
     val all: List<Entity> get() = _all
 
     fun <E : Entity> addEntity(entity: E) = entity.also {
-        if(all.any { it::class == entity::class }) {
+        if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists")
         }
+        log.info { "Adding ${entity::class.simpleName} -- $entity" }
         _all += entity
     }
 
@@ -39,4 +42,5 @@ class User {
     private fun errorNotFoundEntity(type: KClass<*>, options: List<Any>): Nothing {
         error("Nothing found for type: ${type.simpleName} (available: ${options.map { it::class.simpleName }})")
     }
+
 }
