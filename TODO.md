@@ -4,24 +4,25 @@
 
 ## Now
 
-* BZ: citizens
+* BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: go through derbauer/doc info
+* BZ: feature enabler
 
 ## Next
 
-* BZ: general variability end turn (production, consumption)
-* cheat mode (press secret key, increase resources)
-* BZ: tech enabler
-* IT: ci/cd
-* IT: coverage
+* UI: predictable order of entities/resources (give each a weight??)
+* ! IT: ci/cd
+* BZ: general variability end turn (production, taxes, consumption)
 * IT: detekt
-* IT: sonarqube cloud
-* IT: automated releases
 * BZ: random events
 * UI: bright/dark mode support
 
 ## Later
 
+* IT: sonarqube cloud
+* IT: coverage
+* IT: automated releases
+* cheat mode (press secret key, increase resources)
 * sound: continuous bg music; press key beep; each age different theme?!
   * how to configure? overlay menu?!
 * font styling: <red> <green> <bold> etc.

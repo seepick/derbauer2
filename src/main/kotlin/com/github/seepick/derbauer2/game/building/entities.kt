@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.logic.StoresResource
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 
 val User.buildings get() = all.filterIsInstance<Building>()
@@ -21,11 +22,13 @@ interface Building : Asset, OccupiesLand {
     val costsGold: Units
 }
 
-class House(override var owned: Units = 0.units) : Building {
+class House(override var owned: Units = 0.units) : Building, StoresResource {
     override val labelSingular = "House"
     override val costsGold = Mechanics.houseCostsGold.units
     override val landUse = Mechanics.houseLandUse.units
-    // TODO holds X amount citizens
+
+    override val storableResource = Citizen::class
+    override val storageAmount = Mechanics.houseStoreCitizen.units
 }
 
 class Farm(override var owned: Units = 0.units) : Building, ProducesResource {
@@ -41,12 +44,11 @@ class Granary(override var owned: Units = 0.units) : Building, StoresResource {
     override val labelSingular = "Granary"
     override val labelPlural = "Granaries"
     override val costsGold = Mechanics.granaryCostsGold.units
-    override val storableResource = Food::class
-    override val storageAmount = Mechanics.granaryCapacity
     override val landUse = Mechanics.granaryLanduse.units
-    override val totalStorageAmount get() = owned * storageAmount
+
+    override val storableResource = Food::class
+    override val storageAmount = Mechanics.granaryCapacity.units
 }
 
-// storage buildings
 // technology buildings
 // military buildings

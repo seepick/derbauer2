@@ -16,8 +16,11 @@ data class Units(
     }
 
     val magnitutedUnits = translateToMaxMagnitude(single)
+
+    fun toPlusString() = if(single > 0) "+$this" else toString()
     override fun toString() = magnitutedUnits.toString()
 
+    operator fun unaryMinus() = Units(-single)
     operator fun plus(other: Units) = Units(single + other.single)
     operator fun plus(other: Long) = Units(single + other)
     operator fun plus(other: Int) = Units(single + other)

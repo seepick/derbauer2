@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.storageFor
 import com.github.seepick.derbauer2.game.logic.totalLandUse
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -29,6 +30,9 @@ class GameRenderer(
             game.user.find<Land> {
                 val totalLandUse = game.user.totalLandUse
                 add("${it.emojiWithSpaceSuffixOrEmpty}${totalLandUse} / ${it.owned}")
+            }
+            game.user.find<Citizen> {
+                add("${it.emojiWithSpaceSuffixOrEmpty}${it.owned} / ${game.user.storageFor(Citizen::class)}")
             }
         }.joinToString(" | ")
 

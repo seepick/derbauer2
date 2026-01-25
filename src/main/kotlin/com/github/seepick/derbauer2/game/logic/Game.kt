@@ -4,8 +4,7 @@ import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.turn.Turner
 
 data class TurnReport(
-    val turn: Int,
-    val resourceProduction: List<Pair<Resource, Units>>,
+    val resourceChanges: List<Pair<Resource, Units>>,
 )
 
 class Game {

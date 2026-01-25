@@ -7,6 +7,7 @@ import kotlin.reflect.KClass
 interface Entity {
     val labelSingular: String
     val labelPlural: String get() = labelSingular + "s"
+    fun labelFor(units: Units) = if (units == 1.units) labelSingular else labelPlural
     val emoji: String? get() = null
     val emojiWithSpaceSuffixOrEmpty: String get() = emoji?.let { "$it " } ?: ""
 }
@@ -27,14 +28,14 @@ interface Technology : Entity {
 interface EntityFeature
 
 /** For now can only produce 1 type of resource. */
-interface ProducesResource : EntityFeature{
+interface ProducesResource : EntityFeature {
     val producingResourceType: KClass<out Resource>
     val resourceProductionAmount: Units
 }
 
 /** For now can only store 1 type of resource. */
-interface StoresResource : EntityFeature {
+interface StoresResource : EntityFeature, Ownable {
     val storableResource: KClass<out StorableResource>
     val storageAmount: Units
-    val totalStorageAmount: Units
+    val totalStorageAmount: Units get() = owned * storageAmount
 }

@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -32,6 +33,7 @@ object DerBauer2 {
             Gold(Mechanics.startingGold),
             Food(Mechanics.startingFood),
             House(Mechanics.startingHouses),
+            Citizen(Mechanics.startingCitizens),
             Farm(Mechanics.startingFarms),
             Granary(Mechanics.startingGranaries),
         ).forEach(::addEntity)

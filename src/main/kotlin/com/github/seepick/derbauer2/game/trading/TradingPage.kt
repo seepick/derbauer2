@@ -1,11 +1,16 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.HomePage
+import com.github.seepick.derbauer2.game.logic.Mechanics
+import com.github.seepick.derbauer2.game.logic.Units
+import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.trading.TradeOperation.BUY
-import com.github.seepick.derbauer2.game.trading.TradeOperation.SELL
+import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.Resource
+import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
+import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.Result
@@ -16,38 +21,46 @@ import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Prompt
 import com.github.seepick.derbauer2.textengine.SelectOption
 import com.github.seepick.derbauer2.textengine.Textmap
+import kotlin.reflect.KClass
 
 class TradingPage(
     private val trader: Trader,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
     private val resultHandler: ResultHandler,
+    private val user: User,
 ) : Page {
 
     private val back = Back {
         currentPage.page = HomePage::class
     }
 
+    fun trade(op: TradeOperation, targetType: KClass<out Resource>, vararg counters: Pair<KClass<out Resource>, Units>): SelectOption {
+        val targetResource = user.resource(targetType)
+        return SelectOption({
+            "${op.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
+                    counters.joinToString(" and ") { (counterResource, counterAmount) ->
+                        val counterResource = user.resource(counterResource)
+                        "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${counterResource.labelFor(counterAmount)}"
+                    }
+        }) {
+            resultHandler.handleTrade(
+                trader.trade(
+                    TradeRequest(targetType, op, 1.units),
+                    *counters.map { (costResource, costAmount) ->
+                        TradeRequest(costResource, op.inverse, costAmount)
+                    }.toTypedArray()
+                )
+            )
+        }
+    }
+
     private val prompt = Prompt.Select(
-        title = "Ay, what do you wanna have mate?",
-        // TODO rework: more flexible/dynamic and generic/concise; simplify; use emojis
+        title = "What is it your greed desires?",
         listOf(
-            SelectOption({ "Buy 1 food for 10 gold" }) {
-                resultHandler.handleTrade(
-                    trader.trade(
-                        TradeRequest(Food::class, BUY, 1.units),
-                        TradeRequest(Gold::class, SELL, 10.units),
-                    )
-                )
-            },
-            SelectOption({ "Sell 1 food for 6 gold" }) {
-                resultHandler.handleTrade(
-                    trader.trade(
-                        TradeRequest(Food::class, SELL, 1.units),
-                        TradeRequest(Gold::class, BUY, 6.units),
-                    )
-                )
-            },
+            trade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.units),
+            trade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.units),
+            trade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.units),
         )
     )
 
@@ -62,7 +75,8 @@ class TradingPage(
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
-            textmap.printLine("trading ...")
+            textmap.printLine("The merchant is here to do business with you, my lord.")
+            textmap.printEmptyLine()
             prompt.render(textmap)
         }
     }

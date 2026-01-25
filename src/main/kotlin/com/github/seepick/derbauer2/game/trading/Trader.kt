@@ -27,15 +27,15 @@ class Trader(
         requests.forEach { request ->
             val resource = game.user.resource(request.resource)
             when (request.operation) {
-                TradeOperation.BUY -> resource.owned += request.amount
-                TradeOperation.SELL -> resource.owned -= request.amount
+                TradeOperation.Buy -> resource.owned += request.amount
+                TradeOperation.Sell -> resource.owned -= request.amount
             }
         }
         return TradeResult.Success
     }
 
     private fun canBuy(requests: List<TradeRequest>): Boolean =
-        requests.filter { it.operation == TradeOperation.BUY }
+        requests.filter { it.operation == TradeOperation.Buy }
             .all { request ->
                 val resource = game.user.resource(request.resource)
                 if (resource is StorableResource) {
@@ -47,7 +47,7 @@ class Trader(
             }
 
     private fun canSell(requests: List<TradeRequest>): Boolean =
-        requests.filter { it.operation == TradeOperation.SELL }
+        requests.filter { it.operation == TradeOperation.Sell }
             .all { request ->
                 val resource = game.user.resource(request.resource)
                 resource.owned >= request.amount
@@ -61,6 +61,21 @@ class TradeRequest(
     val amount: Units,
 )
 
-enum class TradeOperation {
-    BUY, SELL
+sealed interface TradeOperation {
+
+    val label: String
+
+    val inverse: TradeOperation
+        get() = when (this) {
+            is Buy -> Sell
+            is Sell -> Buy
+        }
+
+    object Buy : TradeOperation {
+        override val label = "Buy"
+    }
+
+    object Sell : TradeOperation {
+        override val label = "Sell"
+    }
 }

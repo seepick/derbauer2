@@ -24,8 +24,8 @@ class ReportPage(
             textmap.printLine("Resources produced this turn:")
             textmap.printEmptyLine()
             val report = game.reports.last()
-            report.resourceProduction.forEach {
-                textmap.printLine("${it.first.emojiWithSpaceSuffixOrEmpty}${it.first.labelPlural}: ${it.second}")
+            report.resourceChanges.forEach {
+                textmap.printLine("${it.first.emojiWithSpaceSuffixOrEmpty}${it.first.labelPlural}: ${it.second.toPlusString()}")
             }
         }
     }
