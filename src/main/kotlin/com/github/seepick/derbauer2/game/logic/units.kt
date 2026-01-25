@@ -18,11 +18,20 @@ data class Units(
     val magnitutedUnits = translateToMaxMagnitude(single)
     val formatted = magnitutedUnits.formatted
 
+    operator fun plus(other: Units) = Units(single + other.single)
     operator fun plus(other: Long) = Units(single + other)
-    operator fun minus(other: Long) = Units(single - other)
-    operator fun compareTo(other: Long) = single.compareTo(other)
     operator fun plus(other: Int) = Units(single + other)
+
+    operator fun minus(other: Units) = Units(single - other.single)
+    operator fun minus(other: Long) = Units(single - other)
     operator fun minus(other: Int) = Units(single - other)
+
+    operator fun times(other: Units) = Units(single * other.single)
+    operator fun times(other: Long) = Units(single * other)
+    operator fun times(other: Int) = Units(single * other)
+
+    operator fun compareTo(other: Units) = single.compareTo(other.single)
+    operator fun compareTo(other: Long) = single.compareTo(other)
     operator fun compareTo(other: Int) = single.compareTo(other.toLong())
 }
 

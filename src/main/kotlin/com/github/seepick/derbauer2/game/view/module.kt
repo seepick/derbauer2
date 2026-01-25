@@ -6,4 +6,5 @@ import org.koin.dsl.module
 fun gameViewModule() = module {
     singleOf(::HomePage)
     singleOf(::GameRenderer)
+    singleOf(::ReportPage)
 }

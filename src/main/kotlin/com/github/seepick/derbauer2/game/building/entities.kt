@@ -24,7 +24,7 @@ class Farm : Building, ProducesResource {
     override val labelSingular = "Farm"
     override val costsGold = Mechanics.farmCostsGold
     override val resourceType = Food::class
-    override fun produce() = units.single * Mechanics.farmProduceFood
+    override fun produce() = units * Mechanics.farmProduceFood
 }
 
 // TODO storage?

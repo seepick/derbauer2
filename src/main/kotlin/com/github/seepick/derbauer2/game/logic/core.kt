@@ -6,6 +6,7 @@ interface Entity {
     val labelSingular: String
     val labelPlural: String get() = labelSingular + "s"
     val emoji: String? get() = null
+    val emojiWithSpaceSuffixOrEmpty: String get() = emoji?.let { "$it " } ?: ""
 }
 
 interface Technology : Entity {
@@ -15,7 +16,7 @@ interface Technology : Entity {
 
 interface ProducesResource : Entity {
     val resourceType: KClass<out Resource>
-    fun produce(): Long
+    fun produce(): Units
 }
 
 sealed interface BuyResult {

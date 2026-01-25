@@ -18,6 +18,7 @@ class HomePage(
     private val gameRenderer: GameRenderer,
 ) : Page {
 
+    private val nextTurn = NextTurn()
     private val prompt = Prompt.Select(
         title = "What shall we do next?", listOf(
             SelectOption("Trade") {
@@ -41,15 +42,16 @@ class HomePage(
         }
     }
 
-    override fun onKeyPressed(e: KeyPressed) =
-        listOf(prompt, NextTurn(game)).any {
-            it.onKeyPressed(e)
-        }
-}
-
-private class NextTurn(private val game: Game) : KeyListener {
     override fun onKeyPressed(key: KeyPressed) =
-        ifDo(key == KeyPressed.Command.Space) {
-            game.nextTurn()
+        listOf(prompt, nextTurn).any {
+            it.onKeyPressed(key)
         }
+
+    private inner class NextTurn : KeyListener {
+        override fun onKeyPressed(key: KeyPressed) =
+            ifDo(key == KeyPressed.Command.Space) {
+                game.nextTurn()
+                currentPage.page = ReportPage::class
+            }
+    }
 }
