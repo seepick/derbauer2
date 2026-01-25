@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.BuildingsPage
-import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
+import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.MetaOption
 import com.github.seepick.derbauer2.ifDo
@@ -16,7 +16,7 @@ import com.github.seepick.derbauer2.textengine.SelectOption
 import com.github.seepick.derbauer2.textengine.Textmap
 
 class HomePage(
-    private val game: Game,
+    private val turner: Turner,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
 ) : Page {
@@ -53,7 +53,7 @@ class HomePage(
     private inner class NextTurn : KeyListener {
         override fun onKeyPressed(key: KeyPressed) =
             ifDo(key == KeyPressed.Command.Space) {
-                game.nextTurn()
+                turner.collectAndExecuteNextTurnReport()
                 currentPage.page = ReportPage::class
             }
     }

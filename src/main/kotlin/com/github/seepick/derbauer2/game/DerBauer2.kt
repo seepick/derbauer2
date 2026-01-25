@@ -22,8 +22,8 @@ object DerBauer2 {
             title = "Der Bauer 2",
             mainModule = gameModule(),
             initPage = HomePage::class,
-        ) { game ->
-            game.user.initAssets()
+        ) { user ->
+            user.initAssets()
         }
     }
 

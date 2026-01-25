@@ -3,6 +3,5 @@ package com.github.seepick.derbauer2.game.logic
 import org.koin.dsl.module
 
 fun logicModule() = module {
-    single { Game() }
-    single { get<Game>().user }
+    single { User() }
 }

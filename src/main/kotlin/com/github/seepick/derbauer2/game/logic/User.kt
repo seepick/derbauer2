@@ -12,7 +12,9 @@ class User {
     val all: List<Entity> get() = _all
 
     fun <E : Entity> addEntity(entity: E) = entity.also {
-        // TODO validate only one of a kind!
+        if(all.any { it::class == entity::class }) {
+            error("Entity ${entity::class.simpleName} already exists")
+        }
         _all += entity
     }
 

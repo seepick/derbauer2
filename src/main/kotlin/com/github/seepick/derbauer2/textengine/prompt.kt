@@ -7,6 +7,8 @@ data class SelectOption(
     val onSelected: () -> Unit,
 ) {
     constructor(label: String, onSelected: () -> Unit) : this({ label }, onSelected)
+
+    override fun toString() = "SelectOption(label=${label()})"
 }
 
 sealed class PrintChar(val char: Char) {

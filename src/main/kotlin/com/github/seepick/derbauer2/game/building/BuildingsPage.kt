@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.HomePage
-import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -17,7 +16,6 @@ import com.github.seepick.derbauer2.textengine.SelectOption
 import com.github.seepick.derbauer2.textengine.Textmap
 
 class BuildingsPage(
-    private val game: Game,
     private val user: User,
     private val builder: Builder,
     private val currentPage: CurrentPage,

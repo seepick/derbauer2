@@ -2,9 +2,6 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.logic.Asset
 import com.github.seepick.derbauer2.game.logic.Units
-import com.github.seepick.derbauer2.game.logic.User
-
-val User.resources get() = all.filterIsInstance<Resource>()
 
 interface Resource : Asset {
     val emojiAndUnitsFormatted: String get() = "${emojiWithSpaceSuffixOrEmpty}${owned}"

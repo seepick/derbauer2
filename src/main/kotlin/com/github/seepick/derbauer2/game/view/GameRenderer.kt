@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.logic.Entity
-import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.storageFor
 import com.github.seepick.derbauer2.game.logic.totalLandUse
@@ -9,6 +8,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Textmap
 
@@ -17,22 +17,23 @@ inline fun <reified E : Entity> User.find(code: (E) -> Unit) {
 }
 
 class GameRenderer(
-    private val game: Game,
+    private val user: User,
+    private val turner: Turner,
 ) {
     private fun renderInfoBar(): String =
         buildList {
-            game.user.find<Gold> {
+            user.find<Gold> {
                 add(it.emojiAndUnitsFormatted)
             }
-            game.user.find<Food> {
-                add("${it.emojiAndUnitsFormatted} / ${game.user.storageFor(Food::class)}")
+            user.find<Food> {
+                add("${it.emojiAndUnitsFormatted} / ${user.storageFor(Food::class)}")
             }
-            game.user.find<Land> {
-                val totalLandUse = game.user.totalLandUse
+            user.find<Land> {
+                val totalLandUse = user.totalLandUse
                 add("${it.emojiWithSpaceSuffixOrEmpty}${totalLandUse} / ${it.owned}")
             }
-            game.user.find<Citizen> {
-                add("${it.emojiWithSpaceSuffixOrEmpty}${it.owned} / ${game.user.storageFor(Citizen::class)}")
+            user.find<Citizen> {
+                add("${it.emojiWithSpaceSuffixOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
             }
         }.joinToString(" | ")
 
@@ -43,14 +44,14 @@ class GameRenderer(
         content: (Textmap) -> Unit
     ) {
 
-        textmap.printAligned(renderInfoBar(), "Turn ${game.turn}")
+        textmap.printAligned(renderInfoBar(), "Turn ${turner.turn}")
         textmap.printHr()
         content(textmap)
         textmap.fillVertical(minus = 2)
         textmap.printHr()
         textmap.printAligned(
             left = "[$promptIndicator]> ▉",
-            right = metaOptions.joinToString("   ") { "${it.command.key}: ${it.description}" },
+            right = metaOptions.joinToString("   ") { "${it.command.label}: ${it.description}" },
         )
     }
 }

@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.logic.User
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin
@@ -34,7 +34,7 @@ private val log = logger {}
 private val outerBorder = 10.dp
 private val innerMargin = 5.dp
 private val windowSize = MatrixSize(rows = 25, cols = 80)
-private val mainContentWidth = (10.9).dp * windowSize.cols
+private val mainContentWidth = (10.85).dp * windowSize.cols
 private val mainContentHeight = (22.2).dp * windowSize.rows
 
 private fun calcWinSize(): DpSize {
@@ -50,7 +50,7 @@ fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
     initPage: KClass<out Page>,
-    initState: (Game) -> Unit,
+    initState: (User) -> Unit,
 ) {
     application {
         KoinApplication(application = {
@@ -62,15 +62,16 @@ fun showMainWindow(
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
             val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().page)
-            log.debug { "tick #$tick / Current page: ${page::class.simpleName}" }
+            tick.toString() // HACK to trigger recomposition, otherwise tick changes are not observed
+            log.trace { "UI render tick #$tick" }
             val textmap = koinInject<Textmap>()
 
             MaterialTheme {
                 // state hack: ensure initialization runs only once during composition
                 var initialized by remember { mutableIntStateOf(0) }
                 if (initialized == 0) {
-                    val game = koinInject<Game>()
-                    initState(game)
+                    val user = koinInject<User>()
+                    initState(user)
                     initialized = 1
                 }
 
@@ -96,7 +97,9 @@ fun showMainWindow(
                             .onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
                                 val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
                                 page.onKeyPressed(key).also { isHandled ->
-                                    if (isHandled) tick++
+                                    if (isHandled) {
+                                        tick++ // trigger re-composition
+                                    }
                                 }
                             }
                     ) {

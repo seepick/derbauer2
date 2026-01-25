@@ -15,7 +15,7 @@ interface KeyListener {
 
 sealed interface KeyPressed {
     data class Symbol(val char: PrintChar) : KeyPressed
-    sealed class Command(val key: String) : KeyPressed {
+    sealed class Command(val label: String) : KeyPressed {
         object Enter : Command("ENTER")
         object Escape : Command("ESCAPE")
         object Space : Command("SPACE")

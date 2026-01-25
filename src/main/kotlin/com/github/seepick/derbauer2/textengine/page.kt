@@ -15,7 +15,7 @@ class CurrentPage(
     private val log = logger {}
     var page: KClass<out Page> = page
         set(value) {
-            log.info { "Switching to controller: ${value.simpleName}" }
+            log.info { "Set: ${value.simpleName}" }
             field = value
         }
 }
