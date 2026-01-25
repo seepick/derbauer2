@@ -6,12 +6,12 @@ import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.viewer.CurrentPage
-import com.github.seepick.derbauer2.viewer.KeyPressed
-import com.github.seepick.derbauer2.viewer.Page
-import com.github.seepick.derbauer2.viewer.Prompt
-import com.github.seepick.derbauer2.viewer.SelectOption
-import com.github.seepick.derbauer2.viewer.Textmap
+import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.KeyPressed
+import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.Prompt
+import com.github.seepick.derbauer2.textengine.SelectOption
+import com.github.seepick.derbauer2.textengine.Textmap
 
 class BuildingsPage(
     private val game: Game,

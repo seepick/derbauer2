@@ -5,8 +5,8 @@ import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.Gold
 import com.github.seepick.derbauer2.game.logic.StorableResource
 import com.github.seepick.derbauer2.game.logic.storageCapacityFor
-import com.github.seepick.derbauer2.viewer.KeyPressed
-import com.github.seepick.derbauer2.viewer.Textmap
+import com.github.seepick.derbauer2.textengine.KeyPressed
+import com.github.seepick.derbauer2.textengine.Textmap
 
 class GameRenderer(
     private val game: Game,

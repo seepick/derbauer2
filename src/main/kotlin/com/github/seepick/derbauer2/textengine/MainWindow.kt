@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.viewer
+package com.github.seepick.derbauer2.textengine
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -63,7 +63,7 @@ fun showMainWindow(
         KoinApplication(application = {
             allowOverride(false)
             createEagerInstances()
-            modules(viewerModule(initPage, windowSize), mainModule)
+            modules(textengineModule(initPage, windowSize), mainModule)
         }) {
 
             val windowDpSize = calcWinSize()

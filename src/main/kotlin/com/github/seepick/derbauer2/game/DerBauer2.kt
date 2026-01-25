@@ -8,7 +8,7 @@ import com.github.seepick.derbauer2.game.logic.Gold
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.viewer.showMainWindow
+import com.github.seepick.derbauer2.textengine.showMainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 object DerBauer2 {

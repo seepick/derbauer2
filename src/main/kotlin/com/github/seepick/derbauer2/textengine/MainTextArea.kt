@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.viewer
+package com.github.seepick.derbauer2.textengine
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text

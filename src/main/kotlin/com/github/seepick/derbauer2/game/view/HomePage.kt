@@ -4,13 +4,13 @@ import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.ifDo
-import com.github.seepick.derbauer2.viewer.CurrentPage
-import com.github.seepick.derbauer2.viewer.KeyListener
-import com.github.seepick.derbauer2.viewer.KeyPressed
-import com.github.seepick.derbauer2.viewer.Page
-import com.github.seepick.derbauer2.viewer.Prompt
-import com.github.seepick.derbauer2.viewer.SelectOption
-import com.github.seepick.derbauer2.viewer.Textmap
+import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.KeyListener
+import com.github.seepick.derbauer2.textengine.KeyPressed
+import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.Prompt
+import com.github.seepick.derbauer2.textengine.SelectOption
+import com.github.seepick.derbauer2.textengine.Textmap
 
 class HomePage(
     private val game: Game,

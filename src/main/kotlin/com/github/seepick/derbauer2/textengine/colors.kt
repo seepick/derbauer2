@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.viewer
+package com.github.seepick.derbauer2.textengine
 
 import androidx.compose.ui.graphics.Color
 

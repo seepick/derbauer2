@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.viewer.KeyListener
-import com.github.seepick.derbauer2.viewer.KeyPressed
+import com.github.seepick.derbauer2.textengine.KeyListener
+import com.github.seepick.derbauer2.textengine.KeyPressed
 
 class Back(
     description: String = "Back",

@@ -1,5 +1,7 @@
 # Todo
 
+==> FOCUS: test properly; fix all major bugs; release <==
+
 ## Now
 
 * BZ: tech enabler
@@ -20,6 +22,8 @@
 
 ## Later
 
+* sound: continuous bg music; press key beep; each age different theme?!
+  * how to configure? overlay menu?!
 * font styling: <red> <green> <bold> etc.
   * like ctrl-codes in shell; process in renderer and remember positions and style for compose annotations
 

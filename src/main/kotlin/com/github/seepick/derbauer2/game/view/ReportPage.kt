@@ -2,10 +2,10 @@ package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.ifDo
-import com.github.seepick.derbauer2.viewer.CurrentPage
-import com.github.seepick.derbauer2.viewer.KeyPressed
-import com.github.seepick.derbauer2.viewer.Page
-import com.github.seepick.derbauer2.viewer.Textmap
+import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.KeyPressed
+import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.Textmap
 
 class ReportPage(
     private val game: Game,
