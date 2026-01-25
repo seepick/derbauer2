@@ -1,8 +1,11 @@
-package com.github.seepick.derbauer2.game.view
+package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.trading.TradingPage
+import com.github.seepick.derbauer2.game.turn.ReportPage
+import com.github.seepick.derbauer2.game.view.GameRenderer
+import com.github.seepick.derbauer2.game.view.MetaOption
 import com.github.seepick.derbauer2.ifDo
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyListener

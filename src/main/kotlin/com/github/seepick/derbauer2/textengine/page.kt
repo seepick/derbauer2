@@ -3,12 +3,7 @@ package com.github.seepick.derbauer2.textengine
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-interface Page : Renderer, KeyListener {
-}
-
-interface KeyListener {
-    fun onKeyPressed(key: KeyPressed): Boolean
-}
+interface Page : Renderer, KeyListener
 
 interface Renderer {
     fun renderText(textmap: Textmap)

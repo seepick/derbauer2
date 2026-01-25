@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.logic.Game
-import com.github.seepick.derbauer2.game.logic.Resource
-import com.github.seepick.derbauer2.game.logic.StorableResource
 import com.github.seepick.derbauer2.game.logic.Units
-import com.github.seepick.derbauer2.game.logic.storageCapacityFor
+import com.github.seepick.derbauer2.game.logic.storageFor
+import com.github.seepick.derbauer2.game.resource.Resource
+import com.github.seepick.derbauer2.game.resource.StorableResource
 import kotlin.reflect.KClass
 
 sealed interface TradeResult {
@@ -39,7 +39,7 @@ class Trader(
             .all { request ->
                 val resource = game.user.resource(request.resource)
                 if (resource is StorableResource) {
-                    val totalCapacity = game.user.storageCapacityFor(resource)
+                    val totalCapacity = game.user.storageFor(resource)
                     (resource.owned + request.amount) <= totalCapacity
                 } else {
                     true

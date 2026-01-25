@@ -4,14 +4,15 @@
 
 ## Now
 
-* BZ: tech enabler
-* BZ: variability in production
-* UI: emoji v-space issue!
+* !!! UI: emoji v-space issue!
+* BZ: citizens
 * BZ: go through derbauer/doc info
 
 ## Next
 
+* BZ: general variability end turn (production, consumption)
 * cheat mode (press secret key, increase resources)
+* BZ: tech enabler
 * IT: ci/cd
 * IT: coverage
 * IT: detekt

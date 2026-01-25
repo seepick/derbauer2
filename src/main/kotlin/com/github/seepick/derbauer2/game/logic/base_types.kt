@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.logic
 
+import com.github.seepick.derbauer2.game.resource.Resource
+import com.github.seepick.derbauer2.game.resource.StorableResource
 import kotlin.reflect.KClass
 
 interface Entity {
@@ -10,7 +12,9 @@ interface Entity {
 }
 
 /** A physical object (house, resource, people); not an abstract concept (tech) */
-interface Asset : Entity
+interface Asset : Entity {
+    var owned: Units
+}
 
 interface Technology : Entity {
     // check end turn, enable if not yet enabled
@@ -19,18 +23,15 @@ interface Technology : Entity {
 
 interface EntityFeature
 
+/** For now can only produce 1 type of resource. */
 interface ProducesResource : EntityFeature{
     val resourceType: KClass<out Resource>
     fun produce(): Units
 }
 
+/** For now can only store 1 type of resource. */
 interface StoresResource : EntityFeature {
     val storableResource: KClass<out StorableResource>
     val capacity: Units
     val totalCapacity: Units
-}
-
-sealed interface BuildResult {
-    object Success : BuildResult
-    object NotEnoughGold : BuildResult
 }

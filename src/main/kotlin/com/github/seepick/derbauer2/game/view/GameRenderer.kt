@@ -1,30 +1,45 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.logic.Food
+import com.github.seepick.derbauer2.game.logic.Entity
 import com.github.seepick.derbauer2.game.logic.Game
-import com.github.seepick.derbauer2.game.logic.Gold
-import com.github.seepick.derbauer2.game.logic.StorableResource
-import com.github.seepick.derbauer2.game.logic.storageCapacityFor
+import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.logic.storageFor
+import com.github.seepick.derbauer2.game.logic.totalLandUse
+import com.github.seepick.derbauer2.game.resource.Food
+import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Textmap
+
+inline fun <reified E : Entity> User.find(code: (E) -> Unit) {
+    all.filterIsInstance<E>().firstOrNull()?.also(code)
+}
 
 class GameRenderer(
     private val game: Game,
 ) {
+    private fun renderInfoBar(): String =
+        buildList {
+            game.user.find<Gold> {
+                add(it.emojiAndUnitsFormatted)
+            }
+            game.user.find<Food> {
+                add("${it.emojiAndUnitsFormatted} / ${game.user.storageFor(Food::class)}")
+            }
+            game.user.find<Land> {
+                val totalLandUse = game.user.totalLandUse
+                add("${it.emojiWithSpaceSuffixOrEmpty}${totalLandUse} / ${it.owned}")
+            }
+        }.joinToString(" | ")
+
     fun render(
         textmap: Textmap,
         promptIndicator: String,
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-        val resourcesInfo = game.user.resources.filter {
-            it is Gold || it is Food
-        }.joinToString(" | ") {
-            it.emojiAndUnitsFormatted + if(it is StorableResource) {
-                " / ${game.user.storageCapacityFor(it::class).formatted}"
-            } else ""
-        }
-        textmap.printAligned(resourcesInfo, "Turn ${game.turn}")
+
+        textmap.printAligned(renderInfoBar(), "Turn ${game.turn}")
         textmap.printHr()
         content(textmap)
         textmap.fillVertical(minus = 2)

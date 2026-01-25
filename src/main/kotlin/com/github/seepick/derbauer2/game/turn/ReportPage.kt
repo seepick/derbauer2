@@ -1,6 +1,9 @@
-package com.github.seepick.derbauer2.game.view
+package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.view.GameRenderer
+import com.github.seepick.derbauer2.game.view.MetaOption
 import com.github.seepick.derbauer2.ifDo
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyPressed
@@ -21,7 +24,7 @@ class ReportPage(
             textmap.printLine("Resources produced this turn:")
             val report = game.reports.last()
             report.resourceProduction.forEach {
-                textmap.printLine("* ${it.first.emojiWithSpaceSuffixOrEmpty}${it.first.labelPlural}: ${it.second.formatted}")
+                textmap.printLine("* ${it.first.emojiWithSpaceSuffixOrEmpty}${it.first.labelPlural}: ${it.second}")
             }
         }
     }

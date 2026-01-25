@@ -1,37 +1,47 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.logic.Asset
-import com.github.seepick.derbauer2.game.logic.Food
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.ProducesResource
 import com.github.seepick.derbauer2.game.logic.StoresResource
 import com.github.seepick.derbauer2.game.logic.Units
+import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.resource.Food
 
-interface Building : Asset {
-    var owned: Units
-    val costsGold: Int
+val User.buildings get() = all.filterIsInstance<Building>()
+
+interface OccupiesLand : Asset {
+    val landUse: Units
+    val totalLandUse get() = owned * landUse
+}
+
+interface Building : OccupiesLand {
+    val costsGold: Units
 }
 
 class House(override var owned: Units = 0.units) : Building {
     override val labelSingular = "House"
-    override val costsGold = Mechanics.houseCostsGold
+    override val costsGold = Mechanics.houseCostsGold.units
+    override val landUse = Mechanics.houseLandUse.units
     // TODO holds X amount citizens
 }
 
 class Farm(override var owned: Units = 0.units) : Building, ProducesResource {
     override val labelSingular = "Farm"
-    override val costsGold = Mechanics.farmCostsGold
+    override val costsGold = Mechanics.farmCostsGold.units
     override val resourceType = Food::class
+    override val landUse = Mechanics.farmLandUse.units
     override fun produce() = owned * Mechanics.farmProduceFood
 }
 
 class Granary(override var owned: Units = 0.units) : Building, StoresResource {
     override val labelSingular = "Granary"
     override val labelPlural = "Granaries"
-    override val costsGold = Mechanics.granaryCostsGold
+    override val costsGold = Mechanics.granaryCostsGold.units
     override val storableResource = Food::class
     override val capacity = Mechanics.granaryCapacity
+    override val landUse = Mechanics.granaryLanduse.units
     override val totalCapacity get() = owned * capacity
 }
 

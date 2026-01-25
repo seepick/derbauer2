@@ -16,12 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.key.Key
-import androidx.compose.ui.input.key.KeyEvent
-import androidx.compose.ui.input.key.KeyEventType
-import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
-import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -120,21 +115,3 @@ fun showMainWindow(
         }
     }
 }
-
-private fun KeyEvent.toKeyPressed(): KeyPressed? =
-    if (type == KeyEventType.KeyDown) {
-        when (key) {
-            Key.Escape -> KeyPressed.Command.Escape
-            Key.Enter -> KeyPressed.Command.Enter
-            Key.Spacebar -> KeyPressed.Command.Space
-            Key.Zero -> KeyPressed.Symbol(PrintChar.Numeric.Zero)
-            Key.One -> KeyPressed.Symbol(PrintChar.Numeric.One)
-            Key.Two -> KeyPressed.Symbol(PrintChar.Numeric.Two)
-            else -> {
-                log.debug { "Unhandled key: $key" }
-                null
-            }
-        }
-    } else {
-        null
-    }

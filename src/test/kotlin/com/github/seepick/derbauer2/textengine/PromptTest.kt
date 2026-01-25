@@ -14,7 +14,7 @@ class SelectPromptTest : DescribeSpec( {
             textmap.toFullString() shouldBeEqual """
                     $title                    
                                                   
-                    [1] ${opt1.label}                      
+                    [1] ${opt1.label()}                      
                 """.trimIndent()
         }
     }

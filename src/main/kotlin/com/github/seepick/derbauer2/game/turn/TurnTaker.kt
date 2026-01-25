@@ -1,5 +1,9 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.building.buildings
+import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.logic.ProducesResource
+import com.github.seepick.derbauer2.game.logic.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging
 
 class TurnTaker {

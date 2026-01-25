@@ -1,17 +1,16 @@
 package com.github.seepick.derbauer2.game
 
-import com.github.seepick.derbauer2.game.building.BuildingsPage
-import com.github.seepick.derbauer2.game.logic.gameLogicModule
-import com.github.seepick.derbauer2.game.trading.gameTradingModule
-import com.github.seepick.derbauer2.game.view.gameViewModule
-import org.koin.core.module.dsl.singleOf
+import com.github.seepick.derbauer2.game.building.buildingModule
+import com.github.seepick.derbauer2.game.logic.logicModule
+import com.github.seepick.derbauer2.game.trading.tradingModule
+import com.github.seepick.derbauer2.game.view.viewModule
 import org.koin.dsl.module
 
 fun gameModule() = module {
     includes(
-        gameLogicModule(),
-        gameTradingModule(),
-        gameViewModule(),
+        logicModule(),
+        tradingModule(),
+        viewModule(),
+        buildingModule(),
     )
-    singleOf(::BuildingsPage)
 }

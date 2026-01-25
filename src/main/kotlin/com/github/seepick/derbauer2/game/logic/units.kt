@@ -16,7 +16,7 @@ data class Units(
     }
 
     val magnitutedUnits = translateToMaxMagnitude(single)
-    val formatted = magnitutedUnits.formatted
+    override fun toString() = magnitutedUnits.toString()
 
     operator fun plus(other: Units) = Units(single + other.single)
     operator fun plus(other: Long) = Units(single + other)
@@ -56,5 +56,5 @@ data class MagnitutedUnits(
     val value: Long,
     val magnitude: Magnitude,
 ) {
-    val formatted = "$value${magnitude.symbol ?: ""}"
+    override fun toString() = "$value${magnitude.symbol ?: ""}"
 }

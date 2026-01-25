@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.logic.BuildResult
+import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.HomePage
+import com.github.seepick.derbauer2.textengine.Beeper
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
@@ -16,8 +16,10 @@ import com.github.seepick.derbauer2.textengine.Textmap
 class BuildingsPage(
     private val game: Game,
     private val user: User,
+    private val builder: Builder,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
+    private val beeper: Beeper,
 ) : Page {
 
     private val back = Back {
@@ -26,14 +28,18 @@ class BuildingsPage(
     private val prompt = Prompt.Select(
         title = "What shall we build next?",
         user.buildings.map { building ->
-            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.owned.formatted})" }) {
-                handleBuildingResult(game.buildBuilding(building))
+            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.owned})" }) {
+                handleBuildingResult(builder.build(building))
             }
         }
     )
 
     private fun handleBuildingResult(result: BuildResult) {
-        // FIXME do something with it. beep if not enough gold, etc.
+        when(result) {
+            BuildResult.Success -> {} // do nothing
+            BuildResult.InsufficientResources -> beeper.beep("Not enough resources to build.")
+        }
+        // TODO solve central place; display message
     }
 
     override fun renderText(textmap: Textmap) {

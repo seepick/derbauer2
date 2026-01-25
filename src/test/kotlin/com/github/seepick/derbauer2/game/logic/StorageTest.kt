@@ -1,12 +1,20 @@
 package com.github.seepick.derbauer2.game.logic
 
+import com.github.seepick.derbauer2.game.building.Granary
+import com.github.seepick.derbauer2.game.resource.Food
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.equals.shouldBeEqual
 
 class StorageTest : DescribeSpec({
-    describe("fsd") {
-        it("asdf") {
-            val user = User()
-            user.storageCapacityFor(Food::class)
+    var user = User()
+    beforeTest { user = User() }
+
+    describe("storage capacity for") {
+        it("increases") {
+            val granary = Granary(1.units)
+            user.addEntity(granary)
+
+            user.storageFor(Food::class) shouldBeEqual granary.totalCapacity
         }
     }
 })

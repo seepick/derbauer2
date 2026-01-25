@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.view.HomePage
+import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.textengine.MatrixSize
 import com.github.seepick.derbauer2.textengine.textengineModule
 import io.kotest.core.spec.style.StringSpec

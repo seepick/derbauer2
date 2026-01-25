@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.logic
 
 import org.koin.dsl.module
 
-fun gameLogicModule() = module {
+fun logicModule() = module {
     single { Game() }
     single { get<Game>().user }
 }
