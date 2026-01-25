@@ -1,6 +1,36 @@
 package com.github.seepick.derbauer2.game.logic
 
-enum class UnitSize(
+data class Units(
+    val single: Long,
+) {
+    companion object {
+        private fun translateToMaxMagnitude(single: Long): MagnitutedUnits {
+            // AI generated code ;)
+            val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else kotlin.math.abs(single)
+            val mag = Magnitude.entries.reversed().firstOrNull {
+                absSingle >= (1L shl (10 * it.thousands))
+            } ?: Magnitude.Single
+            val factor = 1L shl (10 * mag.thousands)
+            return MagnitutedUnits(single / factor, mag)
+        }
+    }
+
+    val magnitutedUnits = translateToMaxMagnitude(single)
+    val formatted = magnitutedUnits.formatted
+
+    operator fun plus(other: Long) = Units(single + other)
+    operator fun minus(other: Long) = Units(single - other)
+    operator fun compareTo(other: Long) = single.compareTo(other)
+    operator fun plus(other: Int) = Units(single + other)
+    operator fun minus(other: Int) = Units(single - other)
+    operator fun compareTo(other: Int) = single.compareTo(other.toLong())
+}
+
+/** pseudo-constructor */
+val Int.units get() = Units(this.toLong())
+val Long.units get() = Units(this)
+
+enum class Magnitude(
     val thousands: Int,
     val symbol: String?,
 ) {
@@ -13,26 +43,9 @@ enum class UnitSize(
     Exa(6, "x"),
 }
 
-data class SizedUnits(
-    val value: Int,
-    val size: UnitSize,
+data class MagnitutedUnits(
+    val value: Long,
+    val magnitude: Magnitude,
 ) {
-    val formatted = "$value${size.symbol ?: ""}"
+    val formatted = "$value${magnitude.symbol ?: ""}"
 }
-
-data class Units(
-    val single: Int,
-) {
-    // FIXME finish unit calc
-    val asMaxUnit =
-        if (single > 1024) SizedUnits(single / 1024, UnitSize.Kilo)
-        else SizedUnits(single, UnitSize.Single)
-
-    val formatted = asMaxUnit.formatted
-
-    operator fun plus(other: Int) = Units(single + other)
-    operator fun minus(other: Int) = Units(single - other)
-    operator fun compareTo(other: Int) = single.compareTo(other)
-}
-
-val Int.units get() = Units(this)

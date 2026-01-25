@@ -15,7 +15,7 @@ interface Technology : Entity {
 
 interface ProducesResource : Entity {
     val resourceType: KClass<out Resource>
-    fun produce(): Int
+    fun produce(): Long
 }
 
 sealed interface BuyResult {

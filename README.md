@@ -1,7 +1,5 @@
 # derbauer2
-text-based strategy game, retro style
 
-# Build
+Round-based, text-based strategy game in a fancy old retro style.
 
-* runs the Compose desktop app: `./gradlew run` 
-* package it `./gradlew package` (or `packageDistributionForCurrentOS`) 
+Successor of [DerBauer v1](https://github.com/seepick/derbauer).

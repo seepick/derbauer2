@@ -2,15 +2,21 @@
 
 ## Important
 
-* go through derbauer/doc info
-* overlay info notifier/window/toast; e.g. not enough resources to buy, etc. (or keep it simple?)
+* IT: ci/cd
+* IT: coverage
+* IT: detekt
+* BZ: go through derbauer/doc info
 
 ## Medium
 
-* bright/dark mode support
+* IT: sonarqube cloud
+* IT: automated releases
+* BZ: random events
+* UI: bright/dark mode support
 
 ## Ideas
 
-* colored text? (build annotated string necessary for compose text...)
-* set icon in Dock (iconFile in build.gradle)
-* set icon of window
+* UI: overlay info notifier/window/toast; e.g. not enough resources to buy, etc. (or keep it simple?)
+* UI: colored text? (build annotated string necessary for compose text...)
+* UI: set icon in Dock (iconFile in build.gradle)
+* UI: set icon of window
