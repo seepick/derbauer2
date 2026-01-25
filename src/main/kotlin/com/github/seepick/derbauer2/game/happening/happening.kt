@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.random.Random
 
-interface Happening {
+interface Happening  {
     fun render(textmap: Textmap)
     fun execute(user: User)
 }

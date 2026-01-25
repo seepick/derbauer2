@@ -11,12 +11,12 @@ class HappeningController(
 ) {
     private val log = KotlinLogging.logger {}
 
-    private val happenings = mutableListOf<Happening>()
-    fun currentHappening() = happenings.first()
+    private val unseenHappenings = mutableListOf<Happening>()
+    fun currentHappening() = unseenHappenings.first()
 
     fun continueNextOrFinish() {
-        happenings.removeAt(0)
-        if(happenings.isEmpty()) {
+        unseenHappenings.removeAt(0)
+        if(unseenHappenings.isEmpty()) {
             log.debug { "No happenings left, go home." }
             currentPage.page = HomePage::class
         } else {
@@ -28,7 +28,7 @@ class HappeningController(
     fun process(happenings: List<Happening>) {
         require(happenings.isNotEmpty())
         log.debug { "Processing ${happenings.size} happenings" }
-        this.happenings.addAll(happenings)
+        unseenHappenings.addAll(happenings)
         currentHappening().execute(user)
     }
 }
