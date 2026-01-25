@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
@@ -34,9 +33,8 @@ import kotlin.reflect.KClass
 private val log = logger {}
 private val outerBorder = 10.dp
 private val innerMargin = 5.dp
-private val mainFontSize = 18.sp
 private val windowSize = MatrixSize(rows = 25, cols = 80)
-private val mainContentWidth = (11.2).dp * windowSize.cols
+private val mainContentWidth = (10.9).dp * windowSize.cols
 private val mainContentHeight = (22.2).dp * windowSize.rows
 
 private fun calcWinSize(): DpSize {
@@ -44,7 +42,7 @@ private fun calcWinSize(): DpSize {
     val borderAndMarginGap = outerBorder.times(2) + innerMargin.times(2)
     return DpSize(
         width = mainContentWidth + borderAndMarginGap,
-        height = mainContentHeight + borderAndMarginGap,
+        height = mainContentHeight + borderAndMarginGap, // + 100.dp,
     )
 }
 
@@ -60,7 +58,6 @@ fun showMainWindow(
             createEagerInstances()
             modules(textengineModule(initPage, windowSize), mainModule)
         }) {
-
             val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
@@ -106,7 +103,6 @@ fun showMainWindow(
                         page.renderText(textmap)
                         MainTextArea(
                             text = textmap.toFullString(),
-                            fontSize = mainFontSize,
                         )
                         textmap.reset()
                     }

@@ -30,6 +30,7 @@ class TradingPage(
 
     private val prompt = Prompt.Select(
         title = "Ay, what do you wanna have mate?",
+        // TODO rework: more flexible/dynamic and generic/concise; simplify; use emojis
         listOf(
             SelectOption({ "Buy 1 food for 10 gold" }) {
                 resultHandler.handleTrade(

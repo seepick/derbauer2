@@ -4,7 +4,6 @@
 
 ## Now
 
-* !!! UI: emoji v-space issue!
 * BZ: citizens
 * BZ: go through derbauer/doc info
 

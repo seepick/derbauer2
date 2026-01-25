@@ -13,19 +13,28 @@ interface Resource : Asset {
 interface StorableResource : Resource
 
 class Gold(override var owned: Units) : Resource {
+    companion object {
+        const val EMOJI = "💰"
+    }
     override val labelSingular = "Gold"
     override val labelPlural = labelSingular
-    override val emoji = "💰"
+    override val emoji = EMOJI
 }
 
 class Food(override var owned: Units) : StorableResource {
+    companion object {
+        const val EMOJI = "🍖"
+    }
     override val labelSingular = "Food"
     override val labelPlural = labelSingular
-    override val emoji = "🍖"
+    override val emoji = EMOJI
 }
 
 class Land(override var owned: Units) : Resource {
+    companion object {
+        const val EMOJI = "🌍"
+    }
     override val labelSingular = "Land"
     override val labelPlural = labelSingular
-    override val emoji = "🌍"
+    override val emoji = EMOJI
 }

@@ -3,6 +3,8 @@ package com.github.seepick.derbauer2.game.building
 import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.Result
@@ -27,9 +29,9 @@ class BuildingsPage(
         currentPage.page = HomePage::class
     }
     private val prompt = Prompt.Select(
-        title = "What shall we build next?",
+        title = "What shall we build next, Sire?",
         user.buildings.map { building ->
-            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.owned})" }) {
+            SelectOption({ "Build ${building.labelSingular} - ${Gold.EMOJI} ${building.costsGold} | ${Land.EMOJI} ${building.landUse} (owned: ${building.owned})" }) {
                 resultHandler.handleBuilding(builder.build(building))
             }
         }
@@ -46,7 +48,7 @@ class BuildingsPage(
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
-            textmap.printLine("Read for work.")
+            textmap.printLine("Your builders are ready for work.")
             textmap.printEmptyLine()
             prompt.render(textmap)
         }
