@@ -21,7 +21,7 @@ class TraderTest : DescribeSpec({
         describe("Results") {
             it("When buy infinite resource like gold Then succeed") {
                 game.user.addEntity(Gold(0.units))
-                Trader(game).handle(
+                Trader(game).trade(
                     TradeRequest(Gold::class, TradeOperation.BUY, 1.units),
                 ) shouldBeEqual TradeResult.Success
             }
@@ -29,14 +29,14 @@ class TraderTest : DescribeSpec({
                 game.user.addEntity(Food(0.units))
                 game.user.addEntity(Granary(1.units))
 
-                Trader(game).handle(
+                Trader(game).trade(
                     TradeRequest(Food::class, TradeOperation.BUY, 1.units),
                 ) shouldBeEqual TradeResult.Success
             }
             it("Given no storage When buy Then fail") {
                 game.user.addEntity(Food(0.units))
 
-                Trader(game).handle(
+                Trader(game).trade(
                     TradeRequest(Food::class, TradeOperation.BUY, 1.units),
                 ) shouldBeEqual TradeResult.NotEnoughStorage
             }
@@ -46,7 +46,7 @@ class TraderTest : DescribeSpec({
             val buyAmount = 1.units
             it("When buy infinite resource gold Then increased") {
                 game.user.addEntity(Gold(0.units))
-                Trader(game).handle(TradeRequest(Gold::class, TradeOperation.BUY, 1.units))
+                Trader(game).trade(TradeRequest(Gold::class, TradeOperation.BUY, 1.units))
                 game.gold shouldBeEqual 1.units
             }
         }
@@ -57,14 +57,14 @@ class TraderTest : DescribeSpec({
             it("Given no gold When selling Then fails") {
                 game.user.addEntity(Gold(0.units))
 
-                Trader(game).handle(
+                Trader(game).trade(
                     TradeRequest(Gold::class, SELL, 1.units),
                 ) shouldBeEqual TradeResult.NotEnoughResources
             }
             it("Given some gold When selling Then succeed") {
                 game.user.addEntity(Gold(1.units))
 
-                Trader(game).handle(
+                Trader(game).trade(
                     TradeRequest(Gold::class, SELL, 1.units),
                 ) shouldBeEqual TradeResult.Success
             }
@@ -72,12 +72,12 @@ class TraderTest : DescribeSpec({
         describe("Operation") {
             it("Given no gold When selling Then gold unchanged") {
                 game.user.addEntity(Gold(0.units))
-                Trader(game).handle(TradeRequest(Gold::class, SELL, 1.units))
+                Trader(game).trade(TradeRequest(Gold::class, SELL, 1.units))
                 game.gold shouldBe 0.units
             }
             it("Given some gold When selling Then gold changed") {
                 game.user.addEntity(Gold(1.units))
-                Trader(game).handle(TradeRequest(Gold::class, SELL, 1.units))
+                Trader(game).trade(TradeRequest(Gold::class, SELL, 1.units))
                 game.gold shouldBe 0.units
             }
         }

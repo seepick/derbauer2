@@ -5,7 +5,8 @@ import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.textengine.Beeper
+import com.github.seepick.derbauer2.game.view.Result
+import com.github.seepick.derbauer2.game.view.ResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
@@ -19,7 +20,7 @@ class BuildingsPage(
     private val builder: Builder,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
-    private val beeper: Beeper,
+    private val resultHandler: ResultHandler,
 ) : Page {
 
     private val back = Back {
@@ -29,17 +30,18 @@ class BuildingsPage(
         title = "What shall we build next?",
         user.buildings.map { building ->
             SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.owned})" }) {
-                handleBuildingResult(builder.build(building))
+                resultHandler.handleBuilding(builder.build(building))
             }
         }
     )
 
-    private fun handleBuildingResult(result: BuildResult) {
-        when(result) {
-            BuildResult.Success -> {} // do nothing
-            BuildResult.InsufficientResources -> beeper.beep("Not enough resources to build.")
-        }
-        // TODO solve central place; display message
+    private fun ResultHandler.handleBuilding(result: BuildResult) {
+        handle(
+            when (result) {
+                BuildResult.Success -> Result.Success
+                BuildResult.InsufficientResources -> Result.Fail
+            }
+        )
     }
 
     override fun renderText(textmap: Textmap) {

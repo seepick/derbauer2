@@ -14,7 +14,7 @@ class StorageTest : DescribeSpec({
             val granary = Granary(1.units)
             user.addEntity(granary)
 
-            user.storageFor(Food::class) shouldBeEqual granary.totalCapacity
+            user.storageFor(Food::class) shouldBeEqual granary.totalStorageAmount
         }
     }
 })

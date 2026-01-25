@@ -12,7 +12,7 @@ object Mechanics {
     val houseLandUse = 1
 
     val farmCostsGold = 120
-    val farmProduceFood = 2
+    val farmProduceFood = 3
     val farmLandUse = 4
 
     val granaryCostsGold = 80

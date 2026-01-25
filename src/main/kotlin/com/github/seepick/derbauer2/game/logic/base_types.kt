@@ -11,9 +11,12 @@ interface Entity {
     val emojiWithSpaceSuffixOrEmpty: String get() = emoji?.let { "$it " } ?: ""
 }
 
-/** A physical object (house, resource, people); not an abstract concept (tech) */
-interface Asset : Entity {
+interface Ownable {
     var owned: Units
+}
+
+/** A physical object (house, resource, people); not an abstract concept (tech) */
+interface Asset : Entity, Ownable {
 }
 
 interface Technology : Entity {
@@ -25,13 +28,13 @@ interface EntityFeature
 
 /** For now can only produce 1 type of resource. */
 interface ProducesResource : EntityFeature{
-    val resourceType: KClass<out Resource>
-    fun produce(): Units
+    val producingResourceType: KClass<out Resource>
+    val resourceProductionAmount: Units
 }
 
 /** For now can only store 1 type of resource. */
 interface StoresResource : EntityFeature {
     val storableResource: KClass<out StorableResource>
-    val capacity: Units
-    val totalCapacity: Units
+    val storageAmount: Units
+    val totalStorageAmount: Units
 }

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.logic
 
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.turn.TurnTaker
+import com.github.seepick.derbauer2.game.turn.Turner
 
 data class TurnReport(
     val turn: Int,
@@ -11,8 +11,8 @@ data class TurnReport(
 class Game {
     val user = User()
 
-    private val turner = TurnTaker()
-    val turn = turner.turn
+    private val turner = Turner()
+    val turn get() = turner.turn
     val reports = mutableListOf<TurnReport>()
 
     fun nextTurn() {

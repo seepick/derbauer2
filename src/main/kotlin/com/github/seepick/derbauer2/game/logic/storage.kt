@@ -10,4 +10,4 @@ fun User.storageFor(resource: KClass<out StorableResource>): Units =
     all
         .filterIsInstance<StoresResource>()
         .filter { it.storableResource == resource }
-        .sumOf { it.totalCapacity.single }.units
+        .sumOf { it.totalStorageAmount.single }.units

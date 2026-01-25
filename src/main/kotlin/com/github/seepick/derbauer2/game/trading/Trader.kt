@@ -16,8 +16,8 @@ sealed interface TradeResult {
 class Trader(
     private val game: Game,
 ) {
-    fun handle(vararg requests: TradeRequest): TradeResult {
-        require(requests.isNotEmpty())
+    fun trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TradeResult {
+        val requests = listOf(requestsX, *requestsXS)
         if (!canBuy(requests)) {
             return TradeResult.NotEnoughStorage
         }
@@ -34,7 +34,7 @@ class Trader(
         return TradeResult.Success
     }
 
-    private fun canBuy(requests: Array<out TradeRequest>): Boolean =
+    private fun canBuy(requests: List<TradeRequest>): Boolean =
         requests.filter { it.operation == TradeOperation.BUY }
             .all { request ->
                 val resource = game.user.resource(request.resource)
@@ -46,7 +46,7 @@ class Trader(
                 }
             }
 
-    private fun canSell(requests: Array<out TradeRequest>): Boolean =
+    private fun canSell(requests: List<TradeRequest>): Boolean =
         requests.filter { it.operation == TradeOperation.SELL }
             .all { request ->
                 val resource = game.user.resource(request.resource)
