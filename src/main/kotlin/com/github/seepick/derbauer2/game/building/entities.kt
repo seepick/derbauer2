@@ -1,4 +1,11 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.building
+
+import com.github.seepick.derbauer2.game.logic.Entity
+import com.github.seepick.derbauer2.game.logic.Food
+import com.github.seepick.derbauer2.game.logic.Mechanics
+import com.github.seepick.derbauer2.game.logic.ProducesResource
+import com.github.seepick.derbauer2.game.logic.Units
+import com.github.seepick.derbauer2.game.logic.units
 
 interface Building : Entity {
     var units: Units

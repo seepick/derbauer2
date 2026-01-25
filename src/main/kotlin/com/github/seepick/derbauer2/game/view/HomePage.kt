@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.engine.Page
 import com.github.seepick.derbauer2.engine.Prompt
 import com.github.seepick.derbauer2.engine.SelectOption
 import com.github.seepick.derbauer2.engine.Textmap
+import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.logic.Game
 
 class HomePage(

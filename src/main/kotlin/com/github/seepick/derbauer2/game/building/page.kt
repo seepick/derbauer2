@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.view
+package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.engine.CurrentPage
 import com.github.seepick.derbauer2.engine.KeyPressed
@@ -9,6 +9,9 @@ import com.github.seepick.derbauer2.engine.Textmap
 import com.github.seepick.derbauer2.game.logic.BuyResult
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.view.GameRenderer
+import com.github.seepick.derbauer2.game.view.HomePage
+import com.github.seepick.derbauer2.game.view.MetaOption
 
 class BuildingsPage(
     private val game: Game,
@@ -22,7 +25,7 @@ class BuildingsPage(
     private val prompt = Prompt.Select(
         title = "What shall we build next?",
         user.buildings.map { building ->
-            SelectOption({"Buy ${building.labelSingular} for ${building.costsGold} (got ${building.units.formatted})"}) {
+            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.units.formatted})" }) {
                 handleBuyResult(game.buyBuilding(building))
             }
         }
