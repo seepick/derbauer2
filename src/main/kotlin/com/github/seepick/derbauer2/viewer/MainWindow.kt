@@ -24,9 +24,11 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.github.seepick.derbauer2.game.logic.Game
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin
@@ -35,21 +37,36 @@ import org.koin.core.module.Module
 import kotlin.reflect.KClass
 
 private val log = logger {}
-private val padding = 10.dp
+private val outerBorder = 10.dp
+private val innerMargin = 5.dp
+private val mainFontSize = 18.sp
+private val windowSize = MatrixSize(rows = 25, cols = 80)
+private val mainContentWidth = (11.2).dp * windowSize.cols
+private val mainContentHeight = (22.2).dp * windowSize.rows
+
+private fun calcWinSize(): DpSize {
+    // FIXME adjust window size, correlate with textmap size
+    val borderAndMarginGap = outerBorder.times(2) + innerMargin.times(2)
+    return DpSize(
+        width = mainContentWidth + borderAndMarginGap,
+        height = mainContentHeight + borderAndMarginGap,
+    )
+}
 
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
     initPage: KClass<out Page>,
-    windowSize: MatrixSize,
+    initState: (Game) -> Unit,
 ) {
     application {
         KoinApplication(application = {
+            allowOverride(false)
+            createEagerInstances()
             modules(viewerModule(initPage, windowSize), mainModule)
         }) {
-            // FIXME adjust window size, correlate with textmap size
-            val windowDpSize = DpSize(1040.dp + padding.times(2), 530.dp + padding.times(2))
 
+            val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
             val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().page)
@@ -57,6 +74,14 @@ fun showMainWindow(
             val textmap = koinInject<Textmap>()
 
             MaterialTheme {
+                // state hack: ensure initialization runs only once during composition
+                var initialized by remember { mutableIntStateOf(0) }
+                if (initialized == 0) {
+                    val game = koinInject<Game>()
+                    initState(game)
+                    initialized = 1
+                }
+
                 Window(
                     title = title,
                     onCloseRequest = ::exitApplication,
@@ -70,9 +95,10 @@ fun showMainWindow(
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .border(padding, Color.fgColor)
-                            .padding(padding)
+                            .border(outerBorder, Color.fgColor)
+                            .padding(outerBorder)
                             .background(Color.bgColor)
+                            .padding(innerMargin)
                             .focusRequester(focusRequester)
                             .focusable()
                             .onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
@@ -83,7 +109,10 @@ fun showMainWindow(
                             }
                     ) {
                         page.renderText(textmap)
-                        MainTextArea(text = textmap.toFullString())
+                        MainTextArea(
+                            text = textmap.toFullString(),
+                            fontSize = mainFontSize,
+                        )
                         textmap.reset()
                     }
                 }

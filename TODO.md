@@ -2,13 +2,17 @@
 
 ## Now
 
-* IT: ci/cd
-* IT: coverage
-* IT: detekt
+* BZ: tech enabler
+* BZ: variability in production
+* UI: emoji v-space issue!
 * BZ: go through derbauer/doc info
 
 ## Next
 
+* cheat mode (press secret key, increase resources)
+* IT: ci/cd
+* IT: coverage
+* IT: detekt
 * IT: sonarqube cloud
 * IT: automated releases
 * BZ: random events
@@ -16,7 +20,8 @@
 
 ## Later
 
-* UI: emoji v-space issue!
+* font styling: <red> <green> <bold> etc.
+  * like ctrl-codes in shell; process in renderer and remember positions and style for compose annotations
 
 ## Ideas
 

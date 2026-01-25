@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.logic.BuyResult
+import com.github.seepick.derbauer2.game.logic.BuildResult
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.view.Back
@@ -26,14 +26,14 @@ class BuildingsPage(
     private val prompt = Prompt.Select(
         title = "What shall we build next?",
         user.buildings.map { building ->
-            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.units.formatted})" }) {
-                handleBuyResult(game.buyBuilding(building))
+            SelectOption({ "Buy ${building.labelSingular} for ${building.costsGold} (got ${building.owned.formatted})" }) {
+                handleBuildingResult(game.buildBuilding(building))
             }
         }
     )
 
-    private fun handleBuyResult(result: BuyResult) {
-        // TODO do something with it...?
+    private fun handleBuildingResult(result: BuildResult) {
+        // FIXME do something with it. beep if not enough gold, etc.
     }
 
     override fun renderText(textmap: Textmap) {

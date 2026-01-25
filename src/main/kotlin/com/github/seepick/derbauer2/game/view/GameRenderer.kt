@@ -3,6 +3,8 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.game.logic.Food
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.Gold
+import com.github.seepick.derbauer2.game.logic.StorableResource
+import com.github.seepick.derbauer2.game.logic.storageCapacityFor
 import com.github.seepick.derbauer2.viewer.KeyPressed
 import com.github.seepick.derbauer2.viewer.Textmap
 
@@ -18,7 +20,9 @@ class GameRenderer(
         val resourcesInfo = game.user.resources.filter {
             it is Gold || it is Food
         }.joinToString(" | ") {
-            (it.emoji?.let { "$it " } ?: "") + it.units.formatted
+            it.emojiAndUnitsFormatted + if(it is StorableResource) {
+                " / ${game.user.storageCapacityFor(it::class).formatted}"
+            } else ""
         }
         textmap.printAligned(resourcesInfo, "Turn ${game.turn}")
         textmap.printHr()

@@ -1,13 +1,11 @@
 package com.github.seepick.derbauer2.game.logic
 
 import com.github.seepick.derbauer2.game.building.Building
-import com.github.seepick.derbauer2.game.building.Farm
-import com.github.seepick.derbauer2.game.building.House
 import kotlin.reflect.KClass
 
 class User {
 
-    // FIXME var citizens = 10.units
+    // var citizens = 10.units ... or is it a (special) resource?
     val resources = mutableListOf<Resource>()
     val buildings = mutableListOf<Building>()
 
@@ -15,12 +13,6 @@ class User {
     fun <B : Building> building(type: KClass<B>): B = buildings.find(type) as B
 
     private fun <T : Any> List<T>.find(type: KClass<out T>): T =
-        filterIsInstance(type.java).firstOrNull() ?: error("Nothing found for type: $type")
+        filterIsInstance(type.java).firstOrNull() ?: error("Nothing found for type: ${type.simpleName} (available: ${map { it::class.simpleName }})")
 
-    init {
-        resources += Gold(Mechanics.startingGold)
-        resources += Food(Mechanics.startingFood)
-        buildings += House()
-        buildings += Farm()
-    }
 }
