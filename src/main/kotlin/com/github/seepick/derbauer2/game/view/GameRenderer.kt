@@ -1,38 +1,38 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.engine.KeyPressed
 import com.github.seepick.derbauer2.engine.Textmap
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.logic.Food
+import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.logic.Gold
 
 class GameRenderer(
-    private val user: User,
+    private val game: Game,
 ) {
     fun render(
         textmap: Textmap,
-        footer: String,
-        footerOptions: List<FooterOption> = emptyList(),
+        promptIndicator: String,
+        metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-        textmap.printAligned("💰 ${user.money.formatted}", "Turn ?")
+        val resourcesInfo = game.user.resources.filter {
+            it is Gold || it is Food
+        }.joinToString(" | ") {
+            (it.emoji?.let { "$it " } ?: "") + it.units.formatted
+        }
+        textmap.printAligned(resourcesInfo, "Turn ${game.turn}")
         textmap.printHr()
         content(textmap)
         textmap.fillVertical(minus = 2)
         textmap.printHr()
         textmap.printAligned(
-            left = "[$footer]> ▉",
-            right = footerOptions.joinToString("   ") { "${it.key}: ${it.description}" },
+            left = "[$promptIndicator]> ▉",
+            right = metaOptions.joinToString("   ") { "${it.command.key}: ${it.description}" },
         )
-    }
-
-    fun render(
-        textmap: Textmap,
-        footerOptions: List<FooterOption>,
-        content: (Textmap) -> Unit
-    ) {
-        render(textmap, footerOptions.first().key, footerOptions, content)
     }
 }
 
-data class FooterOption(
-    val key: String, // ENTER
+data class MetaOption(
+    val command: KeyPressed.Command, // ENTER
     val description: String, // Buy Building
 )

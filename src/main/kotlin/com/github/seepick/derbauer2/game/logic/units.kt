@@ -29,6 +29,10 @@ data class Units(
         else SizedUnits(single, UnitSize.Single)
 
     val formatted = asMaxUnit.formatted
+
+    operator fun plus(other: Int) = Units(single + other)
+    operator fun minus(other: Int) = Units(single - other)
+    operator fun compareTo(other: Int) = single.compareTo(other)
 }
 
 val Int.units get() = Units(this)

@@ -94,6 +94,7 @@ private fun KeyEvent.toKeyPressed(): KeyPressed? =
         when (key) {
             Key.Escape -> KeyPressed.Command.Escape
             Key.Enter -> KeyPressed.Command.Enter
+            Key.Zero -> KeyPressed.Symbol(PrintChar.Numeric.Zero)
             Key.One -> KeyPressed.Symbol(PrintChar.Numeric.One)
             Key.Two -> KeyPressed.Symbol(PrintChar.Numeric.Two)
             else -> {

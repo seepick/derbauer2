@@ -1,6 +1,5 @@
-package com.github.seepick.derbauer2.game.engine
+package com.github.seepick.derbauer2.engine
 
-import com.github.seepick.derbauer2.engine.Textmap
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 

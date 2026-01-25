@@ -3,12 +3,15 @@ package com.github.seepick.derbauer2.engine
 import io.github.oshai.kotlinlogging.KotlinLogging
 
 data class SelectOption(
-    val label: String,
+    val label: () -> String,
     val onSelected: () -> Unit,
-)
+) {
+    constructor(label: String, onSelected: () -> Unit) : this({ label }, onSelected)
+}
 
 sealed class PrintChar(val char: Char) {
     sealed class Numeric(val int: Int) : PrintChar(int.toString().first()) {
+        object Zero : Numeric(0)
         object One : Numeric(1)
         object Two : Numeric(2)
     }
@@ -31,7 +34,7 @@ val KeyPressed.Companion.one get() = KeyPressed.Symbol(PrintChar.Numeric.One)
 
 sealed interface Prompt : KeyListener {
 
-    val footer: String
+    val inputIndicator: String
     fun render(textmap: Textmap)
 
     class Select(
@@ -39,11 +42,12 @@ sealed interface Prompt : KeyListener {
         val options: List<SelectOption>,
     ) : Prompt {
         private val log = KotlinLogging.logger {}
+
         init {
             require(options.size in 1..9)
         }
 
-        override val footer = "1-${options.size}"
+        override val inputIndicator = "1-${options.size}"
 
         override fun onKeyPressed(key: KeyPressed): Boolean {
             if (key is KeyPressed.Symbol &&
@@ -63,7 +67,7 @@ sealed interface Prompt : KeyListener {
             textmap.printEmptyLine()
             options.mapIndexed { idx, opt ->
                 // TODO support arrow up/down selection
-                textmap.printLine("[${idx + 1}] ${opt.label}")
+                textmap.printLine("[${idx + 1}] ${opt.label()}")
             }
         }
     }

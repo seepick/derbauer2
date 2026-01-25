@@ -3,26 +3,48 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.engine.CurrentPage
 import com.github.seepick.derbauer2.engine.KeyPressed
 import com.github.seepick.derbauer2.engine.Page
+import com.github.seepick.derbauer2.engine.Prompt
+import com.github.seepick.derbauer2.engine.SelectOption
 import com.github.seepick.derbauer2.engine.Textmap
+import com.github.seepick.derbauer2.game.logic.BuyResult
+import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.logic.User
 
 class BuildingsPage(
+    private val game: Game,
+    private val user: User,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
 ) : Page {
 
-    private val continueKey = KeyPressed.Command.Enter
+    private val backKey = KeyPressed.Command.Escape
+
+    private val prompt = Prompt.Select(
+        title = "What shall we build next?",
+        user.buildings.map { building ->
+            SelectOption({"Buy ${building.labelSingular} for ${building.costsGold} (got ${building.units.formatted})"}) {
+                handleBuyResult(game.buyBuilding(building))
+            }
+        }
+    )
+
+    private fun handleBuyResult(result: BuyResult) {
+        // TODO do something with it...?
+    }
 
     override fun renderText(textmap: Textmap) {
-        gameRenderer.render(textmap, listOf(FooterOption(continueKey.key, "Continue"))) {
-            textmap.printLine("Buildings to come...")
+        gameRenderer.render(textmap, prompt.inputIndicator + "/" + backKey.key, listOf(MetaOption(backKey, "Back"))) {
+            textmap.printLine("Read for work.")
+            textmap.printEmptyLine()
+            prompt.render(textmap)
         }
     }
 
     override fun onKeyPressed(key: KeyPressed): Boolean {
-        if(key == continueKey) {
+        if (key == backKey) {
             currentPage.page = HomePage::class
             return true
         }
-        return false
+        return prompt.onKeyPressed(key)
     }
 }

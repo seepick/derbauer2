@@ -1,10 +1,5 @@
-package com.github.seepick.derbauer2.game.engine
+package com.github.seepick.derbauer2.engine
 
-import com.github.seepick.derbauer2.engine.KeyPressed
-import com.github.seepick.derbauer2.engine.Prompt
-import com.github.seepick.derbauer2.engine.SelectOption
-import com.github.seepick.derbauer2.engine.Textmap
-import com.github.seepick.derbauer2.engine.one
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
