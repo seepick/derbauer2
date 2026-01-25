@@ -1,18 +1,22 @@
 # Todo
 
-## Important
+## Now
 
 * IT: ci/cd
 * IT: coverage
 * IT: detekt
 * BZ: go through derbauer/doc info
 
-## Medium
+## Next
 
 * IT: sonarqube cloud
 * IT: automated releases
 * BZ: random events
 * UI: bright/dark mode support
+
+## Later
+
+* UI: emoji v-space issue!
 
 ## Ideas
 

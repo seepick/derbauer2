@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.engine.KeyPressed
-import com.github.seepick.derbauer2.engine.Textmap
 import com.github.seepick.derbauer2.game.logic.Food
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.Gold
+import com.github.seepick.derbauer2.viewer.KeyPressed
+import com.github.seepick.derbauer2.viewer.Textmap
 
 class GameRenderer(
     private val game: Game,

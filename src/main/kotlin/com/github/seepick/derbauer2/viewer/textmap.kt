@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.engine
+package com.github.seepick.derbauer2.viewer
 
 interface Output {
     fun printLine(line: String): Output

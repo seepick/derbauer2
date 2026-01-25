@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.engine
+package com.github.seepick.derbauer2.viewer
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

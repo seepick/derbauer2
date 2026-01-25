@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.engine
+package com.github.seepick.derbauer2.viewer
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass

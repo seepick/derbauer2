@@ -1,17 +1,17 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.engine.CurrentPage
-import com.github.seepick.derbauer2.engine.KeyPressed
-import com.github.seepick.derbauer2.engine.Page
-import com.github.seepick.derbauer2.engine.Prompt
-import com.github.seepick.derbauer2.engine.SelectOption
-import com.github.seepick.derbauer2.engine.Textmap
 import com.github.seepick.derbauer2.game.logic.BuyResult
 import com.github.seepick.derbauer2.game.logic.Game
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.view.Back
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.game.view.MetaOption
+import com.github.seepick.derbauer2.viewer.CurrentPage
+import com.github.seepick.derbauer2.viewer.KeyPressed
+import com.github.seepick.derbauer2.viewer.Page
+import com.github.seepick.derbauer2.viewer.Prompt
+import com.github.seepick.derbauer2.viewer.SelectOption
+import com.github.seepick.derbauer2.viewer.Textmap
 
 class BuildingsPage(
     private val game: Game,
@@ -20,8 +20,9 @@ class BuildingsPage(
     private val gameRenderer: GameRenderer,
 ) : Page {
 
-    private val backKey = KeyPressed.Command.Escape
-
+    private val back = Back {
+        currentPage.page = HomePage::class
+    }
     private val prompt = Prompt.Select(
         title = "What shall we build next?",
         user.buildings.map { building ->
@@ -36,18 +37,13 @@ class BuildingsPage(
     }
 
     override fun renderText(textmap: Textmap) {
-        gameRenderer.render(textmap, prompt.inputIndicator + "/" + backKey.key, listOf(MetaOption(backKey, "Back"))) {
+        gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
             textmap.printLine("Read for work.")
             textmap.printEmptyLine()
             prompt.render(textmap)
         }
     }
 
-    override fun onKeyPressed(key: KeyPressed): Boolean {
-        if (key == backKey) {
-            currentPage.page = HomePage::class
-            return true
-        }
-        return prompt.onKeyPressed(key)
-    }
+    override fun onKeyPressed(key: KeyPressed): Boolean =
+        listOf(back, prompt).any { it.onKeyPressed(key) }
 }

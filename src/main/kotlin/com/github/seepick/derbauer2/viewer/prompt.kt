@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.engine
+package com.github.seepick.derbauer2.viewer
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 
@@ -25,6 +25,7 @@ sealed interface KeyPressed {
     sealed class Command(val key: String) : KeyPressed {
         object Enter : Command("ENTER")
         object Escape : Command("ESCAPE")
+        object Space : Command("SPACE")
     }
 
     companion object {}
@@ -49,18 +50,17 @@ sealed interface Prompt : KeyListener {
 
         override val inputIndicator = "1-${options.size}"
 
-        override fun onKeyPressed(key: KeyPressed): Boolean {
-            if (key is KeyPressed.Symbol &&
+        override fun onKeyPressed(key: KeyPressed) =
+            if (
+                key is KeyPressed.Symbol &&
                 key.char is PrintChar.Numeric &&
                 key.char.char in '1'..options.size.toString().first()
             ) {
                 val option = options[key.char.int - 1]
                 log.debug { "Selected: $option" }
                 option.onSelected()
-                return true
-            }
-            return false
-        }
+                true
+            } else false
 
         override fun render(textmap: Textmap) {
             textmap.printLine(title)

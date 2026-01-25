@@ -1,13 +1,16 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.engine.CurrentPage
-import com.github.seepick.derbauer2.engine.KeyPressed
-import com.github.seepick.derbauer2.engine.Page
-import com.github.seepick.derbauer2.engine.Prompt
-import com.github.seepick.derbauer2.engine.SelectOption
-import com.github.seepick.derbauer2.engine.Textmap
 import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.logic.Game
+import com.github.seepick.derbauer2.game.trading.TradingPage
+import com.github.seepick.derbauer2.ifDo
+import com.github.seepick.derbauer2.viewer.CurrentPage
+import com.github.seepick.derbauer2.viewer.KeyListener
+import com.github.seepick.derbauer2.viewer.KeyPressed
+import com.github.seepick.derbauer2.viewer.Page
+import com.github.seepick.derbauer2.viewer.Prompt
+import com.github.seepick.derbauer2.viewer.SelectOption
+import com.github.seepick.derbauer2.viewer.Textmap
 
 class HomePage(
     private val game: Game,
@@ -15,23 +18,38 @@ class HomePage(
     private val gameRenderer: GameRenderer,
 ) : Page {
 
-    private val prompt = Prompt.Select(title = "What shall we do next?", listOf(
-        SelectOption("Buildings") {
-            currentPage.page = BuildingsPage::class
-        },
-        SelectOption("Next Turn") {
-            game.nextTurn()
-        },
-    ))
+    private val prompt = Prompt.Select(
+        title = "What shall we do next?", listOf(
+            SelectOption("Trade") {
+                currentPage.page = TradingPage::class
+            },
+            SelectOption("Build") {
+                currentPage.page = BuildingsPage::class
+            },
+        )
+    )
 
     override fun renderText(textmap: Textmap) {
-        gameRenderer.render(textmap, promptIndicator = prompt.inputIndicator) {
-            textmap.printLine("You are home... 🏠")// FIXME emoji v-space issue!
+        gameRenderer.render(
+            textmap,
+            promptIndicator = prompt.inputIndicator,
+            listOf(MetaOption(KeyPressed.Command.Space, "Next Turn"))
+        ) {
+            textmap.printLine("You are home... 🏠")
             textmap.printEmptyLine()
             prompt.render(textmap)
         }
     }
 
-    override fun onKeyPressed(e: KeyPressed) = prompt.onKeyPressed(e)
+    override fun onKeyPressed(e: KeyPressed) =
+        listOf(prompt, NextTurn(game)).any {
+            it.onKeyPressed(e)
+        }
 }
 
+private class NextTurn(private val game: Game) : KeyListener {
+    override fun onKeyPressed(key: KeyPressed) =
+        ifDo(key == KeyPressed.Command.Space) {
+            game.nextTurn()
+        }
+}
