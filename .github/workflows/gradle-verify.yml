@@ -1,4 +1,4 @@
-name: Gradle Verify
+name: Continuous Integration
 
 on:
   push:
@@ -6,13 +6,13 @@ on:
       - '*'
 
 jobs:
-  verify:
-    name: Run Gradle verify
+  check:
+    name: Run Gradle check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Set up JDK 17
+      - name: Setup JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -28,5 +28,5 @@ jobs:
             gradle-cache-${{ runner.os }}-
 #      - name: Ensure gradlew is executable
 #        run: chmod +x ./gradlew
-      - name: Run Gradle verify
-        run: ./gradlew verify --no-daemon --console=plain
+      - name: Gradle check
+        run: ./gradlew check --no-daemon --console=plain

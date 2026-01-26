@@ -19,7 +19,7 @@ object DerBauer2 {
     fun main(args: Array<String>) {
         log.info { "Starting Der Bauer 2" }
         showMainWindow(
-            title = "Der Bauer 2",
+            title = "DerBauer2",
             mainModule = gameModule(),
             initPage = HomePage::class,
         ) { user ->
