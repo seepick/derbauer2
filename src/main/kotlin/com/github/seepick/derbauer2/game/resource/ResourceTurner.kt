@@ -2,31 +2,29 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.storageFor
+import com.github.seepick.derbauer2.game.logic.availableOf
 import com.github.seepick.derbauer2.game.logic.units
 import kotlin.reflect.KClass
 
 class ResourceTurner(
     private val user: User,
 ) {
-    fun executeAndReturnReport(): ResourceReport {
-        val report = ResourceReportBuilder()
+    // TODO don't execute, just return; someone else will execute it (Interaction?!)
+    fun executeAndReturnReport() = buildResourceReport {
         user.all.filterIsInstance<ProducesResource>().forEach { producer ->
             val resource = user.resource(producer.producingResourceType)
             val producing = producer.resourceProductionAmount
 
             val added = if (resource is StorableResource) {
                 // FIXME centralize max storage logic in single place!
-                val available = user.storageFor(resource) - resource.owned
-                producing.single.coerceAtMost(available.single).units
+                producing.single.coerceAtMost(user.availableOf(resource).single).units
             } else {
                 producing
             }
             // TODO test if added == 0 (should not be contained in report!)
             resource.owned += added
-            report.add(resource, added)
+            add(resource, added)
         }
-        return report.build()
     }
 }
 

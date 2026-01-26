@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.resource.StorableResource
 import com.github.seepick.derbauer2.game.trading.TradeOperation
 import com.github.seepick.derbauer2.game.trading.TradeRequest
 
+// FIXME no, add as extension functions to User, within the building/trading packages; BUT: harden owned somehow centrally
 class Interaction(
     private val user: User,
 ) {

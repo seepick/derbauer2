@@ -7,6 +7,9 @@ import kotlin.reflect.KClass
 fun User.storageFor(resource: StorableResource): Units =
     storageFor(resource::class)
 
+fun User.availableOf(resource: StorableResource): Units =
+    storageFor(resource::class) - resource.owned
+
 fun User.storageFor(resource: KClass<out StorableResource>): Units =
     all
         .filterIsInstance<StoresResource>()

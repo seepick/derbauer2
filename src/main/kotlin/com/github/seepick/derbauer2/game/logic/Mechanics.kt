@@ -28,4 +28,6 @@ object Mechanics {
 
     val citizenTaxPercentage = 0.5 // multiplied by citizens.amount
     val citizenFoodConsumePercentage = 0.3
+
+    val turnProbHappeningIsNegative = 0.1
 }
