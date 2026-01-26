@@ -21,16 +21,16 @@ class UnitsTest : DescribeSpec({
     )
     context("magnituded units") {
         describe("zero") {
-            0.zp.magnitutedValue.magnitude shouldBeEqual Magnitude.Single
+            0.z.magnitutedValue.magnitude shouldBeEqual Magnitude.Single
         }
         describe("positive") {
             withData(singlesAndMagnitude) { (givenSingle: Long, expectedSize: Magnitude) ->
-                givenSingle.zp.magnitutedValue.magnitude shouldBeEqual expectedSize
+                givenSingle.z.magnitutedValue.magnitude shouldBeEqual expectedSize
             }
         }
         describe("negative") {
             withData(singlesAndMagnitude.map { (it.first * - 1) to it.second }) { (givenSingle: Long, expectedSize: Magnitude) ->
-                givenSingle.z.magnitutedValue.magnitude shouldBeEqual expectedSize
+                givenSingle.zz.magnitutedValue.magnitude shouldBeEqual expectedSize
             }
         }
     }

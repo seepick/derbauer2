@@ -12,11 +12,11 @@ interface EntityEffect
 
 interface Ownable {
     @Suppress("DEPRECATION")
-    val owned: Zp get() = _setOwnedOnlyByTx
+    val owned: Z get() = _setOwnedOnlyByTx
 
     @Suppress("PropertyName")
     @Deprecated("just don't use it unless you are within transaction application code")
-    var _setOwnedOnlyByTx: Zp
+    var _setOwnedOnlyByTx: Z
 }
 
 abstract class EmojiAndLabel(
@@ -29,8 +29,8 @@ abstract class EmojiAndLabel(
 interface NounLabel {
     val labelSingular: String
     val labelPlural: String get() = labelSingular + "s"
-    fun labelFor(units: Zp) = if (units == 1.zp) labelSingular else labelPlural
     fun labelFor(units: Z) = if (units == 1.z) labelSingular else labelPlural
+    fun labelFor(units: Zz) = if (units == 1.zz) labelSingular else labelPlural
 }
 
 val <T> T.emojiAndLabel: String where T : NounLabel, T : Entity

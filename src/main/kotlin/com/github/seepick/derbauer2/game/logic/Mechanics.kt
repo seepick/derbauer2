@@ -4,14 +4,14 @@ package com.github.seepick.derbauer2.game.logic
  * All game mechanics constants; a magic constant provider.
  */
 object Mechanics {
-    val startingLand = 10.zp
-    val startingGold = 500.zp
-    val startingCitizens = 4.zp
-    val startingFood = 50.zp
+    val startingLand = 10.z
+    val startingGold = 500.z
+    val startingCitizens = 4.z
+    val startingFood = 50.z
 
-    val startingGranaries = 1.zp
-    val startingHouses = 1.zp
-    val startingFarms = 0.zp
+    val startingGranaries = 1.z
+    val startingHouses = 1.z
+    val startingFarms = 0.z
 
     val houseCostsGold = 40
     val houseLandUse = 1

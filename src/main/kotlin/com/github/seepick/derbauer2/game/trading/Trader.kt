@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.trading
 
-import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.Z
 import com.github.seepick.derbauer2.game.resource.Resource
 import kotlin.reflect.KClass
 
 class TradeRequest(
     val resourceClass: KClass<out Resource>,
     val operation: TradeOperation,
-    val amount: Zp,
+    val amount: Z,
 )
 
 sealed interface TradeOperation {

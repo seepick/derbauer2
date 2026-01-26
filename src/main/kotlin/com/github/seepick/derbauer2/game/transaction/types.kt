@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.transaction
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.BuildingReference
 import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceReference
 import com.github.seepick.derbauer2.game.transaction.TxResult.Fail
@@ -17,9 +17,9 @@ sealed interface Tx {
     data class TxResource(
         override val resourceClass: KClass<out Resource>,
         val operation: TxOperation,
-        val amount: Zp,
+        val amount: Z,
     ) : Tx, ResourceReference {
-        constructor(resourceClass: KClass<out Resource>, amount: Z) : this(
+        constructor(resourceClass: KClass<out Resource>, amount: Zz) : this(
             resourceClass = resourceClass,
             // could introduce TxOperation.NONE but for now just use INCREASE with 0 amount
             operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,

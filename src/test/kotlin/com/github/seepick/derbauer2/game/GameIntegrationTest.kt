@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.zp
+import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.turn.Turner
@@ -27,12 +27,12 @@ class GameIntegrationTest : KoinTest, FunSpec() {
         test("citizens pay taxes") {
             val turner by inject<Turner>()
             val user by inject<User>()
-            val citizenResource = user.add(Citizen(100.zp))
-            val goldResource = user.add(Gold(0.zp))
+            val citizenResource = user.add(Citizen(100.z))
+            val goldResource = user.add(Gold(0.z))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            val expectedTax = (citizenResource.owned.single * Mechanics.citizenTaxPercentage).toLong().zp
+            val expectedTax = (citizenResource.owned.value * Mechanics.citizenTaxPercentage).toLong().z
             goldResource.owned shouldBeEqual expectedTax
             report.resourceReportLines.shouldContainChange(goldResource to expectedTax.asZ)
         }

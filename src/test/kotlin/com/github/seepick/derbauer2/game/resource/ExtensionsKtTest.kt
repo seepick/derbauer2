@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.zp
+import com.github.seepick.derbauer2.game.logic.z
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -11,20 +11,20 @@ class ExtensionsKtTest : DescribeSpec( {
     describe("isAbleToStore") {
         it("Given storage Then yes") {
             val user = User()
-            user.add(Granary(10.zp))
-            val food = user.add(Food(0.zp))
-            user.isAbleToStore(food, 1.zp).shouldBeTrue()
+            user.add(Granary(10.z))
+            val food = user.add(Food(0.z))
+            user.isAbleToStore(food, 1.z).shouldBeTrue()
         }
         it("Given no storage Then no") {
             val user = User()
-            val food = user.add(Food(0.zp))
-            user.isAbleToStore(food, 1.zp).shouldBeFalse()
+            val food = user.add(Food(0.z))
+            user.isAbleToStore(food, 1.z).shouldBeFalse()
         }
         it("Given full storage Then no") {
             val user = User()
-            val storage = user.add(Granary(10.zp))
+            val storage = user.add(Granary(10.z))
             val food = user.add(Food(storage.totalStorageAmount))
-            user.isAbleToStore(food, 1.zp).shouldBeFalse()
+            user.isAbleToStore(food, 1.z).shouldBeFalse()
         }
     }
 })

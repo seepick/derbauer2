@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.logic.Asset
 import com.github.seepick.derbauer2.game.logic.EmojiAndLabel
-import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.Z
 import kotlin.reflect.KClass
 
 interface Resource : Asset {
@@ -15,7 +15,7 @@ interface ResourceReference {
     val resourceClass: KClass<out Resource>
 }
 
-data class Citizen(override var _setOwnedOnlyByTx: Zp) : StorableResource {
+data class Citizen(override var _setOwnedOnlyByTx: Z) : StorableResource {
     companion object {
         const val EMOJI = "🧑"
     }
@@ -23,7 +23,7 @@ data class Citizen(override var _setOwnedOnlyByTx: Zp) : StorableResource {
     override val emoji = EMOJI
 }
 
-data class Gold(override var _setOwnedOnlyByTx: Zp) : Resource {
+data class Gold(override var _setOwnedOnlyByTx: Z) : Resource {
     companion object {
         const val EMOJI = "💰"
         const val LABEL = "Gold"
@@ -34,7 +34,7 @@ data class Gold(override var _setOwnedOnlyByTx: Zp) : Resource {
     override val emoji = EMOJI
 }
 
-data class Food(override var _setOwnedOnlyByTx: Zp) : StorableResource {
+data class Food(override var _setOwnedOnlyByTx: Z) : StorableResource {
     companion object {
         const val EMOJI = "🍖"
     }
@@ -43,7 +43,7 @@ data class Food(override var _setOwnedOnlyByTx: Zp) : StorableResource {
     override val emoji = EMOJI
 }
 
-data class Land(override var _setOwnedOnlyByTx: Zp) : Resource {
+data class Land(override var _setOwnedOnlyByTx: Z) : Resource {
     // TODO simplify even more
     object Text : EmojiAndLabel("🌍", "Land")
     override val labelSingular = Text.label

@@ -14,4 +14,4 @@ fun User.storageFor(resourceClass: KClass<out StorableResource>) =
     all
         .filterIsInstance<StoresResource>()
         .filter { it.storableResourceClass == resourceClass }
-        .sumOf { it.totalStorageAmount.single }.zp
+        .sumOf { it.totalStorageAmount.value }.z

@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.Zz
 import com.github.seepick.derbauer2.game.logic.emojiAndLabel
 import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
 import com.github.seepick.derbauer2.game.transaction.TxOperation
@@ -12,7 +12,7 @@ import kotlin.reflect.KClass
 
 fun User.txResource(
     resourceClass: KClass<out Resource>,
-    amount: Z,
+    amount: Zz,
 ) = execTx(
     TxResource(
         resourceClass = resourceClass,
@@ -22,7 +22,7 @@ fun User.txResource(
 
 fun User.txResource(
     resourceClass: KClass<out Resource>,
-    amount: Zp,
+    amount: Z,
 ) = execTx(
     TxResource(
         resourceClass = resourceClass,

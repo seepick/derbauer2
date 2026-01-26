@@ -1,4 +1,5 @@
 # Main Areas
+
 * Economy: produce/consume Resources (Gold, Food, Wood, Stone)
 	* do buildings occupy land? (buy land, or conquer more cheaply)
 * Citizens: feed Population/Worker, consumed for army (a resource!)
@@ -8,11 +9,15 @@
 	* over time, reward of winning increases (proportional to and % of global max-resources)
 * Trading?
 * Events: probability each turn; gain/lose resources, ...
+
 # Resources
+
 * Simple: Gold, Food, Wood, Stone, Knowledge (=research points)
 * Complex: Land, People
 * storage buildings
+
 # Buildings
+
 * cost any resources to build
 * cost maintenance
 * requires/occupies land

@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.gold
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.zp
+import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.ownedForTest
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -20,7 +20,7 @@ class UserBuildTest : DescribeSpec({
 
     describe("general") {
         fun User.givenSufficientResourcesForHouse(): House {
-            val house = House(0.zp)
+            val house = House(0.z)
             add(Gold(house.costsGold))
             add(Land(house.landUse))
             add(house)
@@ -40,7 +40,7 @@ class UserBuildTest : DescribeSpec({
         }
         it("Given not enough land Then fail") {
             val house = user.givenSufficientResourcesForHouse()
-            user.resource(Land::class).ownedForTest = 0.zp
+            user.resource(Land::class).ownedForTest = 0.z
 
             user.build(house).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }

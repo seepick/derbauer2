@@ -2,8 +2,8 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zp
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.logic.Zz
+import com.github.seepick.derbauer2.game.logic.zz
 import kotlin.reflect.KClass
 
 class ResourceTurner(
@@ -23,9 +23,9 @@ class ResourceTurner(
 
 data class ResourceReportLine(
     val resource: Resource,
-    var changeAmount: Z,
+    var changeAmount: Zz,
 ) {
-    constructor( resource: Resource, changeAmount: Zp) : this(resource, changeAmount.asZ)
+    constructor( resource: Resource, changeAmount: Z) : this(resource, changeAmount.asZ)
 }
 
 class ResourceReport(
@@ -51,12 +51,12 @@ fun buildResourceReport(code: ResourceReportBuilder.() -> Unit): ResourceReport 
 class ResourceReportBuilder {
     private val changes = mutableMapOf<KClass<out Resource>, ResourceReportLine>()
 
-    fun add(resource: Resource, change: Zp) {
+    fun add(resource: Resource, change: Z) {
         add(resource, change.asZ)
     }
 
-    fun add(resource: Resource, change: Z) {
-        changes.putIfAbsent(resource::class, ResourceReportLine(resource, 0.z))
+    fun add(resource: Resource, change: Zz) {
+        changes.putIfAbsent(resource::class, ResourceReportLine(resource, 0.zz))
         changes[resource::class]!!.changeAmount += change
     }
 

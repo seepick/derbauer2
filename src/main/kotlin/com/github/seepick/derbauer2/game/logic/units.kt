@@ -2,64 +2,64 @@ package com.github.seepick.derbauer2.game.logic
 
 import kotlin.math.abs
 
-val Int.z get() = Z(toLong())
-val Int.zp get() = Zp(toLong())
-
+val Long.zz get() = Zz(this)
 val Long.z get() = Z(this)
-val Long.zp get() = Zp(this)
+val Int.zz get() = Zz(toLong())
+val Int.z get() = Z(toLong())
 
-data class Z(
-    val single: Long,
+data class Zz(
+    val value: Long,
 ) {
-    val magnitutedValue = translateToMaxMagnitude(single)
+    val magnitutedValue = translateToMaxMagnitude(value)
 
-    fun toPlusString() = if (single > 0) "+$this" else toString()
+    fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
-    val absZp get() = abs(single).zp
+    val absZp get() = abs(value).z
 
-    operator fun unaryMinus() = Z(-single)
-    operator fun plus(other: Z) = Z(single + other.single)
-    operator fun plus(other: Long) = Z(single + other)
-    operator fun plus(other: Int) = Z(single + other)
-    operator fun minus(other: Z) = Z(single - other.single)
-    operator fun minus(other: Long) = Z(single - other)
-    operator fun minus(other: Int) = Z(single - other)
-    operator fun times(other: Z) = Z(single * other.single)
-    operator fun times(other: Long) = Z(single * other)
-    operator fun times(other: Int) = Z(single * other)
+    operator fun unaryMinus() = Zz(-value)
+    operator fun plus(other: Zz) = Zz(value + other.value)
+    operator fun plus(other: Long) = Zz(value + other)
+    operator fun plus(other: Int) = Zz(value + other)
+    operator fun minus(other: Zz) = Zz(value - other.value)
+    operator fun minus(other: Long) = Zz(value - other)
+    operator fun minus(other: Int) = Zz(value - other)
+    operator fun times(other: Zz) = Zz(value * other.value)
+    operator fun times(other: Long) = Zz(value * other)
+    operator fun times(other: Int) = Zz(value * other)
 
-    operator fun compareTo(other: Z) = single.compareTo(other.single)
-    operator fun compareTo(other: Long) = single.compareTo(other)
-    operator fun compareTo(other: Int) = single.compareTo(other.toLong())
+    operator fun compareTo(other: Zz) = value.compareTo(other.value)
+    operator fun compareTo(other: Long) = value.compareTo(other)
+    operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
-data class Zp(
-    val single: Long,
+/** unsigned int emulation (positive enforcement). */
+data class Z(
+    val value: Long,
 ) {
     init {
-        require(single >= 0) { "Negative value: $single" }
+        require(value >= 0) { "Negative value: $value" }
     }
 
-    val magnitutedValue = translateToMaxMagnitude(single)
-    val asZ get() = single.z
+    val magnitutedValue = translateToMaxMagnitude(value)
+    val asZ get() = value.zz
 
-    fun toPlusString() = if (single > 0) "+$this" else toString()
+    fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
-    operator fun unaryMinus() = Z(-single)
-    operator fun plus(other: Zp) = Zp(single + other.single)
-    operator fun plus(other: Long) = Zp(single + other)
-    operator fun plus(other: Int) = Zp(single + other)
-    operator fun minus(other: Zp) = Zp(single - other.single)
-    operator fun minus(other: Long) = Zp(single - other)
-    operator fun minus(other: Int) = Zp(single - other)
-    operator fun times(other: Zp) = Zp(single * other.single)
-    operator fun times(other: Long) = Zp(single * other)
-    operator fun times(other: Int) = Zp(single * other)
+    operator fun unaryMinus() = Zz(-value)
+    operator fun plus(other: Z) = Z(value + other.value)
+    operator fun plus(other: Long) = Z(value + other)
+    operator fun plus(other: Int) = Z(value + other)
+    operator fun minus(other: Z) = Z(value - other.value)
+    operator fun minus(other: Long) = Z(value - other)
+    operator fun minus(other: Int) = Z(value - other)
+    operator fun times(other: Z) = Z(value * other.value)
+    operator fun times(other: Long) = Z(value * other)
+    operator fun times(other: Int) = Z(value * other)
 
-    operator fun compareTo(other: Zp) = single.compareTo(other.single)
-    operator fun compareTo(other: Long) = single.compareTo(other)
-    operator fun compareTo(other: Int) = single.compareTo(other.toLong())
+    operator fun compareTo(other: Z) = value.compareTo(other.value)
+    operator fun compareTo(other: Long) = value.compareTo(other)
+    operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {

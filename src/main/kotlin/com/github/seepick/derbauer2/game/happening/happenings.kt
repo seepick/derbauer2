@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.happening
 
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Zp
-import com.github.seepick.derbauer2.game.logic.zp
+import com.github.seepick.derbauer2.game.logic.Z
+import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.txResource
@@ -31,19 +31,19 @@ sealed class HappeningDescriptor(
     object FoundGold : HappeningDescriptor(HappeningNature.Positive) {
         override fun build(user: User): FoundGoldHappening {
             // TODO consider history, gold amount (max, current, avg over last x-turns), etc.
-            return FoundGoldHappening(goldFound = 20.zp, this)
+            return FoundGoldHappening(goldFound = 20.z, this)
         }
     }
 
     object RatsEatFood : HappeningDescriptor(HappeningNature.Negative) {
         override fun build(user: User): RatsEatFoodHappening {
             // TODO check food available; if nothing, maybe turn into luck message ;)
-            return RatsEatFoodHappening(foodEaten = 15.zp)
+            return RatsEatFoodHappening(foodEaten = 15.z)
         }
     }
 }
 
-class FoundGoldHappening(val goldFound: Zp, private val descriptor: HappeningData = HappeningDescriptor.FoundGold) :
+class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = HappeningDescriptor.FoundGold) :
     Happening, HappeningData by descriptor {
     override fun render(textmap: Textmap) {
         textmap.multiLine(AsciiArt.goldPot)
@@ -57,7 +57,7 @@ class FoundGoldHappening(val goldFound: Zp, private val descriptor: HappeningDat
 }
 
 class RatsEatFoodHappening(
-    val foodEaten: Zp,
+    val foodEaten: Z,
     private val descriptor: HappeningData = HappeningDescriptor.RatsEatFood
 ) : Happening, HappeningData by descriptor {
     override fun render(textmap: Textmap) {

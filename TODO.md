@@ -4,7 +4,6 @@
 
 ## Now
 
-* resource can go negative (safeguard in data class itself!); centralize
 * resolve TODOs/FIXMEs
 * handle starvation (test first)
 

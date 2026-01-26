@@ -14,7 +14,7 @@ class UserTest : DescribeSpec({
 
     describe("land use") {
         it("with house increases") {
-            val house = House(1.zp)
+            val house = House(1.z)
             user.add(house)
 
             user.totalLandUse shouldBe house.landUse
@@ -22,13 +22,13 @@ class UserTest : DescribeSpec({
     }
     describe("add entity") {
         it("adds resource") {
-            val citizen = Citizen(10.zp)
+            val citizen = Citizen(10.z)
             user.add(citizen)
             user.resource(Citizen::class) shouldBe citizen
         }
         it("duplicate fail") {
-            user.add(Citizen(1.zp))
-            shouldThrow<Exception> { user.add(Citizen(2.zp)) }
+            user.add(Citizen(1.z))
+            shouldThrow<Exception> { user.add(Citizen(2.z)) }
                 .message shouldContain Citizen::class.simpleName!!
         }
     }
