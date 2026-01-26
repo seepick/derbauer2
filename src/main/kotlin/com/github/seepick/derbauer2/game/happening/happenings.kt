@@ -5,7 +5,8 @@ import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.resource.txResource
+import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.Textmap
 
@@ -35,7 +36,7 @@ sealed class HappeningDescriptor(
     }
 
     object RatsEatFood : HappeningDescriptor(HappeningNature.Negative) {
-        override fun build(user: User): Happening {
+        override fun build(user: User): RatsEatFoodHappening {
             // TODO check food available; if nothing, maybe turn into luck message ;)
             return RatsEatFoodHappening(foodEaten = 15.units)
         }
@@ -51,7 +52,7 @@ class FoundGoldHappening(val goldFound: Units, private val descriptor: Happening
     }
 
     override fun execute(user: User) {
-        user.resource(Gold::class).owned += goldFound
+        user.txResource(Gold::class, goldFound).errorOnFail()
     }
 }
 
@@ -66,8 +67,7 @@ class RatsEatFoodHappening(
     }
 
     override fun execute(user: User) {
-        // TODO add Happening.prerequisites, to filter those who need specific stuff (resources) to be existing; e.g. Food
-        user.resource(Food::class).owned -= foodEaten
+        // TODO add Happening.prerequisites (during happening selection phase), to filter those who need specific stuff (resources) to be existing; e.g. Food
+        user.txResource(Food::class, -foodEaten).errorOnFail()
     }
 }
-

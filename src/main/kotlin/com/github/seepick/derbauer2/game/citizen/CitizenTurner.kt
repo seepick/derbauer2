@@ -24,14 +24,16 @@ class CitizenTurner(
 
         user.resourceOrNull(Gold::class)?.let { gold ->
             val taxIncome = (citizen.owned.single * Mechanics.citizenTaxPercentage).toLong().units
-            gold.owned += taxIncome
+
+            // FIXME create TX "upstairs"
+//            gold.owned += taxIncome
             add(gold, taxIncome)
         }
 
         user.resourceOrNull(Food::class)?.let { food ->
             val foodConsumed = (citizen.owned.single * Mechanics.citizenFoodConsumePercentage).toLong().units
             val food = user.resource(Food::class)
-            food.owned -= foodConsumed // FIXME check for negative! maybe dont manipulate directly, but via method!
+//            food.owned -= foodConsumed // FIXME check for negative! maybe dont manipulate directly, but via method!
             // TODO if not enough food, citizens should decrease (left, or died)
             add(food, -foodConsumed)
         }

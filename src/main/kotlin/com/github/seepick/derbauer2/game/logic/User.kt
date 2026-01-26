@@ -10,6 +10,9 @@ class User {
     val all: List<Entity> get() = _all
 
     fun <E : Entity> add(entity: E) = entity.also {
+        // FIXME if add entity:ownable, then would need to wire through TX-infra to do validations
+        // e.g. can add(Food(100.units)) if enough storage
+        // add(House(100.units)) if enough land, etc.
         if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists!")
         }

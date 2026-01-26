@@ -29,6 +29,8 @@ fun User.validateBuildTx(tx: TxRequest.TxBuild): TxResult {
     return TxResult.Success
 }
 
+@Suppress("FunctionName")
 fun User._applyBuildTx(tx: TxRequest.TxBuild) {
-    building(tx.buildingClass).owned += 1
+    @Suppress("DEPRECATION")
+    building(tx.buildingClass)._directSetOwned += 1
 }

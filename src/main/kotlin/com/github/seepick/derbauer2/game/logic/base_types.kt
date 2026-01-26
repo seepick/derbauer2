@@ -11,7 +11,16 @@ interface Asset : Entity, Ownable, NounLabel
 interface EntityEffect
 
 interface Ownable {
+    @Suppress("DEPRECATION")
     var owned: Units // FIXME make val
+        get() = _directSetOwned
+        set(value) {
+            _directSetOwned = value
+        }
+
+    @Suppress("PropertyName")
+    @Deprecated("just don't use it unless you are master TX")
+    var _directSetOwned: Units
 }
 
 abstract class EmojiAndLabel(
