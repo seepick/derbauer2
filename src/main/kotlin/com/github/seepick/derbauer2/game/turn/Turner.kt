@@ -14,7 +14,7 @@ class Turner(
     private val featureTurner: FeatureTurner,
 ) {
     private val log = logger {}
-    val reports = mutableListOf<TurnReport>()
+    val reports = mutableListOf<TurnReport>() // FIXME store in ReportIntelligence (historical auswertung)
 
     var turn = 1
         private set
@@ -22,12 +22,13 @@ class Turner(
     fun collectAndExecuteNextTurnReport(): TurnReport {
         turn++
         log.info { "Taking turn $turn" }
-        val resourceChanges = resourceTurner.executeAndReturnReport() // first resources, then happenings
+        val resourceReport = resourceTurner.executeAndReturnReport() // first resources, then happenings
         val citizenReport = citizenTurner.executeAndReturnReport()
         val happenings = happeningTurner.turn()
         val newFeatures = featureTurner.turn()
         return TurnReport(
-            resourceChanges = resourceChanges.merge(citizenReport).changes,
+            turn = turn - 1,
+            resourceChanges = resourceReport.merge(citizenReport).changes,
             happenings = happenings,
             newFeatures = newFeatures,
         ).also { result ->

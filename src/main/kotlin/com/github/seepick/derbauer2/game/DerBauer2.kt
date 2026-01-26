@@ -26,16 +26,16 @@ object DerBauer2 {
             user.initAssets()
         }
     }
+}
 
-    private fun User.initAssets() {
-        listOf(
-            Land(Mechanics.startingLand),
-            Gold(Mechanics.startingGold),
-            Food(Mechanics.startingFood),
-            House(Mechanics.startingHouses),
-            Citizen(Mechanics.startingCitizens),
-            Farm(Mechanics.startingFarms),
-            Granary(Mechanics.startingGranaries),
-        ).forEach(::addEntity)
-    }
+private fun User.initAssets() {
+    listOf(
+        Land(Mechanics.startingLand),
+        Gold(Mechanics.startingGold),
+        Food(Mechanics.startingFood),
+        House(Mechanics.startingHouses),
+        Citizen(Mechanics.startingCitizens),
+        Farm(Mechanics.startingFarms),
+        Granary(Mechanics.startingGranaries),
+    ).forEach(::addEntity)
 }

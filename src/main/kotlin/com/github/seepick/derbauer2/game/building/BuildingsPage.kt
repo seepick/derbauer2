@@ -46,8 +46,8 @@ class BuildingsPage(
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
-            textmap.printLine("Your builders are ready for work.")
-            textmap.printEmptyLine()
+            textmap.line("Your builders are ready for work.")
+            textmap.emptyLine()
             prompt.render(textmap)
         }
     }

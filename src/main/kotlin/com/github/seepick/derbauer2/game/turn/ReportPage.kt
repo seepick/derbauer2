@@ -22,13 +22,13 @@ class ReportPage(
     private val continueKey = KeyPressed.Command.Space
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, promptIndicator = continueKey.label, listOf(MetaOption(continueKey, "Continue"))) {
-            textmap.printLine("Turn Report")
-            textmap.printEmptyLine()
-            textmap.printLine("Resources produced this turn:")
-            textmap.printEmptyLine()
+            textmap.line("Turn Report")
+            textmap.emptyLine()
+            textmap.line("Resources produced this turn:")
+            textmap.emptyLine()
             val report = turner.reports.last()
             report.resourceChanges.forEach {
-                textmap.printLine("${it.resource.emojiWithSpaceSuffixOrEmpty}${it.resource.labelPlural}: ${it.change.toPlusString()}")
+                textmap.line("${it.resource.emojiWithSpaceSuffixOrEmpty}${it.resource.labelPlural}: ${it.change.toPlusString()}")
             }
         }
     }

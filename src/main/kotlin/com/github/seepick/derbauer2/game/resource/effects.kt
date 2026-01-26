@@ -1,7 +1,8 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.StorableResource
+import com.github.seepick.derbauer2.game.logic.EntityEffect
+import com.github.seepick.derbauer2.game.logic.Ownable
+import com.github.seepick.derbauer2.game.logic.Units
 import kotlin.reflect.KClass
 
 /** For now can only produce 1 type of resource. */

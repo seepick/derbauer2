@@ -39,8 +39,8 @@ class HomePage(
             promptIndicator = prompt.inputIndicator,
             listOf(MetaOption(KeyPressed.Command.Space, "Next Turn"))
         ) {
-            textmap.printLine("You are home... 🏠")
-            textmap.printEmptyLine()
+            textmap.line("You are home... 🏠")
+            textmap.emptyLine()
             prompt.render(textmap)
         }
     }

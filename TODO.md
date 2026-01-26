@@ -4,6 +4,7 @@
 
 ## Now
 
+* change SPACE to ENTER for back&continue
 * BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: go through derbauer/doc info
 * BZ: feature enabler

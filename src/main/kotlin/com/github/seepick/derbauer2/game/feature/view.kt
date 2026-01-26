@@ -19,11 +19,9 @@ class FeatureViewPage(
     private val continueKey = KeyPressed.Command.Space
 
     override fun renderText(textmap: Textmap) {
-        textmap.printLine("New Feature Unlocked! 🚀")
-        textmap.printEmptyLine()
-        multiView.current().render(textmap) // TODO vertical center alignment
+        multiView.current().render(textmap)
         textmap.fillVertical(1)
-        textmap.printLine("${continueKey.label} to continue")
+        textmap.line("${continueKey.label} to continue")
     }
 
     override fun onKeyPressed(key: KeyPressed): Boolean {

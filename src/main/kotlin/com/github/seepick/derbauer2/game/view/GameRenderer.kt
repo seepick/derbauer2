@@ -44,12 +44,12 @@ class GameRenderer(
         content: (Textmap) -> Unit
     ) {
 
-        textmap.printAligned(renderInfoBar(), "Turn ${turner.turn}")
-        textmap.printHr()
+        textmap.aligned(renderInfoBar(), "Turn ${turner.turn}")
+        textmap.hr()
         content(textmap)
         textmap.fillVertical(minus = 2)
-        textmap.printHr()
-        textmap.printAligned(
+        textmap.hr()
+        textmap.aligned(
             left = "[$promptIndicator]> ▉",
             right = metaOptions.joinToString("   ") { "${it.command.label}: ${it.description}" },
         )

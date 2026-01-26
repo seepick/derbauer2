@@ -88,8 +88,8 @@ class TradingPage(
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
-            textmap.printLine("The merchant is here to do business with you, my lord.")
-            textmap.printEmptyLine()
+            textmap.line("The merchant is here to do business with you, my lord.")
+            textmap.emptyLine()
             prompt.render(textmap)
         }
     }

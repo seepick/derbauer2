@@ -1,11 +1,12 @@
 package com.github.seepick.derbauer2.textengine
 
 interface Output {
-    fun printLine(line: String): Output
-    fun printHr(): Output
-    fun printAligned(left: String, /*center: String?,*/ right: String)
-    fun printEmptyLine(): Output = printLine("")
+    fun line(line: String): Output
+    fun hr(): Output
+    fun aligned(left: String, right: String)
+    fun emptyLine(): Output = line("")
     fun fillVertical(minus: Int)
+    fun multiLine(text: String)
 }
 
 private class Cursor {
@@ -33,25 +34,30 @@ class Textmap(
     private val buffer = Array(rows) { Array(cols) { ' ' } }
     private var cursor = Cursor()
 
-    override fun printLine(line: String) = apply {
+    override fun line(line: String) = apply {
         for (c in line.toCharArray()) {
+            if(c == '\n') error("Newline character not allowed in line(): '$line' => use multiLine() instead.")
             set(cursor.x, cursor.y, c)
             cursor.x++
         }
         cursor.nextLine()
     }
 
-    override fun printAligned(left: String, right: String) {
+    override fun aligned(left: String, right: String) {
         val gap = " ".repeat(cols - left.length - right.length)
-        printLine("$left$gap$right")
+        line("$left$gap$right")
     }
 
-    override fun printHr() = apply {
-        printLine(HR_SYMBOL.repeat(cols))
+    override fun hr() = apply {
+        line(HR_SYMBOL.repeat(cols))
     }
 
     override fun fillVertical(minus: Int) {
         repeat(rows - (cursor.y + minus)) { cursor.nextLine() }
+    }
+
+    override fun multiLine(text: String) {
+        text.split("\n").forEach(::line)
     }
 
     fun toFullString(): String =

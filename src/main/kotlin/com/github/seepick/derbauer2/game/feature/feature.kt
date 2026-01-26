@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.logic.Entity
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.landAvailable
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.game.view.MultiViewItem
 import com.github.seepick.derbauer2.textengine.Textmap
 
@@ -35,8 +36,8 @@ sealed class FeatureDescriptor(
 
     object TradeLand : FeatureDescriptor(
         name = "Trade Land",
-        ascii = "XXX", // FIXME also support multiline in textmap renderer
-        description = "You can now buy ${Land.Text.emojiAndLabel} for some other stuff; and some more... hehe.",
+        ascii = AsciiArt.island,
+        description = "You can now buy ${Land.Text.emojiAndLabel} for some other stuff.\nAnd some more... hehe 😅",
     ) {
         override fun check(user: User) = user.landAvailable <= 2
         override fun build() = Feature.TradeLandFeature(this)
@@ -51,7 +52,13 @@ sealed class Feature(
 
 class FeatureInfo(private val feature: Feature) : MultiViewItem {
     override fun render(textmap: Textmap) {
-        textmap.printLine("New Feature: ${feature.descriptor.name}!") // TODO add more
+        textmap.line("🔓 New Feature Unlocked 🔓")
+        textmap.emptyLine()
+        textmap.multiLine(feature.ascii)
+        textmap.emptyLine()
+        textmap.line(">> ${feature.name} <<")
+        textmap.emptyLine()
+        textmap.multiLine(feature.description)
     }
     override fun execute(user: User) {
         user.addEntity(feature)

@@ -19,11 +19,11 @@ class HappeningPage(
     private val continueKey = KeyPressed.Command.Space
 
     override fun renderText(textmap: Textmap) {
-        textmap.printLine("⭐️ Happening ⭐️")
-        textmap.printEmptyLine()
+        textmap.line("⭐️ Happening ⭐️")
+        textmap.emptyLine()
         controller.current().render(textmap) // TODO vertical center alignment
         textmap.fillVertical(1)
-        textmap.printLine("${continueKey.label} to continue")
+        textmap.line("${continueKey.label} to continue")
     }
 
     override fun onKeyPressed(key: KeyPressed): Boolean {

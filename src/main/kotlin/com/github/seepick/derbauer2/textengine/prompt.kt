@@ -59,10 +59,10 @@ sealed interface Prompt : KeyListener {
             } else false
 
         override fun render(textmap: Textmap) {
-            textmap.printLine(title)
-            textmap.printEmptyLine()
+            textmap.line(title)
+            textmap.emptyLine()
             options.mapIndexed { idx, opt ->
-                textmap.printLine("[${idx + 1}] ${opt.label()}")
+                textmap.line("[${idx + 1}] ${opt.label()}")
             }
         }
     }
