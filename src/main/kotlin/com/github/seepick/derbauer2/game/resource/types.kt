@@ -16,35 +16,27 @@ interface ResourceReference {
 }
 
 data class Citizen(override var _setOwnedOnlyByTx: Z) : StorableResource {
-    companion object {
-        const val EMOJI = "🧑"
-    }
-    override val labelSingular = "Citizen"
-    override val emoji = EMOJI
+    object Text : EmojiAndLabel("🧑", "Citizen")
+    override val labelSingular = Text.label
+    override val labelPlural = labelSingular
+    override val emoji = Text.emoji
 }
 
 data class Gold(override var _setOwnedOnlyByTx: Z) : Resource {
-    companion object {
-        const val EMOJI = "💰"
-        const val LABEL = "Gold"
-        const val EMOJI_N_LABEL = "$EMOJI $LABEL"
-    }
-    override val labelSingular = LABEL
+    object Text : EmojiAndLabel("💰", "Gold")
+    override val labelSingular = Text.label
     override val labelPlural = labelSingular
-    override val emoji = EMOJI
+    override val emoji = Text.emoji
 }
 
 data class Food(override var _setOwnedOnlyByTx: Z) : StorableResource {
-    companion object {
-        const val EMOJI = "🍖"
-    }
-    override val labelSingular = "Food"
+    object Text : EmojiAndLabel("🍖", "Food")
+    override val labelSingular = Text.label
     override val labelPlural = labelSingular
-    override val emoji = EMOJI
+    override val emoji = Text.emoji
 }
 
 data class Land(override var _setOwnedOnlyByTx: Z) : Resource {
-    // TODO simplify even more
     object Text : EmojiAndLabel("🌍", "Land")
     override val labelSingular = Text.label
     override val labelPlural = labelSingular

@@ -9,6 +9,7 @@
 
 ## Next
 
+* global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
 * IT: cucumber tests for main flows (super high level)
 * BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: general variability end turn (production, taxes, consumption)

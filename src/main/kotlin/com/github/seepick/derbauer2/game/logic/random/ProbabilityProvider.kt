@@ -29,7 +29,7 @@ class ProbabilityProvider<R>(
     }
 }
 
-fun <T> MutableList<T>.addMaybe(prob: ProbabilityProvider<T>) {
+fun <T> MutableList<T>.addRandomIfNotNull(prob: ProbabilityProvider<T>) {
     prob.randomProvide()?.let {
         add(it)
     }

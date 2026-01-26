@@ -4,7 +4,10 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
 interface Page : Renderer, KeyListener {
-//    FIXME fun invalidate() ...reset prompts
+    /** reset prompts */
+    fun invalidate() {
+        // default no-op
+    }
 }
 
 interface Renderer {

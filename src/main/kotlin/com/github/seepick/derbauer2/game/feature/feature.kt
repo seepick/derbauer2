@@ -13,13 +13,13 @@ fun User.hasFeature(searchDescriptor: FeatureDescriptor): Boolean =
 
 interface FeatureData {
     val name: String
-    val ascii: String
+    val asciiArt: AsciiArt
     val description: String
 }
 
 sealed class FeatureDescriptor(
     override val name: String,
-    override val ascii: String,
+    override val asciiArt: AsciiArt,
     override val description: String,
 ) : FeatureData {
 
@@ -36,7 +36,7 @@ sealed class FeatureDescriptor(
 
     object TradeLand : FeatureDescriptor(
         name = "Trade Land",
-        ascii = AsciiArt.island,
+        asciiArt = AsciiArt.island,
         description = "You can now buy ${Land.Text.emojiAndLabel} for some other stuff.\nAnd some more... hehe 😅",
     ) {
         override fun check(user: User) = user.landAvailable <= 2
@@ -52,14 +52,13 @@ sealed class Feature(
 
 class FeatureInfo(private val feature: Feature) : MultiViewItem {
     override fun render(textmap: Textmap) {
-        textmap.line("🔓 New Feature Unlocked 🔓")
-        textmap.emptyLine()
-        textmap.multiLine(feature.ascii)
-        textmap.emptyLine()
         textmap.line(">> ${feature.name} <<")
         textmap.emptyLine()
         textmap.multiLine(feature.description)
     }
+
+    override val asciiArt = feature.asciiArt
+
     override fun execute(user: User) {
         user.add(feature)
     }

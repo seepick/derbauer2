@@ -29,6 +29,10 @@ sealed class PrintChar(val char: Char) {
     override fun hashCode() = char.hashCode()
 }
 
+fun interface PromptProvider {
+    fun buildPrompt(): Prompt
+}
+
 sealed interface Prompt : KeyListener {
 
     val inputIndicator: String

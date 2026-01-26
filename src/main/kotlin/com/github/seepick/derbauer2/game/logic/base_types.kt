@@ -23,7 +23,7 @@ abstract class EmojiAndLabel(
     val emoji: String,
     val label: String,
 ) {
-    val emojiAndLabel = "$emoji $label"
+    val emojiAndLabel = "$emoji $label" // TODO if used for +1, then stuck with singular, but require plural
 }
 
 interface NounLabel {

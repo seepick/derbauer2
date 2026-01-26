@@ -26,7 +26,7 @@ fun ContinueButton(
 class Button(
     override val key: KeyPressed.Command,
     override val label: String,
-    val option: MetaOption = MetaOptionImpl(key, label),
+    private val option: MetaOption = MetaOptionImpl(key, label),
     private val onExecute: () -> Unit,
 ) : MetaOption by option, KeyListener {
 

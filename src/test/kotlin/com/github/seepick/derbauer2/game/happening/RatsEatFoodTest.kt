@@ -14,7 +14,7 @@ class RatsEatFoodTest : StringSpec({
             val user = User()
             val happening = HappeningDescriptor.RatsEatFood.build(user)
 
-            happening.foodEaten shouldBeEqual 15.z
+            happening.amountFoodEaten shouldBeEqual 15.z
         }
     }
     context("execute") {
@@ -26,7 +26,7 @@ class RatsEatFoodTest : StringSpec({
             val happening = HappeningDescriptor.RatsEatFood.build(user)
             happening.execute(user)
 
-            user.food shouldBeEqual (origAmount - happening.foodEaten)
+            user.food shouldBeEqual (origAmount - happening.amountFoodEaten)
         }
     }
 })

@@ -17,54 +17,60 @@ import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
+import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.KeyPressed
-import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Prompt
+import com.github.seepick.derbauer2.textengine.PromptProvider
 import com.github.seepick.derbauer2.textengine.SelectOption
-import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.reflect.KClass
 
 class TradingPage(
-    private val currentPage: CurrentPage,
-    private val gameRenderer: GameRenderer,
-    private val resultHandler: InteractionResultHandler,
-    private val user: User,
-) : Page {
-
-    private val back = BackButton {
+    currentPage: CurrentPage,
+    gameRenderer: GameRenderer,
+    tradePromptBuilder: TradePromptBuilder,
+) : PromptGamePage(
+    buttons = listOf(BackButton {
         currentPage.pageClass = HomePage::class
+    }),
+    gameRenderer = gameRenderer,
+    promptBuilder = tradePromptBuilder,
+    contentRenderer = { textmap ->
+        textmap.line("The merchant is here to do business with you, my lord.")
     }
+)
 
-    private val prompt
-        get() = Prompt.Select(
-            title = "What is it your greed desires?",
-            options = buildList {
-                add(setupTrade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))
-                add(setupTrade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.z))
-                if (user.hasFeature(FeatureDescriptor.TradeLand)) {
-                    add(setupTrade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.z))
-                }
+class TradePromptBuilder(
+    private val user: User,
+    private val resultHandler: InteractionResultHandler,
+) : PromptProvider {
+    override fun buildPrompt() = Prompt.Select(
+        title = "What is it your greed desires?",
+        options = buildList {
+            // or Gold(Mechanics.buyFoodCostGold.z)?
+            add(buildTradeOption(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))
+            add(buildTradeOption(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.z))
+            if (user.hasFeature(FeatureDescriptor.TradeLand)) {
+                add(buildTradeOption(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.z))
             }
-        )
+        }
+    )
 
-    private fun setupTrade(
+    private fun buildTradeOption(
         operation: TradeOperation,
         targetResourceClass: KClass<out Resource>,
         vararg counters: Pair<KClass<out Resource>, Z>
-    ): SelectOption {
-        val targetResource = user.resource(targetResourceClass)
-        return SelectOption({
+    ) = SelectOption(
+        label = {
+            val targetResource = user.resource(targetResourceClass)
             "${operation.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
                         val counterResource = user.resource(counterResource)
                         "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${
-                            counterResource.labelFor(
-                                counterAmount
-                            )
+                            counterResource.labelFor(counterAmount)
                         }"
                     }
-        }) {
+        },
+        onSelected = {
             resultHandler.handle(
                 user.trade(
                     TradeRequest(targetResourceClass, operation, 1.z),
@@ -74,16 +80,5 @@ class TradingPage(
                 )
             )
         }
-    }
-
-    override fun renderText(textmap: Textmap) {
-        gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {
-            textmap.line("The merchant is here to do business with you, my lord.")
-            textmap.emptyLine()
-            prompt.render(textmap)
-        }
-    }
-
-    override fun onKeyPressed(key: KeyPressed): Boolean =
-        listOf(back, prompt).any { it.onKeyPressed(key) }
+    )
 }

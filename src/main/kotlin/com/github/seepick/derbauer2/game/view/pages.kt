@@ -1,0 +1,69 @@
+package com.github.seepick.derbauer2.game.view
+
+import com.github.seepick.derbauer2.textengine.KeyPressed
+import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.PromptProvider
+import com.github.seepick.derbauer2.textengine.Textmap
+
+abstract class SimpleGamePage(
+    private val gameRenderer: GameRenderer,
+    private val button: Button,
+    private val contentRenderer: (Textmap) -> Unit,
+) : Page {
+
+    override fun renderText(textmap: Textmap) {
+        gameRenderer.render(textmap, promptIndicator = button.key.label, emptyList()) {
+            contentRenderer(textmap)
+        }
+    }
+
+    override fun onKeyPressed(key: KeyPressed) =
+        button.onKeyPressed(key)
+}
+
+abstract class PromptGamePage(
+    private val gameRenderer: GameRenderer,
+    private val promptBuilder: PromptProvider,
+    private val buttons: List<Button>,
+    private val contentRenderer: (Textmap) -> Unit,
+) : Page {
+
+    private var prompt = promptBuilder.buildPrompt()
+
+    override fun invalidate() {
+        prompt = promptBuilder.buildPrompt()
+    }
+
+    override fun renderText(textmap: Textmap) {
+        gameRenderer.render(textmap, prompt.inputIndicator, buttons) {
+            contentRenderer(textmap)
+            textmap.emptyLine()
+            prompt.render(textmap)
+        }
+    }
+
+    override fun onKeyPressed(key: KeyPressed): Boolean =
+        buttons.plus(prompt).any { it.onKeyPressed(key) }
+}
+
+abstract class NotificationPage(
+    private val title: String,
+    private val emoji: String,
+    private val asciiArt: () -> AsciiArt,
+    private val contentRenderer: (Textmap) -> Unit,
+    private val button: Button,
+) : Page {
+
+    override fun renderText(textmap: Textmap) {
+        textmap.line("$emoji $title $emoji")
+        textmap.emptyLine()
+        textmap.multiLine(asciiArt().value)
+        textmap.emptyLine()
+        contentRenderer(textmap)
+        textmap.fillVertical(1)
+        textmap.line("[${button.key.label}] ${button.label}")
+    }
+
+    override fun onKeyPressed(key: KeyPressed) =
+        button.onKeyPressed(key)
+}

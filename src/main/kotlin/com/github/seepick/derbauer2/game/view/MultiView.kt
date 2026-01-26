@@ -8,6 +8,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
 interface MultiViewItem {
+    val asciiArt: AsciiArt
     fun render(textmap: Textmap)
     fun execute(user: User)
 }

@@ -3,13 +3,13 @@ package com.github.seepick.derbauer2.game.happening
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.random.ProbabilityProvider
-import com.github.seepick.derbauer2.game.logic.random.addMaybe
+import com.github.seepick.derbauer2.game.logic.random.addRandomIfNotNull
 import kotlin.random.Random
 
 class HappeningTurner(
     private val user: User,
 ) {
-    private val prob = ProbabilityProvider(
+    private val probability = ProbabilityProvider(
         startValue = 0.0,
         growthRate = 0.02,
     ) {
@@ -21,6 +21,6 @@ class HappeningTurner(
     }
 
     fun buildHappeningMultiPages(): List<Happening> = buildList {
-        addMaybe(prob)
+        addRandomIfNotNull(probability)
     }
 }

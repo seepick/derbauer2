@@ -38,17 +38,18 @@ sealed class HappeningDescriptor(
     object RatsEatFood : HappeningDescriptor(HappeningNature.Negative) {
         override fun build(user: User): RatsEatFoodHappening {
             // TODO check food available; if nothing, maybe turn into luck message ;)
-            return RatsEatFoodHappening(foodEaten = 15.z)
+            return RatsEatFoodHappening(amountFoodEaten = 15.z)
         }
     }
 }
 
 class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = HappeningDescriptor.FoundGold) :
     Happening, HappeningData by descriptor {
+
+    override val asciiArt = AsciiArt.goldPot
+
     override fun render(textmap: Textmap) {
-        textmap.multiLine(AsciiArt.goldPot)
-        textmap.emptyLine()
-        textmap.line("Found $goldFound ${Gold.EMOJI_N_LABEL}")
+        textmap.line("Found $goldFound ${Gold.Text.emojiAndLabel}")
     }
 
     override fun execute(user: User) {
@@ -57,17 +58,18 @@ class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData
 }
 
 class RatsEatFoodHappening(
-    val foodEaten: Z,
+    val amountFoodEaten: Z,
     private val descriptor: HappeningData = HappeningDescriptor.RatsEatFood
 ) : Happening, HappeningData by descriptor {
+
+    override val asciiArt = AsciiArt.rat
+
     override fun render(textmap: Textmap) {
-        textmap.multiLine(AsciiArt.rat)
-        textmap.emptyLine()
-        textmap.line("Eaten $foodEaten ${Food.EMOJI}")
+        textmap.line("Oh noes, rats have eaten ${-amountFoodEaten} ${Food.Text.emojiAndLabel}.")
     }
 
     override fun execute(user: User) {
         // TODO add Happening.prerequisites (during happening selection phase), to filter those who need specific stuff (resources) to be existing; e.g. Food
-        user.txResource(Food::class, -foodEaten).errorOnFail()
+        user.txResource(Food::class, -amountFoodEaten).errorOnFail()
     }
 }

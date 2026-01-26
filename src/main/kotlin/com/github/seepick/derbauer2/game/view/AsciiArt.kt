@@ -1,7 +1,10 @@
 package com.github.seepick.derbauer2.game.view
 
-object AsciiArt {
-    val island = """
+@JvmInline
+value class AsciiArt(val value: String) {
+    companion object {
+        val island = AsciiArt(
+            """
                    _  _             _  _
           .       /\\/%\       .   /%\/%\     .
               __.<\\%#//\,_       <%%#/%%\,__  .
@@ -15,15 +18,19 @@ object AsciiArt {
         ______________/ \__;\___/\;_/\___________
         YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwY
     """.trimIndent()
+        )
 
-    val rat = """
+        val rat = AsciiArt(
+            """
          .---.
       (\./)     \.......-
       >' '<  (__.'""${'"'}${'"'}
       " ` " "
       """.trimIndent()
+        )
 
-    val goldPot = """
+        val goldPot = AsciiArt(
+            """
         _oOoOoOo_  
        (oOoOoOoOo) 
         )`""${'"'}${'"'}${'"'}`(  
@@ -32,8 +39,10 @@ object AsciiArt {
       \           /
        `=========`
        """.trimIndent()
+        )
 
-    val gameOver = """
+        val gameOver = AsciiArt(
+            """
           ____
         ,'   Y`.
        /        \
@@ -42,4 +51,6 @@ object AsciiArt {
     8====| "" |====8
          `LLLU'
     """.trimIndent()
+        )
+    }
 }
