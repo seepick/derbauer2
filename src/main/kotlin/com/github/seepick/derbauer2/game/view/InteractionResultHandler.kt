@@ -1,16 +1,16 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.interaction.InteractionResult
+import com.github.seepick.derbauer2.game.logic.UserResult
 import com.github.seepick.derbauer2.textengine.Beeper
 
 /** Glue-code between view (UI/Beeper) and logic (InteractionResult). */
 class InteractionResultHandler(
     private val beeper: Beeper,
 ) {
-    fun handle(result: InteractionResult) {
+    fun handle(result: UserResult) {
         when (result) {
-            InteractionResult.Success -> {} // do nothing
-            is InteractionResult.Failure -> beeper.beep(result.reason)
+            UserResult.Success -> {} // do nothing
+            is UserResult.Fail -> beeper.beep(result.reason)
         }
     }
 }

@@ -4,7 +4,6 @@ import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.resource.Resource
 import kotlin.reflect.KClass
 
-
 class TradeRequest(
     val resource: KClass<out Resource>,
     val operation: TradeOperation,

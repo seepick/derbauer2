@@ -4,14 +4,11 @@ import com.github.seepick.derbauer2.game.logic.Asset
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.Ownable
 import com.github.seepick.derbauer2.game.logic.Units
-import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.ProducesResource
 import com.github.seepick.derbauer2.game.resource.StoresResource
-
-val User.buildings get() = all.filterIsInstance<Building>()
 
 interface OccupiesLand : Ownable {
     val landUse: Units

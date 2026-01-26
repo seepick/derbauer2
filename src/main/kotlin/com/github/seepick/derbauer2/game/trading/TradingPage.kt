@@ -3,7 +3,6 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.interaction.Interaction
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
@@ -26,7 +25,6 @@ import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.reflect.KClass
 
 class TradingPage(
-    private val interaction: Interaction,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
     private val resultHandler: InteractionResultHandler,
@@ -67,7 +65,7 @@ class TradingPage(
                     }
         }) {
             resultHandler.handle(
-                interaction.trade(
+                user.trade(
                     TradeRequest(targetType, op, 1.units),
                     *counters.map { (costResource, costAmount) ->
                         TradeRequest(costResource, op.inverse, costAmount)

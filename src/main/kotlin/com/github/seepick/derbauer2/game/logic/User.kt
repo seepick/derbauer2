@@ -44,3 +44,11 @@ class User {
     }
 
 }
+
+sealed interface UserResult {
+    object Success : UserResult
+    sealed interface Fail : UserResult {
+        val reason: String
+        data class InsufficientResources(override val reason: String = "Insufficient resources") : Fail
+    }
+}

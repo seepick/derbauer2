@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.HomePage
-import com.github.seepick.derbauer2.game.interaction.Interaction
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -17,7 +16,6 @@ import com.github.seepick.derbauer2.textengine.Textmap
 
 class BuildingsPage(
     private val user: User,
-    private val interaction: Interaction,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
     private val resultHandler: InteractionResultHandler,
@@ -31,7 +29,7 @@ class BuildingsPage(
         title = "What shall we build next, Sire?",
         user.buildings.map { building ->
             SelectOption({ "Build ${building.labelSingular} - ${Gold.EMOJI} ${building.costsGold} | ${Land.Text.emoji} ${building.landUse} (owned: ${building.owned})" }) {
-                resultHandler.handle(interaction.build(building))
+                resultHandler.handle(user.build(building))
             }
         }
     )
