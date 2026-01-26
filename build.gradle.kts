@@ -33,8 +33,8 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.23")
 
     // TEST
-    listOf("assertions-core", "property", "runner-junit5",).forEach {
-        testImplementation("io.kotest:kotest-$it:6.0.7")
+    listOf("assertions-core", "property", "runner-junit5", "extensions-koin").forEach {
+        testImplementation("io.kotest:kotest-$it:6.1.1")
     }
     testImplementation("io.mockk:mockk:1.14.7")
     testImplementation("io.insert-koin:koin-test:$versionKoin")

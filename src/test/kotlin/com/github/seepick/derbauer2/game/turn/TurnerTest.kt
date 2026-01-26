@@ -12,8 +12,8 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
+import com.github.seepick.derbauer2.game.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.equals.shouldBeEqual
 
 class TurnerTest : DescribeSpec({
@@ -52,7 +52,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.resourceProductionAmount
-            report.resourceChanges.shouldContain(food to farm.resourceProductionAmount)
+            report.resourceChanges shouldContainChange(food to farm.resourceProductionAmount)
         }
         it("Given no food storage When produce Then stay 0") {
             val food = user.addEntity(Food(0.units))
@@ -61,7 +61,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.units
-            report.resourceChanges.shouldContain(food to 0.units)
+            report.resourceChanges shouldContainChange(food to 0.units)
         }
         it("Given 1 space left When produce 2 Then max capped") {
             val granary = user.addEntity(Granary(1.units))
@@ -72,20 +72,20 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceChanges.shouldContain(food to diff.units)
+            report.resourceChanges shouldContainChange(food to diff.units)
         }
     }
     describe("citizens") {
-         it("Given sufficient citizens Then increase gold") {
-             val gold = user.addEntity(Gold(0.units))
-             user.addEntity(Citizen((1 / Mechanics.citizenTaxPercentage).units))
-             user.addEntity(Food(0.units))
+        it("Given sufficient citizens Then increase gold") {
+            val gold = user.addEntity(Gold(0.units))
+            user.addEntity(Citizen((1 / Mechanics.citizenTaxPercentage).units))
+            user.addEntity(Food(0.units))
 
-             val report = turner.collectAndExecuteNextTurnReport()
+            val report = turner.collectAndExecuteNextTurnReport()
 
-             report.resourceChanges shouldContain (gold to 1.units)
-             gold.owned shouldBeEqual 1.units
-         }
+            report.resourceChanges shouldContainChange (gold to 1.units)
+            gold.owned shouldBeEqual 1.units
+        }
     }
 })
 

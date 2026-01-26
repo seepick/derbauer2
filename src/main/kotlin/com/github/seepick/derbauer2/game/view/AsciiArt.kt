@@ -42,3 +42,4 @@ object AsciiArt {
     8====| "" |====8
          `LLLU'
     """.trimIndent()
+}

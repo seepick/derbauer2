@@ -30,7 +30,6 @@ class ResourceTurner(
     }
 }
 
-
 data class ResourceChange(
     val resource: Resource,
     var change: Units,
