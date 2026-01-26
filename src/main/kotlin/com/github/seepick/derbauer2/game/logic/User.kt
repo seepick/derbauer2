@@ -17,11 +17,11 @@ class User {
         _all += entity
     }
 
-    fun <T : Any> List<T>.find(type: KClass<out T>): T =
-        findOrNull(type) ?: errorNotFoundEntity(type, this)
+    fun <E : Entity> List<E>.find(entityClass: KClass<out E>): E =
+        findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
 
     fun <T : Any> List<T>.findOrNull(type: KClass<out T>): T? =
-        filterIsInstance(type.java).firstOrNull() // TODO only exact match, not subtype
+        filterIsInstance(type.java).firstOrNull() // FIXME only exact match, not subtype
 
     fun <E : Entity, V> letIfExists(type: KClass<E>, extractValue: (E) -> V): V? =
         (all.findOrNull(type) as E?)?.let(extractValue)

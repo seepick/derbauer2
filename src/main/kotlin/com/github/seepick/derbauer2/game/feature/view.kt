@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.textengine.Textmap
 class FeatureMultiView(user: User, currentPage: CurrentPage) : MultiView<FeatureInfo>(
     user = user,
     currentPage = currentPage,
-    targetPage = FeatureViewPage::class,
+    targetPageClass = FeatureViewPage::class,
 )
 
 class FeatureViewPage(

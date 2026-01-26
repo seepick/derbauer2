@@ -22,7 +22,7 @@ class BuildingsPage(
 ) : Page {
 
     private val back = BackButton {
-        currentPage.page = HomePage::class
+        currentPage.pageClass = HomePage::class
     }
 
     private val prompt = Prompt.Select(

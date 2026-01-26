@@ -20,7 +20,7 @@ class HappeningTurner(
         }.random().build(user)
     }
 
-    fun turn(): List<Happening> = buildList {
+    fun buildHappeningMultiPages(): List<Happening> = buildList {
         addMaybe(prob)
     }
 }

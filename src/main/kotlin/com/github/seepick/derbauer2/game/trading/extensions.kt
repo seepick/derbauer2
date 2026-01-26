@@ -16,7 +16,7 @@ fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResu
         return TxResult.Fail.InsufficientResources("Not enough resources")
     }
     requests.forEach { request ->
-        val resource = resource(request.resource)
+        val resource = resource(request.resourceClass)
         when (request.operation) {
             TradeOperation.Buy -> resource.owned += request.amount
             TradeOperation.Sell -> resource.owned -= request.amount
@@ -28,7 +28,7 @@ fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResu
 private fun User.canBuy(requests: List<TradeRequest>): Boolean =
     requests
         .filter { it.operation == TradeOperation.Buy }
-        .map { it to resource(it.resource) }
+        .map { it to resource(it.resourceClass) }
         .mapNotNull { (request, resource) ->
             (resource as? StorableResource)?.let { request to it } // up-cast from Resource to StorableResource
         }
@@ -38,5 +38,5 @@ private fun User.canBuy(requests: List<TradeRequest>): Boolean =
 private fun User.canSell(requests: List<TradeRequest>): Boolean =
     requests.filter { it.operation == TradeOperation.Sell }
         .all {
-            hasAtLeast(it.resource, it.amount)
+            hasAtLeast(it.resourceClass, it.amount)
         }

@@ -24,6 +24,7 @@ class TurnerTest : DescribeSpec({
         resourceTurner = ResourceTurner(user),
         citizenTurner = CitizenTurner(user),
         featureTurner = FeatureTurner(user),
+        user = user,
     )
     beforeTest {
         user = User()
@@ -32,6 +33,7 @@ class TurnerTest : DescribeSpec({
             resourceTurner = ResourceTurner(user),
             citizenTurner = CitizenTurner(user),
             featureTurner = FeatureTurner(user),
+            user = user,
         )
     }
 
@@ -51,8 +53,8 @@ class TurnerTest : DescribeSpec({
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            food.owned shouldBeEqual farm.resourceProductionAmount
-            report.resourceChanges shouldContainChange(food to farm.resourceProductionAmount)
+            food.owned shouldBeEqual farm.totalProducingResourceAmount
+            report.resourceReportLines shouldContainChange(food to farm.totalProducingResourceAmount)
         }
         it("Given no food storage When produce Then stay 0") {
             val food = user.add(Food(0.units))
@@ -61,7 +63,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.units
-            report.resourceChanges shouldContainChange(food to 0.units)
+            report.resourceReportLines shouldContainChange(food to 0.units)
         }
         it("Given 1 space left When produce 2 Then max capped") {
             val granary = user.add(Granary(1.units))
@@ -72,7 +74,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceChanges shouldContainChange(food to diff.units)
+            report.resourceReportLines shouldContainChange(food to diff.units)
         }
     }
     describe("citizens") {
@@ -83,7 +85,7 @@ class TurnerTest : DescribeSpec({
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            report.resourceChanges shouldContainChange (gold to 1.units)
+            report.resourceReportLines shouldContainChange (gold to 1.units)
             gold.owned shouldBeEqual 1.units
         }
     }

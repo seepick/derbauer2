@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.textengine.Textmap
 class HappeningMultiView(user: User, currentPage: CurrentPage) : MultiView<Happening>(
     user = user,
     currentPage = currentPage,
-    targetPage = HappeningPage::class,
+    targetPageClass = HappeningPage::class,
 )
 
 class HappeningPage(

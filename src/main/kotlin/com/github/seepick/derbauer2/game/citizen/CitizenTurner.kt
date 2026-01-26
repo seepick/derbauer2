@@ -19,7 +19,7 @@ fun citizenModule() = module {
 class CitizenTurner(
     private val user: User,
 ) {
-    fun executeAndReturnReport() = buildResourceReport {
+    fun executeAndBuildReport() = buildResourceReport {
         val citizen = user.resourceOrNull(Citizen::class) ?: return@buildResourceReport
 
         user.resourceOrNull(Gold::class)?.let { gold ->

@@ -10,8 +10,8 @@ fun User.storageFor(resource: StorableResource): Units =
 fun User.availableOf(resource: StorableResource): Units =
     storageFor(resource::class) - resource.owned
 
-fun User.storageFor(resource: KClass<out StorableResource>): Units =
+fun User.storageFor(resourceClass: KClass<out StorableResource>): Units =
     all
         .filterIsInstance<StoresResource>()
-        .filter { it.storableResource == resource }
+        .filter { it.storableResourceClass == resourceClass }
         .sumOf { it.totalStorageAmount.single }.units

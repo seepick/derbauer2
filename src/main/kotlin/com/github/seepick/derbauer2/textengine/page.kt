@@ -12,10 +12,10 @@ interface Renderer {
 }
 
 class CurrentPage(
-    page: KClass<out Page>
+    pageClass: KClass<out Page>
 ) {
     private val log = logger {}
-    var page: KClass<out Page> = page
+    var pageClass: KClass<out Page> = pageClass
         set(value) {
             log.info { "Set: ${value.simpleName}" }
             field = value

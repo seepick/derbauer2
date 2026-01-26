@@ -49,19 +49,19 @@ private fun calcWinSize(): DpSize {
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
-    initPage: KClass<out Page>,
+    initPageClass: KClass<out Page>,
     initState: (User) -> Unit,
 ) {
     application {
         KoinApplication(application = {
             allowOverride(false)
             createEagerInstances()
-            modules(textengineModule(initPage, windowSize), mainModule)
+            modules(textengineModule(initPageClass, windowSize), mainModule)
         }) {
             val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
-            val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().page)
+            val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().pageClass)
             tick.toString() // HACK to trigger recomposition, otherwise tick changes are not observed
             log.trace { "UI render tick #$tick" }
             val textmap = koinInject<Textmap>()

@@ -4,7 +4,11 @@ import com.github.seepick.derbauer2.game.citizen.CitizenTurner
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.logic.TurnReport
+import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
+import com.github.seepick.derbauer2.game.transaction.TxRequest
+import com.github.seepick.derbauer2.game.transaction.errorOnFail
+import com.github.seepick.derbauer2.game.transaction.tx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class Turner(
@@ -12,6 +16,7 @@ class Turner(
     private val resourceTurner: ResourceTurner,
     private val citizenTurner: CitizenTurner,
     private val featureTurner: FeatureTurner,
+    private val user: User,
 ) {
     private val log = logger {}
     val reports = mutableListOf<TurnReport>() // FIXME store in ReportIntelligence (historical auswertung)
@@ -22,13 +27,23 @@ class Turner(
     fun collectAndExecuteNextTurnReport(): TurnReport {
         turn++
         log.info { "Taking turn $turn" }
-        val resourceReport = resourceTurner.executeAndReturnReport() // first resources, then happenings
-        val citizenReport = citizenTurner.executeAndReturnReport()
-        val happenings = happeningTurner.turn()
-        val newFeatures = featureTurner.turn()
+        // first resources, then happenings
+        val resourceReport = resourceTurner.buildTurnReport()
+        resourceReport.lines.forEach { change ->
+            user.tx(
+                TxRequest.TxResource(
+                    resourceClass = change.resource::class,
+                    amount = change.changeAmount,
+                )
+            ).errorOnFail()
+        }
+        val citizenReport = citizenTurner.executeAndBuildReport()
+
+        val happenings = happeningTurner.buildHappeningMultiPages()
+        val newFeatures = featureTurner.buildFeaturMultiPages()
         return TurnReport(
             turn = turn - 1,
-            resourceChanges = resourceReport.merge(citizenReport).changes,
+            resourceReportLines = resourceReport.merge(citizenReport).lines,
             happenings = happenings,
             newFeatures = newFeatures,
         ).also { result ->

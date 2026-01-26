@@ -33,7 +33,7 @@ class TradingPage(
 ) : Page {
 
     private val back = BackButton {
-        currentPage.page = HomePage::class
+        currentPage.pageClass = HomePage::class
     }
 
     private val prompt
@@ -49,13 +49,13 @@ class TradingPage(
         )
 
     private fun setupTrade(
-        op: TradeOperation,
-        targetType: KClass<out Resource>,
+        operation: TradeOperation,
+        targetResourceClass: KClass<out Resource>,
         vararg counters: Pair<KClass<out Resource>, Units>
     ): SelectOption {
-        val targetResource = user.resource(targetType)
+        val targetResource = user.resource(targetResourceClass)
         return SelectOption({
-            "${op.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
+            "${operation.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
                         val counterResource = user.resource(counterResource)
                         "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${
@@ -67,9 +67,9 @@ class TradingPage(
         }) {
             resultHandler.handle(
                 user.trade(
-                    TradeRequest(targetType, op, 1.units),
+                    TradeRequest(targetResourceClass, operation, 1.units),
                     *counters.map { (costResource, costAmount) ->
-                        TradeRequest(costResource, op.inverse, costAmount)
+                        TradeRequest(costResource, operation.inverse, costAmount)
                     }.toTypedArray()
                 )
             )

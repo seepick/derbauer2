@@ -21,7 +21,7 @@ class ReportPage(
     private val continueButton = ContinueButton {
         happeningMultiView.process(turner.reports.last().happenings) {
             featureMultiView.process(turner.reports.last().newFeatures) {
-                current.page = HomePage::class
+                current.pageClass = HomePage::class
             }
         }
     }
@@ -33,8 +33,8 @@ class ReportPage(
             textmap.line("Resources produced this turn:")
             textmap.emptyLine()
             val report = turner.reports.last()
-            report.resourceChanges.forEach {
-                textmap.line("${it.resource.emojiWithSpaceSuffixOrEmpty}${it.resource.labelPlural}: ${it.change.toPlusString()}")
+            report.resourceReportLines.forEach {
+                textmap.line("${it.resource.emojiWithSpaceSuffixOrEmpty}${it.resource.labelPlural}: ${it.changeAmount.toPlusString()}")
             }
         }
     }

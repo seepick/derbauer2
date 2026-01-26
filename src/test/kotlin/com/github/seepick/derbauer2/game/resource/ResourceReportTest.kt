@@ -13,7 +13,7 @@ class ResourceReportTest : DescribeSpec({
                 add(gold, 40.units)
                 add(gold, 2.units)
             }
-            report.changes.shouldBeSingleton().first().change shouldBeEqual 42.units
+            report.lines.shouldBeSingleton().first().changeAmount shouldBeEqual 42.units
         }
     }
     describe("merge") {
@@ -27,7 +27,7 @@ class ResourceReportTest : DescribeSpec({
             }
             val merged = report1.merge(report2)
 
-            merged.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(gold, 42.units)
+            merged.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(gold, 42.units)
         }
     }
 })

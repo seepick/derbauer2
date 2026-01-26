@@ -5,18 +5,33 @@ import com.github.seepick.derbauer2.game.building.BuildingReference
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceReference
+import com.github.seepick.derbauer2.game.transaction.TxResult.Fail
+import com.github.seepick.derbauer2.game.transaction.TxResult.Success
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 sealed interface TxRequest {
+
     data class TxResource(
         override val resourceClass: KClass<out Resource>,
         val operation: TxOperation,
         val amount: Units,
-    ) : TxRequest, ResourceReference
+    ) : TxRequest, ResourceReference {
+        constructor(resourceClass: KClass<out Resource>, amount: Units) : this(
+            resourceClass = resourceClass,
+            operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
+            amount = amount
+        )
+        init {
+            require(amount >= 0) { "Amount must be non-negative: $amount" }
+        }
+    }
 
     data class TxBuild(
         override val buildingClass: KClass<out Building>,
     ) : TxRequest, BuildingReference
+
 }
 
 enum class TxOperation {
@@ -25,9 +40,21 @@ enum class TxOperation {
 }
 
 sealed interface TxResult {
+
     object Success : TxResult
+
     sealed interface Fail : TxResult {
         val reason: String
+
         data class InsufficientResources(override val reason: String = "Insufficient resources") : Fail
+    }
+
+}
+
+@OptIn(ExperimentalContracts::class)
+fun TxResult.errorOnFail() {
+    contract { returns() implies (this@errorOnFail is Success) }
+    if (this is Fail) {
+        error("Transaction failed: $reason")
     }
 }

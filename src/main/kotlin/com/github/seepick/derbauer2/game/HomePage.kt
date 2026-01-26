@@ -21,16 +21,16 @@ class HomePage(
 
     private val nextTurnButton = ContinueButton("Next Turn") {
         turner.collectAndExecuteNextTurnReport()
-        currentPage.page = ReportPage::class
+        currentPage.pageClass = ReportPage::class
     }
 
     private val prompt = Prompt.Select(
         title = "What shall we do next?", listOf(
             SelectOption("Trade") {
-                currentPage.page = TradingPage::class
+                currentPage.pageClass = TradingPage::class
             },
             SelectOption("Build") {
-                currentPage.page = BuildingsPage::class
+                currentPage.pageClass = BuildingsPage::class
             },
         )
     )

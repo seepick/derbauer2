@@ -66,7 +66,7 @@ class FeatureInfo(private val feature: Feature) : MultiViewItem {
 }
 
 class FeatureTurner(private val user: User) {
-    fun turn(): List<FeatureInfo> =
+    fun buildFeaturMultiPages(): List<FeatureInfo> =
         FeatureDescriptor.all
             .filter { !user.hasFeature(it) && it.check(user) }
             .map { FeatureInfo(it.build()) }

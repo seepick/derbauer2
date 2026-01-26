@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.ProducesResource
+import com.github.seepick.derbauer2.game.resource.ProducesResourceOwnable
 import com.github.seepick.derbauer2.game.resource.StoresResource
 import kotlin.reflect.KClass
 
@@ -29,17 +29,17 @@ class House(override var owned: Units = 0.units) : Building, StoresResource {
     override val costsGold = Mechanics.houseCostsGold.units
     override val landUse = Mechanics.houseLandUse.units
 
-    override val storableResource = Citizen::class
+    override val storableResourceClass = Citizen::class
     override val storageAmount = Mechanics.houseStoreCitizen.units
 }
 
-class Farm(override var owned: Units = 0.units) : Building, ProducesResource {
+class Farm(override var owned: Units = 0.units) : Building, ProducesResourceOwnable {
     override val labelSingular = "Farm"
     override val costsGold = Mechanics.farmCostsGold.units
     override val landUse = Mechanics.farmLandUse.units
 
-    override val producingResourceType = Food::class
-    override val resourceProductionAmount get() = owned * Mechanics.farmProduceFood
+    override val producingResourceClass = Food::class
+    override val producingResourceAmount = Mechanics.farmProduceFood.units
 }
 
 class Granary(override var owned: Units = 0.units) : Building, StoresResource {
@@ -48,7 +48,7 @@ class Granary(override var owned: Units = 0.units) : Building, StoresResource {
     override val costsGold = Mechanics.granaryCostsGold.units
     override val landUse = Mechanics.granaryLanduse.units
 
-    override val storableResource = Food::class
+    override val storableResourceClass = Food::class
     override val storageAmount = Mechanics.granaryCapacity.units
 }
 

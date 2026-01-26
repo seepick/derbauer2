@@ -15,7 +15,7 @@ interface MultiViewItem {
 abstract class MultiView<ITEM : MultiViewItem>(
     private val user: User,
     private val currentPage: CurrentPage,
-    private val targetPage: KClass<out Page>
+    private val targetPageClass: KClass<out Page>
 ) {
     private val log = logger {}
     private val unseen = mutableListOf<ITEM>()
@@ -39,7 +39,7 @@ abstract class MultiView<ITEM : MultiViewItem>(
             onFinishedProcessing()
             return
         }
-        currentPage.page = targetPage
+        currentPage.pageClass = targetPageClass
         this.onFinishedProcessing = onFinishedProcessing
         log.debug { "Processing ${toBeProcessed.size}" }
         unseen.addAll(toBeProcessed)
