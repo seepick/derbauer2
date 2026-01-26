@@ -12,15 +12,11 @@ interface EntityEffect
 
 interface Ownable {
     @Suppress("DEPRECATION")
-    var owned: Units // FIXME make val
-        get() = _directSetOwned
-        set(value) {
-            _directSetOwned = value
-        }
+    val owned: Units get() = _setOwnedOnlyByTx
 
     @Suppress("PropertyName")
-    @Deprecated("just don't use it unless you are master TX")
-    var _directSetOwned: Units
+    @Deprecated("just don't use it unless you are within transaction application code")
+    var _setOwnedOnlyByTx: Units
 }
 
 abstract class EmojiAndLabel(

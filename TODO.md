@@ -4,17 +4,14 @@
 
 ## Now
 
-* !! change SPACE to ENTER for back&continue
+* resource can go negative (safeguard in data class itself!); centralize
 * resolve TODOs/FIXMEs
-* encapsulate resource mutations behind safe APIs with validation and bounded math
-  * resource can go negative (safeguard in data class itself!); centralize
-  * duplicated/max-storage
-* document mechanics as "magic constant provider"
 * handle starvation (test first)
-* BZ: citizens: houses, birth, food consumption, gold taxes
 
 ## Next
 
+* IT: cucumber tests for main flows (super high level)
+* BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * UI: predictable order of entities/resources (give each a weight??)

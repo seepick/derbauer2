@@ -24,7 +24,7 @@ interface BuildingReference {
     val buildingClass: KClass<out Building>
 }
 
-class House(override var _directSetOwned: Units = 0.units) : Building, StoresResource {
+class House(override var _setOwnedOnlyByTx: Units = 0.units) : Building, StoresResource {
     override val labelSingular = "House"
     override val costsGold = Mechanics.houseCostsGold.units
     override val landUse = Mechanics.houseLandUse.units
@@ -33,7 +33,7 @@ class House(override var _directSetOwned: Units = 0.units) : Building, StoresRes
     override val storageAmount = Mechanics.houseStoreCitizen.units
 }
 
-class Farm(override var _directSetOwned: Units = 0.units) : Building, ProducesResourceOwnable {
+class Farm(override var _setOwnedOnlyByTx: Units = 0.units) : Building, ProducesResourceOwnable {
     override val labelSingular = "Farm"
     override val costsGold = Mechanics.farmCostsGold.units
     override val landUse = Mechanics.farmLandUse.units
@@ -42,7 +42,7 @@ class Farm(override var _directSetOwned: Units = 0.units) : Building, ProducesRe
     override val producingResourceAmount = Mechanics.farmProduceFood.units
 }
 
-class Granary(override var _directSetOwned: Units = 0.units) : Building, StoresResource {
+class Granary(override var _setOwnedOnlyByTx: Units = 0.units) : Building, StoresResource {
     override val labelSingular = "Granary"
     override val labelPlural = "Granaries"
     override val costsGold = Mechanics.granaryCostsGold.units

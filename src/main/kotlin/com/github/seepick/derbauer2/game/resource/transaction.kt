@@ -42,7 +42,7 @@ fun User.validateResourceTx(tx: TxResource): TxResult {
 fun User._applyResourceTx(tx: TxResource) {
     val resource = resource(tx.resourceClass)
     when (tx.operation) {
-        TxOperation.INCREASE -> resource._directSetOwned += tx.amount
-        TxOperation.DECREASE -> resource._directSetOwned -= tx.amount
+        TxOperation.INCREASE -> resource._setOwnedOnlyByTx += tx.amount
+        TxOperation.DECREASE -> resource._setOwnedOnlyByTx -= tx.amount
     }
 }

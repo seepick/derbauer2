@@ -1,5 +1,8 @@
 package com.github.seepick.derbauer2.game.logic
 
+/**
+ * All game mechanics constants; a magic constant provider.
+ */
 object Mechanics {
     val startingLand = 10.units
     val startingGold = 500.units

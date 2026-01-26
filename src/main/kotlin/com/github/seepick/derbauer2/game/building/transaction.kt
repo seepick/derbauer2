@@ -32,5 +32,5 @@ fun User.validateBuildTx(tx: Tx.TxBuild): TxResult {
 @Suppress("FunctionName")
 fun User._applyBuildTx(tx: Tx.TxBuild) {
     @Suppress("DEPRECATION")
-    building(tx.buildingClass)._directSetOwned += 1
+    building(tx.buildingClass)._setOwnedOnlyByTx += 1
 }

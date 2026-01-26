@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldBeSingleton
@@ -46,7 +47,7 @@ class ResourceTurnerTest : DescribeSpec({
         }
         it("Given two forms Then produce both") {
             withOkSetup {
-                producer.owned = 2.units
+                producer.ownedForTest = 2.units
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = producer.owned * producer.producingResourceAmount
@@ -55,7 +56,7 @@ class ResourceTurnerTest : DescribeSpec({
         }
         it("Given full storage Then still included as 0") {
             withOkSetup {
-                resource.owned = storage.totalStorageAmount
+                resource.ownedForTest = storage.totalStorageAmount
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = 0.units
