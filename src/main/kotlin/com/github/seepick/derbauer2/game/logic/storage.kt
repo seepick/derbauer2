@@ -4,14 +4,14 @@ import com.github.seepick.derbauer2.game.resource.StorableResource
 import com.github.seepick.derbauer2.game.resource.StoresResource
 import kotlin.reflect.KClass
 
-fun User.storageFor(resource: StorableResource): Units =
+fun User.storageFor(resource: StorableResource) =
     storageFor(resource::class)
 
-fun User.availableOf(resource: StorableResource): Units =
+fun User.availableOf(resource: StorableResource) =
     storageFor(resource::class) - resource.owned
 
-fun User.storageFor(resourceClass: KClass<out StorableResource>): Units =
+fun User.storageFor(resourceClass: KClass<out StorableResource>) =
     all
         .filterIsInstance<StoresResource>()
         .filter { it.storableResourceClass == resourceClass }
-        .sumOf { it.totalStorageAmount.single }.units
+        .sumOf { it.totalStorageAmount.single }.zp

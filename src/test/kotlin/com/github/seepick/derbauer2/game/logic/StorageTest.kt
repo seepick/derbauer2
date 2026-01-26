@@ -11,7 +11,7 @@ class StorageTest : DescribeSpec({
 
     describe("storage capacity for") {
         it("increases") {
-            val granary = Granary(1.units)
+            val granary = Granary(1.zp)
             user.add(granary)
 
             user.storageFor(Food::class) shouldBeEqual granary.totalStorageAmount

@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.zp
 import com.github.seepick.derbauer2.game.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -21,9 +21,9 @@ class ResourceTurnerTest : DescribeSpec({
     describe("executeAndReturnReport") {
         fun withOkSetup(test: SetupContext.() -> Unit) {
             val user = User()
-            val resource = user.add(Food(0.units))
-            val producer = user.add(Farm(1.units))
-            val storage = user.add(Granary(1.units))
+            val resource = user.add(Food(0.zp))
+            val producer = user.add(Farm(1.zp))
+            val storage = user.add(Granary(1.zp))
 
             test(SetupContext(user, resource, producer, storage))
         }
@@ -47,7 +47,7 @@ class ResourceTurnerTest : DescribeSpec({
         }
         it("Given two forms Then produce both") {
             withOkSetup {
-                producer.ownedForTest = 2.units
+                producer.ownedForTest = 2.zp
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = producer.owned * producer.producingResourceAmount
@@ -59,7 +59,7 @@ class ResourceTurnerTest : DescribeSpec({
                 resource.ownedForTest = storage.totalStorageAmount
                 val report = ResourceTurner(user).buildTurnReport()
 
-                val change = 0.units
+                val change = 0.zp
                 report.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(resource, change)
             }
         }

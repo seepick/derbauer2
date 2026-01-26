@@ -4,9 +4,9 @@ import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.logic.Mechanics
-import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.zp
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -40,10 +40,10 @@ class TradingPage(
         get() = Prompt.Select(
             title = "What is it your greed desires?",
             options = buildList {
-                add(setupTrade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.units))
-                add(setupTrade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.units))
+                add(setupTrade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.zp))
+                add(setupTrade(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.zp))
                 if (user.hasFeature(FeatureDescriptor.TradeLand)) {
-                    add(setupTrade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.units))
+                    add(setupTrade(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.zp))
                 }
             }
         )
@@ -51,7 +51,7 @@ class TradingPage(
     private fun setupTrade(
         operation: TradeOperation,
         targetResourceClass: KClass<out Resource>,
-        vararg counters: Pair<KClass<out Resource>, Units>
+        vararg counters: Pair<KClass<out Resource>, Zp>
     ): SelectOption {
         val targetResource = user.resource(targetResourceClass)
         return SelectOption({
@@ -67,7 +67,7 @@ class TradingPage(
         }) {
             resultHandler.handle(
                 user.trade(
-                    TradeRequest(targetResourceClass, operation, 1.units),
+                    TradeRequest(targetResourceClass, operation, 1.zp),
                     *counters.map { (costResource, costAmount) ->
                         TradeRequest(costResource, operation.inverse, costAmount)
                     }.toTypedArray()

@@ -7,10 +7,12 @@ import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.logic.zp
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
@@ -47,48 +49,49 @@ class TurnerTest : DescribeSpec({
     }
     describe("produce resource") {
         it("Given producer and storage When produce Then owned increased and report contains") {
-            val food = user.add(Food(0.units))
-            val farm = user.add(Farm(1.units))
-            user.add(Granary(1.units))
+            user.add(Land(10.zp))
+            val farm = user.add(Farm(1.zp))
+            user.add(Granary(1.zp))
+            val food = user.add(Food(0.zp))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.totalProducingResourceAmount
-            report.resourceReportLines shouldContainChange(food to farm.totalProducingResourceAmount)
+            report.resourceReportLines shouldContainChange(food to farm.totalProducingResourceAmount.asZ)
         }
         it("Given no food storage When produce Then stay 0") {
-            val food = user.add(Food(0.units))
-            user.add(Farm(1.units))
+            user.add(Land(10.zp))
+            user.add(Farm(1.zp))
+            val food = user.add(Food(0.zp))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            food.owned shouldBeEqual 0.units
-            report.resourceReportLines shouldContainChange(food to 0.units)
+            food.owned shouldBeEqual 0.zp
+            report.resourceReportLines shouldContainChange(food to 0.z)
         }
         it("Given 1 space left When produce 2 Then max capped") {
-            val granary = user.add(Granary(1.units))
+            user.add(Land(10.zp))
+            val granary = user.add(Granary(1.zp))
             val diff = 1
             val food = user.add(Food(granary.totalStorageAmount - diff))
-            user.add(Farm(1.units))
+            user.add(Farm(1.zp))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceReportLines shouldContainChange(food to diff.units)
+            report.resourceReportLines shouldContainChange(food to diff.z)
         }
     }
     describe("citizens") {
         it("Given sufficient citizens Then increase gold") {
-            val gold = user.add(Gold(0.units))
-            user.add(Citizen((1 / Mechanics.citizenTaxPercentage).units))
-            user.add(Food(0.units))
+            val gold = user.add(Gold(0.zp))
+            user.add(Citizen((1.0 / Mechanics.citizenTaxPercentage).toLong().zp))
+            user.add(Food(0.zp))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            report.resourceReportLines shouldContainChange (gold to 1.units)
-            gold.owned shouldBeEqual 1.units
+            report.resourceReportLines shouldContainChange (gold to 1.z)
+            gold.owned shouldBeEqual 1.zp
         }
     }
 })
-
-val Double.units get() = toLong().units

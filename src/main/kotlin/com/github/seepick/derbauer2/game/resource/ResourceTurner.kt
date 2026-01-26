@@ -1,8 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.Z
+import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.z
 import kotlin.reflect.KClass
 
 class ResourceTurner(
@@ -22,8 +23,10 @@ class ResourceTurner(
 
 data class ResourceReportLine(
     val resource: Resource,
-    var changeAmount: Units,
-)
+    var changeAmount: Z,
+) {
+    constructor( resource: Resource, changeAmount: Zp) : this(resource, changeAmount.asZ)
+}
 
 class ResourceReport(
     val lines: List<ResourceReportLine>, // TODO needs to be sorted in a deterministic way (centrally/globally)
@@ -48,8 +51,12 @@ fun buildResourceReport(code: ResourceReportBuilder.() -> Unit): ResourceReport 
 class ResourceReportBuilder {
     private val changes = mutableMapOf<KClass<out Resource>, ResourceReportLine>()
 
-    fun add(resource: Resource, change: Units) {
-        changes.putIfAbsent(resource::class, ResourceReportLine(resource, 0.units))
+    fun add(resource: Resource, change: Zp) {
+        add(resource, change.asZ)
+    }
+
+    fun add(resource: Resource, change: Z) {
+        changes.putIfAbsent(resource::class, ResourceReportLine(resource, 0.z))
         changes[resource::class]!!.changeAmount += change
     }
 

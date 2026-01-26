@@ -3,8 +3,8 @@ package com.github.seepick.derbauer2.game.building
 import com.github.seepick.derbauer2.game.logic.Asset
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.Ownable
-import com.github.seepick.derbauer2.game.logic.Units
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.Zp
+import com.github.seepick.derbauer2.game.logic.zp
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.ProducesResourceOwnable
@@ -12,44 +12,44 @@ import com.github.seepick.derbauer2.game.resource.StoresResource
 import kotlin.reflect.KClass
 
 interface OccupiesLand : Ownable {
-    val landUse: Units
+    val landUse: Zp
     val totalLandUse get() = owned * landUse
 }
 
 interface Building : Asset, OccupiesLand {
-    val costsGold: Units
+    val costsGold: Zp
 }
 
 interface BuildingReference {
     val buildingClass: KClass<out Building>
 }
 
-class House(override var _setOwnedOnlyByTx: Units = 0.units) : Building, StoresResource {
+class House(override var _setOwnedOnlyByTx: Zp = 0.zp) : Building, StoresResource {
     override val labelSingular = "House"
-    override val costsGold = Mechanics.houseCostsGold.units
-    override val landUse = Mechanics.houseLandUse.units
+    override val costsGold = Mechanics.houseCostsGold.zp
+    override val landUse = Mechanics.houseLandUse.zp
 
     override val storableResourceClass = Citizen::class
-    override val storageAmount = Mechanics.houseStoreCitizen.units
+    override val storageAmount = Mechanics.houseStoreCitizen.zp
 }
 
-class Farm(override var _setOwnedOnlyByTx: Units = 0.units) : Building, ProducesResourceOwnable {
+class Farm(override var _setOwnedOnlyByTx: Zp = 0.zp) : Building, ProducesResourceOwnable {
     override val labelSingular = "Farm"
-    override val costsGold = Mechanics.farmCostsGold.units
-    override val landUse = Mechanics.farmLandUse.units
+    override val costsGold = Mechanics.farmCostsGold.zp
+    override val landUse = Mechanics.farmLandUse.zp
 
     override val producingResourceClass = Food::class
-    override val producingResourceAmount = Mechanics.farmProduceFood.units
+    override val producingResourceAmount = Mechanics.farmProduceFood.zp
 }
 
-class Granary(override var _setOwnedOnlyByTx: Units = 0.units) : Building, StoresResource {
+class Granary(override var _setOwnedOnlyByTx: Zp = 0.zp) : Building, StoresResource {
     override val labelSingular = "Granary"
     override val labelPlural = "Granaries"
-    override val costsGold = Mechanics.granaryCostsGold.units
-    override val landUse = Mechanics.granaryLanduse.units
+    override val costsGold = Mechanics.granaryCostsGold.zp
+    override val landUse = Mechanics.granaryLanduse.zp
 
     override val storableResourceClass = Food::class
-    override val storageAmount = Mechanics.granaryCapacity.units
+    override val storageAmount = Mechanics.granaryCapacity.zp
 }
 
 // technology buildings

@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.logic.Zp
 import com.github.seepick.derbauer2.game.logic.availableOf
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.zp
 import kotlin.reflect.KClass
 
 fun <R : Resource> User.resource(type: KClass<R>): R =
@@ -16,16 +16,16 @@ val User.resources get() = all.filterIsInstance<Resource>()
 context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)
 
-fun User.isAbleToStore(resource: StorableResource, amount: Units): Boolean =
+fun User.isAbleToStore(resource: StorableResource, amount: Zp) =
     amount <= availableOf(resource)
 
-fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Units): Boolean =
+fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Zp) =
     resource(resourceClass).owned >= amount
 
-fun User.hasAtLeast(resource: Resource, amount: Units): Boolean =
+fun User.hasAtLeast(resource: Resource, amount: Zp) =
     resource.owned >= amount
 
-fun User.capResourceAmount(resource: Resource, amount: Units): Units =
+fun User.capResourceAmount(resource: Resource, amount: Zp) =
     if (resource is StorableResource) {
-        amount.single.coerceAtMost(availableOf(resource).single).units
+        amount.single.coerceAtMost(availableOf(resource).single).zp
     } else amount

@@ -2,15 +2,14 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.BuildingReference
-import com.github.seepick.derbauer2.game.logic.Units
-import com.github.seepick.derbauer2.game.logic.units
+import com.github.seepick.derbauer2.game.logic.Z
+import com.github.seepick.derbauer2.game.logic.Zp
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceReference
 import com.github.seepick.derbauer2.game.transaction.TxResult.Fail
 import com.github.seepick.derbauer2.game.transaction.TxResult.Success
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
-import kotlin.math.abs
 import kotlin.reflect.KClass
 
 sealed interface Tx {
@@ -18,12 +17,13 @@ sealed interface Tx {
     data class TxResource(
         override val resourceClass: KClass<out Resource>,
         val operation: TxOperation,
-        val amount: Units,
+        val amount: Zp,
     ) : Tx, ResourceReference {
-        constructor(resourceClass: KClass<out Resource>, amount: Units) : this(
+        constructor(resourceClass: KClass<out Resource>, amount: Z) : this(
             resourceClass = resourceClass,
+            // could introduce TxOperation.NONE but for now just use INCREASE with 0 amount
             operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-            amount = abs(amount.single).units
+            amount = amount.absZp
         )
         init {
             require(amount >= 0) { "Amount must be non-negative: $amount" }
