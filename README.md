@@ -1,5 +1,17 @@
-# derbauer2
+# DerBauer2
 
-Round-based, text-based strategy game in a fancy old retro style.
+A turn-based retro strategy where you grow a little realm from humble beginnings 🌱🏰
+Successor of the original [DerBauer](https://github.com/seepick/derbauer).
 
-Successor of [DerBauer v1](https://github.com/seepick/derbauer).
+![screenshot](https://raw.githubusercontent.com/seepick/derbauer2/refs/heads/main/documentation/screenshot.png)
+
+Welcome! This is a small, love-made game about managing resources, trading, and building a tiny thriving community. Play at your own pace — one turn at a time.
+
+Highlights
+- 🕰️ Turn-based gameplay — think, plan, and watch your plans unfold each round.
+- 💰 Simple economy — gather gold, grow food, and buy or trade to expand.
+- 🏗️ Build and upgrade — add farms, storage, and buildings that shape your village.
+- 🧭 Explore & claim land — find new plots and make them yours.
+- 🤝 Trade & deals — negotiate resources and sign trade agreements.
+
+Happy farming, trading, and exploring! 🌾⛵️
