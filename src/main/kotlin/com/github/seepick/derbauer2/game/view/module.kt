@@ -9,5 +9,5 @@ fun viewModule() = module {
     singleOf(::HomePage)
     singleOf(::GameRenderer)
     singleOf(::ReportPage)
-    singleOf(::ResultHandler)
+    singleOf(::InteractionResultHandler)
 }

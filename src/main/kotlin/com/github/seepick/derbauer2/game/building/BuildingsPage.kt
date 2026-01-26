@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.HomePage
+import com.github.seepick.derbauer2.game.interaction.Interaction
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.view.Back
+import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.Result
-import com.github.seepick.derbauer2.game.view.ResultHandler
+import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
@@ -17,32 +17,24 @@ import com.github.seepick.derbauer2.textengine.Textmap
 
 class BuildingsPage(
     private val user: User,
-    private val builder: Builder,
+    private val interaction: Interaction,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
-    private val resultHandler: ResultHandler,
+    private val resultHandler: InteractionResultHandler,
 ) : Page {
 
-    private val back = Back {
+    private val back = BackButton {
         currentPage.page = HomePage::class
     }
+
     private val prompt = Prompt.Select(
         title = "What shall we build next, Sire?",
         user.buildings.map { building ->
             SelectOption({ "Build ${building.labelSingular} - ${Gold.EMOJI} ${building.costsGold} | ${Land.Text.emoji} ${building.landUse} (owned: ${building.owned})" }) {
-                resultHandler.handleBuilding(builder.build(building))
+                resultHandler.handle(interaction.build(building))
             }
         }
     )
-
-    private fun ResultHandler.handleBuilding(result: BuildResult) {
-        handle(
-            when (result) {
-                BuildResult.Success -> Result.Success
-                BuildResult.InsufficientResources -> Result.Fail
-            }
-        )
-    }
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, listOf(back.option)) {

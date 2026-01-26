@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.HomePage
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.hasFeature
+import com.github.seepick.derbauer2.game.interaction.Interaction
 import com.github.seepick.derbauer2.game.logic.Mechanics
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
@@ -13,10 +14,9 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
-import com.github.seepick.derbauer2.game.view.Back
+import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.Result
-import com.github.seepick.derbauer2.game.view.ResultHandler
+import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
@@ -26,19 +26,19 @@ import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.reflect.KClass
 
 class TradingPage(
-    private val trader: Trader,
+    private val interaction: Interaction,
     private val currentPage: CurrentPage,
     private val gameRenderer: GameRenderer,
-    private val resultHandler: ResultHandler,
+    private val resultHandler: InteractionResultHandler,
     private val user: User,
 ) : Page {
 
-    private val back = Back {
+    private val back = BackButton {
         currentPage.page = HomePage::class
     }
 
     private val prompt
-        get() = Prompt.Select( // TODO maybe more performant possible... unnecessary recreation...
+        get() = Prompt.Select(
             title = "What is it your greed desires?",
             options = buildList {
                 add(setupTrade(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.units))
@@ -66,8 +66,8 @@ class TradingPage(
                         }"
                     }
         }) {
-            resultHandler.handleTrade(
-                trader.trade(
+            resultHandler.handle(
+                interaction.trade(
                     TradeRequest(targetType, op, 1.units),
                     *counters.map { (costResource, costAmount) ->
                         TradeRequest(costResource, op.inverse, costAmount)
@@ -75,15 +75,6 @@ class TradingPage(
                 )
             )
         }
-    }
-
-    private fun ResultHandler.handleTrade(result: TradeResult) {
-        handle(
-            when (result) {
-                TradeResult.Success -> Result.Success
-                TradeResult.NotEnoughResources, TradeResult.NotEnoughStorage -> Result.Fail
-            }
-        )
     }
 
     override fun renderText(textmap: Textmap) {

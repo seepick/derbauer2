@@ -43,7 +43,6 @@ class GameRenderer(
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-
         textmap.aligned(renderInfoBar(), "Turn ${turner.turn}")
         textmap.hr()
         content(textmap)
@@ -51,12 +50,18 @@ class GameRenderer(
         textmap.hr()
         textmap.aligned(
             left = "[$promptIndicator]> ▉",
-            right = metaOptions.joinToString("   ") { "${it.command.label}: ${it.description}" },
+            right = metaOptions.joinToString("   ") { it.formatted },
         )
     }
+    private val MetaOption.formatted get() = "${key.label}: $label"
 }
 
-data class MetaOption(
-    val command: KeyPressed.Command, // ENTER
-    val description: String, // Buy Building
-)
+interface MetaOption {
+    val key: KeyPressed.Command // ENTER
+    val label: String // Buy Building
+}
+
+data class MetaOptionImpl(
+    override val key: KeyPressed.Command,
+    override val label: String,
+): MetaOption

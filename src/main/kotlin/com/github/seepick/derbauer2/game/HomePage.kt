@@ -4,11 +4,9 @@ import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
+import com.github.seepick.derbauer2.game.view.ContinueButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.MetaOption
-import com.github.seepick.derbauer2.ifDo
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.KeyListener
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Prompt
@@ -21,7 +19,11 @@ class HomePage(
     private val gameRenderer: GameRenderer,
 ) : Page {
 
-    private val nextTurn = NextTurn()
+    private val nextTurnButton = ContinueButton("Next Turn") {
+        turner.collectAndExecuteNextTurnReport()
+        currentPage.page = ReportPage::class
+    }
+
     private val prompt = Prompt.Select(
         title = "What shall we do next?", listOf(
             SelectOption("Trade") {
@@ -37,7 +39,7 @@ class HomePage(
         gameRenderer.render(
             textmap,
             promptIndicator = prompt.inputIndicator,
-            listOf(MetaOption(KeyPressed.Command.Space, "Next Turn"))
+            metaOptions = listOf(nextTurnButton)
         ) {
             textmap.line("You are home... 🏠")
             textmap.emptyLine()
@@ -46,15 +48,7 @@ class HomePage(
     }
 
     override fun onKeyPressed(key: KeyPressed) =
-        listOf(prompt, nextTurn).any {
+        listOf(prompt, nextTurnButton).any {
             it.onKeyPressed(key)
         }
-
-    private inner class NextTurn : KeyListener {
-        override fun onKeyPressed(key: KeyPressed) =
-            ifDo(key == KeyPressed.Command.Space) {
-                turner.collectAndExecuteNextTurnReport()
-                currentPage.page = ReportPage::class
-            }
-    }
 }
