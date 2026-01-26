@@ -13,13 +13,13 @@ import kotlin.contracts.contract
 import kotlin.math.abs
 import kotlin.reflect.KClass
 
-sealed interface TxRequest {
+sealed interface Tx {
 
     data class TxResource(
         override val resourceClass: KClass<out Resource>,
         val operation: TxOperation,
         val amount: Units,
-    ) : TxRequest, ResourceReference {
+    ) : Tx, ResourceReference {
         constructor(resourceClass: KClass<out Resource>, amount: Units) : this(
             resourceClass = resourceClass,
             operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
@@ -32,7 +32,7 @@ sealed interface TxRequest {
 
     data class TxBuild(
         override val buildingClass: KClass<out Building>,
-    ) : TxRequest, BuildingReference
+    ) : Tx, BuildingReference
 
 }
 

@@ -5,11 +5,23 @@ import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.logic.TurnReport
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.resource.ResourceReport
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
-import com.github.seepick.derbauer2.game.transaction.TxRequest
+import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
-import com.github.seepick.derbauer2.game.transaction.tx
+import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+
+private fun ResourceReport.execute(user: User) {
+    lines.forEach { change ->
+        user.execTx(
+            TxResource(
+                resourceClass = change.resource::class,
+                amount = change.changeAmount,
+            )
+        ).errorOnFail()
+    }
+}
 
 class Turner(
     private val happeningTurner: HappeningTurner,
@@ -29,16 +41,9 @@ class Turner(
         log.info { "Taking turn $turn" }
         // first resources, then happenings
         val resourceReport = resourceTurner.buildTurnReport()
-        resourceReport.lines.forEach { change ->
-            user.tx(
-                TxRequest.TxResource(
-                    resourceClass = change.resource::class,
-                    amount = change.changeAmount,
-                )
-            ).errorOnFail()
-        }
+        resourceReport.execute(user)
         val citizenReport = citizenTurner.executeAndBuildReport()
-
+        citizenReport.execute(user)
         val happenings = happeningTurner.buildHappeningMultiPages()
         val newFeatures = featureTurner.buildFeaturMultiPages()
         return TurnReport(

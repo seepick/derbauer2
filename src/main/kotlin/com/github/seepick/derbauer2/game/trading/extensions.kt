@@ -1,42 +1,24 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.resource.StorableResource
-import com.github.seepick.derbauer2.game.resource.hasAtLeast
-import com.github.seepick.derbauer2.game.resource.isAbleToStore
-import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.transaction.Tx
+import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxResult
+import com.github.seepick.derbauer2.game.transaction.execTx
 
-fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResult {
-    val requests = listOf(requestsX, *requestsXS)
-    if (!canBuy(requests)) {
-        return TxResult.Fail.InsufficientResources("Not enough storage")
-    }
-    if (!canSell(requests)) {
-        return TxResult.Fail.InsufficientResources("Not enough resources")
-    }
-    requests.forEach { request ->
-        val resource = resource(request.resourceClass)
-        when (request.operation) {
-            TradeOperation.Buy -> resource.owned += request.amount
-            TradeOperation.Sell -> resource.owned -= request.amount
+fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResult =
+    execTx(
+        listOf(requestsX, *requestsXS).map { request ->
+            Tx.TxResource(
+                resourceClass = request.resourceClass,
+                amount = request.amount,
+                operation = request.operation.asTxOperation
+            )
         }
-    }
-    return TxResult.Success
-}
+    )
 
-private fun User.canBuy(requests: List<TradeRequest>): Boolean =
-    requests
-        .filter { it.operation == TradeOperation.Buy }
-        .map { it to resource(it.resourceClass) }
-        .mapNotNull { (request, resource) ->
-            (resource as? StorableResource)?.let { request to it } // up-cast from Resource to StorableResource
-        }
-        .all { (request, resource) -> isAbleToStore(resource, request.amount) }
-
-// FIXME bug, if two times same resource; but that shouldn't be possible anyway; ensure by umbrella TradeRequestMgr or similar
-private fun User.canSell(requests: List<TradeRequest>): Boolean =
-    requests.filter { it.operation == TradeOperation.Sell }
-        .all {
-            hasAtLeast(it.resourceClass, it.amount)
-        }
+val TradeOperation.asTxOperation
+    get() = when (this) {
+        TradeOperation.Buy -> TxOperation.INCREASE
+        TradeOperation.Sell -> TxOperation.DECREASE
+    }

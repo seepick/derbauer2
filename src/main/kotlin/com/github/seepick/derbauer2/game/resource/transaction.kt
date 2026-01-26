@@ -3,16 +3,16 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.logic.Units
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.emojiAndLabel
+import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
 import com.github.seepick.derbauer2.game.transaction.TxOperation
-import com.github.seepick.derbauer2.game.transaction.TxRequest.TxResource
 import com.github.seepick.derbauer2.game.transaction.TxResult
-import com.github.seepick.derbauer2.game.transaction.tx
+import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
 fun User.txResource(
     resourceClass: KClass<out Resource>,
     amount: Units,
-) = tx(
+) = execTx(
     TxResource(
         resourceClass = resourceClass,
         amount = amount,
