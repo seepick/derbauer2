@@ -61,7 +61,7 @@ class FeatureInfo(private val feature: Feature) : MultiViewItem {
         textmap.multiLine(feature.description)
     }
     override fun execute(user: User) {
-        user.addEntity(feature)
+        user.add(feature)
     }
 }
 

@@ -7,6 +7,8 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.buildResourceReport
+import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.resource.resourceOrNull
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 

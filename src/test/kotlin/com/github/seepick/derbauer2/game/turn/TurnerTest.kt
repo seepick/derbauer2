@@ -45,9 +45,9 @@ class TurnerTest : DescribeSpec({
     }
     describe("produce resource") {
         it("Given producer and storage When produce Then owned increased and report contains") {
-            val food = user.addEntity(Food(0.units))
-            val farm = user.addEntity(Farm(1.units))
-            user.addEntity(Granary(1.units))
+            val food = user.add(Food(0.units))
+            val farm = user.add(Farm(1.units))
+            user.add(Granary(1.units))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
@@ -55,8 +55,8 @@ class TurnerTest : DescribeSpec({
             report.resourceChanges shouldContainChange(food to farm.resourceProductionAmount)
         }
         it("Given no food storage When produce Then stay 0") {
-            val food = user.addEntity(Food(0.units))
-            user.addEntity(Farm(1.units))
+            val food = user.add(Food(0.units))
+            user.add(Farm(1.units))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
@@ -64,10 +64,10 @@ class TurnerTest : DescribeSpec({
             report.resourceChanges shouldContainChange(food to 0.units)
         }
         it("Given 1 space left When produce 2 Then max capped") {
-            val granary = user.addEntity(Granary(1.units))
+            val granary = user.add(Granary(1.units))
             val diff = 1
-            val food = user.addEntity(Food(granary.totalStorageAmount - diff))
-            user.addEntity(Farm(1.units))
+            val food = user.add(Food(granary.totalStorageAmount - diff))
+            user.add(Farm(1.units))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
@@ -77,9 +77,9 @@ class TurnerTest : DescribeSpec({
     }
     describe("citizens") {
         it("Given sufficient citizens Then increase gold") {
-            val gold = user.addEntity(Gold(0.units))
-            user.addEntity(Citizen((1 / Mechanics.citizenTaxPercentage).units))
-            user.addEntity(Food(0.units))
+            val gold = user.add(Gold(0.units))
+            user.add(Citizen((1 / Mechanics.citizenTaxPercentage).units))
+            user.add(Food(0.units))
 
             val report = turner.collectAndExecuteNextTurnReport()
 

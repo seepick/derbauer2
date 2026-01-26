@@ -1,18 +1,19 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.UserResult
 import com.github.seepick.derbauer2.game.resource.StorableResource
 import com.github.seepick.derbauer2.game.resource.hasAtLeast
 import com.github.seepick.derbauer2.game.resource.isAbleToStore
+import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.transaction.TxResult
 
-fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): UserResult {
+fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResult {
     val requests = listOf(requestsX, *requestsXS)
     if (!canBuy(requests)) {
-        return UserResult.Fail.InsufficientResources("Not enough storage")
+        return TxResult.Fail.InsufficientResources("Not enough storage")
     }
     if (!canSell(requests)) {
-        return UserResult.Fail.InsufficientResources("Not enough resources")
+        return TxResult.Fail.InsufficientResources("Not enough resources")
     }
     requests.forEach { request ->
         val resource = resource(request.resource)
@@ -21,7 +22,7 @@ fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): UserRe
             TradeOperation.Sell -> resource.owned -= request.amount
         }
     }
-    return UserResult.Success
+    return TxResult.Success
 }
 
 private fun User.canBuy(requests: List<TradeRequest>): Boolean =

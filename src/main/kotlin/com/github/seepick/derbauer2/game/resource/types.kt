@@ -3,12 +3,17 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.logic.Asset
 import com.github.seepick.derbauer2.game.logic.EmojiAndLabel
 import com.github.seepick.derbauer2.game.logic.Units
+import kotlin.reflect.KClass
 
 interface Resource : Asset {
     val emojiAndUnitsFormatted: String get() = "${emojiWithSpaceSuffixOrEmpty}${owned}"
 }
 
 interface StorableResource : Resource
+
+interface ResourceReference {
+    val resourceClass: KClass<out Resource>
+}
 
 data class Citizen(override var owned: Units) : StorableResource {
     companion object {

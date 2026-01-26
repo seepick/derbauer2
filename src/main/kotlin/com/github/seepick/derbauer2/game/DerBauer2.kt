@@ -37,5 +37,5 @@ private fun User.initAssets() {
         Citizen(Mechanics.startingCitizens),
         Farm(Mechanics.startingFarms),
         Granary(Mechanics.startingGranaries),
-    ).forEach(::addEntity)
+    ).forEach(::add)
 }

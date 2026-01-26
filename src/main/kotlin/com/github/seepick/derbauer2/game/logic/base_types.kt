@@ -11,7 +11,7 @@ interface Asset : Entity, Ownable, NounLabel
 interface EntityEffect
 
 interface Ownable {
-    var owned: Units
+    var owned: Units // FIXME make val
 }
 
 abstract class EmojiAndLabel(
@@ -26,3 +26,6 @@ interface NounLabel {
     val labelPlural: String get() = labelSingular + "s"
     fun labelFor(units: Units) = if (units == 1.units) labelSingular else labelPlural
 }
+
+val <T> T.emojiAndLabel: String where T : NounLabel, T : Entity
+    get() = "$emojiWithSpaceSuffixOrEmpty$labelSingular"

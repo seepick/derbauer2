@@ -7,8 +7,6 @@ val User.totalLandUse
     get() = all.filterIsInstance<OccupiesLand>().sumOf { it.totalLandUse.single }.units
 
 val User.landOwned
-    get() = letIfExists(Land::class, 0.units) {
-        it.owned
-    }
+    get() = letIfExists(Land::class) { it.owned } ?: 0.units
 
 val User.landAvailable get() = landOwned - totalLandUse

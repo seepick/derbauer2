@@ -1,5 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
+val dmgPackageVersion = "1.0.0"
 
 plugins {
     kotlin("jvm") version "2.3.0"
@@ -40,22 +42,20 @@ dependencies {
     testImplementation("io.insert-koin:koin-test:$versionKoin")
 }
 
-
 kotlin {
     jvmToolchain(17)
+    compilerOptions {
+        freeCompilerArgs.add("-Xcontext-parameters")
+    }
 }
 
 compose.desktop {
     application {
         mainClass = "com.github.seepick.derbauer2.Main"
         nativeDistributions {
-            targetFormats(
-                org.jetbrains.compose.desktop.application.dsl.TargetFormat.Dmg,
-//                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Msi,
-//                 org.jetbrains.compose.desktop.application.dsl.TargetFormat.Deb
-            )
+            targetFormats(TargetFormat.Dmg)
             packageName = "derbauer2"
-            packageVersion = "1.0.0"
+            packageVersion = dmgPackageVersion
         }
     }
 }

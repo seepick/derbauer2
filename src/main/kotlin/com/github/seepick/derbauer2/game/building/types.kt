@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.ProducesResource
 import com.github.seepick.derbauer2.game.resource.StoresResource
+import kotlin.reflect.KClass
 
 interface OccupiesLand : Ownable {
     val landUse: Units
@@ -17,6 +18,10 @@ interface OccupiesLand : Ownable {
 
 interface Building : Asset, OccupiesLand {
     val costsGold: Units
+}
+
+interface BuildingReference {
+    val buildingClass: KClass<out Building>
 }
 
 class House(override var owned: Units = 0.units) : Building, StoresResource {

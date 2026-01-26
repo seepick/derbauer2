@@ -2,10 +2,11 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.gold
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.UserResult
 import com.github.seepick.derbauer2.game.logic.units
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.transaction.TxResult
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -19,28 +20,28 @@ class UserBuildTest : DescribeSpec({
     describe("general") {
         fun User.givenSufficientResourcesForHouse(): House {
             val house = House(0.units)
-            addEntity(Gold(house.costsGold))
-            addEntity(Land(house.landUse))
-            addEntity(house)
+            add(Gold(house.costsGold))
+            add(Land(house.landUse))
+            add(house)
             return house
         }
 
         it("Given enough money and land Then succeed") {
             val house = user.givenSufficientResourcesForHouse()
 
-            user.build(house) shouldBeEqual UserResult.Success
+            user.build(house) shouldBeEqual TxResult.Success
         }
         it("Given not enough money Then fail") {
             val house = user.givenSufficientResourcesForHouse()
-            user.gold = 0.units
+            user.gold = house.costsGold - 1
 
-            user.build(house).shouldBeInstanceOf<UserResult.Fail.InsufficientResources>()
+            user.build(house).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }
         it("Given not enough land Then fail") {
             val house = user.givenSufficientResourcesForHouse()
             user.resource(Land::class).owned = 0.units
 
-            user.build(house).shouldBeInstanceOf<UserResult.Fail.InsufficientResources>()
+            user.build(house).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }
     }
 })
