@@ -19,7 +19,7 @@ class HappeningTurner(
         log.debug { "New happening going to happen." }
         val isNegative = Random.nextDouble(0.0, 1.0) < Mechanics.turnProbHappeningIsNegative
         val descriptor = HappeningDescriptor.all.filter {
-            (if (isNegative) it.nature == HappeningNature.Negative else true) && it.canHappen(user)
+            (!isNegative || it.nature == HappeningNature.Negative) && it.canHappen(user)
         }.random()
         descriptor.build(user)
     }

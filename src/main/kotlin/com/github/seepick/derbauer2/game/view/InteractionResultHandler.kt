@@ -9,7 +9,7 @@ class InteractionResultHandler(
 ) {
     fun handle(result: TxResult) {
         when (result) {
-            TxResult.Success -> {} // do nothing
+            TxResult.Success -> { /* no-op */ }
             is TxResult.Fail -> beeper.beep(result.message)
         }
     }

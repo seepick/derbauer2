@@ -55,7 +55,7 @@ fun User.validateResourceTx(): TxResult =
         } else TxResult.Success
     }.merge()
 
-@Suppress("FunctionName", "DEPRECATION")
+@Suppress("FunctionName")
 fun User._applyResourceTx(tx: TxResource) {
     val resource = resource(tx.resourceClass)
     log.trace { "Applying: $tx for $resource" }

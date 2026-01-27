@@ -20,7 +20,7 @@ private val log = logger {}
 
 fun User.build(buildingClass: KClass<out Building>): TxResult =
     execTx(
-        TxBuilding(buildingClass, 1.zz,),
+        TxBuilding(buildingClass, 1.zz),
         TxResource(Gold::class, -building(buildingClass).costsGold),
     )
 
@@ -58,16 +58,13 @@ fun User.execTxBuilding(
     )
 )
 
-fun User.validateBuildTx(): TxResult {
-    if(hasEntity(Land::class)) {
-        if(totalLandUse > landOwned) {
-            return TxResult.Fail.LandOveruse()
-        }
-    }
-    return TxResult.Success
-}
+fun User.validateBuildTx(): TxResult =
+    if (hasEntity(Land::class) && totalLandUse > landOwned) {
+        TxResult.Fail.LandOveruse()
+    } else TxResult.Success
 
-@Suppress("FunctionName", "DEPRECATION")
+
+@Suppress("FunctionName")
 fun User._applyBuildTx(tx: TxBuilding) {
     val building = building(tx.buildingClass)
     log.trace { "Applying: $tx for $building" }
@@ -75,6 +72,7 @@ fun User._applyBuildTx(tx: TxBuilding) {
         TxOperation.INCREASE -> {
             building._setOwnedInternal += tx.amount
         }
+
         TxOperation.DECREASE -> {
             building._setOwnedInternal -= tx.amount
         }

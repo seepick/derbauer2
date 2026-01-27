@@ -72,9 +72,7 @@ class Textmap(
         cursor.reset()
     }
 
-    private fun get(x: Int, y: Int): Char = buffer[y][x]
     private fun set(x: Int, y: Int, char: Char) {
         buffer[y][x] = char
     }
-
 }

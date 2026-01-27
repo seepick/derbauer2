@@ -16,7 +16,9 @@ inline fun <reified R : Resource> User.resource(): R =
     resources.find<R>()
 
 
-fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? = resources.findOrNull(type) as R?
+@Suppress("UNCHECKED_CAST")
+fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? =
+    resources.findOrNull(type) as R?
 
 context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)

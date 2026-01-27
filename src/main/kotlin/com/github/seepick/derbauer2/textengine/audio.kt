@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.textengine
 import io.github.oshai.kotlinlogging.KotlinLogging
 import java.awt.Toolkit
 
-interface Beeper {
+fun interface Beeper {
     fun beep(reason: String)
 }
 

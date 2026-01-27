@@ -10,7 +10,7 @@ interface Page : Renderer, KeyListener {
     }
 }
 
-interface Renderer {
+fun interface Renderer {
     fun renderText(textmap: Textmap)
 }
 

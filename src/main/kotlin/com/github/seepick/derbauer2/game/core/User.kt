@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.common.z
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-interface DeepCopyable<T> {
+fun interface DeepCopyable<T> {
     fun deepCopy(): T
 }
 

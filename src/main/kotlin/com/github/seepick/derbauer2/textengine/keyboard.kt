@@ -9,7 +9,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-interface KeyListener {
+fun interface KeyListener {
     fun onKeyPressed(key: KeyPressed): Boolean
 }
 

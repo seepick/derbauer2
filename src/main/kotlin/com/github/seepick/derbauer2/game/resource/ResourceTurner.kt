@@ -2,7 +2,6 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
@@ -48,6 +47,7 @@ fun buildResourceReport(code: ResourceReportBuilder.() -> Unit): ResourceReport 
 }
 
 class ResourceReportBuilder {
+
     private val changes = mutableMapOf<KClass<out Resource>, ResourceReportLine>()
 
     fun add(resource: Resource, change: Z) {
@@ -55,11 +55,10 @@ class ResourceReportBuilder {
     }
 
     fun add(resource: Resource, change: Zz) {
-        changes.putIfAbsent(resource::class, ResourceReportLine(resource, 0.zz))
-        changes[resource::class]!!.changeAmount += change
+        val line = changes.getOrPut(resource::class) { ResourceReportLine(resource, change) }
+        line.changeAmount += change
     }
 
-    fun build(): ResourceReport {
-        return ResourceReport(changes.entries.map { it.value })
-    }
+    fun build() =
+        ResourceReport(changes.entries.map { it.value })
 }

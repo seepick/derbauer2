@@ -16,25 +16,29 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
+@Suppress("MayBeConstant")
+object Versions {
+    val kotlinLogging = "7.0.13"
+    val logback = "1.5.23"
+    val kotest = "6.1.1"
+    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError
+    val mockk = "1.14.7"
+}
+
 dependencies {
     implementation(compose.desktop.currentOs)
-
-    // DEPENDENCY INJECTION - https://insert-koin.io/docs/reference/koin-compose/compose
-    val versionKoin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError
     listOf("compose", "compose-viewmodel").forEach {
-        implementation("io.insert-koin:koin-$it:$versionKoin")
+        implementation("io.insert-koin:koin-$it:${Versions.koin}")
     }
-
-    // LOGGING
-    implementation("io.github.oshai:kotlin-logging:7.0.13")
-    implementation("ch.qos.logback:logback-classic:1.5.23")
+    implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
+    implementation("ch.qos.logback:logback-classic:${Versions.logback}")
 
     // TEST
     listOf("assertions-core", "property", "runner-junit5", "extensions-koin").forEach {
-        testImplementation("io.kotest:kotest-$it:6.1.1")
+        testImplementation("io.kotest:kotest-$it:${Versions.kotest}")
     }
-    testImplementation("io.mockk:mockk:1.14.7")
-    testImplementation("io.insert-koin:koin-test:$versionKoin")
+    testImplementation("io.mockk:mockk:${Versions.mockk}")
+    testImplementation("io.insert-koin:koin-test:${Versions.koin}")
 }
 
 kotlin {

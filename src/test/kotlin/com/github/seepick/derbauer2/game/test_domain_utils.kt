@@ -18,19 +18,18 @@ val User.food
 
 fun <R : Resource> User.enableAndSet(resource: R, amount: Z): R {
     enable(resource)
-    @Suppress("DEPRECATION") // by-pass validation via transaction
+    // by-pass validation via transaction
     resource._setOwnedInternal = amount
     return resource
 }
 
 fun <B : Building> User.enableAndSet(building: B, amount: Z): B {
     enable(building)
-    @Suppress("DEPRECATION") // by-pass validation via transaction
+    // by-pass validation via transaction
     building._setOwnedInternal = amount
     return building
 }
 
-@Suppress("DEPRECATION")
 var Ownable.ownedForTest
     get() = owned
     set(value) {

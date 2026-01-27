@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.textengine.KeyListener
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.PromptProvider
@@ -9,16 +10,13 @@ abstract class SimpleGamePage(
     private val gameRenderer: GameRenderer,
     private val button: Button,
     private val contentRenderer: (Textmap) -> Unit,
-) : Page {
+) : Page, KeyListener by button {
 
     override fun renderText(textmap: Textmap) {
         gameRenderer.render(textmap, promptIndicator = button.key.label, emptyList()) {
             contentRenderer(textmap)
         }
     }
-
-    override fun onKeyPressed(key: KeyPressed) =
-        button.onKeyPressed(key)
 }
 
 abstract class PromptGamePage(
@@ -52,7 +50,7 @@ abstract class NotificationPage(
     private val asciiArt: () -> AsciiArt,
     private val contentRenderer: (Textmap) -> Unit,
     private val button: Button,
-) : Page {
+) : Page, KeyListener by button {
 
     override fun renderText(textmap: Textmap) {
         textmap.line("$emoji $title $emoji")
@@ -63,7 +61,4 @@ abstract class NotificationPage(
         textmap.fillVertical(1)
         textmap.line("[${button.key.label}] ${button.label}")
     }
-
-    override fun onKeyPressed(key: KeyPressed) =
-        button.onKeyPressed(key)
 }
