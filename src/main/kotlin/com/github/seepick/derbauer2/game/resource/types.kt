@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabel
@@ -17,33 +18,49 @@ interface ResourceReference {
     val resourceClass: KClass<out Resource>
 }
 
-data class Citizen(override var _setOwnedOnlyByTx: Z) : StorableResource, HasLabel by Data, HasEmoji by Data {
+class Citizen : StorableResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Citizen"
         override val emojiOrNull = "🧑".emoji
     }
+
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Citizen().also { it._setOwnedInternal = owned }
+    override fun toString() = "Citizen(owned=$owned)"
 }
 
-data class Gold(override var _setOwnedOnlyByTx: Z) : Resource, HasLabel by Data, HasEmoji by Data {
+class Gold : Resource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Gold"
         override val labelPlural = labelSingular
         override val emojiOrNull = "💰".emoji
     }
+
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Gold().also { it._setOwnedInternal = owned }
+    override fun toString() = "Gold(owned=$owned)"
 }
 
-data class Food(override var _setOwnedOnlyByTx: Z) : StorableResource, HasLabel by Data, HasEmoji by Data {
+class Food : StorableResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Food"
         override val labelPlural = labelSingular
         override val emojiOrNull = "🍖".emoji
     }
+
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Food().also { it._setOwnedInternal = owned }
+    override fun toString() = "Food(owned=$owned)"
 }
 
-data class Land(override var _setOwnedOnlyByTx: Z) : Resource, HasLabel by Data, HasEmoji by Data {
+class Land : Resource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Land"
         override val labelPlural = labelSingular
         override val emojiOrNull = "🌍".emoji
     }
+
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Land().also { it._setOwnedInternal = owned }
+    override fun toString() = "Land(owned=$owned)"
 }

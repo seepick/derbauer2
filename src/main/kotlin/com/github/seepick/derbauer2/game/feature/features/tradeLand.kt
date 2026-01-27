@@ -16,4 +16,6 @@ object TradeLandDescriptor : FeatureDescriptor(
     override fun build() = TradeLandFeature(this)
 }
 
-class TradeLandFeature(descriptor: TradeLandDescriptor) : Feature(descriptor)
+class TradeLandFeature(descriptor: TradeLandDescriptor) : Feature(descriptor) {
+    override fun deepCopy() = this // immutable
+}

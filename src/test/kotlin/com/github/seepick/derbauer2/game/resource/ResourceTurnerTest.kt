@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.enableAndSet
 import com.github.seepick.derbauer2.game.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -21,9 +22,9 @@ class ResourceTurnerTest : DescribeSpec({
     describe("executeAndReturnReport") {
         fun withOkSetup(test: SetupContext.() -> Unit) {
             val user = User()
-            val resource = user.add(Food(0.z))
-            val producer = user.add(Farm(1.z))
-            val storage = user.add(Granary(1.z))
+            val resource = user.enable(Food())
+            val producer = user.enableAndSet(Farm(), 1.z)
+            val storage = user.enableAndSet(Granary(), 1.z)
 
             test(SetupContext(user, resource, producer, storage))
         }

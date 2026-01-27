@@ -40,7 +40,7 @@ class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
     override val asciiArt = feature.asciiArt
 
     override fun execute(user: User) {
-        user.add(feature)
+        user.enable(feature)
     }
 }
 

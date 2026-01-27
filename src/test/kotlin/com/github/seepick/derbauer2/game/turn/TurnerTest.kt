@@ -2,11 +2,13 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
+import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.citizen.CitizenTurner
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.enableAndSet
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -18,6 +20,7 @@ import com.github.seepick.derbauer2.game.shouldContainLine
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import kotlin.math.ceil
 
 class TurnerTest : DescribeSpec({
     lateinit var user: User
@@ -50,44 +53,49 @@ class TurnerTest : DescribeSpec({
     }
     describe("produce resource") {
         it("Given producer and storage When produce Then owned increased and report contains") {
-            user.add(Land(10.z))
-            val farm = user.add(Farm(1.z))
-            user.add(Granary(1.z))
-            val food = user.add(Food(0.z))
+            user.enableAndSet(Land(), 10.z)
+            val farm = user.enableAndSet(Farm(), 1.z)
+            user.enableAndSet(Granary(), 1.z)
+            val food = user.enable(Food())
 
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.totalProducingResourceAmount
-            report.resourceReportLines shouldContainLine(food to farm.totalProducingResourceAmount.asSigned)
+            report.resourceReportLines shouldContainLine (food to farm.totalProducingResourceAmount.asZz)
         }
         it("Given no food storage When produce Then stay 0") {
-            user.add(Land(10.z))
-            user.add(Farm(1.z))
-            val food = user.add(Food(0.z))
+            user.enableAndSet(Land(), 10.z)
+            user.enableAndSet(Farm(), 1.z)
+            val food = user.enable(Food())
 
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.z
-            report.resourceReportLines shouldContainLine(food to 0.zz)
+            report.resourceReportLines shouldContainLine (food to 0.zz)
         }
         it("Given 1 space left When produce 2 Then max capped") {
-            user.add(Land(10.z))
-            val granary = user.add(Granary(1.z))
+            user.enableAndSet(Land(), 10.z)
+            val granary = user.enableAndSet(Granary(), 1.z)
             val diff = 1
-            val food = user.add(Food(granary.totalStorageAmount - diff))
-            user.add(Farm(1.z))
+            val food = user.enableAndSet(Food(), granary.totalStorageAmount - diff)
+            user.enableAndSet(Farm(), 1.z)
 
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceReportLines shouldContainLine(food to diff.zz)
+            report.resourceReportLines shouldContainLine (food to diff.zz)
         }
     }
     describe("citizens") {
         it("Given sufficient citizens Then increase gold") {
-            val gold = user.add(Gold(0.z))
-            user.add(Citizen((1.0 / Mechanics.citizenTax.value).toLong().z))
-            user.add(Food(0.z))
+            val gold = user.enable(Gold())
+            val targetCitizens = (1.0 / Mechanics.citizenTax.value).toLong().z
+            val house = House()
+            val housesNeeded = ceil(targetCitizens.value.toDouble() / house.storageAmount.value).toLong().z
+            user.enableAndSet(Land(), housesNeeded * house.landUse)
+            user.enableAndSet(house, housesNeeded)
+            user.enableAndSet(Citizen(), targetCitizens)
+            user.enable(Food())
 
             val report = turner.collectAndExecuteNextTurnReport()
 

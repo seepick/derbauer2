@@ -26,35 +26,39 @@ interface BuildingReference {
     val buildingClass: KClass<out Building>
 }
 
-class House(override var _setOwnedOnlyByTx: Z = 0.z) : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
+class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "House"
     }
-
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = House().also { it._setOwnedInternal = owned }
     override val costsGold = Mechanics.houseCostsGold.z
     override val landUse = Mechanics.houseLandUse.z
     override val storableResourceClass = Citizen::class
     override val storageAmount = Mechanics.houseStoreCitizen.z
 }
 
-class Farm(override var _setOwnedOnlyByTx: Z = 0.z) : Building, ProducesResourceOwnable, HasLabel by Data,
+class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
     HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Farm"
     }
-
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Farm().also { it._setOwnedInternal = owned }
     override val costsGold = Mechanics.farmCostsGold.z
     override val landUse = Mechanics.farmLandUse.z
     override val producingResourceClass = Food::class
     override val producingResourceAmount = Mechanics.farmProduceFood.z
+//    TODO override fun toString() = "Citizen(owned=$owned)"
 }
 
-class Granary(override var _setOwnedOnlyByTx: Z = 0.z) : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
+class Granary : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Granary"
         override val labelPlural = "Granaries"
     }
-
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Granary().also { it._setOwnedInternal = owned }
     override val costsGold = Mechanics.granaryCostsGold.z
     override val landUse = Mechanics.granaryLanduse.z
 

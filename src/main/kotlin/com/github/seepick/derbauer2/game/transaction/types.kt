@@ -28,7 +28,8 @@ sealed interface TxResult {
     sealed interface Fail : TxResult {
         val message: String
 
-        data class InsufficientResources(override val message: String = "Insufficient resources") : Fail
+        class LandOveruse(override val message: String = "Using more land than available") : Fail
+        class InsufficientResources(override val message: String = "Insufficient resources") : Fail
     }
 }
 

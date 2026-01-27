@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.enableAndSet
 import com.github.seepick.derbauer2.game.gold
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -23,21 +24,21 @@ class TraderTest : DescribeSpec({
     context("Buy") {
         describe("Results") {
             it("When buy infinite resource like gold Then succeed") {
-                user.add(Gold(0.z))
+                user.enable(Gold())
                 user.trade(
                     TradeRequest(Gold::class, Buy, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
             it("Given enough storage When buy storable Then succeed") {
-                user.add(Food(0.z))
-                user.add(Granary(1.z))
+                user.enable(Food())
+                user.enableAndSet(Granary(), 1.z)
 
                 user.trade(
                     TradeRequest(Food::class, Buy, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
             it("Given no storage When buy Then fail") {
-                user.add(Food(0.z))
+                user.enable(Food())
 
                 user.trade(
                     TradeRequest(Food::class, Buy, 1.z),
@@ -48,7 +49,7 @@ class TraderTest : DescribeSpec({
         describe("Operation") {
             val buyAmount = 1.z
             it("When buy infinite resource gold Then increased") {
-                user.add(Gold(0.z))
+                user.enable(Gold())
                 user.trade(TradeRequest(Gold::class, Buy, 1.z))
                 user.gold shouldBeEqual 1.z
             }
@@ -58,14 +59,14 @@ class TraderTest : DescribeSpec({
     context("Sell") {
         describe("Results") {
             it("Given no gold When selling Then fails") {
-                user.add(Gold(0.z))
+                user.enable(Gold())
 
                 user.trade(
                     TradeRequest(Gold::class, Sell, 1.z),
                 ).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
             }
             it("Given some gold When selling Then succeed") {
-                user.add(Gold(1.z))
+                user.enableAndSet(Gold(), 1.z)
 
                 user.trade(
                     TradeRequest(Gold::class, Sell, 1.z),
@@ -74,12 +75,12 @@ class TraderTest : DescribeSpec({
         }
         describe("Operation") {
             it("Given no gold When selling Then gold unchanged") {
-                user.add(Gold(0.z))
+                user.enable(Gold())
                 user.trade(TradeRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }
             it("Given some gold When selling Then gold changed") {
-                user.add(Gold(1.z))
+                user.enableAndSet(Gold(), 1.z)
                 user.trade(TradeRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }

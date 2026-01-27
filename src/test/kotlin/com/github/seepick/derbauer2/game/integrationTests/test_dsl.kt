@@ -5,7 +5,6 @@ import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.initAssets
 import com.github.seepick.derbauer2.game.ownedForTest
-import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.Beeper
 import com.github.seepick.derbauer2.textengine.CurrentPage
@@ -44,10 +43,13 @@ fun Given(code: GivenDsl.() -> Unit): GivenDsl {
 
 @GameDsl
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
+    inline fun <reified A : Asset> setOwned(amount: Z) {
+        val ownable = user.all.find<A>()
+        ownable.ownedForTest = amount
+    }
     inline fun <reified A : Asset> changeOwned(amount: Z) {
         val ownable = user.all.find<A>()
-        user.all.findOrNull<Food>()
-        ownable.ownedForTest = amount
+        ownable.ownedForTest += amount
     }
 }
 

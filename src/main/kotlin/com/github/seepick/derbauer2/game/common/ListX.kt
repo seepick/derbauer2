@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.common
 import kotlin.reflect.KClass
 
 @Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
-class ListX<E : Any>(val delegate: List<E>) : List<E> by delegate, ListXOps<E> {
+data class ListX<E : Any>(val delegate: List<E>) : List<E> by delegate, ListXOps<E> {
     inline fun <reified X : E> find(): X = find(X::class) as X
     inline fun <reified X : E> findOrNull(): X? = findOrNull(X::class) as X?
 }

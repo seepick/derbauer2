@@ -16,7 +16,7 @@ data class Zz(
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
-    fun asUnsigned() = abs(value).z
+    fun asZ() = abs(value).z
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Zz) = Zz(value + other.value)
@@ -34,16 +34,21 @@ data class Zz(
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
+class NegativeZException(val value: Long) :
+    IllegalArgumentException("Negative value for unsigned long: $value")
+
 /** Unsigned long. */
 data class Z(
     val value: Long,
 ) {
     init {
-        require(value >= 0) { "Negative value: $value" }
+        if(value < 0) {
+            throw NegativeZException(value)
+        }
     }
 
     val magnitutedValue = translateToMaxMagnitude(value)
-    val asSigned get() = value.zz
+    val asZz get() = value.zz
 
     fun maxOf(owned: Z) = if (this > owned) this else owned
     fun minOf(owned: Z) = if (this < owned) this else owned

@@ -2,18 +2,26 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.TxResource
-import com.github.seepick.derbauer2.game.resource.landAvailable
+import com.github.seepick.derbauer2.game.resource.landOwned
+import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxOwned
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
-class TxBuild(
+fun User.build(buildingClass: KClass<out Building>): TxResult =
+    execTx(
+        TxBuilding(buildingClass, 1.zz,),
+        TxResource(Gold::class, -building(buildingClass).costsGold),
+    )
+
+data class TxBuilding(
     override val targetClass: KClass<out Building>,
     override val operation: TxOperation,
     override val amount: Z
@@ -21,35 +29,50 @@ class TxBuild(
     constructor(targetClass: KClass<out Building>, amount: Zz) : this(
         targetClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-        amount = amount.asUnsigned()
+        amount = amount.asZ()
     )
 
     override val buildingClass = targetClass
 }
 
-fun User.build(building: Building): TxResult =
-    execTx(
-        TxResource(
-            targetClass = Gold::class,
-            operation = TxOperation.DECREASE,
-            amount = building.costsGold,
-        ),
-        TxBuild(
-            targetClass = building::class,
-            operation = TxOperation.INCREASE,
-            amount = 1.z,
-        )
+fun User.execTxBuilding(
+    buildingClass: KClass<out Building>,
+    amount: Zz,
+) = execTx(
+    TxBuilding(
+        targetClass = buildingClass,
+        amount = amount,
     )
+)
 
-fun User.validateBuildTx(tx: TxBuild): TxResult {
-    if (landAvailable < tx.building.landUse) {
-        return TxResult.Fail.InsufficientResources("Not enough land")
+fun User.execTxBuilding(
+    buildingClass: KClass<out Building>,
+    amount: Z,
+) = execTx(
+    TxBuilding(
+        targetClass = buildingClass,
+        amount = amount.asZz,
+    )
+)
+
+fun User.validateBuildTx(): TxResult {
+    if(hasEntity(Land::class)) {
+        if(totalLandUse > landOwned) {
+            return TxResult.Fail.LandOveruse()
+        }
     }
     return TxResult.Success
 }
 
-@Suppress("FunctionName")
-fun User._applyBuildTx(tx: TxBuild) {
-    @Suppress("DEPRECATION")
-    building(tx.buildingClass)._setOwnedOnlyByTx += 1
+@Suppress("FunctionName", "DEPRECATION")
+fun User._applyBuildTx(tx: TxBuilding) {
+    val building = building(tx.buildingClass)
+    when (tx.operation) {
+        TxOperation.INCREASE -> {
+            building._setOwnedInternal += tx.amount
+        }
+        TxOperation.DECREASE -> {
+            building._setOwnedInternal -= tx.amount
+        }
+    }
 }

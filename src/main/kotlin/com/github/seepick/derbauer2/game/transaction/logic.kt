@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.transaction
 
-import com.github.seepick.derbauer2.game.building.TxBuild
+import com.github.seepick.derbauer2.game.building.TxBuilding
 import com.github.seepick.derbauer2.game.building._applyBuildTx
 import com.github.seepick.derbauer2.game.building.validateBuildTx
-import com.github.seepick.derbauer2.game.common.deepCopy
+import com.github.seepick.derbauer2.game.common.NegativeZException
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource._applyResourceTx
@@ -19,28 +19,29 @@ fun User.execTx(txs: List<Tx>): TxResult {
     log.debug { "Executing transactions: $txs" }
 
     val snapshot = deepCopy()
-    txs.forEach { snapshot._applyTx(it) }
+    try {
+        txs.forEach { snapshot._applyTx(it) }
+    } catch(_: NegativeZException) {
+        log.info { "Transactions blocked already during snapshot due to negative value." }
+        return TxResult.Fail.InsufficientResources()
+    }
 
-    val fails = txs.map { snapshot.validateTx(it) }.filterIsInstance<TxResult.Fail>()
+    val fails = listOf(
+        snapshot.validateResourceTx(),
+        snapshot.validateBuildTx(),
+    ).filterIsInstance<TxResult.Fail>()
     if (fails.isNotEmpty()) {
-        return fails.first() // TODO aggregate messages
+        return fails.first() // TODO could aggregate messages
     }
     txs.forEach(::_applyTx)
     return TxResult.Success
 }
 
-private fun User.validateTx(tx: Tx): TxResult =
-    when (tx) {
-        is TxResource -> validateResourceTx(tx)
-        is TxBuild -> validateBuildTx(tx)
-        else -> error("Unknown Tx type: ${tx::class}")
-    }
-
 @Suppress("FunctionName")
 private fun User._applyTx(tx: Tx) {
     when (tx) {
         is TxResource -> _applyResourceTx(tx)
-        is TxBuild -> _applyBuildTx(tx)
+        is TxBuilding -> _applyBuildTx(tx)
         else -> error("Unknown Tx type: ${tx::class}")
     }
 }
