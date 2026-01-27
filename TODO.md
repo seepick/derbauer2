@@ -4,8 +4,6 @@
 
 * documentation
 * BZ: implement birth rate, increase citizens on turn
-* detekt (build fail + notification)
-* sonarqube cloud (+MCP); quality gates/build fail + notification
 
 ## Next
 

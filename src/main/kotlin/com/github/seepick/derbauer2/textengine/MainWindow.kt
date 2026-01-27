@@ -34,8 +34,8 @@ private val log = logger {}
 private val outerBorder = 10.dp
 private val innerMargin = 5.dp
 val mainWindowMatrixSize = MatrixSize(rows = 25, cols = 80)
-private val mainContentWidth = (10.85).dp * mainWindowMatrixSize.cols
-private val mainContentHeight = (22.2).dp * mainWindowMatrixSize.rows
+private val mainContentWidth = 10.85.dp * mainWindowMatrixSize.cols
+private val mainContentHeight = 22.2.dp * mainWindowMatrixSize.rows
 
 private fun calcWinSize(): DpSize {
     val borderAndMarginGap = outerBorder.times(2) + innerMargin.times(2)
@@ -74,7 +74,6 @@ fun showMainWindow(
                     initState(user)
                     initialized = 1
                 }
-
                 Window(
                     title = title,
                     onCloseRequest = ::exitApplication,

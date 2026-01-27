@@ -10,6 +10,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
     id ("org.sonarqube") version "7.2.2.6593"
+    id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
 repositories {
@@ -26,6 +27,7 @@ object Versions {
     val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError
     val mockk = "1.14.7"
     val jacoco = "0.8.14"
+    val detekt = "1.23.8"
 }
 
 dependencies {
@@ -42,6 +44,9 @@ dependencies {
     }
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.insert-koin:koin-test:${Versions.koin}")
+
+    // DETEKT
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
 }
 
 kotlin {
@@ -82,6 +87,7 @@ tasks.jacocoTestReport {
         csv.required = false
     }
 }
+
 tasks.jacocoTestCoverageVerification {
     violationRules {
         rule {
@@ -94,6 +100,14 @@ tasks.jacocoTestCoverageVerification {
 
 tasks.named("check") {
     dependsOn(tasks.named("jacocoTestCoverageVerification"))
+}
+
+detekt {
+    toolVersion = Versions.detekt
+    source.setFrom("src/main/kotlin", "src/test/kotlin")
+    config.setFrom(project.rootDir.absolutePath + "/src/main/config/detekt.yml")
+    parallel = true
+    ignoreFailures = false
 }
 
 tasks.withType<DependencyUpdatesTask> {
