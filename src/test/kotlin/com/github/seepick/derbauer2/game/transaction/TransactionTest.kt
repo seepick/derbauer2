@@ -44,9 +44,7 @@ class TransactionTest : DescribeSpec({
             user.enable(House())
 
             user.execTx(TxBuilding(House::class, 1.zz))
-                .shouldBeInstanceOf<TxResult.Fail>().message.should {
-                    it.lowercase().contains("FIXME building not enough land") // FIXME change msg
-                }
+                .shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
         it("Given no storage When adding resource Then fail") {
             val user = User()

@@ -15,24 +15,41 @@ private val log = logger {}
 fun User.execTx(first: Tx, vararg other: Tx) =
     execTx(listOf(first, *other))
 
-fun User.execTx(txs: List<Tx>): TxResult {
-    log.debug { "Executing transactions: $txs" }
+sealed interface TxMaybe<T> {
+    data class Ok<T>(val value: T) : TxMaybe<T>
+    class Fail<T>(val fail: TxResult.Fail) : TxMaybe<T>
+}
 
+private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
     val snapshot = deepCopy()
     try {
         txs.forEach { snapshot._applyTx(it) }
-    } catch(_: NegativeZException) {
+    } catch (_: NegativeZException) {
         log.info { "Transactions blocked already during snapshot due to negative value." }
-        return TxResult.Fail.InsufficientResources()
+        return TxMaybe.Fail(TxResult.Fail.InsufficientResources())
+    }
+    return TxMaybe.Ok(snapshot)
+}
+
+fun User.execTx(txs: List<Tx>): TxResult {
+    log.debug { "Executing transactions: $txs" }
+
+    val maybeSnapshot = copyAndApply(txs)
+    val snapshot: User
+    when (maybeSnapshot) {
+        is TxMaybe.Fail -> return maybeSnapshot.fail
+        is TxMaybe.Ok -> snapshot = maybeSnapshot.value
     }
 
     val fails = listOf(
         snapshot.validateResourceTx(),
         snapshot.validateBuildTx(),
     ).filterIsInstance<TxResult.Fail>()
+
     if (fails.isNotEmpty()) {
-        return fails.first() // TODO could aggregate messages
+        return TxResult.Fail.of(fails)
     }
+
     txs.forEach(::_applyTx)
     return TxResult.Success
 }

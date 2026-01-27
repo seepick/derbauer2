@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.ListX
+import com.github.seepick.derbauer2.game.common.z
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -13,29 +14,25 @@ class User : DeepCopyable<User> {
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)
 
-    fun <E : Entity> enable(entity: E) = entity.also {
-        // FIXME if add entity:ownable, then would need to wire through TX-infra to do validations
-        // e.g. can add(Food(100.units)) if enough storage
-        // add(House(100.units)) if enough land, etc.
-        // check preconditions, like: if add OccupiesLand, but has no Land resource yet
+    fun <E : Entity> enable(entity: E, disableCheck: Boolean = false) = entity.also {
+        if(!disableCheck && entity is Ownable) {
+            require(entity.owned == 0.z) { "Enable must have 0 owned; change it later via TX: $entity" }
+        }
         if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists!")
         }
-        log.info { "Adding ${entity::class.simpleName} -- $entity" }
+        log.info { "Enabling $entity" }
         _all += entity
     }
-
-//    fun add(entity: Entity, vararg moreEntities: Entity) {
-//        add(entity)
-//        moreEntities.forEach { add(it) }
-//    }
 
     fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
 
     override fun deepCopy(): User =
         User().also { copy ->
+            log.info { "Creating deep copy." }
             all.forEach { entity ->
-                copy.enable(entity.deepCopy())
+                // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
+                copy.enable(entity.deepCopy(), disableCheck = true)
             }
         }
 
@@ -48,5 +45,5 @@ class User : DeepCopyable<User> {
     override fun hashCode(): Int =
         _all.hashCode()
 
-    override fun toString() = "User(all=$_all)"
+    override fun toString() = "User($_all)"
 }

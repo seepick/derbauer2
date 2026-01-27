@@ -44,12 +44,10 @@ class Turner(
 }
 
 private fun ResourceReport.execute(user: User) {
-    lines.forEach { change -> // TODO could aggregate
-        user.execTx(
-            TxResource(
-                targetClass = change.resource::class,
-                amount = change.changeAmount,
-            )
-        ).errorOnFail()
-    }
+    user.execTx(lines.map { line ->
+        TxResource(
+            targetClass = line.resource::class,
+            amount = line.changeAmount,
+        )
+    }).errorOnFail()
 }

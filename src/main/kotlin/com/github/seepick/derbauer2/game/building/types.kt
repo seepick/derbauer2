@@ -36,6 +36,7 @@ class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     override val landUse = Mechanics.houseLandUse.z
     override val storableResourceClass = Citizen::class
     override val storageAmount = Mechanics.houseStoreCitizen.z
+    override fun toString() = "House(owned=$owned)"
 }
 
 class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
@@ -49,7 +50,7 @@ class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
     override val landUse = Mechanics.farmLandUse.z
     override val producingResourceClass = Food::class
     override val producingResourceAmount = Mechanics.farmProduceFood.z
-//    TODO override fun toString() = "Citizen(owned=$owned)"
+    override fun toString() = "Farm(owned=$owned)"
 }
 
 class Granary : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
@@ -64,6 +65,7 @@ class Granary : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
 
     override val storableResourceClass = Food::class
     override val storageAmount = Mechanics.granaryCapacity.z
+    override fun toString() = "Granary(owned=$owned)"
 }
 
 // technology buildings

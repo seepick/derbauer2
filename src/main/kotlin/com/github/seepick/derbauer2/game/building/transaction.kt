@@ -13,7 +13,10 @@ import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxOwned
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
+
+private val log = logger {}
 
 fun User.build(buildingClass: KClass<out Building>): TxResult =
     execTx(
@@ -67,6 +70,7 @@ fun User.validateBuildTx(): TxResult {
 @Suppress("FunctionName", "DEPRECATION")
 fun User._applyBuildTx(tx: TxBuilding) {
     val building = building(tx.buildingClass)
+    log.trace { "Applying: $tx for $building" }
     when (tx.operation) {
         TxOperation.INCREASE -> {
             building._setOwnedInternal += tx.amount

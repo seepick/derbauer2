@@ -21,6 +21,16 @@ enum class TxOperation {
     DECREASE,
 }
 
+fun List<TxResult>.merge(): TxResult {
+    if(isEmpty()) return Success
+    val fails = filterIsInstance<Fail>()
+    return if(fails.isEmpty()) {
+        Success
+    } else {
+        Fail.of(fails)
+    }
+}
+
 sealed interface TxResult {
 
     object Success : TxResult
@@ -30,6 +40,22 @@ sealed interface TxResult {
 
         class LandOveruse(override val message: String = "Using more land than available") : Fail
         class InsufficientResources(override val message: String = "Insufficient resources") : Fail
+
+        class CompoundFail(
+            val fails: List<Fail>,
+            override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}"
+        ) : Fail
+
+        companion object {
+            fun of(fails: List<Fail>): Fail {
+                require(fails.isNotEmpty())
+                return if (fails.size == 1) {
+                    fails.first()
+                } else {
+                    CompoundFail(fails)
+                }
+            }
+        }
     }
 }
 

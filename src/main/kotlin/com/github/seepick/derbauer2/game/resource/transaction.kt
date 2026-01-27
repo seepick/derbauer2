@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxOwned
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
+import com.github.seepick.derbauer2.game.transaction.merge
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -47,38 +48,17 @@ fun User.execTxResource(
     )
 )
 
-fun User.validateResourceTx(): TxResult {
-    val fails = resources.filterIsInstance<StorableResource>().map { resource ->
+fun User.validateResourceTx(): TxResult =
+    resources.filterIsInstance<StorableResource>().map { resource ->
         if (resource.owned > storageFor(resource)) {
             TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
         } else TxResult.Success
-    }.filterIsInstance<TxResult.Fail>()
-    if(fails.isNotEmpty()) {
-        log.debug { "Failed: $fails" }
-        return fails.first() // TODO merge
-    }
-//    val resource = resource(tx.resourceClass)
-//    when (tx.operation) {
-//        TxOperation.DECREASE -> {
-//            if (resource.owned < tx.amount) {
-//                return TxResult.Fail.InsufficientResources("Not enough ${resource.emojiAndLabelPlural}")
-//            }
-//        }
-//
-//        TxOperation.INCREASE -> {
-//            if (resource is StorableResource) {
-//                if (!isAbleToStore(resource, tx.amount)) {
-//                    return TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
-//                }
-//            }
-//        }
-//    }
-    return TxResult.Success
-}
+    }.merge()
 
 @Suppress("FunctionName", "DEPRECATION")
 fun User._applyResourceTx(tx: TxResource) {
     val resource = resource(tx.resourceClass)
+    log.trace { "Applying: $tx for $resource" }
     when (tx.operation) {
         TxOperation.INCREASE -> resource._setOwnedInternal += tx.amount
         TxOperation.DECREASE -> resource._setOwnedInternal -= tx.amount
