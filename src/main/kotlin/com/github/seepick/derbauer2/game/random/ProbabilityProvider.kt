@@ -17,8 +17,7 @@ class ProbabilityProvider<R>(
     private var currentValue = startValue
 
     fun randomProvide(): R? {
-        // TODO use a cooldown mechanism
-        if (Random.Default.nextDouble(0.0, 1.0) <= currentValue) {
+        if (Random.nextDouble(0.0, 1.0) <= currentValue) {
             log.debug { "probability hit." }
             currentValue = 0.0
             return provider()

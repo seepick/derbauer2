@@ -21,6 +21,7 @@
 
 ## Later
 
+* BZ: extend probability provider: use a cooldown mechanism; linear/exp/log chance 
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
 * cheat mode (press secret key, increase resources)
 * UI: sound: continuous bg music; press key beep; each age different theme?!
@@ -28,6 +29,7 @@
 * UI: font styling: <red> <green> <bold> etc.
   * like ctrl-codes in shell; process in renderer and remember positions and style for compose annotations
 * BZ: immigration happening
+* UI: dynamic window size, adjust so it correlates with textmap size (font measure size needed)
 
 ## Tech
 

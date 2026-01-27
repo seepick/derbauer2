@@ -38,7 +38,6 @@ private val mainContentWidth = (10.85).dp * mainWindowMatrixSize.cols
 private val mainContentHeight = (22.2).dp * mainWindowMatrixSize.rows
 
 private fun calcWinSize(): DpSize {
-    // FIXME adjust window size, correlate with textmap size
     val borderAndMarginGap = outerBorder.times(2) + innerMargin.times(2)
     return DpSize(
         width = mainContentWidth + borderAndMarginGap,
