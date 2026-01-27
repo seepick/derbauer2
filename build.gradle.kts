@@ -9,7 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
-    id ("org.sonarqube") version "<FULL_VERSION_NUMBER>"
+    id ("org.sonarqube") version "7.2.2.6593"
 }
 
 repositories {

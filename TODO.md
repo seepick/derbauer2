@@ -29,7 +29,7 @@
 
 * refactor text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
 * IT: automated releases
-* IT: coverage
+* IT: switch jacoco to kover?
 
 ## Ideas
 
