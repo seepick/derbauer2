@@ -6,18 +6,18 @@ import com.github.seepick.derbauer2.game.view.MultiView
 import com.github.seepick.derbauer2.game.view.NotificationPage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 
+class HappeningPage(
+    private val multiView: HappeningMultiView,
+) : NotificationPage(
+    title = "Happening",
+    emoji = "✨",
+    asciiArt = { multiView.current().asciiArt },
+    contentRenderer = { multiView.current().render(it) },
+    button = ContinueButton { multiView.continueNextOrFinish() }
+)
+
 class HappeningMultiView(user: User, currentPage: CurrentPage) : MultiView<Happening>(
     user = user,
     currentPage = currentPage,
     targetPageClass = HappeningPage::class,
-)
-
-class HappeningPage(
-    private val controller: HappeningMultiView,
-) : NotificationPage(
-    title = "Happening",
-    emoji = "✨",
-    asciiArt = { controller.current().asciiArt },
-    contentRenderer = { controller.current().render(it) },
-    button = ContinueButton { controller.continueNextOrFinish() }
 )

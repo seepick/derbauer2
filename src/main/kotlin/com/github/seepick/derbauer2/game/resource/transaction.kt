@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
-fun User.txResource(
+fun User.execTxResource(
     resourceClass: KClass<out Resource>,
     amount: Zz,
 ) = execTx(
@@ -20,7 +20,7 @@ fun User.txResource(
     )
 )
 
-fun User.txResource(
+fun User.execTxResource(
     resourceClass: KClass<out Resource>,
     amount: Z,
 ) = execTx(

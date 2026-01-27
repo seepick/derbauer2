@@ -11,7 +11,7 @@
 
 * ? could each turn calculation, be an external, plugged-in feature instead?
 * UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
-* IT: cucumber tests for main flows (super high level)
+* instead `user.add(House(10.z))` enforce `user.tx(..)` to go through validations (e.g. sufficient gold/land); test can by-pass 
 * BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
@@ -21,6 +21,7 @@
 
 ## Later
 
+* BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
 * cheat mode (press secret key, increase resources)
 * UI: sound: continuous bg music; press key beep; each age different theme?!
   * how to configure? overlay menu?!
@@ -43,3 +44,4 @@
 * UI: colored text? (build annotated string necessary for compose text...)
 * UI: set icon in Dock (iconFile in build.gradle)
 * UI: set icon of window
+* IT: cucumber tests for main flows (super high level) ... or simply use current DSL approach?!

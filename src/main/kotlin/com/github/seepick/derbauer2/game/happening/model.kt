@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.view.MultiViewItem
+import com.github.seepick.derbauer2.game.view.MultiViewSubPage
 
 enum class HappeningNature {
     Positive,
@@ -13,4 +13,4 @@ interface HappeningData {
     val nature: HappeningNature
 }
 
-interface Happening : MultiViewItem, HappeningData
+interface Happening : MultiViewSubPage, HappeningData

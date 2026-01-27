@@ -20,7 +20,7 @@ class TxResourceTest : DescribeSpec() {
         describe("simple non-storageable") {
             it("When add Then added") {
                 val resource = user.add(Gold(0.z))
-                user.txResource(resource::class, 1.z).shouldBeSuccess()
+                user.execTxResource(resource::class, 1.z).shouldBeSuccess()
                 resource.owned shouldBeEqual 1.z
             }
         }
@@ -28,7 +28,7 @@ class TxResourceTest : DescribeSpec() {
         describe("storageable") {
             it("Given nothing When add Then fail") {
                 val resource = user.add(Food(0.z))
-                user.txResource(resource::class, 1.z).shouldBeFail()// FIXME should contain ("storage")
+                user.execTxResource(resource::class, 1.z).shouldBeFail()// FIXME should contain ("storage")
             }
         }
     }

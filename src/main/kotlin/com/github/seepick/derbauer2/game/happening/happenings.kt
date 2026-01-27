@@ -1,75 +1,25 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.resource.txResource
-import com.github.seepick.derbauer2.game.transaction.errorOnFail
-import com.github.seepick.derbauer2.game.view.AsciiArt
-import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
+import com.github.seepick.derbauer2.game.happening.happenings.RatsEatFoodDescriptor
 
-sealed class HappeningDescriptor(
+abstract class HappeningDescriptor(
     override val nature: HappeningNature
 ) : HappeningData {
+
+    abstract fun canHappen(user: User): Boolean
+    abstract fun build(user: User): Happening
 
     companion object {
         val all: List<HappeningDescriptor> by lazy {
             listOf(
-                FoundGold,
-                RatsEatFood,
+                FoundGoldDescriptor,
+                RatsEatFoodDescriptor,
                 // !!!!!!!!!!!!!!!!!!!!!
                 // keep MANUALLY in sync
                 // !!!!!!!!!!!!!!!!!!!!!
             )
         }
-    }
-
-    abstract fun build(user: User): Happening
-
-    object FoundGold : HappeningDescriptor(HappeningNature.Positive) {
-        override fun build(user: User): FoundGoldHappening {
-            // TODO consider history, gold amount (max, current, avg over last x-turns), etc.
-            return FoundGoldHappening(goldFound = 20.z, this)
-        }
-    }
-
-    object RatsEatFood : HappeningDescriptor(HappeningNature.Negative) {
-        override fun build(user: User): RatsEatFoodHappening {
-            // TODO check food available; if nothing, maybe turn into luck message ;)
-            return RatsEatFoodHappening(amountFoodEaten = 15.z)
-        }
-    }
-}
-
-class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = HappeningDescriptor.FoundGold) :
-    Happening, HappeningData by descriptor {
-
-    override val asciiArt = AsciiArt.goldPot
-
-    override fun render(textmap: Textmap) {
-        textmap.line("Found $goldFound ${Gold.Text.emojiAndLabel}")
-    }
-
-    override fun execute(user: User) {
-        user.txResource(Gold::class, goldFound.asSigned).errorOnFail()
-    }
-}
-
-class RatsEatFoodHappening(
-    val amountFoodEaten: Z,
-    private val descriptor: HappeningData = HappeningDescriptor.RatsEatFood
-) : Happening, HappeningData by descriptor {
-
-    override val asciiArt = AsciiArt.rat
-
-    override fun render(textmap: Textmap) {
-        textmap.line("Oh noes, rats have eaten ${-amountFoodEaten} ${Food.Text.emojiAndLabel}.")
-    }
-
-    override fun execute(user: User) {
-        // TODO add Happening.prerequisites (during happening selection phase), to filter those who need specific stuff (resources) to be existing; e.g. Food
-        user.txResource(Food::class, -amountFoodEaten).errorOnFail()
     }
 }

@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.view.AsciiArt
-import com.github.seepick.derbauer2.game.view.MultiViewItem
+import com.github.seepick.derbauer2.game.view.MultiViewSubPage
 import com.github.seepick.derbauer2.textengine.Textmap
 
 fun User.hasFeature(searchDescriptor: FeatureDescriptor): Boolean =
@@ -50,7 +50,7 @@ sealed class Feature(
     class TradeLandFeature(descriptor: FeatureDescriptor.TradeLand) : Feature(descriptor)
 }
 
-class FeatureInfo(private val feature: Feature) : MultiViewItem {
+class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
     override fun render(textmap: Textmap) {
         textmap.line(">> ${feature.name} <<")
         textmap.emptyLine()

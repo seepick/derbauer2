@@ -7,22 +7,33 @@ import com.github.seepick.derbauer2.textengine.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-interface MultiViewItem {
+interface MultiViewSubPage {
     val asciiArt: AsciiArt
     fun render(textmap: Textmap)
     fun execute(user: User)
 }
 
-abstract class MultiView<ITEM : MultiViewItem>(
+abstract class MultiView<PAGE : MultiViewSubPage>(
     private val user: User,
     private val currentPage: CurrentPage,
     private val targetPageClass: KClass<out Page>
 ) {
     private val log = logger {}
-    private val unseen = mutableListOf<ITEM>()
     private var onFinishedProcessing: () -> Unit = {}
-
+    private val unseen = mutableListOf<PAGE>()
     fun current() = unseen.first()
+
+    fun process(toBeProcessed: List<PAGE>, onFinishedProcessing: () -> Unit) {
+        if (toBeProcessed.isEmpty()) {
+            onFinishedProcessing()
+            return
+        }
+        currentPage.pageClass = targetPageClass
+        this.onFinishedProcessing = onFinishedProcessing
+        log.debug { "Processing ${toBeProcessed.size}" }
+        unseen.addAll(toBeProcessed)
+        current().execute(user)
+    }
 
     fun continueNextOrFinish() {
         unseen.removeAt(0)
@@ -33,17 +44,5 @@ abstract class MultiView<ITEM : MultiViewItem>(
             log.debug { "Showing next." }
             current().execute(user)
         }
-    }
-
-    fun process(toBeProcessed: List<ITEM>, onFinishedProcessing: () -> Unit) {
-        if (toBeProcessed.isEmpty()) {
-            onFinishedProcessing()
-            return
-        }
-        currentPage.pageClass = targetPageClass
-        this.onFinishedProcessing = onFinishedProcessing
-        log.debug { "Processing ${toBeProcessed.size}" }
-        unseen.addAll(toBeProcessed)
-        current().execute(user)
     }
 }

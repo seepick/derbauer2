@@ -20,27 +20,6 @@ value class AsciiArt(val value: String) {
     """.trimIndent()
         )
 
-        val rat = AsciiArt(
-            """
-         .---.
-      (\./)     \.......-
-      >' '<  (__.'""${'"'}${'"'}
-      " ` " "
-      """.trimIndent()
-        )
-
-        val goldPot = AsciiArt(
-            """
-        _oOoOoOo_  
-       (oOoOoOoOo) 
-        )`""${'"'}${'"'}${'"'}`(  
-       /         \ 
-      | #         |
-      \           /
-       `=========`
-       """.trimIndent()
-        )
-
         val gameOver = AsciiArt(
             """
           ____

@@ -58,7 +58,7 @@ class CitizenTurnerTest : DescribeSpec() {
                 val report = turner.buildReport()
 
                 report.shouldContainLine(food, -food.owned)
-                report.lines.filter { it.resource is Citizen }.shouldBeEmpty() // TODO will fail once birth is enabled
+                report.lines.filter { it.resource is Citizen }.shouldBeEmpty()
             }
             it("Given few citizens and no food Then minimum starvation") {
                 val citizen = user.add(Citizen(3.z))
