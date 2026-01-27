@@ -15,8 +15,7 @@ import org.koin.test.get
 class ExampleITest : KoinTest, FunSpec() {
     init {
         gameKoinExtension()
-
-        test("move to report") {
+        test("skip next turn brings you to the report page") {
             Given {} When {
                 input(KeyInput.Enter)
             } Then {
