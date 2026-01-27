@@ -3,9 +3,9 @@ package com.github.seepick.derbauer2.game.happening.happenings
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.execTxResource
@@ -35,7 +35,7 @@ class RatsEatFoodHappening(
     override val asciiArt = AsciiArt.rat
 
     override fun render(textmap: Textmap) {
-        textmap.line("Oh noes, rats have eaten ${-amountFoodEaten} ${Food.Text.emojiAndLabel}.")
+        textmap.line("Oh noes, rats have eaten ${-amountFoodEaten} ${Food.Data.emojiAndLabelFor(amountFoodEaten)}.")
     }
 
     override fun execute(user: User) {

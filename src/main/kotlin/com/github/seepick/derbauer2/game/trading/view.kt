@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
+import com.github.seepick.derbauer2.game.feature.features.TradeLandFeature
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -49,7 +49,7 @@ class TradePromptBuilder(
             // or Gold(Mechanics.buyFoodCostGold.z)?
             add(buildTradeOption(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))
             add(buildTradeOption(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.z))
-            if (user.hasFeature(FeatureDescriptor.TradeLand)) {
+            if (user.hasFeature(TradeLandFeature::class)) {
                 add(buildTradeOption(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.z))
             }
         }
@@ -62,10 +62,10 @@ class TradePromptBuilder(
     ) = SelectOption(
         label = {
             val targetResource = user.resource(targetResourceClass)
-            "${operation.label} 1 ${targetResource.emojiWithSpaceSuffixOrEmpty}${targetResource.labelSingular} for " +
+            "${operation.label} 1 ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
                         val counterResource = user.resource(counterResource)
-                        "$counterAmount ${counterResource.emojiWithSpaceSuffixOrEmpty}${
+                        "$counterAmount ${counterResource.emojiSpaceOrEmpty}${
                             counterResource.labelFor(counterAmount)
                         }"
                     }

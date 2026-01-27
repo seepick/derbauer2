@@ -2,57 +2,37 @@ package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.landAvailable
+import com.github.seepick.derbauer2.game.feature.features.FeatureDescriptor
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.game.view.MultiViewSubPage
 import com.github.seepick.derbauer2.textengine.Textmap
+import kotlin.reflect.KClass
 
-fun User.hasFeature(searchDescriptor: FeatureDescriptor): Boolean =
-    all.filterIsInstance<Feature>().any { it.descriptor == searchDescriptor }
+// ... not sure yet which style i prefer?
+//inline fun <reified F: Feature> User.hasFeature(): Boolean =
+//    all.findOrNull<F>() != null
+
+fun <F: Feature> User.hasFeature(featureClass: KClass<F>): Boolean =
+    all.findOrNull(featureClass) != null
+
+fun User.hasFeature(descriptor: FeatureDescriptor): Boolean =
+    all.filterIsInstance<Feature>().any { it.descriptor == descriptor }
 
 interface FeatureData {
-    val name: String
+    val label: String
     val asciiArt: AsciiArt
     val description: String
 }
 
-sealed class FeatureDescriptor(
-    override val name: String,
-    override val asciiArt: AsciiArt,
-    override val description: String,
-) : FeatureData {
-
-    companion object {
-        val all by lazy {
-            listOf(
-                TradeLand,
-            )
-        }
-    }
-
-    abstract fun build(): Feature
-    abstract fun check(user: User): Boolean
-
-    object TradeLand : FeatureDescriptor(
-        name = "Trade Land",
-        asciiArt = AsciiArt.island,
-        description = "You can now buy ${Land.Text.emojiAndLabel} for some other stuff.\nAnd some more... hehe 😅",
-    ) {
-        override fun check(user: User) = user.hasEntity(Land::class) && user.landAvailable <= 2
-        override fun build() = Feature.TradeLandFeature(this)
-    }
-}
-
-sealed class Feature(
+abstract class Feature(
     val descriptor: FeatureDescriptor,
 ) : Entity, FeatureData by descriptor {
-    class TradeLandFeature(descriptor: FeatureDescriptor.TradeLand) : Feature(descriptor)
+    override val labelSingular = descriptor.label
 }
 
 class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
     override fun render(textmap: Textmap) {
-        textmap.line(">> ${feature.name} <<")
+        textmap.line(">> ${feature.label} <<")
         textmap.emptyLine()
         textmap.multiLine(feature.description)
     }

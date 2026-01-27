@@ -29,7 +29,7 @@ class ReportPage(
         textmap.line("Resource production:")
         val report = turner.reports.last()
         report.resourceReportLines.forEach {
-            textmap.line("${it.resource.emojiWithSpaceSuffixOrEmpty}${it.resource.labelPlural} ${it.changeAmount.toPlusString()}")
+            textmap.line("${it.resource.emojiSpaceOrEmpty}${it.resource.labelPlural} ${it.changeAmount.toPlusString()}")
         }
     },
 )

@@ -7,6 +7,7 @@ val Long.z get() = Z(this)
 val Int.zz get() = Zz(toLong())
 val Int.z get() = Z(toLong())
 
+/** Signed long. */
 data class Zz(
     val value: Long,
 ) {
@@ -33,7 +34,7 @@ data class Zz(
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
-/** unsigned int emulation (positive enforcement). */
+/** Unsigned long. */
 data class Z(
     val value: Long,
 ) {

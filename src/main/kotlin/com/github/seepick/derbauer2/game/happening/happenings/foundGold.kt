@@ -3,9 +3,9 @@ package com.github.seepick.derbauer2.game.happening.happenings
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.execTxResource
@@ -27,7 +27,7 @@ class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData
     override val asciiArt = AsciiArt.goldPot
 
     override fun render(textmap: Textmap) {
-        textmap.line("Found $goldFound ${Gold.Text.emojiAndLabel}")
+        textmap.line("Found $goldFound ${Gold.Data.emojiAndLabelFor(goldFound)}")
     }
 
     override fun execute(user: User) {

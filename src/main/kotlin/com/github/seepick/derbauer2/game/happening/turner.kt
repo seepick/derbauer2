@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.happening
 
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptor
 import com.github.seepick.derbauer2.game.random.ProbabilityProvider
 import com.github.seepick.derbauer2.game.random.addRandomIfNotNull
 import io.github.oshai.kotlinlogging.KotlinLogging.logger

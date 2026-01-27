@@ -23,7 +23,7 @@ class BuildingsPage(
         Prompt.Select(
             title = "What shall we build next, Sire?",
             user.buildings.map { building ->
-                SelectOption({ "Build ${building.labelSingular} - ${Gold.Text.emoji} ${building.costsGold} | ${Land.Text.emoji} ${building.landUse} (owned: ${building.owned})" }) {
+                SelectOption({ "Build ${building.labelSingular} - ${Gold.Data.emojiSpaceOrEmpty}${building.costsGold} | ${Land.Data.emojiSpaceOrEmpty}${building.landUse} (owned: ${building.owned})" }) {
                     resultHandler.handle(user.build(building))
                 }
             }

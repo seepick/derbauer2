@@ -1,8 +1,9 @@
-package com.github.seepick.derbauer2.game.happening
+package com.github.seepick.derbauer2.game.happening.happenings
 
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
-import com.github.seepick.derbauer2.game.happening.happenings.RatsEatFoodDescriptor
+import com.github.seepick.derbauer2.game.happening.Happening
+import com.github.seepick.derbauer2.game.happening.HappeningData
+import com.github.seepick.derbauer2.game.happening.HappeningNature
 
 abstract class HappeningDescriptor(
     override val nature: HappeningNature
@@ -16,6 +17,7 @@ abstract class HappeningDescriptor(
             listOf(
                 FoundGoldDescriptor,
                 RatsEatFoodDescriptor,
+
                 // !!!!!!!!!!!!!!!!!!!!!
                 // keep MANUALLY in sync
                 // !!!!!!!!!!!!!!!!!!!!!
