@@ -25,9 +25,6 @@ sealed interface Tx {
             operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
             amount = amount.asUnsigned()
         )
-        init {
-            require(amount >= 0) { "Amount must be non-negative: $amount" }
-        }
     }
 
     data class TxBuild(
@@ -46,17 +43,16 @@ sealed interface TxResult {
     object Success : TxResult
 
     sealed interface Fail : TxResult {
-        val reason: String
+        val message: String
 
-        data class InsufficientResources(override val reason: String = "Insufficient resources") : Fail
+        data class InsufficientResources(override val message: String = "Insufficient resources") : Fail
     }
-
 }
 
 @OptIn(ExperimentalContracts::class)
 fun TxResult.errorOnFail() {
     contract { returns() implies (this@errorOnFail is Success) }
     if (this is Fail) {
-        error("Transaction failed: $reason")
+        error("Transaction failed: $message")
     }
 }

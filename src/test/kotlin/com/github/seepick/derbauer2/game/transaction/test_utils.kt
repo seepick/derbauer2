@@ -8,10 +8,10 @@ fun TxResult.shouldBeSuccess() {
     this shouldBeEqual TxResult.Success
 }
 
-fun TxResult.shouldBeFail(vararg reasonContains: String) {
+fun TxResult.shouldBeFail(vararg messageContains: String) {
     this.shouldBeInstanceOf<TxResult.Fail>().also {
-        reasonContains.forEach { expected ->
-            it.reason shouldContain expected
+        messageContains.forEach { expected ->
+            it.message shouldContain expected
         }
     }
 }

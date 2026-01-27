@@ -10,7 +10,7 @@ class InteractionResultHandler(
     fun handle(result: TxResult) {
         when (result) {
             TxResult.Success -> {} // do nothing
-            is TxResult.Fail -> beeper.beep(result.reason)
+            is TxResult.Fail -> beeper.beep(result.message)
         }
     }
 }

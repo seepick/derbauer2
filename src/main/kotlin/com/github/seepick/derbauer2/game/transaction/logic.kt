@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.building.validateBuildTx
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource._applyResourceTx
 import com.github.seepick.derbauer2.game.resource.validateResourceTx
+import com.github.seepick.derbauer2.game.transaction.Tx.TxBuild
 import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -28,13 +29,13 @@ fun User.execTx(txs: List<Tx>): TxResult {
 private fun User.validateTx(tx: Tx): TxResult =
     when (tx) {
         is TxResource -> validateResourceTx(tx)
-        is Tx.TxBuild -> validateBuildTx(tx)
+        is TxBuild -> validateBuildTx(tx)
     }
 
 @Suppress("FunctionName")
 private fun User._applyTx(tx: Tx) {
     when (tx) {
         is TxResource -> _applyResourceTx(tx)
-        is Tx.TxBuild -> _applyBuildTx(tx)
+        is TxBuild -> _applyBuildTx(tx)
     }
 }

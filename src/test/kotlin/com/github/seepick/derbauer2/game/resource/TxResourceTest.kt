@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.transaction.shouldBeFail
@@ -22,7 +23,14 @@ class TxResourceTest : DescribeSpec({
     describe("storageable") {
         it("Given no storage When add Then fail") {
             val resource = user.add(Food(0.z))
+
             user.execTxResource(resource::class, 1.z).shouldBeFail("Not enough storage")
+        }
+        it("Given enough storage When add Then succeed") {
+            user.add(Granary(1.z))
+            val resource = user.add(Food(0.z))
+
+            user.execTxResource(resource::class, 1.z).shouldBeSuccess()
         }
     }
 })
