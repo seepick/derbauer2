@@ -1,11 +1,13 @@
 package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Granary
+import com.github.seepick.derbauer2.game.building.TxBuild
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.TxResource
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.should
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -16,7 +18,7 @@ class TransactionTest : DescribeSpec({
             val user = User()
             user.add(Food(0.z))
 
-            user.execTx(Tx.TxResource(Food::class, 1.zz))
+            user.execTx(TxResource(Food::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail>().message.should {
                     it.lowercase().contains("not enough storage")
                 }
@@ -26,7 +28,7 @@ class TransactionTest : DescribeSpec({
             user.add(Granary(1.z))
             user.add(Food(0.z))
 
-            user.execTx(Tx.TxResource(Food::class, 1.zz))
+            user.execTx(TxResource(Food::class, 1.zz))
                 .shouldBeSuccess()
         }
         it("Given enough storage When adding resource and removing storage Then fail") {
@@ -36,10 +38,9 @@ class TransactionTest : DescribeSpec({
             user.add(Food(0.z))
 
             user.execTx(
-                Tx.TxResource(Food::class, 1.zz),
-                Tx.TxBuild(Granary::class) // FIXME -1.zz
-            )
-                .shouldBeSuccess()
+                TxResource(Food::class, 1.zz),
+                TxBuild(Granary::class, (-1).zz)
+            ).shouldBeFail("not enough storage")
         }
     }
 })

@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.ResourceReport
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
-import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
+import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -47,7 +47,7 @@ private fun ResourceReport.execute(user: User) {
     lines.forEach { change ->
         user.execTx(
             TxResource(
-                resourceClass = change.resource::class,
+                targetClass = change.resource::class,
                 amount = change.changeAmount,
             )
         ).errorOnFail()
