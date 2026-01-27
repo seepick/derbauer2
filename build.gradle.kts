@@ -8,6 +8,7 @@ plugins {
     id("org.jetbrains.compose") version "1.7.3"
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
     id("com.github.ben-manes.versions") version "0.53.0"
+    id("jacoco")
 }
 
 repositories {
@@ -23,6 +24,7 @@ object Versions {
     val kotest = "6.1.1"
     val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError
     val mockk = "1.14.7"
+    val jacoco = "0.8.14"
 }
 
 dependencies {
@@ -59,8 +61,38 @@ compose.desktop {
     }
 }
 
-tasks.withType<Test>().configureEach { // to be able to run kotests
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+jacoco {
+    toolVersion = Versions.jacoco
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required = true
+        html.required = false
+        csv.required = false
+    }
+}
+tasks.jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = "0.6".toBigDecimal()
+            }
+        }
+    }
+}
+
+tasks.named("check") {
+    dependsOn(tasks.named("jacocoTestCoverageVerification"))
 }
 
 tasks.withType<DependencyUpdatesTask> {
