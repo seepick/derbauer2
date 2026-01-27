@@ -1,3 +1,4 @@
+* aka Events: probability each turn; gain/lose resources, ...
 
 # Happenings
 
@@ -6,6 +7,10 @@
 * gold bag/treasure: +gold
 * rats eaten: -food
 * heritage: +gold (+building/land)
+* being asked for help: choice
+    * help: -gold/food, +karma, +people
+    * refuse: -karma, -people
+* bandits attack: -gold/food/people/building
 * plague: -people!!!
 * someone visits: traveler/magician ... can be good/bad ...
     * tells a secret: get free upgrade

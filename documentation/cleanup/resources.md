@@ -1,4 +1,8 @@
 
+* Simple: Gold, Food, Wood, Stone, Knowledge (=research points)
+* Complex: Land, People
+* storage buildings
+
 # Types
 
 1. Food

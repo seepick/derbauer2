@@ -31,7 +31,6 @@
 
 * reproduction rate
 
-
 # Wealth
 
 ## Effected by
@@ -45,6 +44,3 @@
 * bank rates
 * trade rates
 
-# Upcome costs
-
-* for: units!, (some?) buildings

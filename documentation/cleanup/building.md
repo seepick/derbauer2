@@ -1,3 +1,19 @@
+* buildings occupy land (buy land, or conquer more cheaply)
+
+# Ideas
+
+* wonder buildings (one time enabler)
+
+* cost any resources to build
+* cost maintenance
+* requires/occupies land
+* provides:
+    * produces resources
+    * storage (for resources, army)
+* e.g.
+    * farm = produce food
+    * carnary = store food
+
 
 # Building
 
