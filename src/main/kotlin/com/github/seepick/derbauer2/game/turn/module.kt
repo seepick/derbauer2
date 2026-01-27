@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 fun turnModule() = module {
     singleOf(::Turner)
+    singleOf(::ReportIntelligence)
 }

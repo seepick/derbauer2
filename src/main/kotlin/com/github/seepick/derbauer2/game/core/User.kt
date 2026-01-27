@@ -14,8 +14,7 @@ class User {
         // e.g. can add(Food(100.units)) if enough storage
         // add(House(100.units)) if enough land, etc.
         // check preconditions, like: if add OccupiesLand, but has no Land resource yet
-        if (all.filterIsInstance(entity::class.java).isNotEmpty()) {
-//        if (all.any { it::class == entity::class }) {
+        if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists!")
         }
         log.info { "Adding ${entity::class.simpleName} -- $entity" }

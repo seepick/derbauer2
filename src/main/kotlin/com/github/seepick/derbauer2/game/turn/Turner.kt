@@ -11,6 +11,38 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
+class Turner(
+    private val happeningTurner: HappeningTurner,
+    private val resourceTurner: ResourceTurner,
+    private val citizenTurner: CitizenTurner,
+    private val featureTurner: FeatureTurner,
+    private val user: User,
+    private val reports: ReportIntelligence,
+) {
+    private val log = logger {}
+
+    var turn = 1
+        private set
+
+    fun collectAndExecuteNextTurnReport(): TurnReport {
+        turn++
+        log.info { "Taking turn $turn" }
+        // first resources, then happenings!
+        val resourceReport = resourceTurner.buildTurnReport()
+        resourceReport.execute(user)
+        val citizenReport = citizenTurner.buildReport()
+        citizenReport.execute(user)
+        return TurnReport(
+            turn = turn - 1,
+            resourceReportLines = resourceReport.merge(citizenReport).lines,
+            happenings = happeningTurner.buildHappeningMultiPages(),
+            newFeatures = featureTurner.buildFeaturMultiPages(),
+        ).also { result ->
+            reports.addReport(result)
+        }
+    }
+}
+
 private fun ResourceReport.execute(user: User) {
     lines.forEach { change ->
         user.execTx(
@@ -20,40 +52,4 @@ private fun ResourceReport.execute(user: User) {
             )
         ).errorOnFail()
     }
-}
-
-class Turner(
-    private val happeningTurner: HappeningTurner,
-    private val resourceTurner: ResourceTurner,
-    private val citizenTurner: CitizenTurner,
-    private val featureTurner: FeatureTurner,
-    private val user: User,
-) {
-    private val log = logger {}
-    val reports = mutableListOf<TurnReport>() // FIXME store in ReportIntelligence (historical auswertung)
-
-    var turn = 1
-        private set
-
-    fun collectAndExecuteNextTurnReport(): TurnReport {
-        turn++
-        log.info { "Taking turn $turn" }
-        // first resources, then happenings
-        val resourceReport = resourceTurner.buildTurnReport()
-        resourceReport.execute(user)
-        val citizenReport = citizenTurner.buildReport()
-        citizenReport.execute(user)
-        // executed later...
-        val happenings = happeningTurner.buildHappeningMultiPages()
-        val newFeatures = featureTurner.buildFeaturMultiPages()
-        return TurnReport(
-            turn = turn - 1,
-            resourceReportLines = resourceReport.merge(citizenReport).lines,
-            happenings = happenings,
-            newFeatures = newFeatures,
-        ).also { result ->
-            reports += result
-        }
-    }
-
 }

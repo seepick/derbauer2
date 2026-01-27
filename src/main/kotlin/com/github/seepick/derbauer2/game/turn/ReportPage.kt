@@ -10,15 +10,15 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 
 class ReportPage(
     gameRenderer: GameRenderer,
-    private val turner: Turner,
+    private val reports: ReportIntelligence,
     private val current: CurrentPage,
     private val happeningMultiView: HappeningMultiView,
     private val featureMultiView: FeatureMultiView
 ) : SimpleGamePage(
     gameRenderer = gameRenderer,
     button = ContinueButton {
-        happeningMultiView.process(turner.reports.last().happenings) {
-            featureMultiView.process(turner.reports.last().newFeatures) {
+        happeningMultiView.process(reports.last().happenings) {
+            featureMultiView.process(reports.last().newFeatures) {
                 current.pageClass = HomePage::class
             }
         }
@@ -27,7 +27,7 @@ class ReportPage(
         textmap.line("Turn Report")
         textmap.emptyLine()
         textmap.line("Resource production:")
-        val report = turner.reports.last()
+        val report = reports.last()
         report.resourceReportLines.forEach {
             textmap.line("${it.resource.emojiSpaceOrEmpty}${it.resource.labelPlural} ${it.changeAmount.toPlusString()}")
         }

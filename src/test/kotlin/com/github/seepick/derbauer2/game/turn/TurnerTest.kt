@@ -17,34 +17,35 @@ import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.shouldContainLine
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
+import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class TurnerTest : DescribeSpec({
-    // FIXME avoid duplication
-    var user = User()
-    var turner = Turner(
-        happeningTurner = HappeningTurner(user),
-        resourceTurner = ResourceTurner(user),
-        citizenTurner = CitizenTurner(user),
-        featureTurner = FeatureTurner(user),
-        user = user,
-    )
+    lateinit var user: User
+    lateinit var turner: Turner
+    lateinit var reports: ReportIntelligence
     beforeTest {
         user = User()
+        reports = ReportIntelligence()
         turner = Turner(
             happeningTurner = HappeningTurner(user),
             resourceTurner = ResourceTurner(user),
             citizenTurner = CitizenTurner(user),
             featureTurner = FeatureTurner(user),
+            reports = reports,
             user = user,
         )
     }
-
-    describe("turn") {
-        it("changed") {
+    describe("misc") {
+        it("turn changed") {
             val old = turner.turn
             turner.collectAndExecuteNextTurnReport()
 
             turner.turn shouldBeEqual old + 1
+        }
+        it("intelligence updated") {
+            val report = turner.collectAndExecuteNextTurnReport()
+
+            reports.last() shouldBeSameInstanceAs report
         }
     }
     describe("produce resource") {
