@@ -12,11 +12,18 @@ class User {
         // FIXME if add entity:ownable, then would need to wire through TX-infra to do validations
         // e.g. can add(Food(100.units)) if enough storage
         // add(House(100.units)) if enough land, etc.
-        if (all.any { it::class == entity::class }) {
+        // check preconditions, like: if add OccupiesLand, but has no Land resource yet
+        if(all.filterIsInstance(entity::class.java).isNotEmpty()) {
+//        if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists!")
         }
         log.info { "Adding ${entity::class.simpleName} -- $entity" }
         _all += entity
+    }
+
+    fun add(entity: Entity, vararg moreEntities: Entity) {
+        add(entity)
+        moreEntities.forEach { add(it) }
     }
 
     fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
@@ -37,11 +44,11 @@ fun <E : Entity> List<Entity>.find(entityClass: KClass<out E>): E =
 inline fun <reified E : Entity> List<Entity>.find(): E =
     findOrNull<E>() ?: errorNotFoundEntity(E::class, this)
 
-fun <E : Entity, V> List<Entity>.letIfExists(type: KClass<out E>, extractValue: (E) -> V): V? =
-    findOrNull(type)?.let(extractValue)
+fun <E : Entity, V> List<Entity>.letIfExists(type: KClass<out E>, letCode: (E) -> V): V? =
+    findOrNull(type)?.let(letCode)
 
- fun <E : Entity> List<Entity>.findAndMaybeDo(klass: KClass<out E>, code: (E) -> Unit) {
-    findOrNull(klass)?.also(code)
+ fun <E : Entity> List<Entity>.alsoIfExists(klass: KClass<out E>, alsoCode: (E) -> Unit) {
+    findOrNull(klass)?.also(alsoCode)
 }
 
 fun errorNotFoundEntity(type: KClass<*>, options: List<Any>): Nothing {

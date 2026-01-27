@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.findAndMaybeDo
+import com.github.seepick.derbauer2.game.logic.alsoIfExists
 import com.github.seepick.derbauer2.game.logic.storageFor
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
@@ -18,21 +18,21 @@ class GameRenderer(
     private val turner: Turner,
 ) {
     private fun renderInfoBar(): String = buildList<String> {
-            user.resources.findAndMaybeDo(Land::class) {
+            user.resources.alsoIfExists(Land::class) {
                 add(it.emojiAndUnitsFormatted)
             }
-            user.resources.findAndMaybeDo(Gold::class) {
+            user.resources.alsoIfExists(Gold::class) {
                 add(it.emojiAndUnitsFormatted)
             }
 
-            user.resources.findAndMaybeDo(Food::class) {
+            user.resources.alsoIfExists(Food::class) {
                 add("${it.emojiAndUnitsFormatted} / ${user.storageFor(Food::class)}")
             }
-            user.resources.findAndMaybeDo(Land::class) {
+            user.resources.alsoIfExists(Land::class) {
                 val totalLandUse = user.totalLandUse
                 add("${it.emojiWithSpaceSuffixOrEmpty}${totalLandUse} / ${it.owned}")
             }
-            user.resources.findAndMaybeDo(Citizen::class) {
+            user.resources.alsoIfExists(Citizen::class) {
                 add("${it.emojiWithSpaceSuffixOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
             }
         }.joinToString(" | ")
