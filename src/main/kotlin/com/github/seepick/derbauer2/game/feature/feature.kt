@@ -39,7 +39,7 @@ sealed class FeatureDescriptor(
         asciiArt = AsciiArt.island,
         description = "You can now buy ${Land.Text.emojiAndLabel} for some other stuff.\nAnd some more... hehe 😅",
     ) {
-        override fun check(user: User) = user.landAvailable <= 2
+        override fun check(user: User) = user.hasEntity(Land::class) && user.landAvailable <= 2
         override fun build() = Feature.TradeLandFeature(this)
     }
 }
