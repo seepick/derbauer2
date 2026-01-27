@@ -1,7 +1,8 @@
 # DerBauer2
 
 A turn-based retro strategy where you grow a little realm from humble beginnings 🌱🏰
-Successor of the original [DerBauer](https://github.com/seepick/derbauer).
+
+This is the successor of the original [DerBauer](https://github.com/seepick/derbauer).
 
 ![screenshot](https://raw.githubusercontent.com/seepick/derbauer2/refs/heads/main/documentation/screenshot.png)
 

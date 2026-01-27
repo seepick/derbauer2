@@ -28,7 +28,7 @@ abstract class PromptGamePage(
     private val contentRenderer: (Textmap) -> Unit,
 ) : Page {
 
-    private var prompt = promptBuilder.buildPrompt()
+    var prompt = promptBuilder.buildPrompt()
 
     override fun invalidate() {
         prompt = promptBuilder.buildPrompt()

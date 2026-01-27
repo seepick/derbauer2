@@ -1,38 +1,38 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.logic.Entity
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.logic.findAndMaybeDo
 import com.github.seepick.derbauer2.game.logic.storageFor
 import com.github.seepick.derbauer2.game.logic.totalLandUse
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.resources
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Textmap
-
-inline fun <reified E : Entity> User.find(code: (E) -> Unit) {
-    all.filterIsInstance<E>().firstOrNull()?.also(code)
-}
 
 class GameRenderer(
     private val user: User,
     private val turner: Turner,
 ) {
-    private fun renderInfoBar(): String =
-        buildList {
-            user.find<Gold> {
+    private fun renderInfoBar(): String = buildList<String> {
+            user.resources.findAndMaybeDo(Land::class) {
                 add(it.emojiAndUnitsFormatted)
             }
-            user.find<Food> {
+            user.resources.findAndMaybeDo(Gold::class) {
+                add(it.emojiAndUnitsFormatted)
+            }
+
+            user.resources.findAndMaybeDo(Food::class) {
                 add("${it.emojiAndUnitsFormatted} / ${user.storageFor(Food::class)}")
             }
-            user.find<Land> {
+            user.resources.findAndMaybeDo(Land::class) {
                 val totalLandUse = user.totalLandUse
                 add("${it.emojiWithSpaceSuffixOrEmpty}${totalLandUse} / ${it.owned}")
             }
-            user.find<Citizen> {
+            user.resources.findAndMaybeDo(Citizen::class) {
                 add("${it.emojiWithSpaceSuffixOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
             }
         }.joinToString(" | ")
@@ -53,6 +53,7 @@ class GameRenderer(
             right = metaOptions.joinToString("   ") { it.formatted },
         )
     }
+
     private val MetaOption.formatted get() = "${key.label}: $label"
 }
 
@@ -64,4 +65,4 @@ interface MetaOption {
 data class MetaOptionImpl(
     override val key: KeyPressed.Command,
     override val label: String,
-): MetaOption
+) : MetaOption

@@ -4,7 +4,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
 class User {
-
     private val log = logger {}
     private val _all = mutableListOf<Entity>()
     val all: List<Entity> get() = _all
@@ -19,18 +18,29 @@ class User {
         log.info { "Adding ${entity::class.simpleName} -- $entity" }
         _all += entity
     }
-
-    fun <E : Entity> List<E>.find(entityClass: KClass<out E>): E =
-        findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
-
-    fun <T : Any> List<T>.findOrNull(type: KClass<out T>): T? =
-        filterIsInstance(type.java).firstOrNull() // FIXME only exact match, not subtype
-
-    fun <E : Entity, V> letIfExists(type: KClass<E>, extractValue: (E) -> V): V? =
-        (all.findOrNull(type) as E?)?.let(extractValue)
-
-    fun errorNotFoundEntity(type: KClass<*>, options: List<Any>): Nothing {
-        error("Nothing found for type: ${type.simpleName} (available: ${options.map { it::class.simpleName }})")
-    }
 }
 
+// TODO only exact match, not subtype; check singleton
+
+fun <E : Entity> List<Entity>.findOrNull(klass: KClass<out E>): E? =
+    filterIsInstance(klass.java).firstOrNull()
+
+inline fun <reified E : Entity> List<Entity>.findOrNull(): E? =
+    filterIsInstance<E>().firstOrNull()
+
+fun <E : Entity> List<Entity>.find(entityClass: KClass<out E>): E =
+    findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
+
+inline fun <reified E : Entity> List<Entity>.find(): E =
+    findOrNull<E>() ?: errorNotFoundEntity(E::class, this)
+
+fun <E : Entity, V> List<Entity>.letIfExists(type: KClass<out E>, extractValue: (E) -> V): V? =
+    findOrNull(type)?.let(extractValue)
+
+ fun <E : Entity> List<Entity>.findAndMaybeDo(klass: KClass<out E>, code: (E) -> Unit) {
+    findOrNull(klass)?.also(code)
+}
+
+fun errorNotFoundEntity(type: KClass<*>, options: List<Any>): Nothing {
+    error("Nothing found for type: ${type.simpleName} (available: ${options.map { it::class.simpleName }})")
+}

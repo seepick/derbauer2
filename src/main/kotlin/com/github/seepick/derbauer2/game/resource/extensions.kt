@@ -3,15 +3,18 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.Z
 import com.github.seepick.derbauer2.game.logic.availableOf
+import com.github.seepick.derbauer2.game.logic.errorNotFoundEntity
+import com.github.seepick.derbauer2.game.logic.findOrNull
 import com.github.seepick.derbauer2.game.logic.z
 import kotlin.reflect.KClass
 
+val User.resources get() = all.filterIsInstance<Resource>()
+
+@Suppress("UNCHECKED_CAST")
 fun <R : Resource> User.resource(type: KClass<R>): R =
     (resources.findOrNull(type) as R?) ?: errorNotFoundEntity(type, resources)
 
 fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? = resources.findOrNull(type) as R?
-
-val User.resources get() = all.filterIsInstance<Resource>()
 
 context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)

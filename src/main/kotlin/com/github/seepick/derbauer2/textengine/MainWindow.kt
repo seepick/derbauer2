@@ -33,9 +33,9 @@ import kotlin.reflect.KClass
 private val log = logger {}
 private val outerBorder = 10.dp
 private val innerMargin = 5.dp
-private val windowSize = MatrixSize(rows = 25, cols = 80)
-private val mainContentWidth = (10.85).dp * windowSize.cols
-private val mainContentHeight = (22.2).dp * windowSize.rows
+val mainWindowMatrixSize = MatrixSize(rows = 25, cols = 80)
+private val mainContentWidth = (10.85).dp * mainWindowMatrixSize.cols
+private val mainContentHeight = (22.2).dp * mainWindowMatrixSize.rows
 
 private fun calcWinSize(): DpSize {
     // FIXME adjust window size, correlate with textmap size
@@ -56,12 +56,13 @@ fun showMainWindow(
         KoinApplication(application = {
             allowOverride(false)
             createEagerInstances()
-            modules(textengineModule(initPageClass, windowSize), mainModule)
+            modules(textengineModule(initPageClass, mainWindowMatrixSize), mainModule)
         }) {
             val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
-            val page = getKoin().get<Page>(clazz = koinInject<CurrentPage>().pageClass)
+            val currentPage = koinInject<CurrentPage>()
+            val page = getKoin().get<Page>(clazz = currentPage.pageClass)
             tick.toString() // HACK to trigger recomposition, otherwise tick changes are not observed
             log.trace { "UI render tick #$tick" }
             val textmap = koinInject<Textmap>()

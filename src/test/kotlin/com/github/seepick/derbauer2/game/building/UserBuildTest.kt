@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.gold
 import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.ownedForTest
@@ -34,7 +33,7 @@ class UserBuildTest : DescribeSpec({
         }
         it("Given not enough money Then fail") {
             val house = user.givenSufficientResourcesForHouse()
-            user.gold = house.costsGold - 1
+            user.resource(Gold::class).ownedForTest = house.costsGold - 1
 
             user.build(house).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }

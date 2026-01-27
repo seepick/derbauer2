@@ -14,6 +14,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 object DerBauer2 {
     private val log = logger {}
+    val initPageClass = HomePage::class
 
     @JvmStatic
     fun main(args: Array<String>) {
@@ -21,21 +22,24 @@ object DerBauer2 {
         showMainWindow(
             title = "DerBauer2",
             mainModule = gameModule(),
-            initPageClass = HomePage::class,
+            initPageClass = initPageClass,
         ) { user ->
             user.initAssets()
         }
     }
 }
 
-private fun User.initAssets() {
+private val log = logger {}
+
+fun User.initAssets() {
+    log.info { "Initializing user assert" }
     listOf(
         Land(Mechanics.startingLand),
         Gold(Mechanics.startingGold),
-        Food(Mechanics.startingFood),
         House(Mechanics.startingHouses),
         Citizen(Mechanics.startingCitizens),
-        Farm(Mechanics.startingFarms),
         Granary(Mechanics.startingGranaries),
+        Food(Mechanics.startingFood),
+        Farm(Mechanics.startingFarms),
     ).forEach(::add)
 }
