@@ -1,3 +1,7 @@
+
+[![Build Status](https://github.com/seepick/derbauer2/actions/workflows/continuous.yml/badge.svg)](https://github.com/seepick/derbauer2/actions/workflows/continuous.yml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=seepick_derbauer2&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=seepick_derbauer2)
+
 # DerBauer2
 
 A turn-based retro strategy where you grow a little realm from humble beginnings 🌱🏰
