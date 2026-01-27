@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game
 
-import com.github.seepick.derbauer2.game.logic.Zz
+import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceReport
 import com.github.seepick.derbauer2.game.resource.ResourceReportLine

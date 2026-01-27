@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.logic.random
+package com.github.seepick.derbauer2.game.random
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlin.random.Random

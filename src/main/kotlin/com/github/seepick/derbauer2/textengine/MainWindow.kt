@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin

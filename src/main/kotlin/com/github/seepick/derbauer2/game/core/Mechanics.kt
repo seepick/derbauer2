@@ -1,4 +1,7 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.core
+
+import com.github.seepick.derbauer2.game.common.`%`
+import com.github.seepick.derbauer2.game.common.z
 
 /**
  * All game mechanics constants; a magic constant provider.

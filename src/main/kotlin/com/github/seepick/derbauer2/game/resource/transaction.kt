@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zz
-import com.github.seepick.derbauer2.game.logic.emojiAndLabel
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiAndLabel
 import com.github.seepick.derbauer2.game.transaction.Tx.TxResource
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxResult

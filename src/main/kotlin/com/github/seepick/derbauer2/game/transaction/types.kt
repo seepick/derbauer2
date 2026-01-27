@@ -2,8 +2,8 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.BuildingReference
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zz
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceReference
 import com.github.seepick.derbauer2.game.transaction.TxResult.Fail

@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building._applyBuildTx
 import com.github.seepick.derbauer2.game.building.validateBuildTx
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource._applyResourceTx
 import com.github.seepick.derbauer2.game.resource.validateResourceTx
 import com.github.seepick.derbauer2.game.transaction.Tx.TxResource

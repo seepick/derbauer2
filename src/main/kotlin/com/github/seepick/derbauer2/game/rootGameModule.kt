@@ -2,9 +2,9 @@ package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.buildingModule
 import com.github.seepick.derbauer2.game.citizen.citizenModule
+import com.github.seepick.derbauer2.game.core.coreModule
 import com.github.seepick.derbauer2.game.feature.featureModule
 import com.github.seepick.derbauer2.game.happening.happeningModule
-import com.github.seepick.derbauer2.game.logic.logicModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
 import com.github.seepick.derbauer2.game.trading.tradingModule
 import com.github.seepick.derbauer2.game.turn.turnModule
@@ -13,14 +13,14 @@ import org.koin.dsl.module
 
 fun gameModule() = module {
     includes(
+        coreModule(),
         resourceModule(),
         buildingModule(),
         citizenModule(),
         tradingModule(),
-        happeningModule(),
         turnModule(),
+        happeningModule(),
         featureModule(),
-        logicModule(),
         viewModule(),
     )
 }

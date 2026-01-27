@@ -1,10 +1,9 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.citizen.CitizenTurner
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.logic.TurnReport
-import com.github.seepick.derbauer2.game.logic.User
 import com.github.seepick.derbauer2.game.resource.ResourceReport
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.transaction.Tx.TxResource

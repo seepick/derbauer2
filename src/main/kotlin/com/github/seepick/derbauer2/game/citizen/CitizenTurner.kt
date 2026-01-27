@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.logic.Mechanics
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold

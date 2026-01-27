@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.trading
 
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.transaction.Tx
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxResult

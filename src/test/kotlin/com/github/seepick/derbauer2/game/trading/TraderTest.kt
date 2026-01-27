@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.building.Granary
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.gold
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy

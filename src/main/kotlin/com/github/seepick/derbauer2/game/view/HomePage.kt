@@ -1,12 +1,9 @@
-package com.github.seepick.derbauer2.game
+package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
-import com.github.seepick.derbauer2.game.view.ContinueButton
-import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Prompt
 import com.github.seepick.derbauer2.textengine.SelectOption

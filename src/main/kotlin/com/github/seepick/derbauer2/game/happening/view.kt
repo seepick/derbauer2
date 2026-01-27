@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.view.ContinueButton
 import com.github.seepick.derbauer2.game.view.MultiView
 import com.github.seepick.derbauer2.game.view.NotificationPage

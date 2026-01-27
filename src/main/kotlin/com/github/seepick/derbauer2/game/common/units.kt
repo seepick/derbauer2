@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.common
 
 import kotlin.math.abs
 
@@ -69,7 +69,7 @@ data class Z(
 
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {
     // AI generated code ;)
-    val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else kotlin.math.abs(single)
+    val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else abs(single)
     val mag = Magnitude.entries.reversed().firstOrNull {
         absSingle >= (1L shl (10 * it.thousands))
     } ?: Magnitude.Single

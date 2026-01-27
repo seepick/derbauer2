@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.common
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.datatest.withData

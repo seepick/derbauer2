@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Textmap

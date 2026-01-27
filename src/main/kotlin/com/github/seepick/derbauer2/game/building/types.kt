@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.logic.Asset
-import com.github.seepick.derbauer2.game.logic.Mechanics
-import com.github.seepick.derbauer2.game.logic.Ownable
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Asset
+import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.Ownable
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.ProducesResourceOwnable

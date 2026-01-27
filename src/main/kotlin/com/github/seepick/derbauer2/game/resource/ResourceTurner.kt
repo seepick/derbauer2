@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.Zz
-import com.github.seepick.derbauer2.game.logic.zz
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
 class ResourceTurner(

@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2
+package com.github.seepick.derbauer2.game.common
 
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind

@@ -1,12 +1,11 @@
 package com.github.seepick.derbauer2.game.trading
 
-import com.github.seepick.derbauer2.game.HomePage
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.logic.Mechanics
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -16,6 +15,7 @@ import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
+import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage

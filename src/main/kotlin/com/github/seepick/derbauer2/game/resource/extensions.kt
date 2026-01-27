@@ -1,14 +1,13 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.availableOf
-import com.github.seepick.derbauer2.game.logic.errorNotFoundEntity
-import com.github.seepick.derbauer2.game.logic.findOrNull
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.common.ListX
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.errorNotFoundEntity
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
-val User.resources get() = all.filterIsInstance<Resource>()
+val User.resources get() = ListX(all.filterIsInstance<Resource>())
 
 @Suppress("UNCHECKED_CAST")
 fun <R : Resource> User.resource(type: KClass<R>): R =

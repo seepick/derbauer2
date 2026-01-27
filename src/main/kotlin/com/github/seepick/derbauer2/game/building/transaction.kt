@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.transaction.Tx

@@ -1,4 +1,9 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.core
+
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.common.zz
 
 interface Entity {
     val emoji: String? get() = null

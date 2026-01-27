@@ -5,7 +5,7 @@
 ## Now
 
 * resolve TODOs/FIXMEs
-* handle starvation (test first)
+* BZ: citizens borth
 
 ## Next
 

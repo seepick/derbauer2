@@ -1,15 +1,13 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.errorNotFoundEntity
-import com.github.seepick.derbauer2.game.logic.findOrNull
+import com.github.seepick.derbauer2.game.common.ListX
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
-@Suppress("UNCHECKED_CAST")
-fun <B : Building> User.building(type: KClass<B>): B =
-    (buildings.findOrNull(type) as? B) ?: errorNotFoundEntity(type, buildings)
+val User.buildings get() = ListX(all.filterIsInstance<Building>())
 
-val User.buildings get() = all.filterIsInstance<Building>()
+@Suppress("UNCHECKED_CAST")
+fun <B : Building> User.building(type: KClass<B>): B = buildings.find(type) as B
 
 context(user: User)
 val BuildingReference.building get() = user.building(buildingClass)

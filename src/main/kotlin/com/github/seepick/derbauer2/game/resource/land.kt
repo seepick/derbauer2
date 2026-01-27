@@ -1,10 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.OccupiesLand
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.find
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 
 val User.totalLandUse: Z
     get() {
@@ -12,7 +11,7 @@ val User.totalLandUse: Z
         return all.filterIsInstance<OccupiesLand>().sumOf { it.totalLandUse.value }.z
     }
 
-val User.landOwned
-    get() = resources.find<Land>().owned
+val User.landOwned: Z
+    get() = resources.find(Land::class).owned
 
 val User.landAvailable get() = landOwned - totalLandUse

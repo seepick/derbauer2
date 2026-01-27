@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.logic.Mechanics
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.random.ProbabilityProvider
-import com.github.seepick.derbauer2.game.logic.random.addRandomIfNotNull
+import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.random.ProbabilityProvider
+import com.github.seepick.derbauer2.game.random.addRandomIfNotNull
 import kotlin.random.Random
 
 class HappeningTurner(

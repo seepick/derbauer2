@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.integrationTests
 
+import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.core.Asset
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.initAssets
-import com.github.seepick.derbauer2.game.logic.Asset
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.Z
-import com.github.seepick.derbauer2.game.logic.find
 import com.github.seepick.derbauer2.game.ownedForTest
+import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.Beeper
 import com.github.seepick.derbauer2.textengine.CurrentPage
@@ -46,6 +46,7 @@ fun Given(code: GivenDsl.() -> Unit): GivenDsl {
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
     inline fun <reified A : Asset> changeOwned(amount: Z) {
         val ownable = user.all.find<A>()
+        user.all.findOrNull<Food>()
         ownable.ownedForTest = amount
     }
 }

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.z
-import com.github.seepick.derbauer2.game.logic.zz
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.common.zz
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.equals.shouldBeEqual

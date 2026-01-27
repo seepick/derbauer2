@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.feature
 
-import com.github.seepick.derbauer2.game.logic.Entity
-import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.view.AsciiArt

@@ -1,7 +1,7 @@
-package com.github.seepick.derbauer2.game.logic
+package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.resource.StorableResource
-import com.github.seepick.derbauer2.game.resource.StoresResource
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
 fun User.storageFor(resource: StorableResource) =

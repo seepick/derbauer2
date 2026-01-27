@@ -1,13 +1,12 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.alsoIfExists
-import com.github.seepick.derbauer2.game.logic.storageFor
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.resources
+import com.github.seepick.derbauer2.game.resource.storageFor
 import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.KeyPressed

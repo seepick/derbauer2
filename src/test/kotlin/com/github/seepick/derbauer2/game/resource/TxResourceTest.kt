@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.z
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.transaction.shouldBeFail
 import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
 import io.kotest.core.spec.style.DescribeSpec
