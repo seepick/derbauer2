@@ -6,6 +6,7 @@
 
 * resolve TODOs/FIXMEs
 * BZ: citizens borth
+* MCP sonarqube cloud integration
 
 ## Next
 

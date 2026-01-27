@@ -18,11 +18,6 @@ repositories {
 
 dependencies {
     implementation(compose.desktop.currentOs)
-//    implementation(compose.components.resources)
-//    implementation(compose.material3)
-//    implementation("org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4") // NO! 2.9.6 UnsatisfiedLinkError
-//    runtimeOnly("org.jetbrains.kotlinx:kotlinx-coroutines-swing:1.10.2") // when "Module with the Main dispatcher is missing"
-    implementation("io.arrow-kt:arrow-core:1.2.0")
 
     // DEPENDENCY INJECTION - https://insert-koin.io/docs/reference/koin-compose/compose
     val versionKoin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError

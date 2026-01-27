@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -12,4 +13,8 @@ fun ifDo(condition: Boolean, execution: () -> Unit): Boolean {
     }
     if (condition) execution()
     return condition
+}
+
+fun User.deepCopy(): User {
+    TODO("Implement deep copy logic for User" )
 }

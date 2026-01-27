@@ -8,12 +8,23 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.TxResource
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.should
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class TransactionTest : DescribeSpec({
     describe("When changing resource and storage") {
+        it("Given nothing When adding non-existing resource Then fail") {
+            shouldThrow<IllegalArgumentException> {
+                User().execTx(TxResource(Land::class, 1.zz))
+            }.message.shouldNotBeNull().should {
+                it.contains("nothing found")
+                it.contains("Land")
+            }
+        }
+
         it("Given no storage When adding resource Then fail") {
             val user = User()
             user.add(Food(0.z))
