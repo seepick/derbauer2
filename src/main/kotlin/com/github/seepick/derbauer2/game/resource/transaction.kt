@@ -26,7 +26,7 @@ fun User.txResource(
 ) = execTx(
     TxResource(
         resourceClass = resourceClass,
-        amount = amount.asZ,
+        amount = amount.asSigned,
     )
 )
 

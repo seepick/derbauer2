@@ -6,36 +6,42 @@ import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.ResourceReportBuilder
 import com.github.seepick.derbauer2.game.resource.buildResourceReport
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.resource.resourceOrNull
-import org.koin.core.module.dsl.singleOf
-import org.koin.dsl.module
-
-fun citizenModule() = module {
-    singleOf(::CitizenTurner)
-}
 
 class CitizenTurner(
     private val user: User,
 ) {
-    fun executeAndBuildReport() = buildResourceReport {
-        val citizen = user.resourceOrNull(Citizen::class) ?: return@buildResourceReport
+    fun buildReport() = buildResourceReport {
+        if(!user.hasEntity(Citizen::class)) {
+            return@buildResourceReport
+        }
+        maybeAddTaxation()
+        maybeConsumeFoodOrStarve()
+    }
 
+    private fun ResourceReportBuilder.maybeAddTaxation() {
         user.resourceOrNull(Gold::class)?.let { gold ->
-            val taxIncome = (citizen.owned.value * Mechanics.citizenTaxPercentage).toLong().z
-            // FIXME create TX "upstairs"
-//            gold.owned += taxIncome
+            val citizen = user.resource(Citizen::class)
+            val taxIncome = citizen.owned * Mechanics.citizenTax
             add(gold, taxIncome)
         }
+    }
 
+    private fun ResourceReportBuilder.maybeConsumeFoodOrStarve() {
         user.resourceOrNull(Food::class)?.let { food ->
-            val foodConsumed = (citizen.owned.value * Mechanics.citizenFoodConsumePercentage).toLong().z
-            val food = user.resource(Food::class)
-//            food.owned -= foodConsumed // FIXME check for negative! maybe dont manipulate directly, but via method!
-            // TODO if not enough food, citizens should decrease (left, or died)
-            add(food, -foodConsumed)
+            val citizen = user.resource(Citizen::class)
+            if (food.owned == 0.z) {
+                val rawStarving = citizen.owned * Mechanics.citizensStarve
+                val starving = rawStarving.maxOf(Mechanics.citizensStarveMinimum)
+                add(citizen, -starving)
+            } else {
+                val rawFoodConsumed = citizen.owned * Mechanics.citizenFoodConsume
+                val foodConsumed = rawFoodConsumed.minOf(food.owned)
+                add(food, -foodConsumed)
+            }
         }
-        // TODO increase citizens (birth, immigration)
     }
 }

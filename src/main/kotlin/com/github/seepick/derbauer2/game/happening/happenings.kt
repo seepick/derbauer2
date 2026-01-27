@@ -53,7 +53,7 @@ class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData
     }
 
     override fun execute(user: User) {
-        user.txResource(Gold::class, goldFound.asZ).errorOnFail()
+        user.txResource(Gold::class, goldFound.asSigned).errorOnFail()
     }
 }
 

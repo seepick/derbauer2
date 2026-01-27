@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.logic
 import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.resource.totalLandUse
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

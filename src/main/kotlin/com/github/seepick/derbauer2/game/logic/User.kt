@@ -18,6 +18,9 @@ class User {
         log.info { "Adding ${entity::class.simpleName} -- $entity" }
         _all += entity
     }
+
+    fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
+
 }
 
 // TODO only exact match, not subtype; check singleton

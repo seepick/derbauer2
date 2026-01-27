@@ -14,7 +14,8 @@ data class Zz(
 
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
-    val absZp get() = abs(value).z
+
+    fun asUnsigned() = abs(value).z
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Zz) = Zz(value + other.value)
@@ -41,7 +42,10 @@ data class Z(
     }
 
     val magnitutedValue = translateToMaxMagnitude(value)
-    val asZ get() = value.zz
+    val asSigned get() = value.zz
+
+    fun maxOf(owned: Z) = if (this > owned) this else owned
+    fun minOf(owned: Z) = if (this < owned) this else owned
 
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
@@ -56,6 +60,7 @@ data class Z(
     operator fun times(other: Z) = Z(value * other.value)
     operator fun times(other: Long) = Z(value * other)
     operator fun times(other: Int) = Z(value * other)
+    operator fun times(other: Percent) = Z((value * other.value).toLong())
 
     operator fun compareTo(other: Z) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
@@ -91,4 +96,13 @@ data class MagnitutedNumber(
     val originalNumber: Long,
 ) {
     override fun toString() = "$number${magnitude.symbol ?: ""}"
+}
+
+val Double.`%`: Percent get() = Percent(this)
+
+@JvmInline
+value class Percent(val value: Double) {
+    init {
+        require(value in 0.0..1.0) { "Percent value must be between 0.0 and 1.0" }
+    }
 }

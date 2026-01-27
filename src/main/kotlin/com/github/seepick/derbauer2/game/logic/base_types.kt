@@ -17,6 +17,8 @@ interface Ownable {
     @Suppress("PropertyName")
     @Deprecated("just don't use it unless you are within transaction application code")
     var _setOwnedOnlyByTx: Z
+
+    // funny things possible ;) operator fun unaryMinus(): Zz = -owned
 }
 
 abstract class EmojiAndLabel(

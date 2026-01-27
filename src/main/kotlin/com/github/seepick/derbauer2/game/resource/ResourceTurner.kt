@@ -25,7 +25,7 @@ data class ResourceReportLine(
     val resource: Resource,
     var changeAmount: Zz,
 ) {
-    constructor( resource: Resource, changeAmount: Z) : this(resource, changeAmount.asZ)
+    constructor( resource: Resource, changeAmount: Z) : this(resource, changeAmount.asSigned)
 }
 
 class ResourceReport(
@@ -52,7 +52,7 @@ class ResourceReportBuilder {
     private val changes = mutableMapOf<KClass<out Resource>, ResourceReportLine>()
 
     fun add(resource: Resource, change: Z) {
-        add(resource, change.asZ)
+        add(resource, change.asSigned)
     }
 
     fun add(resource: Resource, change: Zz) {

@@ -23,7 +23,7 @@ sealed interface Tx {
             resourceClass = resourceClass,
             // could introduce TxOperation.NONE but for now just use INCREASE with 0 amount
             operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-            amount = amount.absZp
+            amount = amount.asUnsigned()
         )
         init {
             require(amount >= 0) { "Amount must be non-negative: $amount" }

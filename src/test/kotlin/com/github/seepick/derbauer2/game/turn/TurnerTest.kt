@@ -14,7 +14,7 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
-import com.github.seepick.derbauer2.game.shouldContainChange
+import com.github.seepick.derbauer2.game.shouldContainLine
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
@@ -57,7 +57,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.totalProducingResourceAmount
-            report.resourceReportLines shouldContainChange(food to farm.totalProducingResourceAmount.asZ)
+            report.resourceReportLines shouldContainLine(food to farm.totalProducingResourceAmount.asSigned)
         }
         it("Given no food storage When produce Then stay 0") {
             user.add(Land(10.z))
@@ -67,7 +67,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.z
-            report.resourceReportLines shouldContainChange(food to 0.zz)
+            report.resourceReportLines shouldContainLine(food to 0.zz)
         }
         it("Given 1 space left When produce 2 Then max capped") {
             user.add(Land(10.z))
@@ -79,18 +79,18 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceReportLines shouldContainChange(food to diff.zz)
+            report.resourceReportLines shouldContainLine(food to diff.zz)
         }
     }
     describe("citizens") {
         it("Given sufficient citizens Then increase gold") {
             val gold = user.add(Gold(0.z))
-            user.add(Citizen((1.0 / Mechanics.citizenTaxPercentage).toLong().z))
+            user.add(Citizen((1.0 / Mechanics.citizenTax.value).toLong().z))
             user.add(Food(0.z))
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            report.resourceReportLines shouldContainChange (gold to 1.zz)
+            report.resourceReportLines shouldContainLine (gold to 1.zz)
             gold.owned shouldBeEqual 1.z
         }
     }

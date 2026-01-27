@@ -42,8 +42,9 @@ class Turner(
         // first resources, then happenings
         val resourceReport = resourceTurner.buildTurnReport()
         resourceReport.execute(user)
-        val citizenReport = citizenTurner.executeAndBuildReport()
+        val citizenReport = citizenTurner.buildReport()
         citizenReport.execute(user)
+        // executed later...
         val happenings = happeningTurner.buildHappeningMultiPages()
         val newFeatures = featureTurner.buildFeaturMultiPages()
         return TurnReport(

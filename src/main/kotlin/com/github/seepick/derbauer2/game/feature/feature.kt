@@ -2,8 +2,8 @@ package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.logic.Entity
 import com.github.seepick.derbauer2.game.logic.User
-import com.github.seepick.derbauer2.game.logic.landAvailable
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.game.view.MultiViewItem
 import com.github.seepick.derbauer2.textengine.Textmap

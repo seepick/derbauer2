@@ -29,8 +29,10 @@ object Mechanics {
     val sellFoodGainGold = 3
     val buyLandCostGold = 50
 
-    val citizenTaxPercentage = 0.5 // multiplied by citizens.amount
-    val citizenFoodConsumePercentage = 0.3
+    val citizenTax = 0.5.`%` // multiplied by citizens.amount
+    val citizenFoodConsume = 0.3.`%`
+    val citizensStarve = 0.01.`%`
+    val citizensStarveMinimum = 1.z
 
     val turnProbHappeningIsNegative = 0.1
 }

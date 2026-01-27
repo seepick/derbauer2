@@ -35,14 +35,14 @@ class ExampleITest : KoinTest, FunSpec() {
             }
         }
         test("citizens pay taxes") {
-            val citizenCount = 100
+            val citizenCount = 100.z
             Given {
                 changeOwned<Gold>(0.z)
-                changeOwned<Citizen>(citizenCount.z)
+                changeOwned<Citizen>(citizenCount)
             } When {
                 input(KeyInput.Enter)
             } Then {
-                val expectedTax = (citizenCount * Mechanics.citizenTaxPercentage).toLong().z
+                val expectedTax = citizenCount * Mechanics.citizenTax
                 shouldOwn<Gold>(expectedTax)
             }
         }

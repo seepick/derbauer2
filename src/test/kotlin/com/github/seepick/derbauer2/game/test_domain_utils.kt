@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.logic.Ownable
 import com.github.seepick.derbauer2.game.logic.User
+import com.github.seepick.derbauer2.game.logic.z
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.resource
@@ -18,3 +19,5 @@ var Ownable.ownedForTest
     set(value) {
         _setOwnedOnlyByTx = value
     }
+
+val Double.z get() = toLong().z

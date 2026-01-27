@@ -9,21 +9,24 @@
 
 ## Next
 
-* global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
+* ? could each turn calculation, be an external, plugged-in feature instead?
+* UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
 * IT: cucumber tests for main flows (super high level)
 * BZ: citizens: houses, birth, food consumption, gold taxes
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * UI: predictable order of entities/resources (give each a weight??)
 * UI: bright/dark mode support
+* BZ: implement birth rate, increase citizens on turn
 
 ## Later
 
 * cheat mode (press secret key, increase resources)
-* sound: continuous bg music; press key beep; each age different theme?!
+* UI: sound: continuous bg music; press key beep; each age different theme?!
   * how to configure? overlay menu?!
-* font styling: <red> <green> <bold> etc.
+* UI: font styling: <red> <green> <bold> etc.
   * like ctrl-codes in shell; process in renderer and remember positions and style for compose annotations
+* BZ: immigration happening
 
 ## Tech
 
@@ -35,6 +38,7 @@
 
 ## Ideas
 
+* AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve (currently only starve if 0 food)
 * UI: overlay info notifier/window/toast for InteractionResult.Failure (or keep it simple?)
 * UI: colored text? (build annotated string necessary for compose text...)
 * UI: set icon in Dock (iconFile in build.gradle)
