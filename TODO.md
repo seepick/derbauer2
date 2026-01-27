@@ -45,3 +45,4 @@
 * UI: set icon in Dock (iconFile in build.gradle)
 * UI: set icon of window
 * IT: cucumber tests for main flows (super high level) ... or simply use current DSL approach?!
+* UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)

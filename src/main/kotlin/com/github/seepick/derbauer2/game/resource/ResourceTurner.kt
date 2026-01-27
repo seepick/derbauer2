@@ -25,14 +25,13 @@ data class ResourceReportLine(
     val resource: Resource,
     var changeAmount: Zz,
 ) {
-    constructor( resource: Resource, changeAmount: Z) : this(resource, changeAmount.asSigned)
+    constructor(resource: Resource, changeAmount: Z) : this(resource, changeAmount.asSigned)
 }
 
 class ResourceReport(
-    val lines: List<ResourceReportLine>, // TODO needs to be sorted in a deterministic way (centrally/globally)
+    val lines: List<ResourceReportLine>,
 ) {
     companion object {
-        val empty = ResourceReport(emptyList())
         fun builder() = ResourceReportBuilder()
     }
 
