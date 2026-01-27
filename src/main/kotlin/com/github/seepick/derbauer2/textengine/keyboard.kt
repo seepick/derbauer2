@@ -5,9 +5,6 @@ import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
-
-private val log = logger {}
 
 fun interface KeyListener {
     fun onKeyPressed(key: KeyPressed): Boolean
@@ -20,33 +17,34 @@ sealed interface KeyPressed {
         object Escape : Command("ESCAPE")
         object Space : Command("SPACE")
     }
-
-    companion object {}
+    companion object {
+        // via extension functions
+    }
 }
 
 val KeyPressed.Companion.one get() = KeyPressed.Symbol(PrintChar.Numeric.One)
 
+private val keyMap = buildMap {
+    put(Key.Escape, KeyPressed.Command.Escape)
+    put(Key.Escape, KeyPressed.Command.Escape)
+    put(Key.Enter, KeyPressed.Command.Enter)
+    put(Key.Spacebar, KeyPressed.Command.Space)
+
+    put(Key.Zero, KeyPressed.Symbol(PrintChar.Numeric.Zero))
+    put(Key.One, KeyPressed.Symbol(PrintChar.Numeric.One))
+    put(Key.Two, KeyPressed.Symbol(PrintChar.Numeric.Two))
+    put(Key.Three, KeyPressed.Symbol(PrintChar.Numeric.Three))
+    put(Key.Four, KeyPressed.Symbol(PrintChar.Numeric.Four))
+    put(Key.Five, KeyPressed.Symbol(PrintChar.Numeric.Five))
+    put(Key.Six, KeyPressed.Symbol(PrintChar.Numeric.Six))
+    put(Key.Seven, KeyPressed.Symbol(PrintChar.Numeric.Seven))
+    put(Key.Eight, KeyPressed.Symbol(PrintChar.Numeric.Eight))
+    put(Key.Nine, KeyPressed.Symbol(PrintChar.Numeric.Nine))
+}
+
 fun KeyEvent.toKeyPressed(): KeyPressed? =
     if (type == KeyEventType.KeyDown) {
-        when (key) {
-            Key.Escape -> KeyPressed.Command.Escape
-            Key.Enter -> KeyPressed.Command.Enter
-            Key.Spacebar -> KeyPressed.Command.Space
-            Key.Zero -> KeyPressed.Symbol(PrintChar.Numeric.Zero)
-            Key.One -> KeyPressed.Symbol(PrintChar.Numeric.One)
-            Key.Two -> KeyPressed.Symbol(PrintChar.Numeric.Two)
-            Key.Three -> KeyPressed.Symbol(PrintChar.Numeric.Three)
-            Key.Four -> KeyPressed.Symbol(PrintChar.Numeric.Four)
-            Key.Five -> KeyPressed.Symbol(PrintChar.Numeric.Five)
-            Key.Six -> KeyPressed.Symbol(PrintChar.Numeric.Six)
-            Key.Seven -> KeyPressed.Symbol(PrintChar.Numeric.Seven)
-            Key.Eight -> KeyPressed.Symbol(PrintChar.Numeric.Eight)
-            Key.Nine -> KeyPressed.Symbol(PrintChar.Numeric.Nine)
-            else -> {
-                log.debug { "Unhandled key: $key" }
-                null
-            }
-        }
+        keyMap[key]
     } else {
         null
     }

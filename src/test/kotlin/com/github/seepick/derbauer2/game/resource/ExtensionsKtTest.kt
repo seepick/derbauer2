@@ -50,7 +50,7 @@ class ExtensionsKtTest : DescribeSpec( {
             user.enableAndSet(house, 1.z)
             user.enableAndSet(farm, 1.z)
 
-            user.totalLandUse shouldBe (house.landUse + farm.landUse)
+            user.totalLandUse shouldBe house.landUse + farm.landUse
             user.landAvailable shouldBeEqual 0.z
         }
     }

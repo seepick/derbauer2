@@ -55,6 +55,7 @@ class TradePromptBuilder(
         }
     )
 
+    @Suppress("SpreadOperator")
     private fun buildTradeOption(
         operation: TradeOperation,
         targetResourceClass: KClass<out Resource>,

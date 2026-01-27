@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.common.z
 /**
  * All game mechanics constants; a magic constant provider.
  */
+@Suppress("MayBeConstant", "MagicNumber")
 object Mechanics {
     val startingLand = 10.z
     val startingGold = 500.z

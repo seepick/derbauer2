@@ -33,15 +33,15 @@ private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
 
 fun User.execTx(txs: List<Tx>): TxResult {
     log.debug { "Executing transactions: $txs" }
-
-    val maybeSnapshot = copyAndApply(txs)
-    val snapshot: User
-    when (maybeSnapshot) {
-        is TxMaybe.Fail -> return maybeSnapshot.fail
-        is TxMaybe.Ok -> snapshot = maybeSnapshot.value
+    return when (val maybeSnapshot = copyAndApply(txs)) {
+        is TxMaybe.Fail -> maybeSnapshot.fail
+        is TxMaybe.Ok -> validateAndExec(txs, maybeSnapshot.value)
     }
+}
 
+private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
     val fails = listOf(
+        // TODO register in koin validator interface, and collect all (eager singletons) via DI-context
         snapshot.validateResourceTx(),
         snapshot.validateBuildTx(),
     ).filterIsInstance<TxResult.Fail>()

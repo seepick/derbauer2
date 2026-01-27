@@ -13,7 +13,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.equals.shouldBeEqual
 
-
 class CitizenTurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: CitizenTurner
@@ -69,7 +68,10 @@ class CitizenTurnerTest : DescribeSpec({
         }
         it("Given many citizens and no food Then proportional starvation") {
             val expectedStarve = 2
-            val citizen = user.enableAndSet(Citizen(), ((1.0 / Mechanics.citizensStarve.value) * expectedStarve).z)
+            val citizen = user.enableAndSet(
+                Citizen(),
+                (1.0 / Mechanics.citizensStarve.value * expectedStarve).z
+            )
             user.enableAndSet(Food(), 0.z)
 
             val report = turner.buildReport()

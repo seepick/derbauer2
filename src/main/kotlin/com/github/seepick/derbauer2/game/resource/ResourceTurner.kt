@@ -31,13 +31,13 @@ data class ResourceReportLine(
 class ResourceReport(
     val lines: List<ResourceReportLine>,
 ) {
-    companion object {
-        fun builder() = ResourceReportBuilder()
-    }
-
     fun merge(other: ResourceReport) = buildResourceReport {
         lines.forEach { add(it.resource, it.changeAmount) }
         other.lines.forEach { add(it.resource, it.changeAmount) }
+    }
+
+    companion object {
+        fun builder() = ResourceReportBuilder()
     }
 }
 

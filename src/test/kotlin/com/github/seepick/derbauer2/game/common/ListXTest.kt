@@ -54,7 +54,7 @@ class ListXTest : DescribeSpec({
         val subTypeB = SubTypeB()
 
         it("Given twice same type When find it Then fail") {
-            val listx = ListX<SuperType>(listOf(superType, superType))
+            val listx = ListX(listOf(superType, superType))
 
             shouldThrow<IllegalStateException> { listx.findOrNull<SuperType>() }
                 .message.shouldNotBeNull().should {
@@ -63,12 +63,12 @@ class ListXTest : DescribeSpec({
                 }
         }
         it("Given two different subs When find one Then return it") {
-            val listx = ListX<SuperType>(listOf(subTypeA, subTypeB))
+            val listx = ListX(listOf(subTypeA, subTypeB))
 
             listx.findOrNull<SubTypeA>().shouldNotBeNull() shouldBeEqual subTypeA
         }
         it("Given super and sub When find super Then return super And not sub") {
-            val listx = ListX<SuperType>(listOf(superType, subType))
+            val listx = ListX(listOf(superType, subType))
 
             listx.findOrNull<SuperType>().shouldNotBeNull() shouldBeEqual superType
         }
@@ -78,11 +78,11 @@ class ListXTest : DescribeSpec({
             listx.findOrNull<SuperType>().shouldBeNull()
         }
     }
-    describe("find delegates to findOrNull") {
+    describe("find") { // simply delegates to findOrNull
         it("Given empty Then null") {
             val listx = ListX(emptyList())
 
-            shouldThrow<IllegalArgumentException> {
+            shouldThrow<NotFoundEntityException> {
                 listx.find<String>()
             }.message.should {
                 it.shouldNotBeNull()

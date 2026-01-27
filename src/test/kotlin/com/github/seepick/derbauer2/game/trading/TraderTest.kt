@@ -47,7 +47,6 @@ class TraderTest : DescribeSpec({
         }
 
         describe("Operation") {
-            val buyAmount = 1.z
             it("When buy infinite resource gold Then increased") {
                 user.enable(Gold())
                 user.trade(TradeRequest(Gold::class, Buy, 1.z))

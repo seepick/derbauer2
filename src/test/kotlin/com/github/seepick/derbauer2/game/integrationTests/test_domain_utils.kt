@@ -43,7 +43,9 @@ fun PromptGamePage.indexOfOption(searchLabel: String): Int {
         if (option.label().lowercase().contains(searchLabel.lowercase())) {
             log.debug { "Selected option for '$searchLabel' at index ${index}: $option" }
             index + 1 to option
-        } else null
+        } else {
+            null
+        }
     }
     require(matching.size == 1) {
         "Expected exactly one matching option for '$searchLabel', but was: $matching (all: ${select.options})"

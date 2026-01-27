@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.SimpleGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 
+@Suppress("LongParameterList")
 class ReportPage(
     gameRenderer: GameRenderer,
     private val reports: ReportIntelligence,

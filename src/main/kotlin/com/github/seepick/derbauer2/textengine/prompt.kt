@@ -12,6 +12,7 @@ data class SelectOption(
 }
 
 sealed class PrintChar(val char: Char) {
+    @Suppress("MagicNumber")
     sealed class Numeric(val int: Int) : PrintChar(int.toString().first()) {
         object Zero : Numeric(0)
         object One : Numeric(1)
@@ -45,6 +46,7 @@ sealed interface Prompt : KeyListener {
         private val log = KotlinLogging.logger {}
 
         init {
+            @Suppress("MagicNumber")
             require(options.size in 1..9)
         }
 
@@ -60,7 +62,9 @@ sealed interface Prompt : KeyListener {
                 log.debug { "Selected: $option" }
                 option.onSelected()
                 true
-            } else false
+            } else {
+                false
+            }
 
         override fun render(textmap: Textmap) {
             textmap.line(title)

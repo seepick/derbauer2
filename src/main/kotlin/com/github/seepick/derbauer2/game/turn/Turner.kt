@@ -11,6 +11,7 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
+@Suppress("LongParameterList")
 class Turner(
     private val happeningTurner: HappeningTurner,
     private val resourceTurner: ResourceTurner,
@@ -27,7 +28,6 @@ class Turner(
     fun collectAndExecuteNextTurnReport(): TurnReport {
         turn++
         log.info { "Taking turn $turn" }
-        // first resources, then happenings!
         val resourceReport = resourceTurner.buildTurnReport()
         resourceReport.execute(user)
         val citizenReport = citizenTurner.buildReport()

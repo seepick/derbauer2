@@ -29,23 +29,23 @@ class UnitsTest : DescribeSpec({
             }
         }
         describe("negative") {
-            withData(singlesAndMagnitude.map { (it.first * - 1) to it.second }) { (givenSingle: Long, expectedSize: Magnitude) ->
+            withData(singlesAndMagnitude.map { -it.first to it.second }) { (givenSingle, expectedSize) ->
                 givenSingle.zz.magnitutedValue.magnitude shouldBeEqual expectedSize
             }
         }
     }
-        describe("toPlusString") {
-            it("z unsigned") {
-                0.z.toPlusString() shouldBeEqual "0"
-                1.z.toPlusString() shouldBeEqual "+1"
-                1024.z.toPlusString() shouldBeEqual "+1k"
-            }
-            it("zz signed") {
-                (-1024).zz.toPlusString() shouldBeEqual "-1k"
-                (-1).zz.toPlusString() shouldBeEqual "-1"
-                0.zz.toPlusString() shouldBeEqual "0"
-                1.zz.toPlusString() shouldBeEqual "+1"
-                1024.zz.toPlusString() shouldBeEqual "+1k"
-            }
+    describe("toPlusString") {
+        it("z unsigned") {
+            0.z.toPlusString() shouldBeEqual "0"
+            1.z.toPlusString() shouldBeEqual "+1"
+            1024.z.toPlusString() shouldBeEqual "+1k"
         }
+        it("zz signed") {
+            (-1024).zz.toPlusString() shouldBeEqual "-1k"
+            (-1).zz.toPlusString() shouldBeEqual "-1"
+            0.zz.toPlusString() shouldBeEqual "0"
+            1.zz.toPlusString() shouldBeEqual "+1"
+            1024.zz.toPlusString() shouldBeEqual "+1k"
+        }
+    }
 })

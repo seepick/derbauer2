@@ -3,11 +3,14 @@ package com.github.seepick.derbauer2.game.common
 import kotlin.math.abs
 
 val Long.zz get() = Zz(this)
+@Suppress("VariableMinLength")
 val Long.z get() = Z(this)
 val Int.zz get() = Zz(toLong())
+@Suppress("VariableMinLength")
 val Int.z get() = Z(toLong())
 
 /** Signed long. */
+@Suppress("TooManyFunctions")
 data class Zz(
     val value: Long,
 ) {
@@ -38,6 +41,7 @@ class NegativeZException(val value: Long) :
     IllegalArgumentException("Negative value for unsigned long: $value")
 
 /** Unsigned long. */
+@Suppress("TooManyFunctions")
 data class Z(
     val value: Long,
 ) {
@@ -73,16 +77,18 @@ data class Z(
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
+@Suppress("MagicNumber")
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {
     // AI generated code ;)
     val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else abs(single)
     val mag = Magnitude.entries.reversed().firstOrNull {
-        absSingle >= (1L shl (10 * it.thousands))
+        absSingle >= 1L shl 10 * it.thousands
     } ?: Magnitude.Single
-    val factor = 1L shl (10 * mag.thousands)
+    val factor = 1L shl 10 * mag.thousands
     return MagnitutedNumber(single / factor, mag, single)
 }
 
+@Suppress("MagicNumber")
 enum class Magnitude(
     val thousands: Int,
     val symbol: String?,
@@ -104,6 +110,7 @@ data class MagnitutedNumber(
     override fun toString() = "$number${magnitude.symbol ?: ""}"
 }
 
+@Suppress("ObjectPropertyName", "DANGEROUS_CHARACTERS")
 val Double.`%`: Percent get() = Percent(this)
 
 @JvmInline

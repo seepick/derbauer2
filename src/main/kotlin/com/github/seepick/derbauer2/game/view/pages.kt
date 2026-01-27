@@ -44,6 +44,7 @@ abstract class PromptGamePage(
         buttons.plus(prompt).any { it.onKeyPressed(key) }
 }
 
+@Suppress("LongParameterList")
 abstract class NotificationPage(
     private val title: String,
     private val emoji: String,

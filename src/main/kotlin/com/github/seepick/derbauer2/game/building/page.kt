@@ -15,7 +15,7 @@ import com.github.seepick.derbauer2.textengine.SelectOption
 class BuildingsPage(
     private val user: User,
     private val currentPage: CurrentPage,
-    private val gameRenderer: GameRenderer,
+    gameRenderer: GameRenderer,
     private val resultHandler: InteractionResultHandler,
 ) : PromptGamePage(
     gameRenderer = gameRenderer,
@@ -23,7 +23,12 @@ class BuildingsPage(
         Prompt.Select(
             title = "What shall we build next, Sire?",
             user.buildings.map { building ->
-                SelectOption({ "Build ${building.labelSingular} - ${Gold.Data.emojiSpaceOrEmpty}${building.costsGold} | ${Land.Data.emojiSpaceOrEmpty}${building.landUse} (owned: ${building.owned})" }) {
+                SelectOption({
+                    "Build ${building.labelSingular} - " +
+                            "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold} | " +
+                            "${Land.Data.emojiSpaceOrEmpty}${building.landUse} " +
+                            "(owned: ${building.owned})"
+                }) {
                     resultHandler.handle(user.build(building::class))
                 }
             }

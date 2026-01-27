@@ -36,4 +36,5 @@ var Ownable.ownedForTest
         _setOwnedInternal = value
     }
 
+@Suppress("VariableMinLength")
 val Double.z get() = toLong().z

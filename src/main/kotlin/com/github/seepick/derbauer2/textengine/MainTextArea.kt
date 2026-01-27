@@ -24,6 +24,7 @@ private val mainTextStyle = TextStyle(
     lineHeight = mainFontSize * 1.16,
 )
 
+@Suppress("FunctionName")
 @Composable
 fun MainTextArea(text: String) {
     Text(

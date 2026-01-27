@@ -16,25 +16,27 @@ class GameRenderer(
     private val user: User,
     private val turner: Turner,
 ) {
-    private fun renderInfoBar(): String = buildList<String> {
-            user.resources.alsoIfExists(Land::class) {
-                add(it.emojiAndOwned)
-            }
-            user.resources.alsoIfExists(Gold::class) {
-                add(it.emojiAndOwned)
-            }
+    private val MetaOption.formatted get() = "${key.label}: $label"
 
-            user.resources.alsoIfExists(Food::class) {
-                add("${it.emojiAndOwned} / ${user.storageFor(Food::class)}")
-            }
-            user.resources.alsoIfExists(Land::class) {
-                val totalLandUse = user.totalLandUse
-                add("${it.emojiSpaceOrEmpty}${totalLandUse} / ${it.owned}")
-            }
-            user.resources.alsoIfExists(Citizen::class) {
-                add("${it.emojiSpaceOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
-            }
-        }.joinToString(" | ")
+    private fun renderInfoBar(): String = buildList {
+        user.resources.alsoIfExists(Land::class) {
+            add(it.emojiAndOwned)
+        }
+        user.resources.alsoIfExists(Gold::class) {
+            add(it.emojiAndOwned)
+        }
+
+        user.resources.alsoIfExists(Food::class) {
+            add("${it.emojiAndOwned} / ${user.storageFor(Food::class)}")
+        }
+        user.resources.alsoIfExists(Land::class) {
+            val totalLandUse = user.totalLandUse
+            add("${it.emojiSpaceOrEmpty}${totalLandUse} / ${it.owned}")
+        }
+        user.resources.alsoIfExists(Citizen::class) {
+            add("${it.emojiSpaceOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
+        }
+    }.joinToString(" | ")
 
     fun render(
         textmap: Textmap,
@@ -52,8 +54,6 @@ class GameRenderer(
             right = metaOptions.joinToString("   ") { it.formatted },
         )
     }
-
-    private val MetaOption.formatted get() = "${key.label}: $label"
 }
 
 interface MetaOption {

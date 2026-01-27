@@ -18,7 +18,7 @@ inline fun <reified R : Resource> User.resource(): R =
 
 @Suppress("UNCHECKED_CAST")
 fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? =
-    resources.findOrNull(type) as R?
+    resources.findOrNull(type) as? R?
 
 context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)
@@ -29,10 +29,9 @@ fun User.isAbleToStore(resource: StorableResource, amount: Z) =
 fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Z) =
     resource(resourceClass).owned >= amount
 
-fun User.hasAtLeast(resource: Resource, amount: Z) =
-    resource.owned >= amount
-
 fun User.capResourceAmount(resource: Resource, amount: Z) =
     if (resource is StorableResource) {
         amount.value.coerceAtMost(availableOf(resource).value).z
-    } else amount
+    } else {
+        amount
+    }

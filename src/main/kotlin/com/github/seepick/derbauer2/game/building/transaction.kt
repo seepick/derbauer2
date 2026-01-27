@@ -29,13 +29,14 @@ data class TxBuilding(
     override val operation: TxOperation,
     override val amount: Z
 ) : TxOwned<Building>, BuildingReference {
+
+    override val buildingClass = targetClass
+
     constructor(targetClass: KClass<out Building>, amount: Zz) : this(
         targetClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )
-
-    override val buildingClass = targetClass
 }
 
 fun User.execTxBuilding(

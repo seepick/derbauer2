@@ -19,13 +19,13 @@ data class TxResource(
     override val operation: TxOperation,
     override val amount: Z,
 ) : TxOwned<Resource>, ResourceReference {
+    override val resourceClass = targetClass
+
     constructor(targetClass: KClass<out Resource>, amount: Zz) : this(
         targetClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )
-
-    override val resourceClass = targetClass
 }
 
 fun User.execTxResource(

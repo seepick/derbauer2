@@ -31,13 +31,13 @@ abstract class Feature(
 }
 
 class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
+    override val asciiArt = feature.asciiArt
+
     override fun render(textmap: Textmap) {
         textmap.line(">> ${feature.label} <<")
         textmap.emptyLine()
         textmap.multiLine(feature.description)
     }
-
-    override val asciiArt = feature.asciiArt
 
     override fun execute(user: User) {
         user.enable(feature)

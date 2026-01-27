@@ -1,3 +1,4 @@
+@file:Suppress("MagicNumber")
 package com.github.seepick.derbauer2.textengine
 
 import androidx.compose.ui.graphics.Color

@@ -9,6 +9,7 @@ interface Output {
     fun multiLine(text: String)
 }
 
+@Suppress("VariableMinLength")
 private class Cursor {
     var x = 0
     var y = 0
@@ -27,10 +28,6 @@ class Textmap(
     private val cols: Int,
     private val rows: Int,
 ) : Output {
-    companion object {
-        private const val HR_SYMBOL = "="
-    }
-
     private val buffer = Array(rows) { Array(cols) { ' ' } }
     private var cursor = Cursor()
 
@@ -74,5 +71,9 @@ class Textmap(
 
     private fun set(x: Int, y: Int, char: Char) {
         buffer[y][x] = char
+    }
+
+    companion object {
+        private const val HR_SYMBOL = "="
     }
 }

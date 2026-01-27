@@ -63,7 +63,7 @@ class RatsEatFoodTest : StringSpec({
 
             happening.execute(user)
 
-            user.food shouldBeEqual (origAmount - happening.amountFoodEaten)
+            user.food shouldBeEqual origAmount - happening.amountFoodEaten
         }
     }
 })
