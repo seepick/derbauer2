@@ -31,6 +31,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --no-daemon --console=plain
       - name: Verify Build
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew check sonar --no-daemon --console=plain
+        run: ./gradlew check --no-daemon --console=plain

@@ -55,7 +55,7 @@ fun User.validateResourceTx(): TxResult =
         } else TxResult.Success
     }.merge()
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "kotlin:S100")
 fun User._applyResourceTx(tx: TxResource) {
     val resource = resource(tx.resourceClass)
     log.trace { "Applying: $tx for $resource" }

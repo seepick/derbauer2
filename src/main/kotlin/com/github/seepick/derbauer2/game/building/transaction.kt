@@ -65,7 +65,7 @@ fun User.validateBuildTx(): TxResult =
     } else TxResult.Success
 
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "kotlin:S100")
 fun User._applyBuildTx(tx: TxBuilding) {
     val building = building(tx.buildingClass)
     log.trace { "Applying: $tx for $building" }

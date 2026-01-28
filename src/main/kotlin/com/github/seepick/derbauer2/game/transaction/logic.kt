@@ -53,7 +53,7 @@ private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
     return TxResult.Success
 }
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "kotlin:S100")
 private fun User._applyTx(tx: Tx) {
     when (tx) {
         is TxResource -> _applyResourceTx(tx)

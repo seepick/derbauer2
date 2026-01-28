@@ -71,9 +71,10 @@ fun showMainWindow(
                 // state hack: ensure initialization runs only once during composition
                 var initialized by remember { mutableIntStateOf(0) }
                 if (initialized == 0) {
+                    initialized = 1
+                    log.debug { "Compose is going to initialize state (initialized=$initialized)" }
                     val user = koinInject<User>()
                     initState(user)
-                    initialized = 1
                 }
                 Window(
                     title = title,
