@@ -54,6 +54,12 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
     }
+    
+    sourceSets {
+        val main by getting {
+            kotlin.srcDir("src/generated/kotlin")
+        }
+    }
 }
 
 compose.desktop {
