@@ -1,23 +1,26 @@
-
 # Upgrades
 
-Similar to "Achievements", make "things better", kind of technology.
-
+* Similar to Achievements and Technology; permanent effect
+* positively effecting other entities (modifiers on mechanics)
+* enabled by:
+  * similar to Features/Achievements/Technology
 * attributes:
-    * buy price (gold)
-    * leveled: current / max (even if only 1 level)
+    * costs: (mostly) gold, maybe other resources
+    * prerequisites: other upgrades, technology, buildings, military strength, resources, ...
+    * type: singular | leveled (upgradable multiple times, increasing costs; maybe infinitely?)
 
-## Examples
+## Effect Examples
 
-* increase resource productivity/capacity
-* new feature/action
-* military
-    - new army types
-    - army strengths
-* buildings
-    - building types
-    - efficiency
-* lower upcome
+* economy:
+  * resource production/capacity (effectiveness/efficiency of buildings; type == leveled)
+  * lower maintanance costs (type == leveled)
+  * better trade prices (type == leveled)
+* new buildings/features/actions (type == singular)
+* military:
+    * new army types
+    * army strengths
+* social:
+  * better stats (happiness, growth rate, ...)
 
 ## Effects
 

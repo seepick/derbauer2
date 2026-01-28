@@ -76,7 +76,9 @@ About:
 Examples:
 
 * Church
+  * +happyness/karma
 * Pub
+  * +happyness/karma
 
 ## Misc
 

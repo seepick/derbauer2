@@ -1,11 +1,10 @@
 
 # Ideas
 
-* the bigger the kingdom (more citizens), at certain thresholds, earn title: village, town, city, ...
-* Experience Points
-  - military, trade (economical)
-  - gets you achievements (permanent upgrades)
-  - enables new stuff
+* Financial System
+  * allows to adjust tax rate (gold/happiness tradeoff)
+* Banking
+  * allows finanicial actions (borrow/invest money, ...)
 * Religion
 * Policy: change laws
   - taxes (gambling, banking, land, military)

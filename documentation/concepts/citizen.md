@@ -1,6 +1,6 @@
 # Citizens
 
-* synonyms: population, people, peasants, villagers
+* synonyms: population, people, peasants, villagers; workers
 * yet another resource, stored in houses
 * effects:
   * consume food
@@ -10,4 +10,5 @@
     * actually the main (only?) income of gold
   * reproducing itself over time (depending on stats such as health/wealth/luck)
 * used up (consumed) for army
-  * one knight request X (1?) citizen; basically from worker to soldier
+  * one knight request X (1?) citizen
+  * basically from worker to soldier

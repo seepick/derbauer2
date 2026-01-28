@@ -1,3 +1,8 @@
+# Story
+
+* you are a king of a kingdom
+* it is europe in the middle ages
+* your goal is to expand your kingdom
 
 # Guiding Flavors
 

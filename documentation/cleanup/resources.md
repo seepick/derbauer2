@@ -40,7 +40,11 @@
     - later on, gold
     - later later on, land as buildings require lots of land
     - push user to get more involved in military actions (as trading is highly expensive)
- 
+* Experience Points:
+  * a "hidden" resource; for each user interaction get XP; meaning of gaining skill by doing (kungfu)
+  * received for: building, trading (economical), enabling/unlocking stuff, military actions
+  * enables new stuff: gets you achievements (permanent upgrades)
+
 # Food
 
 * affects:

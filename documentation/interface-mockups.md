@@ -22,7 +22,7 @@ What do you want to do today?
 2️⃣ Build
 
 =======================================================================
-[1-2]> ▉                                               ENTER: Next Turn
+[1-2]> ▉                                              [ENTER] Next Turn
 ```
 
 ## Trade Screen
@@ -39,7 +39,7 @@ What do you want to trade?
 2️⃣ Sell 1 Food for 3 💰
 
 =======================================================================
-[1-2]> ▉                                                 ENTER: Go Back
+[1-2]> ▉                                                [ENTER] Go Back
 ```
 
 Enter free number:
@@ -53,7 +53,7 @@ You got 321🍖 and one food is worth 3💰.
 
 
 =======================================================================
-[1-321]> 3▉                                 ENTER: Confirm   ESC: Abort
+[1-321]> 3▉                                [ENTER] Confirm  [ESC] Abort
 ```
 
 ## Notification

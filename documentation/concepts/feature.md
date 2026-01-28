@@ -1,0 +1,20 @@
+# Feature
+
+* synonyms: condition, option, possibility, modifier
+* about / essence:
+    * internal "switches" to allow user new possibilities/interactions
+    * similar to tech or upgrades, but they are passive; or... is tech enabling a feature?!
+    * Conditions are certain criteria in order to allow other things to happen/be available
+* effects:
+  * enables:
+    * buildings, military (army/action), upgrades, actions, happenings, trade (new) resources
+    * also: achievements (if x feature is enabled, achievement y can be earned)
+  * changes the modifiers (probability calculation)
+
+# Trigger
+
+* e.g. certain resources exceed threshold, or capacity running low
+  * e.g. when land is getting low, receive feature to buy/trade land for money
+* Depends on:
+  * availability of entities: upgrade, people, building, achievement
+  * history! how often something happened so far
