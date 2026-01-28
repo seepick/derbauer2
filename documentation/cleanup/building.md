@@ -1,22 +1,7 @@
-* buildings occupy land (buy land, or conquer more cheaply)
+# Buildings
 
-# Ideas
-
-* wonder buildings (one time enabler)
-
-* cost any resources to build
-* cost maintenance
-* requires/occupies land
-* provides:
-    * produces resources
-    * storage (for resources, army)
-* e.g.
-    * farm = produce food
-    * carnary = store food
-
-
-# Building
-
+* about:
+  * occupy land
 * attributes:
     * costs gold (buy price)
     * uses land
@@ -46,15 +31,6 @@
         - army capacity
         - army effectiveness
     * social: happyness
-
-## Ideas
-
-* can be destroyed/sold?
-* build multiple buildings at once?
-* bsp: kaserne, schmiede, universitaet, farm, castle
-* building.upkeep += people
-    - render overview bar as "2 / 6 / 10", 2 used, 6 living, 10 max cap. (6-2 = 4 available)
-    - oder doch nicht, da zu komplex?!? gold upkeep enough?
 
 ## Examples
 
@@ -139,3 +115,24 @@ Examples:
 * condition/feature/upgrade/action enabled (which itself might enable army...)
 * influences happening
 
+
+# Ideas
+
+* can be destroyed/sold?
+* build multiple buildings at once?
+* bsp: kaserne, schmiede, universitaet, farm, castle
+* building.upkeep += people
+    - render overview bar as "2 / 6 / 10", 2 used, 6 living, 10 max cap. (6-2 = 4 available)
+    - oder doch nicht, da zu komplex?!? gold upkeep enough?
+
+* wonder buildings (one time enabler)
+* gebaeude abreissen: kostet gold
+* cost any resources to build
+* cost maintenance
+* requires/occupies land
+* provides:
+    * produces resources
+    * storage (for resources, army)
+* e.g.
+    * farm = produce food
+    * carnary = store food

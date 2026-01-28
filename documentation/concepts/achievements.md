@@ -1,8 +1,10 @@
-
 # Achievement
 
-See "Upgrade" and "History". Is some kind of "XP reward".
-
+* about / essence:
+  * a progression based happening
+  * some kind of "XP reward"
+  * similar to upgrade/feature/tech maybe
+  * relies on historical data
 * get free gold/food/land/buildings (when land available)
 
 ## Triggered by
@@ -16,5 +18,5 @@ See "Upgrade" and "History". Is some kind of "XP reward".
 * happenings: good vs bad
 * days (each week, month, year), give special reward
 * ui-interation ;)
+* ... differentiate between: by type VS global
 
-differentiate between: by type VS global.

@@ -1,4 +1,3 @@
-
 # Other similar games
 
 * Warsim
@@ -14,7 +13,16 @@
 * hamurabi
     * lil game, JS
     * https://github.com/skypanther/Hamurabi/blob/master/Resources/common/hamurabi.js#L62
+
+## More like traditional round-based strategy games
+
+* Civilisation
+  * something for the eye, build shiny castle, expand grow (village view)
 * Die Fugger II
+    * marry + birth => 2nd round (a la fugger)
+    * sterbe rate von player steigt mit steigendem alter drastisch
+    * auf wieviele jahre beschraenken? wie hunde-jahre
+      * 7 zb... also nach 10 jahren ist todeswahrscheinlichkeit schon sehr hoch
 
 ## collections
 

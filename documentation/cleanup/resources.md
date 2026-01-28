@@ -33,9 +33,9 @@
     * income influenced by upgrades/features/achievements
     * if over limit, then lose gradually
 1. Land
-    * trade (only later via special upgrade, highly expensive)
+    * trade/buy it (only later via special upgrade, highly expensive)
     * used for buildings
-
+    * conquer via military; get waaay more, but have to get+maintain army
 * in earl stage of game, food is the main thing
     - later on, gold
     - later later on, land as buildings require lots of land

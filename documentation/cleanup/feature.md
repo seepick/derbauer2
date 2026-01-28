@@ -1,16 +1,17 @@
-
 # Feature
 
-Internal "switches" to allow user new interactions.
-
-* See to "Condition"
-* Enables new possibilities
+* synonyms: condition, option, possibility, modifier
+  * similar to tech or upgrades
+* about / essence:
+  * internal "switches" to allow user new possibilities/interactions
+* enables:
     - buildings
     - armies
     - upgrades
     - actions
-    - achievements
     - happenings
+    - achievements (if x feature is enabled, achievement y can be earned)
+    - trade resources
 * effects modifiers
 
 # Condition

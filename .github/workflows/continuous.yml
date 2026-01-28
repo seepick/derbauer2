@@ -40,3 +40,6 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --console=plain
+      - name: Validate Documentation
+        run: |
+          ./bin/validate_documentation.sh
