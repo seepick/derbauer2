@@ -32,63 +32,6 @@
         - army effectiveness
     * social: happyness
 
-## Examples
-
-* Areas:
-    - economical: affects resources (prod/cap)
-    - military: strengthen armies and increase cap
-    - social: increase happiness/karma
-    - feature enabler; e.g.: castle (for throne room)
-
-### Economy/Resources
-
-General:
-
-* food cap/prod
-* people cap/prod (reproduction rate, immigrants)
-* gold prod
-* trade benefits
-
-Examples:
-
-* farm: +food prod
-* granary: +food cap, +rat protection
-* "big granary": resistince to happenings
-* marketplace: +gold prod (per people), -trade price modifier
-* mine: +gold prod, +people upcome (needs people to work)
-
-### Military
-
-General:
-
-* unit cap/hire (=buy)
-* enable hire (new types)
-
-Examples:
-
-* barrack: +army cap, -army buy mod, +att/def mod
-* archery: +army cap, -army buy mod, +att/def mod
-* stable: +army cap, -army buy mod, +att/def mod
-* armoury
-* wall: +defense
-* "defence palisades" less likely to get raided by bandits
-
-### Tech (upgrade/feature/action)
-
-* castle
-* alchemy
-
-### Social
-
-General:
-
-* increase happyness/karma
-* the more people, the more social buildings required
-
-Examples:
-
-* library
-* school
 
 ### Misc
 
@@ -114,7 +57,6 @@ Examples:
 * price mod for build/trade/military/upgrade
 * condition/feature/upgrade/action enabled (which itself might enable army...)
 * influences happening
-
 
 # Ideas
 
