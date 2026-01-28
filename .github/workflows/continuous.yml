@@ -28,7 +28,3 @@ jobs:
             gradle-cache-${{ runner.os }}-
       - name: Gradle check
         run: ./gradlew check --no-daemon --console=plain
-      - name: Gradle sonar
-        run: ./gradlew sonar --no-daemon --console=plain
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
