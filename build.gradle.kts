@@ -115,6 +115,7 @@ sonar {
         property("sonar.organization", "seepick")
         property("sonar.projectKey", "derbauer2")
         property("sonar.host.url", "https://sonarcloud.io")
+        property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
     }
 }
 tasks.withType<DependencyUpdatesTask> {
