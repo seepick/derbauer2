@@ -26,9 +26,10 @@ jobs:
           key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-cache-${{ runner.os }}-
-      - name: SonarQube Scan
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonar --no-daemon --console=plain
+#            You are running CI analysis while Automatic Analysis is enabled. Please consider disabling one or the other.
+#      - name: SonarQube Scan
+#        env:
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#        run: ./gradlew sonar --no-daemon --console=plain
       - name: Verify Build
         run: ./gradlew check --no-daemon --console=plain
