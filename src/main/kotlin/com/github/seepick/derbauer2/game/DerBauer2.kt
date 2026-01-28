@@ -20,7 +20,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 object DerBauer2 {
     private val log = logger {}
     val initPageClass = HomePage::class
-    // too long line. too long line. too long line. too long line. too long line. too long line. too long line. too long line. too long line.
+
     @JvmStatic
     fun main(args: Array<String>) {
         log.info { "Starting Der Bauer 2" }
