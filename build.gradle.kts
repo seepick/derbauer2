@@ -9,6 +9,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
+    id("org.sonarqube") version "7.2.2.6593"
     id("io.gitlab.arturbosch.detekt") version "1.23.8"
 }
 
@@ -109,6 +110,13 @@ detekt {
     ignoreFailures = false
 }
 
+sonar {
+    properties {
+        property("sonar.organization", "seepick")
+        property("sonar.projectKey", "derbauer2")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
 tasks.withType<DependencyUpdatesTask> {
     val rejectPatterns =
         listOf(
