@@ -107,7 +107,7 @@ detekt {
     source.setFrom("src/main/kotlin", "src/test/kotlin")
     config.setFrom(project.rootDir.absolutePath + "/src/main/config/detekt.yml")
     parallel = true
-    ignoreFailures = false
+    ignoreFailures = true // don't fail build, pass results to sonarqube
 }
 
 sonar {

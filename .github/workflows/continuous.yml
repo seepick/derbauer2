@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # unshallow checkout, so sonarqube can do blame analysis
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
@@ -32,9 +34,11 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: SonarQube Scan
+      - name: Generate Detekt Reports
+        run: ./gradlew detekt --no-daemon --console=plain
+      - name: Trigger SonarQube
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --no-daemon --console=plain
-      - name: Verify Build
+      - name: Check Build
         run: ./gradlew check --no-daemon --console=plain
