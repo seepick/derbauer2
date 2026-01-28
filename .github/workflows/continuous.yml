@@ -34,11 +34,9 @@ jobs:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
-      - name: Generate Detekt Reports
-        run: ./gradlew detekt --no-daemon --console=plain
+      - name: Build Project
+        run: ./gradlew detekt jacocoTestReport check --console=plain
       - name: Trigger SonarQube
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./gradlew sonar --no-daemon --console=plain
-      - name: Check Build
-        run: ./gradlew check --no-daemon --console=plain
+        run: ./gradlew sonar --console=plain

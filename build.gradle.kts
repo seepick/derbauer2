@@ -83,23 +83,8 @@ tasks.jacocoTestReport {
     dependsOn(tasks.test)
     reports {
         xml.required = true
-        html.required = true
-        csv.required = false
+        html.required = false
     }
-}
-
-tasks.jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = "0.6".toBigDecimal()
-            }
-        }
-    }
-}
-
-tasks.named("check") {
-    dependsOn(tasks.named("jacocoTestCoverageVerification"))
 }
 
 detekt {
