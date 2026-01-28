@@ -45,7 +45,7 @@ private fun calcWinSize(): DpSize {
     )
 }
 
-@Suppress("LongMethod") // TODO refactor
+@Suppress("LongMethod")
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,

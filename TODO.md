@@ -2,8 +2,12 @@
 
 ## Now
 
-* documentation
+* codecov? https://app.codecov.io/github/seepick
+* IT: how to get sonarqube cloud updated analyses? github action exec `gradlew sonar` (pass SONAR_TOKEN) maybe?
+* BZ: documentation
+* IT: register in koin validator interface, and collect all (eager singletons) via DI-context; see transaction/logic.kt
 * BZ: implement birth rate, increase citizens on turn
+* IT: refactor `fun showMainWindow` too long
 
 ## Next
 

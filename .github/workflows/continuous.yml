@@ -26,7 +26,9 @@ jobs:
           key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
           restore-keys: |
             gradle-cache-${{ runner.os }}-
-#      - name: Ensure gradlew is executable
-#        run: chmod +x ./gradlew
       - name: Gradle check
         run: ./gradlew check --no-daemon --console=plain
+      - name: Gradle sonar
+        run: ./gradlew sonar --no-daemon --console=plain
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

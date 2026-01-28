@@ -41,7 +41,6 @@ fun User.execTx(txs: List<Tx>): TxResult {
 
 private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
     val fails = listOf(
-        // TODO register in koin validator interface, and collect all (eager singletons) via DI-context
         snapshot.validateResourceTx(),
         snapshot.validateBuildTx(),
     ).filterIsInstance<TxResult.Fail>()
