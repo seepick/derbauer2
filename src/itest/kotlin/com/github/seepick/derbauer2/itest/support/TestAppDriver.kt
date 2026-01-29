@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.gameModule
 import com.github.seepick.derbauer2.game.initAssets
+import com.github.seepick.derbauer2.game.ownedForTest
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.transaction.TxResult
@@ -75,14 +76,14 @@ class TestUserBuilder(private val user: User) {
     
     fun setResource(resourceClass: KClass<out Resource>, amount: Z): TestUserBuilder {
         val resource = user.all.find(resourceClass)
-        resource._setOwnedInternal = amount.value
+        resource.ownedForTest = amount
         log.debug { "Set ${resourceClass.simpleName} to $amount" }
         return this
     }
     
     fun setBuilding(buildingClass: KClass<out Building>, amount: Z): TestUserBuilder {
         val building = user.all.find(buildingClass)
-        building._setOwnedInternal = amount.value
+        building.ownedForTest = amount
         log.debug { "Set ${buildingClass.simpleName} to $amount" }
         return this
     }
@@ -130,9 +131,6 @@ class TestTransactionExecutor(private val user: User) {
     }
 }
 
-// Extension to access the internal setter for testing
-private inline fun <reified A : Asset> User.Assets.find(klass: KClass<A>): A =
-    this.all.filterIsInstance<A>().first { it::class == klass }
-
 private val Z.asZz: com.github.seepick.derbauer2.game.common.Zz
     get() = com.github.seepick.derbauer2.game.common.Zz(this)
+
