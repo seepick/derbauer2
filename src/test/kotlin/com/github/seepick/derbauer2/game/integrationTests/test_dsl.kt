@@ -47,6 +47,7 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestCont
         val ownable = user.all.find<A>()
         ownable.ownedForTest = amount
     }
+
     inline fun <reified A : Asset> changeOwned(amount: Z) {
         val ownable = user.all.find<A>()
         ownable.ownedForTest += amount
@@ -79,7 +80,7 @@ infix fun WhenDsl.Then(code: ThenDsl.() -> Unit) {
 
 @GameDsl
 class ThenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
-    inline fun <reified A: Asset> shouldOwn(expectedAmount: Z)  {
+    inline fun <reified A : Asset> shouldOwn(expectedAmount: Z) {
         val asset = user.all.find<A>()
         asset.owned shouldBeEqual expectedAmount
     }

@@ -25,15 +25,15 @@ fun User.build(buildingClass: KClass<out Building>): TxResult =
     )
 
 data class TxBuilding(
-    override val targetClass: KClass<out Building>,
+    override val ownableClass: KClass<out Building>,
     override val operation: TxOperation,
     override val amount: Z
 ) : TxOwned<Building>, BuildingReference {
 
-    override val buildingClass = targetClass
+    override val buildingClass = ownableClass
 
     constructor(targetClass: KClass<out Building>, amount: Zz) : this(
-        targetClass = targetClass,
+        ownableClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )

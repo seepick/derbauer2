@@ -9,7 +9,7 @@ import kotlin.contracts.contract
 import kotlin.reflect.KClass
 
 interface TxOwned<T : Ownable> : Tx {
-    val targetClass: KClass<out T>
+    val ownableClass: KClass<out T>
     val operation: TxOperation
     val amount: Z
 }
@@ -22,9 +22,9 @@ enum class TxOperation {
 }
 
 fun List<TxResult>.merge(): TxResult {
-    if(isEmpty()) return Success
+    if (isEmpty()) return Success
     val fails = filterIsInstance<Fail>()
-    return if(fails.isEmpty()) {
+    return if (fails.isEmpty()) {
         Success
     } else {
         Fail.of(fails)

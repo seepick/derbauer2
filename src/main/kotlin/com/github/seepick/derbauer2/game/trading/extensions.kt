@@ -10,7 +10,7 @@ fun User.trade(requestsX: TradeRequest, vararg requestsXS: TradeRequest): TxResu
     execTx(
         listOf(requestsX, *requestsXS).map { request ->
             TxResource(
-                targetClass = request.resourceClass,
+                ownableClass = request.resourceClass,
                 amount = request.amount,
                 operation = request.operation.asTxOperation
             )

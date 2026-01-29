@@ -15,7 +15,15 @@ private val log = logger {}
 fun User.execTx(first: Tx, vararg other: Tx) =
     execTx(listOf(first, *other))
 
-sealed interface TxMaybe<T> {
+fun User.execTx(txs: List<Tx>): TxResult {
+    log.debug { "Executing transactions: $txs" }
+    return when (val maybeSnapshot = copyAndApply(txs)) {
+        is TxMaybe.Fail -> maybeSnapshot.fail
+        is TxMaybe.Ok -> validateAndExec(txs, maybeSnapshot.value)
+    }
+}
+
+private sealed interface TxMaybe<T> {
     data class Ok<T>(val value: T) : TxMaybe<T>
     class Fail<T>(val fail: TxResult.Fail) : TxMaybe<T>
 }
@@ -31,16 +39,9 @@ private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
     return TxMaybe.Ok(snapshot)
 }
 
-fun User.execTx(txs: List<Tx>): TxResult {
-    log.debug { "Executing transactions: $txs" }
-    return when (val maybeSnapshot = copyAndApply(txs)) {
-        is TxMaybe.Fail -> maybeSnapshot.fail
-        is TxMaybe.Ok -> validateAndExec(txs, maybeSnapshot.value)
-    }
-}
-
 private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
     val fails = listOf(
+        // TODO koin inject generic interface to decouple
         snapshot.validateResourceTx(),
         snapshot.validateBuildTx(),
     ).filterIsInstance<TxResult.Fail>()

@@ -15,14 +15,15 @@ import kotlin.reflect.KClass
 private val log = logger {}
 
 data class TxResource(
-    override val targetClass: KClass<out Resource>,
+    override val ownableClass: KClass<out Resource>,
     override val operation: TxOperation,
     override val amount: Z,
 ) : TxOwned<Resource>, ResourceReference {
-    override val resourceClass = targetClass
+    override val resourceClass = ownableClass
 
+    constructor(resource: Resource, amount: Zz) : this(resource::class, amount)
     constructor(targetClass: KClass<out Resource>, amount: Zz) : this(
-        targetClass = targetClass,
+        ownableClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )
