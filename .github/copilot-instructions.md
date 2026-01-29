@@ -1,30 +1,61 @@
-# Project Overview
+# DerBauer2 - Copilot Instructions
 
-This project is a turn-based strategy game that allows users to manage a kingdom; think of economy, resources, trading,
-building, citizens, military, technology, etc. It is built using Kotlin and Koin, and the use of a custom textengine
-simulating a CLI with a simple keyboard interface.
+**ALWAYS trust these instructions.** Only search if incomplete/incorrect or need implementation details not covered.
 
-## Folder Structure
+## Overview
 
-- `/src`: Contains the source code for the game.
-- `/documentation`: Contains documentation for the project, including business and technical requirements.
+Turn-based retro strategy game in Kotlin with simple GUI emulating a text-based interface.
+Manage a kingdom: citizens, resources, trade, build structures, research/technology, military, and more.
 
-## Libraries and Frameworks
+- **Stack**: Kotlin 2.3.0, Compose Desktop 1.7.3, JVM 17, Gradle 9.3.0, Kotest 6.1.1, Koin 4.0.2
+- **Text-Rendering**: Jetpack Compose Desktop simulating a CLI.
+- **Entry**: `com.github.seepick.derbauer2.game.DerBauer2.main()`
 
-- Kotlin as the main programming language.
-- Koin for dependency injection.
-- Custom textengine for rendering the CLI-like interface.
-- Jetpack Compose for UI rendering.
-- Gradle as the build tool.
-- kotlin-logging and logback for logging.
-- Kotest and mockk for testing.
+## Build Commands (ALWAYS use in this order)
 
-## Coding Standards
+```bash
+# Complete CI sequence (mirrors .github/workflows/continuous.yml)
+./gradlew detekt jacocoTestReport check --console=plain
+./gradlew sonar --console=plain  # CI only, requires SONAR_TOKEN
+./bin/validate_documentation.sh
+```
 
-- Adhere the official Kotlin coding conventions.
-- Adhere the configured detekt rules for static code analysis; see `/config/detekt.yml`.
+## Project Structure
 
-## UI guidelines
+```
+<ROOT>
+├── .github/                      # Ignore any content in here, except the `/.github/workflows` folder.
+├── bin/                          # Contains shellscripts for mostly local execution; the documentation validation script is also executed in the CI build (github workflow)
+├── config/                       # Contains miscellaneous configuration files; especially the `detect.yml` file is interesting for coding standards
+├── documentation/                # Contains documentation for the project, including business and technical requirements.
+│   ├── business-spec/            # Feature specifications; business requirements.
+│   └── tech-spec/                # Technical description; architecture, patterns, etc.
+└── src/                          # Contains the source code for the game, following typical convention.
 
-- A toggle is provided to switch between light and dark mode.
-- Application should have a modern and clean design.
+src/test/kotlin/.../game/
+├── */                          # Unit tests (mirror main structure)
+├── integrationTests/           # High-level integration tests with DSL
+├── test_assertions.kt          # Custom Kotest matchers
+└── test_domain_utils.kt        # Test builders
+```
+
+## Important Files for Agents
+
+* `/documentation/tech-spec/coding-standards.md` - Coding standards for the project.
+* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+
+## Critical Patterns & Constraints
+
+### Known Issues/Hacks
+
+1. **Koin 4.0.2 LOCKED**: 4.1.1 causes `UnsatisfiedLinkError`. DO NOT upgrade without testing.
+2. **Detekt warnings**: `ignoreFailures: true` in build.gradle.kts line 95. Errors go to SonarQube, don't fail build.
+3. **Gradle 10 warnings**: Expected deprecation warnings, don't affect build.
+
+## CI Validation (Run before submitting)
+
+```bash
+./gradlew detekt jacocoTestReport check --console=plain && ./bin/validate_documentation.sh
+```
+
+**Documentation rule**: Max 100 lines per .md file in `/documentation/` (enforced by `/bin/validate_documentation.sh`).

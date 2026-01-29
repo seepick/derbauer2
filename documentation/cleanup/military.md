@@ -1,8 +1,6 @@
-
 * Military: build Army (Soldier, Knight, Catapult), attack Enemy (gain resources)
-  * over time, reward of winning increases (proportional to and % of global max-resources)
+    * over time, reward of winning increases (proportional to and % of global max-resources)
 * army = military unit = militia/knight/warrior
-
 
 # Military
 
@@ -40,6 +38,7 @@ Properties:
 * wizard
 * arch mage
 * scout: is a (non-army) military unit; to see when the next attack is approaching
+* AngryFarmer: if run out of armies, people will fight
 
 ## Attack
 

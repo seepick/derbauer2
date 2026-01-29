@@ -50,17 +50,11 @@ kotlin {
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
     }
-
-    sourceSets {
-        val main by getting {
-            kotlin.srcDir("src/generated/kotlin")
-        }
-    }
 }
 
 compose.desktop {
     application {
-        mainClass = "com.github.seepick.derbauer2.Main"
+        mainClass = "com.github.seepick.derbauer2.DerBauer2"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg)
             packageName = "derbauer2"

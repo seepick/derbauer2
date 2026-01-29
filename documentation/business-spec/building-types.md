@@ -2,10 +2,29 @@
 
 Areas:
 
-* economical: affects resources (prod/cap)
+* civic: increase happiness/karma
+* economy: affects resources (prod/cap)
 * military: strengthen armies and increase cap
-* social: increase happiness/karma
-* feature enabler; e.g.: castle (for throne room)
+* tech: schoo, university, alchemy
+* special: feature enabler; e.g.: castle (for throne room)
+
+## Civic
+
+About:
+
+* increase happyness/karma
+* the more people, the more social buildings required
+
+Examples:
+
+* Tent -> House -> Villa -> Mansion
+    * +citizen cap
+* Church
+    * +happyness/karma
+* Pub
+    * +happyness/karma
+* Workshop
+* TownHall
 
 ## Economy/Resources
 
@@ -18,18 +37,20 @@ About:
 
 Examples:
 
-* House
-    * +citizen cap
 * Farm
     * +food prod
 * Granary
     * +food cap, +rat protection
 * "big granary":
     * resistince to happenings
-* Marketplace
-    * +gold prod (per people), -trade price modifier
 * Mine
     * +gold prod, +people upcome (needs people to work)
+
+### Trading
+
+* Marketplace
+    * +gold prod (per people), -trade price modifier
+* Harbor
 
 ## Military
 
@@ -46,11 +67,11 @@ Examples:
     * +army cap, -army buy mod, +att/def mod
 * Stable
     * +army cap, -army buy mod, +att/def mod
-* Armoury
+    * horses (allowing knights?)
+* Smithy/Armoury
     * "improve stuff"?
-* Wall
+* Wall /"defence palisades"
     * +defense
-* "defence palisades"
     * less likely to get raided by bandits
 
 ## Research/Tech (upgrade/feature/action)
@@ -66,21 +87,8 @@ Examples:
 * Library
 * Alchemy
 
-## Social
-
-About:
-
-* increase happyness/karma
-* the more people, the more social buildings required
-
-Examples:
-
-* Church
-    * +happyness/karma
-* Pub
-    * +happyness/karma
-
-## Misc
+## Special
 
 * Castle
     * the ultimate building
+* Monument
