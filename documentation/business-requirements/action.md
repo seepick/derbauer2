@@ -1,4 +1,4 @@
-# Actions
+# Action
 
 * certain "special activities" which can can be executed by user
 * available only in certain conditions

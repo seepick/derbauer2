@@ -9,13 +9,23 @@ fun interface DeepCopyable<T> {
     fun deepCopy(): T
 }
 
+enum class CityTitle {
+    Village, Town, City, Metropolis
+}
+
+enum class UserTitle {
+    Sir, Lord, King, Emperor
+}
+
 class User : DeepCopyable<User> {
     private val log = logger {}
+
+    // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)
 
     fun <E : Entity> enable(entity: E, disableCheck: Boolean = false) = entity.also {
-        if(!disableCheck && entity is Ownable) {
+        if (!disableCheck && entity is Ownable) {
             require(entity.owned == 0.z) { "Enable must have 0 owned; change it later via TX: $entity" }
         }
         if (all.any { it::class == entity::class }) {

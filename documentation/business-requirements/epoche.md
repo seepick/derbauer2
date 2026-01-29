@@ -1,9 +1,10 @@
-# Epochs / Ages
+# Epoch
 
+* synonym: age, era, period, phase (like in age of empires)
 * the game is divided into phases, each with focus on different aspects
     * this is steered by the features enabled/disabled and algorithmic mechanics used
     * some parts will run out, some easy to produce, ... this way influence user's behavior/strategy/focus
-* give them fancy names, like age of empires; bronze age, renessaince, ...
+* give them fancy names: bronze age, renessaince, ...
 
 ## Example
 

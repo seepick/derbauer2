@@ -1,4 +1,4 @@
-# Building Examples
+# Building Types
 
 Areas:
 
@@ -76,11 +76,11 @@ About:
 Examples:
 
 * Church
-  * +happyness/karma
+    * +happyness/karma
 * Pub
-  * +happyness/karma
+    * +happyness/karma
 
 ## Misc
 
 * Castle
-  * the ultimate building
+    * the ultimate building
