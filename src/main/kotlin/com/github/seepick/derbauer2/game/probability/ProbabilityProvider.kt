@@ -1,8 +1,9 @@
-package com.github.seepick.derbauer2.game.random
+package com.github.seepick.derbauer2.game.probability
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlin.random.Random
 
+// TODO introduce interface for testability
 class ProbabilityProvider<R>(
     startValue: Double,
     private val growthRate: Double,

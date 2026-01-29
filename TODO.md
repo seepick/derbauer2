@@ -1,5 +1,24 @@
 # Todo
 
+* cucumber first
+* resolve tech debt
+    * mutable internal state; make it immutable, find other solution
+    * tests for transaction logic
+    * if use `object` (not testable) then document
+    * showMainWindow too long
+    * split into sub-projects: app, view, logic, textengine
+
+Jacoco HTML report disabled — poorer developer UX for coverage inspection
+Where: build.gradle.kts — tasks.jacocoTestReport { reports { xml.required = true; html.required = false } }
+Why: Developers commonly inspect HTML coverage locally; disabling HTML makes quick local inspection harder.
+Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI while enabling HTML locally.
+
+Tests may leak DI state between tests — Koin lifecycle not reset in tests
+Where: Tests under src/test/kotlin/** (integration tests and unit tests reference Koin modules).
+Why: If Koin modules are started and not stopped between tests, tests can be order-dependent and flaky.
+Fix: Ensure each test isolates/starts/stops Koin with stopKoin() or use Koin test facilities; add a global test utility
+to reset DI between test cases.
+
 ## Now
 
 * BZ: documentation
@@ -13,6 +32,23 @@
 * **PackageNaming disabled** (detekt.yml:353): TODO pending package standardization.
 * **Recomposition hack** (textengine/MainWindow.kt): `tick.toString()` forces Compose recomposition. Do not remove.
 * `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+
+## Release
+
+* Support version number
+    * a single number, e.g. `1`
+    * stored in a text file `VERSION.txt` in the root directory
+* Releases done automatically on specific job execution
+    * auto-increment version
+* macOs build:
+    * better name
+    * use icons (dmg and app)
+    * show version in app metadata and in "About" dialog
+* Windows build
+
+Later:
+
+* Auto-update feature
 
 ## Later
 

@@ -24,7 +24,7 @@ object Versions {
     val kotlinLogging = "7.0.13"
     val logback = "1.5.23"
     val kotest = "6.1.1"
-    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError
+    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
     val mockk = "1.14.7"
     val jacoco = "0.8.14"
     val detekt = "1.23.8"
@@ -54,11 +54,15 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.github.seepick.derbauer2.DerBauer2"
+        mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg)
             packageName = "derbauer2"
             packageVersion = dmgPackageVersion
+
+            nativeDistributions {
+                modules("java.naming")
+            }
         }
     }
 }
@@ -88,7 +92,7 @@ detekt {
     source.setFrom("src/main/kotlin", "src/test/kotlin")
     config.setFrom(project.rootDir.absolutePath + "/config/detekt.yml")
     parallel = true
-    ignoreFailures = true // don't fail build, pass results to sonarqube
+    ignoreFailures = true // don't fail build, pass results to sonarqube which acts as quality gate enforcing 0 findings
 }
 
 sonar {
@@ -101,11 +105,10 @@ sonar {
 }
 
 tasks.withType<DependencyUpdatesTask> {
-    val rejectPatterns =
-        listOf(
-            ".*-ea.*", ".*RC", ".*rc.*", ".*M1", ".*check",
-            ".*dev.*", ".*[Bb]eta.*", ".*[Aa]lpha.*", ".*SNAPSHOT.*",
-        ).map { Regex(it) }
+    val rejectPatterns = listOf(
+        ".*-ea.*", ".*RC", ".*rc.*", ".*M1", ".*check",
+        ".*dev.*", ".*[Bb]eta.*", ".*[Aa]lpha.*", ".*SNAPSHOT.*",
+    ).map { Regex(it) }
     rejectVersionIf {
         rejectPatterns.any {
             it.matches(candidate.version)
