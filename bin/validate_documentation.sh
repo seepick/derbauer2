@@ -1,13 +1,24 @@
-#!/bin/sh
+#!/bin/bash
+
+# ensure CWD is project root
+CWD=`pwd`
+ROOT="${CWD%/bin}"
+cd "${ROOT}" || exit 1
+source "./bin/_includes.sh"
 
 # check `documentation/*.md` if any more than max lines
-
+SOURCE_DIR="./documentation"
 MAX_LINES=100
+
 exceeding=0
 checked=0
 tmp=$(mktemp) || exit 1
 
-find documentation -type f -name '*.md' > "$tmp"
+echoH1 "📜  Validate documentation files"
+echoParam "📁  Source directory" $SOURCE_DIR
+echoParam "📈  Max lines" $MAX_LINES
+
+find $SOURCE_DIR -type f -name '*.md' > "$tmp"
 while IFS= read -r file || [ -n "$file" ]; do
   lines=$(wc -l < "$file" | tr -d ' ')
   checked=$((checked + 1))
@@ -19,9 +30,9 @@ done < "$tmp"
 rm -f "$tmp"
 
 echo ""
-printf 'Script done: %d out of %d files are invalid\n' "$exceeding" "$checked"
+echo "Script done: $exceeding out of $checked files are invalid"
 if [ "$exceeding" -eq 0 ]; then
-  printf '✅ All documentation files are valid.\n'
+  echoSuccess "Validating documentation files"
 fi
 
 exit $exceeding
