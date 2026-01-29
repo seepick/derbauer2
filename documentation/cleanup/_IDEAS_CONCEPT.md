@@ -1,5 +1,6 @@
 # Ideas
 
+* supply chain: buildings consume to produce other (higher) resources
 * Financial System
     * allows to adjust tax rate (gold/happiness tradeoff)
 * Banking
