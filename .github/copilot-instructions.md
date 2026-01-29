@@ -41,8 +41,8 @@ src/test/kotlin/.../game/
 
 ## Important Files for Agents
 
-* `/documentation/tech-spec/coding-standards.md` - Coding standards for the project.
-* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+* [Coding Standards](/documentation/tech-spec/coding-standards.md)` - when writing code, adhere to those.
+* [Software Architecture](/documentation/tech-spec/project-architecture.md) - High level architecture overview.
 
 ## Critical Patterns & Constraints
 

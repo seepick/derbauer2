@@ -3,9 +3,9 @@
 Adhere as much as possible to the official Kotlin coding conventions (
 see: https://kotlinlang.org/docs/coding-conventions.html).
 
-## Static Code Analysis
+## Static Code Analysis via Detekt
 
-Based on `/config/detekt.yml` (maxLineLength:120, LongMethod:50, ReturnCount:2)
+Based on [Detekt config](/config/detekt.yml)
 
 - Max line length: 120 chars
 - Max function length: 50 lines
