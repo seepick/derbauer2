@@ -28,6 +28,7 @@ object Versions {
     val mockk = "1.14.7"
     val jacoco = "0.8.14"
     val detekt = "1.23.8"
+    val cucumber = "7.20.1"
 }
 
 dependencies {
@@ -56,6 +57,32 @@ kotlin {
     }
 }
 
+sourceSets {
+    val test by getting
+    val itest by creating {
+        java.srcDir("src/itest/kotlin")
+        resources.srcDir("src/itest/resources")
+        compileClasspath += test.output + test.compileClasspath
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
+configurations {
+    val itestImplementation by getting {
+        extendsFrom(configurations.testImplementation.get())
+    }
+    val itestRuntimeOnly by getting {
+        extendsFrom(configurations.testRuntimeOnly.get())
+    }
+}
+
+dependencies {
+    "itestImplementation"("io.cucumber:cucumber-java:${Versions.cucumber}")
+    "itestImplementation"("io.cucumber:cucumber-java8:${Versions.cucumber}")
+    "itestImplementation"("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
+    "itestImplementation"("org.junit.platform:junit-platform-suite:1.11.4")
+}
+
 compose.desktop {
     application {
         mainClass = "com.github.seepick.derbauer2.Main"
@@ -69,6 +96,19 @@ compose.desktop {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+tasks.register<Test>("integrationTest") {
+    description = "Runs integration tests with Cucumber"
+    group = "verification"
+    testClassesDirs = sourceSets["itest"].output.classesDirs
+    classpath = sourceSets["itest"].runtimeClasspath
+    useJUnitPlatform()
+    shouldRunAfter(tasks.test)
+}
+
+tasks.check {
+    dependsOn(tasks.named("integrationTest"))
 }
 
 jacoco {
