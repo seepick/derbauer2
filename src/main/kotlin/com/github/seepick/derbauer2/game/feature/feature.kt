@@ -8,11 +8,7 @@ import com.github.seepick.derbauer2.game.view.MultiViewSubPage
 import com.github.seepick.derbauer2.textengine.Textmap
 import kotlin.reflect.KClass
 
-// ... not sure yet which style i prefer?
-//inline fun <reified F: Feature> User.hasFeature(): Boolean =
-//    all.findOrNull<F>() != null
-
-fun <F: Feature> User.hasFeature(featureClass: KClass<F>): Boolean =
+fun <F : Feature> User.hasFeature(featureClass: KClass<F>): Boolean =
     all.findOrNull(featureClass) != null
 
 fun User.hasFeature(descriptor: FeatureDescriptor): Boolean =

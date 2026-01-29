@@ -30,14 +30,16 @@ class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "House"
     }
+
     override var _setOwnedInternal: Z = 0.z
     override val costsGold = Mechanics.houseCostsGold.z
     override val landUse = Mechanics.houseLandUse.z
     override val storableResourceClass = Citizen::class
-    override val storageAmount = Mechanics.houseStoreCitizen.z
 
     override fun deepCopy() = House().also { it._setOwnedInternal = owned }
     override fun toString() = "House(owned=$owned)"
+
+    override val storageAmount = Mechanics.houseStoreCitizen.z
 }
 
 class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
@@ -45,6 +47,7 @@ class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Farm"
     }
+
     override var _setOwnedInternal: Z = 0.z
     override val costsGold = Mechanics.farmCostsGold.z
     override val landUse = Mechanics.farmLandUse.z
@@ -60,6 +63,7 @@ class Granary : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
         override val labelSingular = "Granary"
         override val labelPlural = "Granaries"
     }
+
     override var _setOwnedInternal: Z = 0.z
     override val costsGold = Mechanics.granaryCostsGold.z
     override val landUse = Mechanics.granaryLanduse.z

@@ -37,15 +37,11 @@ dependencies {
     }
     implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")
-
-    // TEST
     listOf("assertions-core", "property", "runner-junit5", "extensions-koin").forEach {
         testImplementation("io.kotest:kotest-$it:${Versions.kotest}")
     }
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.insert-koin:koin-test:${Versions.koin}")
-
-    // DETEKT
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
 }
 
@@ -53,6 +49,12 @@ kotlin {
     jvmToolchain(17)
     compilerOptions {
         freeCompilerArgs.add("-Xcontext-parameters")
+    }
+
+    sourceSets {
+        val main by getting {
+            kotlin.srcDir("src/generated/kotlin")
+        }
     }
 }
 
@@ -90,7 +92,7 @@ tasks.jacocoTestReport {
 detekt {
     toolVersion = Versions.detekt
     source.setFrom("src/main/kotlin", "src/test/kotlin")
-    config.setFrom(project.rootDir.absolutePath + "/src/main/config/detekt.yml")
+    config.setFrom(project.rootDir.absolutePath + "/config/detekt.yml")
     parallel = true
     ignoreFailures = true // don't fail build, pass results to sonarqube
 }
