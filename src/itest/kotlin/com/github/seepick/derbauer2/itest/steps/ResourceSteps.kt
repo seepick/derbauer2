@@ -17,8 +17,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
  */
 class ResourceSteps : En {
     
-    private var lastTxResult: TxResult? = null
-    
     init {
         Given("a user with {int} gold") { goldAmount: Int ->
             TestWorld.userBuilder.setResource(Gold::class, goldAmount.z)
@@ -48,22 +46,22 @@ class ResourceSteps : En {
         }
         
         When("the user spends {int} gold") { goldAmount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, (-goldAmount).z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, (-goldAmount).z)
         }
         
         When("the user gains {int} gold") { goldAmount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, goldAmount.z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, goldAmount.z)
         }
         
         When("the user trades {int} gold for {int} land") { goldAmount: Int, landAmount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeMultipleTransactions(
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeMultipleTransactions(
                 Gold::class to (-goldAmount).z,
                 Land::class to landAmount.z
             )
         }
         
         When("the user tries to spend {int} gold") { goldAmount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, (-goldAmount).z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeResourceTransaction(Gold::class, (-goldAmount).z)
         }
         
         Then("the user should have {int} gold") { expectedGold: Int ->
@@ -85,22 +83,22 @@ class ResourceSteps : En {
         
         Then("the transaction should fail") {
             assertTrue(
-                lastTxResult is TxResult.Fail,
-                "Expected transaction to fail but it was: $lastTxResult"
+                TestWorld.lastTxResult is TxResult.Fail,
+                "Expected transaction to fail but it was: ${TestWorld.lastTxResult}"
             )
         }
         
         Then("the transaction should succeed") {
             assertTrue(
-                lastTxResult is TxResult.Success,
-                "Expected transaction to succeed but it was: $lastTxResult"
+                TestWorld.lastTxResult is TxResult.Success,
+                "Expected transaction to succeed but it was: ${TestWorld.lastTxResult}"
             )
         }
         
         Then("the transaction should fail due to insufficient resources") {
             assertTrue(
-                lastTxResult is TxResult.Fail.InsufficientResources,
-                "Expected InsufficientResources failure but was: $lastTxResult"
+                TestWorld.lastTxResult is TxResult.Fail.InsufficientResources,
+                "Expected InsufficientResources failure but was: ${TestWorld.lastTxResult}"
             )
         }
     }

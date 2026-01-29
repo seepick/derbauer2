@@ -10,13 +10,13 @@ Feature: Building Construction
     And the user should have 6 houses
 
   Scenario: Build multiple farms
-    Given a user with 2 farms and 1 granaries
+    Given a user with 2 farms and 1 granary
     When the user builds 3 farms
     Then the building transaction should succeed
     And the user should have 5 farms
 
   Scenario: Build a granary
-    Given a user with 1 granaries
+    Given a user with 1 granary
     When the user builds 2 granaries
     Then the building transaction should succeed
     And the user should have 3 granaries

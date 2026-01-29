@@ -20,9 +20,7 @@ src/itest/
 │       │   ├── ResourceSteps.kt          # Resource management steps
 │       │   └── BuildingSteps.kt          # Building construction steps
 │       └── support/                       # Test infrastructure
-│           ├── TestAppDriver.kt          # Main test driver
-│           ├── TestUserBuilder.kt        # User state setup
-│           ├── TestTransactionExecutor.kt # Transaction execution
+│           ├── TestAppDriver.kt          # Main test driver (includes TestUserBuilder and TestTransactionExecutor)
 │           ├── TestWorld.kt              # Shared scenario state
 │           └── TestHooks.kt              # Cucumber lifecycle hooks
 └── resources/

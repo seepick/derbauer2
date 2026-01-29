@@ -40,8 +40,9 @@ class TestAppDriver {
         log.info { "Initializing TestAppDriver" }
         try {
             stopKoin()
-        } catch (e: Exception) {
+        } catch (e: IllegalStateException) {
             // Koin not started yet, that's fine
+            log.debug { "Koin not started, skipping stopKoin: ${e.message}" }
         }
         
         startKoin {
@@ -63,8 +64,8 @@ class TestAppDriver {
         _user = null
         try {
             stopKoin()
-        } catch (e: Exception) {
-            log.warn(e) { "Error stopping Koin" }
+        } catch (e: IllegalStateException) {
+            log.debug { "Error stopping Koin (possibly not started): ${e.message}" }
         }
     }
 }

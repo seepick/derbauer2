@@ -16,8 +16,6 @@ import org.junit.jupiter.api.Assertions.assertTrue
  */
 class BuildingSteps : En {
     
-    private var lastTxResult: TxResult? = null
-    
     init {
         Given("a user with {int} houses") { houseCount: Int ->
             TestWorld.userBuilder.setBuilding(House::class, houseCount.z)
@@ -29,30 +27,30 @@ class BuildingSteps : En {
                 .setBuilding(House::class, houseCount.z)
         }
         
-        Given("a user with {int} farms and {int} granaries") { farmCount: Int, granaryCount: Int ->
+        Given("a user with {int} farms and {int} granary") { farmCount: Int, granaryCount: Int ->
             TestWorld.userBuilder
                 .setBuilding(Farm::class, farmCount.z)
                 .setBuilding(Granary::class, granaryCount.z)
         }
         
         When("the user builds {int} house(s)") { houseCount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, houseCount.z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, houseCount.z)
         }
         
         When("the user builds {int} farm(s)") { farmCount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(Farm::class, farmCount.z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(Farm::class, farmCount.z)
         }
         
-        When("the user builds {int} granary/granaries") { granaryCount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(Granary::class, granaryCount.z)
+        When("the user builds {int} granaries") { granaryCount: Int ->
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(Granary::class, granaryCount.z)
         }
         
         When("the user tries to build {int} house(s)") { houseCount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, houseCount.z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, houseCount.z)
         }
         
         When("the user demolishes {int} house(s)") { houseCount: Int ->
-            lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, (-houseCount).z)
+            TestWorld.lastTxResult = TestWorld.txExecutor.executeBuildingTransaction(House::class, (-houseCount).z)
         }
         
         Then("the user should have {int} house(s)") { expectedHouses: Int ->
@@ -65,7 +63,7 @@ class BuildingSteps : En {
             assertEquals(expectedFarms.z, actualFarms, "Farm count mismatch")
         }
         
-        Then("the user should have {int} granary/granaries") { expectedGranaries: Int ->
+        Then("the user should have {int} granaries") { expectedGranaries: Int ->
             val actualGranaries = TestWorld.userBuilder.getBuilding(Granary::class)
             assertEquals(expectedGranaries.z, actualGranaries, "Granary count mismatch")
         }
@@ -80,15 +78,15 @@ class BuildingSteps : En {
         
         Then("the building transaction should fail") {
             assertTrue(
-                lastTxResult is TxResult.Fail,
-                "Expected building transaction to fail but it was: $lastTxResult"
+                TestWorld.lastTxResult is TxResult.Fail,
+                "Expected building transaction to fail but it was: ${TestWorld.lastTxResult}"
             )
         }
         
         Then("the building transaction should succeed") {
             assertTrue(
-                lastTxResult is TxResult.Success,
-                "Expected building transaction to succeed but it was: $lastTxResult"
+                TestWorld.lastTxResult is TxResult.Success,
+                "Expected building transaction to succeed but it was: ${TestWorld.lastTxResult}"
             )
         }
     }

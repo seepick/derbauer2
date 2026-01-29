@@ -13,4 +13,4 @@ Feature: Complex Resource Trading
   Scenario: Initial state with all resources
     Given a user with 500 gold, 100 land, 50 citizens, and 200 food
     Then the user should have 500 gold
-    And the user should have 100 citizens
+    And the user should have 50 citizens
