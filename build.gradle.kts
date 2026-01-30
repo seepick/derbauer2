@@ -53,7 +53,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java8:${Versions.cucumber}")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
     testImplementation("io.cucumber:cucumber-picocontainer:${Versions.cucumber}")
-    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
+    testImplementation("org.junit.platform:junit-platform-suite:6.0.2")
 }
 
 kotlin {
