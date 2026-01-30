@@ -62,8 +62,9 @@ fun User.execTxBuilding(
 fun User.validateBuildTx(): TxResult =
     if (hasEntity(Land::class) && totalLandUse > landOwned) {
         TxResult.Fail.LandOveruse()
-    } else TxResult.Success
-
+    } else {
+        TxResult.Success
+    }
 
 @Suppress("FunctionName", "kotlin:S100")
 fun User._applyBuildTx(tx: TxBuilding) {

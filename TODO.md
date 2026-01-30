@@ -37,6 +37,10 @@ to reset DI between test cases.
 * **PackageNaming disabled** (detekt.yml:353): TODO pending package standardization.
 * **Recomposition hack** (textengine/MainWindow.kt): `tick.toString()` forces Compose recomposition. Do not remove.
 * `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+* exploration, discover land
+* attack barbarins, or nps
+* decisions impact story, influence
+* very minimal compose test, so AI can verify workings (right now, i start app manually)
 
 ## Release
 
