@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.turn.ReportPage
-import com.github.seepick.derbauer2.textengine.Beeper
+import com.github.seepick.derbauer2.textengine.audio.Beeper
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.verify

@@ -6,9 +6,9 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.initAssets
 import com.github.seepick.derbauer2.game.ownedForTest
 import com.github.seepick.derbauer2.game.view.PromptGamePage
-import com.github.seepick.derbauer2.textengine.Beeper
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.audio.Beeper
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every

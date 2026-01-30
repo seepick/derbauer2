@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.transaction.TxResult
-import com.github.seepick.derbauer2.textengine.Beeper
+import com.github.seepick.derbauer2.textengine.audio.Beeper
 
 /** Glue-code between view (UI/Beeper) and logic (InteractionResult). */
 class InteractionResultHandler(
@@ -9,7 +9,9 @@ class InteractionResultHandler(
 ) {
     fun handle(result: TxResult) {
         when (result) {
-            TxResult.Success -> { /* no-op */ }
+            TxResult.Success -> { /* no-op */
+            }
+
             is TxResult.Fail -> beeper.beep(result.message)
         }
     }

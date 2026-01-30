@@ -10,13 +10,11 @@ object DerBauer2 {
 
     @JvmStatic
     fun main(args: Array<String>) {
-        log.info { "Starting Der Bauer 2" }
+        log.info { "Starting Der Bauer 2 (args: ${args.toList()})" }
         showMainWindow(
             title = "DerBauer2",
             mainModule = gameModule(),
             initPageClass = initPageClass,
-        ) { user ->
-            user.initAssets()
-        }
+        ) { user -> user.initAssets() }
     }
 }
