@@ -20,6 +20,10 @@ enum class UserTitle {
 class User : DeepCopyable<User> {
     private val log = logger {}
 
+    init {
+        log.info { "Creating new User instance." }
+    }
+
     // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)

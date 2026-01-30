@@ -1,5 +1,6 @@
 # Todo
 
+* introduce buildSrc (try again ;)
 * cucumber first
 * resolve tech debt
     * mutable internal state; make it immutable, find other solution
@@ -7,6 +8,8 @@
     * if use `object` (not testable) then document
     * showMainWindow too long
     * split into sub-projects: app, view, logic, textengine
+* alternative to sealed interfaces: use enums as properties for each type; exhaustiveness possible (compiler safety);
+  doc in some MD file
 
 Jacoco HTML report disabled — poorer developer UX for coverage inspection
 Where: build.gradle.kts — tasks.jacocoTestReport { reports { xml.required = true; html.required = false } }

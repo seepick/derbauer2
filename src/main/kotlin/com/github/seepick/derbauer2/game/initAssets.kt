@@ -21,7 +21,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-private val startingAssets: List<Pair<Asset, Zz>> = listOf(
+private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
     Pair(Gold(), Mechanics.startingGold.asZz),
     Pair(Land(), Mechanics.startingLand.asZz),
     Pair(House(), Mechanics.startingHouses.asZz),
@@ -33,12 +33,13 @@ private val startingAssets: List<Pair<Asset, Zz>> = listOf(
 
 fun User.initAssets() {
     log.info { "Initializing user assets." }
-    startingAssets.map { it.first }.forEach(::enable)
-    execTx(startingAssets.map { (asset, amount) ->
+    val assets = createInitAssets()
+    assets.forEach { enable(it.first) }
+    execTx(assets.map { (asset, amount) ->
         when (asset) {
             is Resource -> TxResource(asset::class, amount)
             is Building -> TxBuilding(asset::class, amount)
-            else -> error("Unknown asset type: ${asset::class}")
+            else -> error("Unknown asset type: ${asset::class}") // TODO use enum-indirection for exhaustive when
         }
     }).errorOnFail()
 }
