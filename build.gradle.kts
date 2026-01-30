@@ -5,7 +5,7 @@ val dmgPackageVersion = "1.0.0"
 
 plugins {
     kotlin("jvm") version "2.3.0"
-    id("org.jetbrains.compose") version "1.7.3"
+    id("org.jetbrains.compose") version "1.10.0"
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
