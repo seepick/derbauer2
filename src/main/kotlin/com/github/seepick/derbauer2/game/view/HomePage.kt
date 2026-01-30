@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.BuildingsPage
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
@@ -12,25 +13,21 @@ class HomePage(
     turner: Turner,
     currentPage: CurrentPage,
     gameRenderer: GameRenderer,
-) : PromptGamePage(
-    buttons = listOf(ContinueButton("Next Turn") {
-        turner.collectAndExecuteNextTurnReport()
-        currentPage.pageClass = ReportPage::class
-    }),
-    gameRenderer = gameRenderer,
-    promptBuilder = {
-        Prompt.Select(
-            title = "What shall we do next?", listOf(
-                SelectOption("Trade") {
-                    currentPage.pageClass = TradingPage::class
-                },
-                SelectOption("Build") {
-                    currentPage.pageClass = BuildingsPage::class
-                },
-            )
+    user: User,
+) : PromptGamePage(buttons = listOf(ContinueButton("Next Turn") {
+    turner.collectAndExecuteNextTurnReport()
+    currentPage.pageClass = ReportPage::class
+}), gameRenderer = gameRenderer, promptBuilder = {
+    Prompt.Select(
+        title = "What shall we do next, ${user.designator.label}?", listOf(
+            SelectOption("Trade") {
+                currentPage.pageClass = TradingPage::class
+            },
+            SelectOption("Build") {
+                currentPage.pageClass = BuildingsPage::class
+            },
         )
-    },
-    contentRenderer = { textmap ->
-        textmap.line("You are home... 🏠")
-    }
-)
+    )
+}, contentRenderer = { textmap ->
+    textmap.line("You are home... 🏠")
+})

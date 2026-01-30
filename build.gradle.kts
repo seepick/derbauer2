@@ -33,9 +33,11 @@ object Versions {
 
 dependencies {
     implementation(compose.desktop.currentOs)
+    implementation(kotlin("reflect"))
     listOf("compose", "compose-viewmodel").forEach {
         implementation("io.insert-koin:koin-$it:${Versions.koin}")
     }
+    implementation("javazoom:jlayer:1.0.1") // play mp3s
     implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")
 

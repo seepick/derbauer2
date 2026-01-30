@@ -110,6 +110,7 @@ fun showMainWindow(
                             text = textmap.toFullString(),
                         )
                         textmap.reset()
+                        MusicPlayerView()
                     }
                 }
             }

@@ -5,24 +5,15 @@ import com.github.seepick.derbauer2.game.common.z
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-fun interface DeepCopyable<T> {
-    fun deepCopy(): T
-}
-
-enum class CityTitle {
-    Village, Town, City, Metropolis
-}
-
-enum class UserTitle {
-    Sir, Lord, King, Emperor
-}
-
 class User : DeepCopyable<User> {
     private val log = logger {}
 
     init {
         log.info { "Creating new User instance." }
     }
+
+    var designator = UserDesignator.default
+    var cityDesignator = CityDesignator.default
 
     // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()

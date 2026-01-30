@@ -4,6 +4,10 @@ import com.github.seepick.derbauer2.game.common.Z
 
 interface Entity : DeepCopyable<Entity>, HasLabel, HasEmoji
 
+fun interface DeepCopyable<T> {
+    fun deepCopy(): T
+}
+
 /** A physical object (house, resource, people); not an abstract concept (tech) */
 interface Asset : Entity, Ownable
 

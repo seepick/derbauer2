@@ -29,6 +29,8 @@ to reset DI between test cases.
 * IT: refactor `fun showMainWindow` too long
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: immigration happening
+* BZ: change designators based on criteria (can be upped and lowered again! different than feature, which is a one-way
+  unlock)
 
 ## Misc
 
