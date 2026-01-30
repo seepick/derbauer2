@@ -14,7 +14,6 @@ object DerBauer2 {
         showMainWindow(
             title = "DerBauer2",
             mainModule = gameModule(),
-            initPageClass = initPageClass,
         ) { user -> user.initAssets() }
     }
 }

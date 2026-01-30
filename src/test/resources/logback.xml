@@ -2,14 +2,13 @@
 <configuration>
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{HH:mm:ss} [%-5level] %logger{30} - %msg%n</pattern>
+            <pattern>%d{HH:mm:ss} [%thread] [%-5level] %logger{30} - %msg%n</pattern>
         </encoder>
     </appender>
 
-    <!-- TRACE/ALL will show lots of transaction logs -->
-    <logger name="com.github.seepick.derbauer2" level="DEBUG"/>
+    <logger name="com.github.seepick.derbauer2" level="ALL"/>
 
-    <root level="WARN">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 </configuration>

@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -41,7 +42,6 @@ import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin
 import org.koin.compose.koinInject
 import org.koin.core.module.Module
-import kotlin.reflect.KClass
 
 private val log = logger {}
 private val outerBorder = 10.dp
@@ -58,18 +58,19 @@ private fun calcWinSize(): DpSize {
     )
 }
 
+fun textengineModule() = textengineModule(DerBauer2.initPageClass, mainWindowMatrixSize)
+
 @Suppress("LongMethod")
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
-    initPageClass: KClass<out Page>,
     initState: (User) -> Unit,
 ) {
     application {
         KoinApplication(application = {
             allowOverride(false)
             createEagerInstances()
-            modules(textengineModule(initPageClass, mainWindowMatrixSize), mainModule)
+            modules(textengineModule(), mainModule)
         }) {
             val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)

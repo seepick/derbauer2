@@ -21,6 +21,9 @@ interface ListXOps<E : Any> : List<E> {
     fun find(entityClass: KClass<out E>): E =
         findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
 
+    fun <X> findAs(entityClass: KClass<out E>): X =
+        findOrNull(entityClass) as X ?: errorNotFoundEntity(entityClass, this)
+
     fun <V> letIfExists(type: KClass<out E>, letCode: (E) -> V): V? =
         findOrNull(type)?.let(letCode)
 

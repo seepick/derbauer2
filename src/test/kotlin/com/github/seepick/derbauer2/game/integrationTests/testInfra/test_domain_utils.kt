@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.integrationTests
+package com.github.seepick.derbauer2.game.integrationTests.testInfra
 
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.KeyPressed
@@ -10,6 +10,8 @@ private val log = logger {}
 
 enum class KeyInput(val asKeyPressed: KeyPressed) {
     Enter(KeyPressed.Command.Enter),
+    Escape(KeyPressed.Command.Escape),
+    Space(KeyPressed.Command.Space),
     Nr1(KeyPressed.Symbol(PrintChar.Numeric.One)),
     Nr2(KeyPressed.Symbol(PrintChar.Numeric.Two)),
     Nr3(KeyPressed.Symbol(PrintChar.Numeric.Three)),
@@ -36,6 +38,22 @@ enum class KeyInput(val asKeyPressed: KeyPressed) {
         }
     }
 }
+
+fun String.asKeyInput(): KeyInput = KeyInput.fromString(this)
+
+fun KeyInput.Companion.fromString(string: String): KeyInput =
+    KeyInput.entries.firstOrNull {
+        it.inputString.equals(string, ignoreCase = true)
+    } ?: error("No KeyInput for string: '$string'")
+
+
+val KeyPressed.inputString
+    get() = when (this) {
+        is KeyPressed.Command -> label
+        is KeyPressed.Symbol -> char.char.toString()
+    }
+
+val KeyInput.inputString get() = asKeyPressed.inputString
 
 fun PromptGamePage.indexOfOption(searchLabel: String): Int {
     val select = prompt as Prompt.Select
