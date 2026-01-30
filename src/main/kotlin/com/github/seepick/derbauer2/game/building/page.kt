@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 
+
 class BuildingsPage(
     private val user: User,
     private val currentPage: CurrentPage,
@@ -20,19 +21,23 @@ class BuildingsPage(
 ) : PromptGamePage(
     gameRenderer = gameRenderer,
     promptBuilder = {
-        Prompt.Select(
-            title = "What shall we build next, Sire?",
-            user.buildings.map { building ->
-                SelectOption({
-                    "Build ${building.labelSingular} - " +
-                            "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold} | " +
-                            "${Land.Data.emojiSpaceOrEmpty}${building.landUse} " +
-                            "(owned: ${building.owned})"
-                }) {
-                    resultHandler.handle(user.build(building::class))
+        if (user.buildings.isEmpty()) {
+            Prompt.EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
+        } else {
+            Prompt.Select(
+                title = "What shall we build next, Sire?",
+                options = user.buildings.map { building ->
+                    SelectOption({
+                        "Build ${building.labelSingular} - " +
+                                "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold} | " +
+                                "${Land.Data.emojiSpaceOrEmpty}${building.landUse} " +
+                                "(owned: ${building.owned})"
+                    }) {
+                        resultHandler.handle(user.build(building::class))
+                    }
                 }
-            }
-        )
+            )
+        }
     },
     buttons = listOf(BackButton {
         currentPage.pageClass = HomePage::class

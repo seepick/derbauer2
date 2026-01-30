@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 data class SelectOption(
     val label: () -> String,
@@ -25,15 +25,26 @@ sealed interface Prompt : KeyListener {
     val inputIndicator: String
     fun render(textmap: Textmap)
 
+    class EmptyPagePromptProvider(private val emptyMessage: String) : Prompt {
+        override val inputIndicator: String = KeyPressed.Command.Enter.label
+        override fun render(textmap: Textmap) {
+            textmap.line(emptyMessage)
+        }
+
+        override fun onKeyPressed(key: KeyPressed) = false
+    }
+
     class Select(
         val title: String,
         val options: List<SelectOption>,
     ) : Prompt {
-        private val log = KotlinLogging.logger {}
+        private val log = logger {}
 
         init {
             @Suppress("MagicNumber")
-            require(options.size in 1..9)
+            require(options.size in 1..9) {
+                "Select prompt must have between 1 and 9 options, but has ${options.size}: $options"
+            }
         }
 
         override val inputIndicator = "1-${options.size}"

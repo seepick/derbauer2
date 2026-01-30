@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.integrationTests.testInfra
 
+import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
@@ -12,13 +13,12 @@ import com.github.seepick.derbauer2.textengine.audio.Beeper
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
+import io.mockk.verify
 import org.koin.test.KoinTest
 import org.koin.test.get
 import org.koin.test.inject
 import org.koin.test.mock.declareMock
-
-@DslMarker
-annotation class GameDsl
+import kotlin.reflect.full.primaryConstructor
 
 interface GameKoinTestContext {
     val koin: KoinTest
@@ -28,46 +28,67 @@ interface GameKoinTestContext {
     fun <P : Page> pageAs() = page as P
 }
 
+@DslMarker
+annotation class GameDsl
+
 @Suppress("TestFunctionName")
 context(koin: KoinTest)
-fun Given(code: GivenDsl.() -> Unit): GivenDsl {
+fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
     koin.declareMock<Beeper> {
         every { beep(any()) } answers {
             println("TEST beep for reason=[${arg<String>(0)}]")
         }
     }
     val user by koin.inject<User>()
-    user.initAssets()
+    if (initAssets) {
+        user.initAssets()
+    }
     return GivenDsl(koin).apply(code)
 }
 
 @GameDsl
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
+
     inline fun <reified A : Asset> setOwned(amount: Z) {
-        val ownable = user.all.find<A>()
-        ownable.ownedForTest = amount
+        val asset = user.all.findOrSet<A>()
+        asset.ownedForTest = amount
     }
 
     inline fun <reified A : Asset> changeOwned(amount: Z) {
-        val ownable = user.all.find<A>()
+        val ownable = user.all.findOrSet<A>()
         ownable.ownedForTest += amount
+    }
+
+    inline fun <reified A : Asset> ListX<in A>.findOrSet(): A =
+        findOrNull<A>() ?: createAssetInstance()
+
+    inline fun <reified A : Asset> createAssetInstance(): A {
+        // TODO write test, that all assets must have no-arg ctor
+        val asset = A::class.primaryConstructor!!.call()
+        user.enable(asset)
+        return asset
     }
 }
 
 @Suppress("TestFunctionName")
-infix fun GivenDsl.When(code: WhenDsl.() -> Unit) =
-    WhenDsl(koin).apply(code)
+infix fun GivenDsl.When(code: WhenHomePageDsl.() -> Unit) =
+    WhenHomePageDsl(WhenDslImpl(koin)).apply(code)
+
+interface WhenDsl : KoinTest, GameKoinTestContext {
+    fun input(key: KeyInput)
+    fun selectPrompt(searchLabel: String)
+}
 
 @GameDsl
-class WhenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
+class WhenDslImpl(override val koin: KoinTest) : WhenDsl, KoinTest by koin, GameKoinTestContext {
     private val log = logger {}
 
-    fun input(key: KeyInput) {
+    override fun input(key: KeyInput) {
         log.debug { "Input ${key::class.simpleName} (page = ${page::class.simpleName})" }
         page.onKeyPressed(key.asKeyPressed)
     }
 
-    fun selectPrompt(searchLabel: String) {
+    override fun selectPrompt(searchLabel: String) {
         val optionIndex = pageAs<PromptGamePage>().indexOfOption(searchLabel)
         input(KeyInput.byNr(optionIndex))
     }
@@ -80,8 +101,15 @@ infix fun WhenDsl.Then(code: ThenDsl.() -> Unit) {
 
 @GameDsl
 class ThenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestContext {
+
     inline fun <reified A : Asset> shouldOwn(expectedAmount: Z) {
         val asset = user.all.find<A>()
         asset.owned shouldBeEqual expectedAmount
+    }
+
+    fun shouldRaiseWarning(containsMessage: String) {
+        verify(exactly = 1) { // TODO capture all beeps; in the future do it with events
+            get<Beeper>().beep(reason = match { it.contains(containsMessage, ignoreCase = true) })
+        }
     }
 }

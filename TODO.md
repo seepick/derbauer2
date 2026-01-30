@@ -18,12 +18,6 @@ Where: build.gradle.kts — tasks.jacocoTestReport { reports { xml.required = tr
 Why: Developers commonly inspect HTML coverage locally; disabling HTML makes quick local inspection harder.
 Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI while enabling HTML locally.
 
-Tests may leak DI state between tests — Koin lifecycle not reset in tests
-Where: Tests under src/test/kotlin/** (integration tests and unit tests reference Koin modules).
-Why: If Koin modules are started and not stopped between tests, tests can be order-dependent and flaky.
-Fix: Ensure each test isolates/starts/stops Koin with stopKoin() or use Koin test facilities; add a global test utility
-to reset DI between test cases.
-
 ## Now
 
 * BZ: documentation
@@ -33,6 +27,15 @@ to reset DI between test cases.
 * BZ: immigration happening
 * BZ: change designators based on criteria (can be upped and lowered again! different than feature, which is a one-way
   unlock)
+
+## Test
+
+* allow for "global config"; set initAssets/custom ones by default applied to all tests within
+* beeper uses some event WarningBus; then catch in itests fail-cases as well
+
+## Refactor
+
+* ad turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
 
 ## Misc
 
