@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxOwned
 import com.github.seepick.derbauer2.game.transaction.TxResult
+import com.github.seepick.derbauer2.game.transaction.TxValidator
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
@@ -59,12 +60,15 @@ fun User.execTxBuilding(
     )
 )
 
-fun User.validateBuildTx(): TxResult =
-    if (hasEntity(Land::class) && totalLandUse > landOwned) {
-        TxResult.Fail.LandOveruse()
-    } else {
-        TxResult.Success
+object BuildingTxValidator : TxValidator {
+    override fun validateTx(user: User) = with(user) {
+        if (hasEntity(Land::class) && totalLandUse > landOwned) {
+            TxResult.Fail.LandOveruse()
+        } else {
+            TxResult.Success
+        }
     }
+}
 
 @Suppress("FunctionName", "kotlin:S100")
 fun User._applyBuildTx(tx: TxBuilding) {

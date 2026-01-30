@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxOwned
 import com.github.seepick.derbauer2.game.transaction.TxResult
+import com.github.seepick.derbauer2.game.transaction.TxValidator
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.transaction.merge
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -49,12 +50,15 @@ fun User.execTxResource(
     )
 )
 
-fun User.validateResourceTx(): TxResult =
-    resources.filterIsInstance<StorableResource>().map { resource ->
-        if (resource.owned > storageFor(resource)) {
-            TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
-        } else TxResult.Success
-    }.merge()
+object ResourceTxValidator : TxValidator {
+    override fun validateTx(user: User) = with(user) {
+        resources.filterIsInstance<StorableResource>().map { resource ->
+            if (resource.owned > storageFor(resource)) {
+                TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
+            } else TxResult.Success
+        }.merge()
+    }
+}
 
 @Suppress("FunctionName", "kotlin:S100")
 fun User._applyResourceTx(tx: TxResource) {

@@ -10,7 +10,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import com.github.seepick.derbauer2.game.common.loadFilesFromClasspath
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import javazoom.jl.player.Player
 import java.io.InputStream
@@ -23,7 +22,16 @@ class MusicPlayer {
     private val threadRef = AtomicReference<Thread?>()
     private val threadId = AtomicInteger(0)
 
-    private val audioFilePaths = loadFilesFromClasspath("/bg_music")
+    // turned out tricky to get files in a folder by scanning it during runtime (in the end, packaged via compose in a fat jar)
+    private val audioFilePaths = listOf(
+        "adventurers-quest.mp3",
+        "another-medieval-village.mp3",
+        "medieval-village.mp3",
+        "rise-of-a-kingdom.mp3",
+        "travelers-inn.mp3",
+        "wild-boars-inn.mp3",
+    ).map { "/bg_music/$it" }
+
     private var currentAudioIdx = 0
     private val stopped = AtomicReference(false)
 

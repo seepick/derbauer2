@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
@@ -12,25 +13,26 @@ import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.equals.shouldBeEqual
 
 private data class SetupContext(
-    val user: User,
     val resource: Resource,
     val producer: ProducesResourceOwnable,
     val storage: Granary,
 )
 
 class ResourceTurnerTest : DescribeSpec({
+    lateinit var user: User
+    beforeTest {
+        user = User()
+    }
+
     describe("executeAndReturnReport") {
         fun withOkSetup(test: SetupContext.() -> Unit) {
-            val user = User()
             val resource = user.enable(Food())
             val producer = user.enableAndSet(Farm(), 1.z)
             val storage = user.enableAndSet(Granary(), 1.z)
 
-            test(SetupContext(user, resource, producer, storage))
+            test(SetupContext(resource, producer, storage))
         }
         it("Given nothing Then do nothing") {
-            val user = User()
-
             val report = ResourceTurner(user).buildTurnReport()
 
             report.lines.shouldBeEmpty()

@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 fun buildingModule() = module {
     singleOf(::BuildingsPage)
+    single { BuildingTxValidator }
 }

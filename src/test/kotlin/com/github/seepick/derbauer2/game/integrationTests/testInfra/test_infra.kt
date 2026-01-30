@@ -10,9 +10,8 @@ import io.mockk.mockkClass
 import org.koin.test.KoinTest
 import kotlin.reflect.KClass
 
-fun Extendable.gameKoinExtension() {
+fun Extendable.installGameKoinExtension() {
     extension(
-        // doc: https://insert-koin.io/docs/reference/koin-test/testing/
         KoinExtension(
             modules = listOf(
                 textengineModule(DerBauer2.initPageClass, mainWindowMatrixSize),

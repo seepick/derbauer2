@@ -1,8 +1,13 @@
 package com.github.seepick.derbauer2.game.core
 
-import org.koin.core.module.dsl.singleOf
+import com.github.seepick.derbauer2.game.common.getAllCustom
+import com.github.seepick.derbauer2.game.transaction.TxValidator
 import org.koin.dsl.module
 
 fun coreModule() = module {
-    singleOf(::User)
+    single {
+        User(
+            txValidators = getAllCustom<TxValidator>(),
+        )
+    }
 }

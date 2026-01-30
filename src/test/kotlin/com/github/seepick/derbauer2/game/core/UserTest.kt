@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

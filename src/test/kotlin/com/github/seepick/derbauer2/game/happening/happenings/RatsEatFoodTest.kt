@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
@@ -14,13 +15,16 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.equals.shouldBeEqual
 
 class RatsEatFoodTest : StringSpec({
+    lateinit var user: User
+    beforeTest {
+        user = User()
+    }
+
     context("can happen") {
         "Given no food Then no" {
-            val user = User()
             RatsEatFoodDescriptor.canHappen(user).shouldBeFalse()
         }
         "Given zero food Then no" {
-            val user = User()
             user.enableAndSet(Food(), 0.z)
             RatsEatFoodDescriptor.canHappen(user).shouldBeFalse()
         }
@@ -32,20 +36,17 @@ class RatsEatFoodTest : StringSpec({
     }
     context("build") {
         "Given no food Then fail" {
-            val user = User()
             shouldThrow<IllegalArgumentException> {
                 RatsEatFoodDescriptor.build(user)
             }
         }
         "Given lots of food Then should eat max amount" {
-            val user = User()
             user.enableAndSet(Food(), 20.z)
             val happening = RatsEatFoodDescriptor.build(user)
 
             happening.amountFoodEaten shouldBeEqual 15.z
         }
         "Given less food than max Then should eat all food" {
-            val user = User()
             user.enableAndSet(Food(), 2.z)
             val happening = RatsEatFoodDescriptor.build(user)
 
@@ -54,7 +55,6 @@ class RatsEatFoodTest : StringSpec({
     }
     context("execute") {
         "should change user food amount" {
-            val user = User()
             val origAmount = 20.z
             user.enableAndSet(Land(), 10.z)
             user.enableAndSet(Granary(), 1.z)

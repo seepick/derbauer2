@@ -561,8 +561,7 @@ style:
       - reason: 'Kotlin does not support @Inherited annotation, see https://youtrack.jetbrains.com/issue/KT-22265'
         value: 'java.lang.annotation.Inherited'
   ForbiddenComment:
-    # TODO should be enabled
-    active: false
+    active: true
     comments:
       - reason: 'Forbidden FIXME todo marker in comment, please fix the problem.'
         value: 'FIXME'

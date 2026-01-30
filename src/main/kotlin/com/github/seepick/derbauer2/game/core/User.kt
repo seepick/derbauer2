@@ -2,10 +2,14 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.transaction.TxValidator
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-class User : DeepCopyable<User> {
+class User(
+    val txValidators: List<TxValidator>,
+) : DeepCopyable<User> {
+
     private val log = logger {}
 
     init {
@@ -35,7 +39,7 @@ class User : DeepCopyable<User> {
     fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
 
     override fun deepCopy(): User =
-        User().also { copy ->
+        User(txValidators).also { copy ->
             log.info { "Creating deep copy." }
             all.forEach { entity ->
                 // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)

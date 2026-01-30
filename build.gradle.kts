@@ -63,15 +63,12 @@ compose.desktop {
             targetFormats(TargetFormat.Dmg)
             packageName = "DerBauer2"
             packageVersion = distributionPackageVersion
+            modules("java.naming")
 
-            nativeDistributions {
-                modules("java.naming")
+            macOS {
+                appStore = false
+                iconFile.set(project.file("src/main/distribution/icon.icns"))
             }
-            // TODO set icon
-//            macOS {
-//                appStore = false
-//                iconFile.set(project.file("icon.icns"))
-//            }
         }
     }
 }

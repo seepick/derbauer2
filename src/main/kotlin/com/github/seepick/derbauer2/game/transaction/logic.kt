@@ -2,12 +2,10 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.TxBuilding
 import com.github.seepick.derbauer2.game.building._applyBuildTx
-import com.github.seepick.derbauer2.game.building.validateBuildTx
 import com.github.seepick.derbauer2.game.common.NegativeZException
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource._applyResourceTx
-import com.github.seepick.derbauer2.game.resource.validateResourceTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
@@ -39,17 +37,15 @@ private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
     return TxMaybe.Ok(snapshot)
 }
 
-private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
-    val fails = listOf(
-        // TODO koin inject generic interface to decouple
-        snapshot.validateResourceTx(),
-        snapshot.validateBuildTx(),
-    ).filterIsInstance<TxResult.Fail>()
+interface TxValidator {
+    fun validateTx(user: User): TxResult
+}
 
+private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
+    val fails = txValidators.map { it.validateTx(snapshot) }.filterIsInstance<TxResult.Fail>()
     if (fails.isNotEmpty()) {
         return TxResult.Fail.of(fails)
     }
-
     txs.forEach(::_applyTx)
     return TxResult.Success
 }

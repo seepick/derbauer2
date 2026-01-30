@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.trading
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
@@ -16,7 +17,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class TraderTest : DescribeSpec({
-    var user = User()
+    lateinit var user: User
     beforeTest {
         user = User()
     }

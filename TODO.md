@@ -9,7 +9,9 @@
     * showMainWindow too long
     * split into sub-projects: app, view, logic, textengine
 * alternative to sealed interfaces: use enums as properties for each type; exhaustiveness possible (compiler safety);
-  doc in some MD file
+  doc in some MD file (see initAssets)
+* ad ProbabilityProvider: introduce interface for testability
+* let `showMainWindow` be refactored
 
 Jacoco HTML report disabled — poorer developer UX for coverage inspection
 Where: build.gradle.kts — tasks.jacocoTestReport { reports { xml.required = true; html.required = false } }
@@ -61,6 +63,7 @@ Later:
 
 ## Later
 
+* UI: certain events make a sound (happening, etc...)
 * make magnituded number from "1k" to "1.2k"
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * BZ: extend probability provider

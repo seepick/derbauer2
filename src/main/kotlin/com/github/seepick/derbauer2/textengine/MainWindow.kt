@@ -60,7 +60,6 @@ private fun calcWinSize(): DpSize {
 
 fun textengineModule() = textengineModule(DerBauer2.initPageClass, mainWindowMatrixSize)
 
-// TODO let it be refactored
 @Suppress("LongMethod", "MagicNumber", "CognitiveComplexMethod")
 fun showMainWindow(
     title: String = "Main Window",

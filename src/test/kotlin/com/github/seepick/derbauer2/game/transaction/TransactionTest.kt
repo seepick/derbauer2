@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.transaction
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.building.TxBuilding
@@ -18,10 +19,15 @@ import io.kotest.matchers.should
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class TransactionTest : DescribeSpec({
+    lateinit var user: User
+    beforeTest {
+        user = User()
+    }
+
     describe("When changing resource and storage") {
         it("Given nothing When adding non-existing resource Then fail") {
             shouldThrow<IllegalArgumentException> {
-                User().execTx(TxResource(Land::class, 1.zz))
+                user.execTx(TxResource(Land::class, 1.zz))
             }.message.shouldNotBeNull().should {
                 it.contains("nothing found")
                 it.contains("Land")
@@ -29,7 +35,6 @@ class TransactionTest : DescribeSpec({
         }
 
         it("Given zero gold When remove gold Then fail") {
-            val user = User()
             user.enable(Gold())
 
             user.execTx(TxResource(Gold::class, (-1).zz))
@@ -39,7 +44,6 @@ class TransactionTest : DescribeSpec({
         }
 
         it("Given zero land When build Then fail") {
-            val user = User()
             user.enable(Land())
             user.enable(House())
 
@@ -47,7 +51,6 @@ class TransactionTest : DescribeSpec({
                 .shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
         it("Given no storage When adding resource Then fail") {
-            val user = User()
             user.enable(Land())
             user.enable(Food())
 
@@ -57,7 +60,6 @@ class TransactionTest : DescribeSpec({
                 }
         }
         it("Given enough storage When adding resource Then succeed") {
-            val user = User()
             user.enableAndSet(Land(), 50.z)
             user.enableAndSet(Granary(), 1.z)
             user.enable(Food())
@@ -65,7 +67,6 @@ class TransactionTest : DescribeSpec({
             user.execTx(TxResource(Food::class, 1.zz)).shouldBeSuccess()
         }
         it("Given enough storage When adding resource and removing storage Then fail") {
-            val user = User()
             user.enableAndSet(Land(), 20.z)
             user.enableAndSet(Granary(), 1.z)
             user.enable(Food())

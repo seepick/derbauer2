@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User

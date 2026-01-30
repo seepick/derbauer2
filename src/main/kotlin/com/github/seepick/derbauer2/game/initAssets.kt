@@ -39,7 +39,7 @@ fun User.initAssets() {
         when (asset) {
             is Resource -> TxResource(asset::class, amount)
             is Building -> TxBuilding(asset::class, amount)
-            else -> error("Unknown asset type: ${asset::class}") // TODO use enum-indirection for exhaustive when
+            else -> error("Unknown asset type: ${asset::class}")
         }
     }).errorOnFail()
 }

@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.integrationTests.testInfra.Given
 import com.github.seepick.derbauer2.game.integrationTests.testInfra.KeyInput
 import com.github.seepick.derbauer2.game.integrationTests.testInfra.Then
 import com.github.seepick.derbauer2.game.integrationTests.testInfra.When
-import com.github.seepick.derbauer2.game.integrationTests.testInfra.gameKoinExtension
+import com.github.seepick.derbauer2.game.integrationTests.testInfra.installGameKoinExtension
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -22,7 +22,7 @@ import kotlin.math.ceil
 
 class TurnITest : KoinTest, FunSpec() {
     init {
-        gameKoinExtension()
+        installGameKoinExtension()
         test("skip next turn brings you to the report page") {
             Given {} When {
                 input(KeyInput.Enter)

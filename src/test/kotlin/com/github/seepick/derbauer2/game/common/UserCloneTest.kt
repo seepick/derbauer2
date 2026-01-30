@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.enableAndSet
 import com.github.seepick.derbauer2.game.gold
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -9,7 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldNotBeSameInstanceAs
 
-class UserCloneTest : StringSpec( {
+class UserCloneTest : StringSpec({
     "When clone Then a distinct but equal copy is created" {
         val user1 = User()
         val user2 = user1.deepCopy()
