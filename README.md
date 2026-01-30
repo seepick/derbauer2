@@ -1,5 +1,6 @@
 [![Build Status](https://github.com/seepick/derbauer2/actions/workflows/continuous.yml/badge.svg)](https://github.com/seepick/derbauer2/actions/workflows/continuous.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=seepick_derbauer2&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=seepick_derbauer2)
+![Dependabot compatibility score](https://dependabot-badges.githubapp.com/badges/compatibility_score?dependency-name=gradle-wrapper&amp;package-manager=gradle&amp;previous-version=9.3.0&amp;new-version=9.3.1)]
 
 # DerBauer2
 
