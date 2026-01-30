@@ -1,12 +1,12 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val dmgPackageVersion = "1.0.0"
+val distributionPackageVersion = "1.0.0"
 
 plugins {
     kotlin("jvm") version "2.3.0"
-    id("org.jetbrains.compose") version "1.7.3"
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
+    id("org.jetbrains.compose") version "1.10.0"
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
     id("org.sonarqube") version "7.2.2.6593"
@@ -53,7 +53,7 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java8:${Versions.cucumber}")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
     testImplementation("io.cucumber:cucumber-picocontainer:${Versions.cucumber}")
-    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
+//    testImplementation("org.junit.platform:junit-platform-suite:1.11.4")
 }
 
 kotlin {
@@ -68,12 +68,16 @@ compose.desktop {
         mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
         nativeDistributions {
             targetFormats(TargetFormat.Dmg)
-            packageName = "derbauer2"
-            packageVersion = dmgPackageVersion
+            packageName = "DerBauer2"
+            packageVersion = distributionPackageVersion
 
             nativeDistributions {
                 modules("java.naming")
             }
+//            macOS {
+//                appStore = false
+//                iconFile.set(project.file("icon.icns"))
+//            }
         }
     }
 }

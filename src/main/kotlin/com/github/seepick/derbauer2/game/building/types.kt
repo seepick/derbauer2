@@ -35,11 +35,10 @@ class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     override val costsGold = Mechanics.houseCostsGold.z
     override val landUse = Mechanics.houseLandUse.z
     override val storableResourceClass = Citizen::class
+    override val storageAmount = Mechanics.houseStoreCitizen.z
 
     override fun deepCopy() = House().also { it._setOwnedInternal = owned }
     override fun toString() = "House(owned=$owned)"
-
-    override val storageAmount = Mechanics.houseStoreCitizen.z
 }
 
 class Farm : Building, ProducesResourceOwnable, HasLabel by Data,

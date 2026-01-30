@@ -26,7 +26,9 @@ class User : DeepCopyable<User> {
         if (all.any { it::class == entity::class }) {
             error("Entity ${entity::class.simpleName} already exists!")
         }
-        log.info { "Enabling $entity" }
+        if (!disableCheck) {
+            log.info { "Enabling $entity" }
+        }
         _all += entity
     }
 

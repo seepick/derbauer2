@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import io.github.oshai.kotlinlogging.KotlinLogging
 import javazoom.jl.player.Player
 import java.awt.Toolkit
+import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
 fun interface Beeper {
@@ -31,6 +32,7 @@ object RealBeeper : Beeper {
 class MusicPlayer {
     private val playerRef = AtomicReference<Player?>()
     private val threadRef = AtomicReference<Thread?>()
+    private val threadId = AtomicInteger(0)
 
     fun play() {
         val foo = this::class.java.getResourceAsStream("/audio/medieval_village.mp3")
@@ -46,6 +48,7 @@ class MusicPlayer {
                 threadRef.set(null)
             }
         }.apply {
+            name = "MusicPlayerThread#${threadId.getAndIncrement()}"
             isDaemon = true
             start()
         }

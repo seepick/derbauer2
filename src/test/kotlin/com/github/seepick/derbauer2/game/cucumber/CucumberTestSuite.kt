@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game
+package com.github.seepick.derbauer2.game.cucumber
 
 import io.cucumber.core.options.Constants
 import org.junit.platform.suite.api.ConfigurationParameter
