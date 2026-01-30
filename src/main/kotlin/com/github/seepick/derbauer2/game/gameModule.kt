@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.core.coreModule
 import com.github.seepick.derbauer2.game.feature.featureModule
 import com.github.seepick.derbauer2.game.happening.happeningModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
+import com.github.seepick.derbauer2.game.technology.technologyModule
 import com.github.seepick.derbauer2.game.trading.tradingModule
 import com.github.seepick.derbauer2.game.turn.turnModule
 import com.github.seepick.derbauer2.game.view.viewModule
@@ -21,6 +22,7 @@ fun gameModule() = module {
         turnModule(),
         happeningModule(),
         featureModule(),
+        technologyModule(),
         viewModule(),
     )
 }

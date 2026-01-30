@@ -10,12 +10,16 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 object TradeLandDescriptor : FeatureDescriptor(
     label = "Trade Land",
     asciiArt = AsciiArt.island,
-    description = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\nAnd some more... hehe 😅",
+    multilineDescription = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\nAnd some more... hehe 😅",
 ) {
+    override val enumIdentifier = FeatureDescriptorEnum.TradeLand
     override fun check(user: User) = user.hasEntity(Land::class) && user.landAvailable <= 2
     override fun build() = TradeLandFeature(this)
 }
 
-class TradeLandFeature(descriptor: TradeLandDescriptor) : Feature(descriptor) {
+class TradeLandFeature(
+    descriptor: TradeLandDescriptor,
+) : Feature(descriptor) {
+    override val discriminator = Discriminator.TradeLand(this)
     override fun deepCopy() = this // immutable
 }

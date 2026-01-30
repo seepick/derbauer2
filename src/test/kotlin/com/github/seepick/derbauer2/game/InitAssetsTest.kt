@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game
 
-import com.github.seepick.derbauer2.game.testInfra.food
-import com.github.seepick.derbauer2.game.testInfra.gold
+import com.github.seepick.derbauer2.game.core.food
+import com.github.seepick.derbauer2.game.core.gold
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.comparables.shouldBeGreaterThan
