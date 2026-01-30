@@ -60,7 +60,8 @@ private fun calcWinSize(): DpSize {
 
 fun textengineModule() = textengineModule(DerBauer2.initPageClass, mainWindowMatrixSize)
 
-@Suppress("LongMethod")
+// TODO let it be refactored
+@Suppress("LongMethod", "MagicNumber", "CognitiveComplexMethod")
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
@@ -136,8 +137,8 @@ fun showMainWindow(
                                 awaitPointerEventScope {
                                     while (true) {
                                         val event = awaitPointerEvent()
-                                        val p = event.changes.firstOrNull()?.position ?: continue
-                                        val near = p.x <= cursorLeftThreshold
+                                        val pos = event.changes.firstOrNull()?.position ?: continue
+                                        val near = pos.x <= cursorLeftThreshold
                                         if (near != isCursorNearLeft) {
                                             isCursorNearLeft = near
                                         }

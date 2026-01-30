@@ -21,12 +21,11 @@ fun ifDo(condition: Boolean, execution: () -> Unit): Boolean {
 fun loadFilesFromClasspath(folderPath: String): List<String> {
     val normalized = folderPath.removePrefix("/").trimEnd('/')
     val loader = Thread.currentThread().contextClassLoader
-    val resource = loader.getResource(normalized) ?: return emptyList()
+    val resource = loader.getResource(normalized) ?: error("Resource not found: $folderPath")
     val uri = resource.toURI()
     return when (uri.scheme) {
         "file" -> {
-            val dir = Paths.get(uri)
-            Files.list(dir).use { stream ->
+            Files.list(Paths.get(uri)).use { stream ->
                 stream.iterator().asSequence().map { "/$normalized/${it.fileName}" }.toList()
             }
         }
@@ -34,15 +33,16 @@ fun loadFilesFromClasspath(folderPath: String): List<String> {
         "jar" -> {
             val fs = try {
                 FileSystems.getFileSystem(uri)
-            } catch (e: FileSystemNotFoundException) {
+            } catch (_: FileSystemNotFoundException) {
                 FileSystems.newFileSystem(uri, emptyMap<String, Any>())
             }
-            val pathInJar = fs.getPath("/$normalized")
-            Files.list(pathInJar).use { stream ->
+            Files.list(fs.getPath("/$normalized")).use { stream ->
                 stream.iterator().asSequence().map { "/$normalized/${it.fileName}" }.toList()
             }
         }
 
-        else -> emptyList()
+        else -> {
+            error("Unsupported URI scheme: ${uri.scheme} for folder path: $folderPath")
+        }
     }
 }
