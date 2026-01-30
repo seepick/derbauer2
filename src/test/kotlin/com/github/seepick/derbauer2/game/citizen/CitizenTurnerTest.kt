@@ -1,15 +1,15 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.enableAndSet
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.shouldContainLine
-import com.github.seepick.derbauer2.game.z
+import com.github.seepick.derbauer2.game.testInfra.User
+import com.github.seepick.derbauer2.game.testInfra.enableAndSet
+import com.github.seepick.derbauer2.game.testInfra.shouldContainLine
+import com.github.seepick.derbauer2.game.testInfra.z
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.equals.shouldBeEqual

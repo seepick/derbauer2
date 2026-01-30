@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game
+package com.github.seepick.derbauer2.game.testInfra
 
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.BuildingTxValidator

@@ -16,7 +16,7 @@ class BuildBuildingsITest : KoinTest, DescribeSpec() {
         installGameKoinExtension()
         describe("When build simple building") {
             it("Given sufficient gold Then owned houses increases") {
-                Given(initAssets = false) {
+                Given() {
                     setOwned<House>(0.z)
                     setOwned<Gold>(Mechanics.houseCostsGold.z)
                     // without the concept of Land, the engine doesn't check for it; sweet side-effect of dynamics
@@ -29,7 +29,7 @@ class BuildBuildingsITest : KoinTest, DescribeSpec() {
                 }
             }
             it("Given insufficient gold Then building fails") {
-                Given(initAssets = false) {
+                Given() {
                     setOwned<House>(0.z)
                     setOwned<Gold>(1.z)
                 } When {
@@ -42,7 +42,6 @@ class BuildBuildingsITest : KoinTest, DescribeSpec() {
                     shouldOwn<Gold>(1.z) // untouched
                 }
             }
-            // TODO test land
         }
     }
 }

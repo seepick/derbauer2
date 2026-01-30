@@ -30,6 +30,8 @@ class Textmap(
     private val cols: Int,
     private val rows: Int,
 ) : TextmapWriter {
+    constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
+
     private val buffer = Array(rows) { Array(cols) { ' ' } }
     private val cursor = Cursor()
 

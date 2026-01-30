@@ -8,6 +8,6 @@ import kotlin.reflect.KClass
 
 fun textengineModule(initPageClass: KClass<out Page>, textmapSize: MatrixSize) = module {
     single { CurrentPage(initPageClass) }
-    single { Textmap(textmapSize.cols, textmapSize.rows) }
+    single { Textmap(textmapSize) }
     single { RealBeeper }.bind<Beeper>()
 }

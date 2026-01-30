@@ -12,7 +12,6 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 
-
 class BuildingsPage(
     private val user: User,
     private val currentPage: CurrentPage,

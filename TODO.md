@@ -1,9 +1,9 @@
 # Todo
 
+* itest for happenings; requires probability provider injection (use enum class to identify source)
 * introduce buildSrc (try again ;)
-* cucumber first
 * resolve tech debt
-    * mutable internal state; make it immutable, find other solution
+
     * tests for transaction logic
     * if use `object` (not testable) then document
     * showMainWindow too long
@@ -32,6 +32,8 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 
 * allow for "global config"; set initAssets/custom ones by default applied to all tests within
 * beeper uses some event WarningBus; then catch in itests fail-cases as well
+* itest for build and (not) enough land
+* GameRenderPage ... make reusable also for plain pages (happenings, etc.)
 
 ## Refactor
 
@@ -86,7 +88,8 @@ Later:
 
 * refactor text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass
   config-object
-* IT: automated releases
-* IT: switch jacoco to kover?
-* nope IT: register in koin validator interface, and collect all (eager singletons) via DI-context; see
-  transaction/logic.kt
+* switch jacoco to kover?
+
+### Nope
+
+* mutable internal state; make it immutable, find other solution

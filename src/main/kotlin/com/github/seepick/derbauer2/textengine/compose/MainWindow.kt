@@ -36,6 +36,10 @@ import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.MatrixSize
+import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
 import com.github.seepick.derbauer2.textengine.bgColor
 import com.github.seepick.derbauer2.textengine.fgColor
@@ -50,7 +54,7 @@ import org.koin.core.module.Module
 private val log = logger {}
 private val outerBorder = 10.dp
 private val innerMargin = 5.dp
-val mainWindowMatrixSize = _root_ide_package_.com.github.seepick.derbauer2.textengine.MatrixSize(rows = 25, cols = 80)
+val mainWindowMatrixSize = MatrixSize(rows = 25, cols = 80)
 private val mainContentWidth = 10.85.dp * mainWindowMatrixSize.cols
 private val mainContentHeight = 22.2.dp * mainWindowMatrixSize.rows
 
@@ -82,11 +86,11 @@ fun showMainWindow(
             val windowDpSize = calcWinSize()
             val state = rememberWindowState(size = windowDpSize)
             var tick by remember { mutableIntStateOf(0) }
-            val currentPage = koinInject<com.github.seepick.derbauer2.textengine.CurrentPage>()
-            val page = getKoin().get<com.github.seepick.derbauer2.textengine.Page>(clazz = currentPage.pageClass)
+            val currentPage = koinInject<CurrentPage>()
+            val page = getKoin().get<Page>(clazz = currentPage.pageClass)
             tick.toString() // HACK to trigger recomposition, otherwise tick changes are not observed
             log.trace { "UI render tick #$tick" }
-            val textmap = koinInject<com.github.seepick.derbauer2.textengine.Textmap>()
+            val textmap = koinInject<Textmap>()
 
             val density = LocalDensity.current
             val leftBarWidth = 40.dp

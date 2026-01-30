@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
-import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.enableAndSet
-import com.github.seepick.derbauer2.game.food
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.testInfra.User
+import com.github.seepick.derbauer2.game.testInfra.enableAndSet
+import com.github.seepick.derbauer2.game.testInfra.food
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
