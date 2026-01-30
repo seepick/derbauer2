@@ -1,0 +1,15 @@
+version: 2
+updates:
+  - package-ecosystem: "gradle"
+    directory: "/"
+    schedule:
+      interval: "weekly" # Frequency of updates (daily, weekly, or monthly)
+    #ignore:
+    #  - dependency-name: "org.example:example-library"
+    #    versions: ["1.x"] # Optional: Ignore updating certain dependencies
+    reviewers:
+      - "seepick"
+    assignees:
+      - "seepick"
+    labels:
+      - "dependencies"
