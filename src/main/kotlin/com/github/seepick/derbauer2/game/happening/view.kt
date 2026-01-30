@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.view.NotificationPage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 
 class HappeningPage(
-    private val multiView: HappeningMultiView,
+    val multiView: HappeningMultiView,
 ) : NotificationPage(
     title = "Happening",
     emoji = "✨",

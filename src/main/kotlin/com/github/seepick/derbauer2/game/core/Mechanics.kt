@@ -52,5 +52,7 @@ object Mechanics {
     val citizensStarve = 0.01.`%`
     val citizensStarveMinimum = 1.z
 
-    val turnProbHappeningIsNegative = 0.1
+    val turnProbHappeningStart = 0.0.`%`
+    val turnProbHappeningGrowthRate = 0.02.`%`
+    val turnProbHappeningIsNegative = 0.1.`%`
 }

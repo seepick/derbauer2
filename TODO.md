@@ -2,6 +2,7 @@
 
 ## Now
 
+* finish Technology concept
 * itest for happenings; requires probability provider injection (use enum class to identify source)
 * introduce buildSrc (try again ;)
 * resolve tech debt
@@ -22,6 +23,8 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 
 ## Next
 
+* BZ: happening amount with probability range
+* BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * BZ: implement game over (all citizens dead)
 * ! BZ: implement birth rate, increase citizens on turn
 * IT: refactor `fun showMainWindow` too long

@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
+import com.github.seepick.derbauer2.game.happening.HappeningId
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.execTxResource
@@ -15,8 +16,9 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.Textmap
 
 object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
-    override fun canHappen(user: User) =
-        user.hasEntity(Food::class) && user.resource<Food>().owned > 0
+    override val id = HappeningId.RatsEatFood
+
+    override fun canHappen(user: User) = user.hasEntity(Food::class) && user.resource<Food>().owned > 0
 
     override fun build(user: User): RatsEatFoodHappening {
         require(canHappen(user))
@@ -25,8 +27,7 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
 }
 
 class RatsEatFoodHappening(
-    val amountFoodEaten: Z,
-    private val descriptor: HappeningData = RatsEatFoodDescriptor
+    val amountFoodEaten: Z, private val descriptor: HappeningData = RatsEatFoodDescriptor
 ) : Happening, HappeningData by descriptor {
     init {
         require(amountFoodEaten > 0) { "amountFoodEaten must be positive: $amountFoodEaten" }

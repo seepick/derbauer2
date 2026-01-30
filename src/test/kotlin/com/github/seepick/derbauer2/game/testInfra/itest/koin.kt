@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.integrationTests.testInfra
+package com.github.seepick.derbauer2.game.testInfra.itest
 
 import com.github.seepick.derbauer2.game.gameModule
 import com.github.seepick.derbauer2.textengine.compose.textengineModule

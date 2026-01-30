@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.integrationTests.testInfra
+package com.github.seepick.derbauer2.game.testInfra.itest
 
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.BuildingsPage
@@ -13,15 +13,16 @@ annotation class TestEngineDsl
 
 @TestEngineDsl
 interface HomePageDsl {
-    fun nextTurn()
+    fun nextTurn(code: WhenTurnPageDsl.() -> Unit = {})
     fun selectTrade()
     fun selectBuild(code: WhenBuildPageDsl.() -> Unit)
 }
 
-class WhenHomePageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePageDsl {
-    override fun nextTurn() { // TODO report page
+class WhenHomePageDsl(private val whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePageDsl {
+    override fun nextTurn(code: WhenTurnPageDsl.() -> Unit) {
         input(KeyInput.Enter)
         page.shouldBeInstanceOf<ReportPage>()
+        WhenTurnPageDsl(whenDsl).code()
     }
 
     override fun selectTrade() {
@@ -33,6 +34,13 @@ class WhenHomePageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePageDsl {
         selectPrompt("build")
         page.shouldBeInstanceOf<BuildingsPage>()
         WhenBuildPageDsl(this).code()
+    }
+}
+
+@TestEngineDsl
+class WhenTurnPageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl {
+    fun nextPage() {
+        input(KeyInput.Enter)
     }
 }
 

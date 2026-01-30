@@ -10,6 +10,8 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
+import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.probability.ProbabilityManagerImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -23,15 +25,18 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import kotlin.math.ceil
 
+
 class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: Turner
     lateinit var reports: ReportIntelligence
+    lateinit var probabilities: ProbabilityManagerImpl
     beforeTest {
         user = User()
         reports = ReportIntelligence()
+        probabilities = ProbabilityManagerImpl()
         turner = Turner(
-            happeningTurner = HappeningTurner(user),
+            happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo),
             resourceTurner = ResourceTurner(user),
             citizenTurner = CitizenTurner(user),
             featureTurner = FeatureTurner(user),
@@ -52,7 +57,7 @@ class TurnerTest : DescribeSpec({
             reports.last() shouldBeSameInstanceAs report
         }
     }
-    describe("produce resource") {
+    describe("When produce food") {
         it("Given producer and storage When produce Then owned increased and report contains") {
             user.enableAndSet(Land(), 10.z)
             val farm = user.enableAndSet(Farm(), 1.z)
@@ -87,7 +92,7 @@ class TurnerTest : DescribeSpec({
             report.resourceReportLines shouldContainLine (food to diff.zz)
         }
     }
-    describe("citizens") {
+    describe("citizens pay taxes") {
         it("Given sufficient citizens Then increase gold") {
             val gold = user.enable(Gold())
             val targetCitizens = (1.0 / Mechanics.citizenTax.value).toLong().z

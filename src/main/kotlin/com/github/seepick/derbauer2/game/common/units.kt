@@ -46,7 +46,7 @@ data class Z(
     val value: Long,
 ) {
     init {
-        if(value < 0) {
+        if (value < 0) {
             throw NegativeZException(value)
         }
     }
@@ -118,4 +118,10 @@ value class Percent(val value: Double) {
     init {
         require(value in 0.0..1.0) { "Percent value must be between 0.0 and 1.0" }
     }
+
+    operator fun compareTo(other: Percent) = this.value.compareTo(other.value)
+    operator fun compareTo(other: Double) = this.value.compareTo(other)
+    operator fun plus(other: Percent) = Percent(this.value + other.value)
 }
+
+operator fun Double.compareTo(other: Percent) = this.compareTo(other.value)

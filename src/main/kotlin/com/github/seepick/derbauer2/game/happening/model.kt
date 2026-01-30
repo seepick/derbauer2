@@ -9,8 +9,14 @@ enum class HappeningNature {
     Neutral,
 }
 
+enum class HappeningId {
+    FoundGold,
+    RatsEatFood,
+}
+
 interface HappeningData {
     val nature: HappeningNature
+    val id: HappeningId
 }
 
 interface Happening : MultiViewSubPage, HappeningData

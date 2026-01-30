@@ -1,13 +1,12 @@
-package com.github.seepick.derbauer2.game.integrationTests
+package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.integrationTests.testInfra.Given
-import com.github.seepick.derbauer2.game.integrationTests.testInfra.Then
-import com.github.seepick.derbauer2.game.integrationTests.testInfra.When
-import com.github.seepick.derbauer2.game.integrationTests.testInfra.installGameKoinExtension
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.testInfra.itest.Given
+import com.github.seepick.derbauer2.game.testInfra.itest.Then
+import com.github.seepick.derbauer2.game.testInfra.itest.When
+import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
 import io.kotest.core.spec.style.DescribeSpec
 import org.koin.test.KoinTest
 

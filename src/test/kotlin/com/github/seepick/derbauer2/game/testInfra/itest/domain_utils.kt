@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.integrationTests.testInfra
+package com.github.seepick.derbauer2.game.testInfra.itest
 
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
