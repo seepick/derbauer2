@@ -39,22 +39,6 @@ enum class KeyInput(val asKeyPressed: KeyPressed) {
     }
 }
 
-fun String.asKeyInput(): KeyInput = KeyInput.fromString(this)
-
-fun KeyInput.Companion.fromString(string: String): KeyInput =
-    KeyInput.entries.firstOrNull {
-        it.inputString.equals(string, ignoreCase = true)
-    } ?: error("No KeyInput for string: '$string'")
-
-
-val KeyPressed.inputString
-    get() = when (this) {
-        is KeyPressed.Command -> label
-        is KeyPressed.Symbol -> char.char.toString()
-    }
-
-val KeyInput.inputString get() = asKeyPressed.inputString
-
 fun PromptGamePage.indexOfOption(searchLabel: String): Int {
     val select = prompt as Prompt.Select
     val matching = select.options.mapIndexedNotNull { index, option ->

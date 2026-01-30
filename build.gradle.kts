@@ -28,7 +28,6 @@ object Versions {
     val mockk = "1.14.7"
     val jacoco = "0.8.14"
     val detekt = "1.23.8"
-    val cucumber = "7.20.1"
 }
 
 dependencies {
@@ -48,12 +47,6 @@ dependencies {
     }
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.insert-koin:koin-test:${Versions.koin}")
-
-    testImplementation("io.cucumber:cucumber-java:${Versions.cucumber}")
-    testImplementation("io.cucumber:cucumber-java8:${Versions.cucumber}")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:${Versions.cucumber}")
-    testImplementation("io.cucumber:cucumber-picocontainer:${Versions.cucumber}")
-    testImplementation("org.junit.platform:junit-platform-suite:6.0.2")
 }
 
 kotlin {
@@ -74,6 +67,7 @@ compose.desktop {
             nativeDistributions {
                 modules("java.naming")
             }
+            // TODO set icon
 //            macOS {
 //                appStore = false
 //                iconFile.set(project.file("icon.icns"))
