@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.User
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
