@@ -1,28 +1,10 @@
-package com.github.seepick.derbauer2.textengine
+package com.github.seepick.derbauer2.textengine.keyboard
 
 import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.KeyEvent
 import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.type
-
-fun interface KeyListener {
-    fun onKeyPressed(key: KeyPressed): Boolean
-}
-
-sealed interface KeyPressed {
-    data class Symbol(val char: PrintChar) : KeyPressed
-    sealed class Command(val label: String) : KeyPressed {
-        object Enter : Command("ENTER")
-        object Escape : Command("ESCAPE")
-        object Space : Command("SPACE")
-    }
-    companion object {
-        // via extension functions
-    }
-}
-
-val KeyPressed.Companion.one get() = KeyPressed.Symbol(PrintChar.Numeric.One)
 
 private val keyMap = buildMap {
     put(Key.Escape, KeyPressed.Command.Escape)

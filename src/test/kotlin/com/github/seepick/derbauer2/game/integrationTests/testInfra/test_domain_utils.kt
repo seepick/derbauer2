@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.integrationTests.testInfra
 
 import com.github.seepick.derbauer2.game.view.PromptGamePage
-import com.github.seepick.derbauer2.textengine.KeyPressed
-import com.github.seepick.derbauer2.textengine.PrintChar
-import com.github.seepick.derbauer2.textengine.Prompt
+import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
+import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
+import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.textengine.showMainWindow
+import com.github.seepick.derbauer2.textengine.compose.showMainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 object DerBauer2 {

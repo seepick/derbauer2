@@ -1,9 +1,13 @@
 package com.github.seepick.derbauer2.textengine
 
+import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
+import com.github.seepick.derbauer2.textengine.keyboard.one
+import com.github.seepick.derbauer2.textengine.prompt.Prompt
+import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
-class SelectPromptTest : DescribeSpec( {
+class SelectPromptTest : DescribeSpec({
     val title = "test title"
     val opt1 = SelectOption("opt1") { }
 

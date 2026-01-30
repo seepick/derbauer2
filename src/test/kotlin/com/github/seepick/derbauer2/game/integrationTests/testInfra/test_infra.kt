@@ -1,9 +1,7 @@
 package com.github.seepick.derbauer2.game.integrationTests.testInfra
 
-import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.gameModule
-import com.github.seepick.derbauer2.textengine.mainWindowMatrixSize
-import com.github.seepick.derbauer2.textengine.textengineModule
+import com.github.seepick.derbauer2.textengine.compose.textengineModule
 import io.kotest.core.spec.Extendable
 import io.kotest.koin.KoinExtension
 import io.mockk.mockkClass
@@ -14,7 +12,7 @@ fun Extendable.installGameKoinExtension() {
     extension(
         KoinExtension(
             modules = listOf(
-                textengineModule(DerBauer2.initPageClass, mainWindowMatrixSize),
+                textengineModule(),
                 gameModule()
             ),
             mockProvider = { mockkClass(it, relaxed = true) }

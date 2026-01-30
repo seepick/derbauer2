@@ -9,8 +9,8 @@ import com.github.seepick.derbauer2.game.resource.resources
 import com.github.seepick.derbauer2.game.resource.storageFor
 import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.turn.Turner
-import com.github.seepick.derbauer2.textengine.KeyPressed
 import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 
 class GameRenderer(
     private val user: User,

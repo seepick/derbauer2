@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.Prompt
-import com.github.seepick.derbauer2.textengine.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.Prompt
+import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 
 class HomePage(
     turner: Turner,
