@@ -6,44 +6,17 @@ on:
       - '*'
 
 jobs:
-  check:
-    name: Run Gradle check
+  setup-environment:
+    uses: ./.github/workflows/includes/setup-env.yml
+    with:
+      setup-sonar: true
+  exec-quality-gates:
+    uses: ./.github/workflows/includes/exec-quality-gates.yml
+  finalization:
+    name: SonarQube
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # unshallow checkout, so sonarqube can do blame analysis
-      - name: Setup JDK
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '17'
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: gradle-cache-${{ runner.os }}-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            gradle-cache-${{ runner.os }}-
-      - name: Cache SonarQube
-        uses: actions/cache@v4
-        with:
-          path: ~/.sonar/cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-      - name: Install UiTest prerequisites
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y xvfb
-      - name: Build Project
-        run: xvfb-run -a -s "-screen 0 1280x1024x24" ./gradlew detekt jacocoTestReport check --console=plain
-      - name: Trigger SonarQube
+      - name: Trigger SonarQube via Gradle
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: ./gradlew sonar --console=plain
-      - name: Validate Documentation
-        run: |
-          ./bin/validate_documentation.sh
