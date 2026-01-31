@@ -1,8 +1,8 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val versionNr = File("src/main/distribution/version.txt").readText().trim().toInt()
-val distributionPackageVersion = "$versionNr.0.0"
+//val versionNr = File("src/main/distribution/version.txt").readText().trim().toInt()
+val distributionPackageVersion = "1.0.0"
 
 plugins {
     alias(libs.plugins.kotlin)
