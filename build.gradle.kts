@@ -21,7 +21,7 @@ repositories {
 
 dependencies {
     implementation(libs.kotlin.reflect)
-    implementation(libs.compose.desktopCurrentOs)
+    implementation(compose.desktop.currentOs)
     implementation(libs.koin.compose)
     implementation(libs.koin.composeViewmodel)
     implementation(libs.jlayer) // play mp3s

@@ -25,7 +25,6 @@ kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 
 [libraries]
-compose-desktopCurrentOs = { module = "org.jetbrains.compose.desktop:desktop", version.ref = "compose" }
 compose-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 jlayer = { module = "javazoom:jlayer", version.ref = "jlayer" }
