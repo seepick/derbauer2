@@ -8,14 +8,14 @@ permissions:
 
 jobs:
   prepare-release:
-    name: Create Release and Upload Artifacts
+    name: Create GitHub Release
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
       - uses: ./.github/actions/check-quality-gates
-      - name: Version Number Handling
+      - name: Update Version Number
         id: step-version
         run: |
           newVersion=$(./bin/version_increment_and_get.sh)
@@ -25,17 +25,17 @@ jobs:
             exit $rc
           fi
           echo "new_version=$newVersion" >> $GITHUB_OUTPUT
-      - name: Print Verrsion Numbe
+      - name: Log Version Number
         run: |
           echo "New version to be released: ${{ steps.step-version.outputs.new_version }}"
       - name: Commit Changes
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Auto-Release for Version ${{ steps.step-version.outputs.new_version }}
-      - name: Create Tag
+      - name: Create GIT Tag
         uses: negz/create-tag@v1
         with:
-          version: ${{ steps.step-version.outputs.new_version }}
+          version: ${{ steps.step-version.outputs.new_version }}.0.0
           message: tag version ${{ steps.step-version.outputs.new_version }}
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create GitHub Release
@@ -67,7 +67,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
       - name: Build Gradle Distribution
-        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}"
+        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}.0.0"
 
       - name: Upload Release Asset for Windows
         if: runner.os == 'Windows'
@@ -77,7 +77,7 @@ jobs:
         with:
           upload_url: ${{ needs.prepare-release.outputs.upload-url }}
           # TODO needs to be verified to work
-          asset_path: build/compose/binaries/main/exe/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.exe
+          asset_path: build/compose/binaries/main/exe/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.exe
           asset_name: DerBauer2.exe
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Release Asset for MacOS
