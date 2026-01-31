@@ -45,7 +45,6 @@ fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
     DisposableEffect(Unit) {
         onDispose {
             player.stop()
-            stateManager.updatePlayingState(false)
         }
     }
 }
