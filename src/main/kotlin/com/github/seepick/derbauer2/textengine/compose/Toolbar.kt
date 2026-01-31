@@ -25,10 +25,10 @@ import org.koin.compose.koinInject
 fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
     val stateManager = koinInject<MusicStateManager>()
     val autoPlayMusic = remember { stateManager.shouldAutoPlay() }
-    
+
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
-            modifier = Modifier.Companion
+            modifier = Modifier
                 .align(Alignment.CenterStart)
                 .offset(x = xOffset)
                 .width(width)
@@ -36,7 +36,10 @@ fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
                 .clip(RoundedCornerShape(4.dp))
                 .background(Color.fgColor.copy(alpha = bgAlpha))
         ) {
-            MusicButton(autoPlayMusic = autoPlayMusic, stateManager = stateManager)
+            MusicButton(
+                autoPlayMusic = autoPlayMusic,
+                stateManager = stateManager,
+            )
         }
     }
 }

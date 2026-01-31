@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.core
 
-import com.github.seepick.derbauer2.game.DerBauer2
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import java.util.prefs.Preferences
 import kotlin.reflect.KClass
 
 class PreferencesStateRepository(
-    storagePackage: KClass<*> = DerBauer2::class,
+    storagePackage: KClass<*>,
 ) : StateRepository {
+
     private val log = logger {}
     private val prefs = Preferences.userNodeForPackage(storagePackage.java)
 

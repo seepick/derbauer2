@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.textengine
 
 import com.github.seepick.derbauer2.core.PreferencesStateRepository
 import com.github.seepick.derbauer2.core.StateRepository
+import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.textengine.audio.Beeper
 import com.github.seepick.derbauer2.textengine.audio.BeepingWarningListener
 import com.github.seepick.derbauer2.textengine.audio.MusicStateManager
@@ -15,8 +16,8 @@ import kotlin.reflect.KClass
 fun textengineModule(initPageClass: KClass<out Page>) = module {
     single { CurrentPage(initPageClass) }
     single { Textmap(MainWin.matrixSize) }
-    single { RealBeeper }.bind<Beeper>()
+    single { RealBeeper } bind Beeper::class
     singleOf(::BeepingWarningListener)
-    singleOf(::PreferencesStateRepository) bind StateRepository::class
+    single { PreferencesStateRepository(DerBauer2::class) } bind StateRepository::class
     singleOf(::MusicStateManager)
 }

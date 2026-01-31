@@ -40,7 +40,7 @@ fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
             stateManager.updatePlayingState(true)
         }
     }) {
-        Text(if (playing) "⏸️" else "▶️", color = Color.Companion.White)
+        Text(if (playing) "⏸️" else "▶️", color = Color.White)
     }
     DisposableEffect(Unit) {
         onDispose {

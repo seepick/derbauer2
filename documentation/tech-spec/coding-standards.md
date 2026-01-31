@@ -11,11 +11,20 @@ Adhere as much as possible to the official Kotlin coding conventions
     * Capturing its essence, from a service not a consumer view.
     * Using short, single words which are self-explanatory.
 * Prefer **immutability** (val) over mutability (var).
-* Use **expression body syntax** for functions and properties with single expressions.
-* Use **named arguments** for functions with more than 2 parameters.
 * Use **data classes** for value objects, and **value classes** for single-value wrappers.
 * Avoid using the `Any` type and runtime type checks/casts.
     * Except if necessary due to a more dynamic/flexible approach; but do so with caution (safeguard errors manually).
+* Use **expression body syntax** for functions and properties with single expressions.
+    * Do so especially when implementing interfaces/abstract functions.
+* Use **named arguments** for functions with more than 2 parameters.
+* Use **logging** only if it adds value (e.g. for debugging/traceability); always use appropriate log levels and include
+  context.
+
+### Formatting
+
+* Use **trailing commas** in multi-line collections, function calls, etc.
+* Use 4 spaces for **indentation**.
+* Use **blank lines** to separate logical blocks of code.
 
 ## Static Code Analysis via Detekt
 
