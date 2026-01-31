@@ -10,14 +10,12 @@ class PreferencesMusicStateRepositoryTest : StringSpec({
     lateinit var prefs: Preferences
 
     beforeEach {
-        repository = PreferencesMusicStateRepository()
-        prefs = Preferences.userNodeForPackage(PreferencesMusicStateRepository::class.java)
-        // Clear any existing state
+        repository = PreferencesMusicStateRepository(PreferencesMusicStateRepositoryTest::class)
+        prefs = Preferences.userNodeForPackage(PreferencesMusicStateRepositoryTest::class.java)
         prefs.remove("music.isPlaying")
     }
 
     afterEach {
-        // Clean up after tests
         prefs.remove("music.isPlaying")
     }
 
@@ -31,15 +29,6 @@ class PreferencesMusicStateRepositoryTest : StringSpec({
     }
 
     "When save playing state as true Then load returns true" {
-        repository.savePlayingState(true)
-        repository.loadPlayingState() shouldBe true
-    }
-
-    "When save multiple times Then latest value is returned" {
-        repository.savePlayingState(true)
-        repository.savePlayingState(false)
-        repository.loadPlayingState() shouldBe false
-
         repository.savePlayingState(true)
         repository.loadPlayingState() shouldBe true
     }

@@ -1,14 +1,15 @@
 package com.github.seepick.derbauer2.textengine.audio
 
+import com.github.seepick.derbauer2.game.DerBauer2
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import java.util.prefs.Preferences
+import kotlin.reflect.KClass
 
-/**
- * Implementation of MusicStateRepository using Java Preferences API.
- */
-class PreferencesMusicStateRepository : MusicStateRepository {
+class PreferencesMusicStateRepository(
+    storagePackage: KClass<*> = DerBauer2::class,
+) : StateRepository {
     private val log = logger {}
-    private val prefs = Preferences.userNodeForPackage(PreferencesMusicStateRepository::class.java)
+    private val prefs = Preferences.userNodeForPackage(storagePackage.java)
 
     override fun loadPlayingState(): Boolean {
         val state = prefs.getBoolean(KEY_IS_PLAYING, DEFAULT_IS_PLAYING)

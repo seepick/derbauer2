@@ -3,9 +3,9 @@ package com.github.seepick.derbauer2.textengine
 import com.github.seepick.derbauer2.textengine.audio.Beeper
 import com.github.seepick.derbauer2.textengine.audio.BeepingWarningListener
 import com.github.seepick.derbauer2.textengine.audio.MusicStateManager
-import com.github.seepick.derbauer2.textengine.audio.MusicStateRepository
 import com.github.seepick.derbauer2.textengine.audio.PreferencesMusicStateRepository
 import com.github.seepick.derbauer2.textengine.audio.RealBeeper
+import com.github.seepick.derbauer2.textengine.audio.StateRepository
 import com.github.seepick.derbauer2.textengine.compose.MainWin
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
@@ -17,6 +17,6 @@ fun textengineModule(initPageClass: KClass<out Page>) = module {
     single { Textmap(MainWin.matrixSize) }
     single { RealBeeper }.bind<Beeper>()
     singleOf(::BeepingWarningListener)
-    single<MusicStateRepository> { PreferencesMusicStateRepository() }
+    single<StateRepository> { PreferencesMusicStateRepository() }
     singleOf(::MusicStateManager)
 }
