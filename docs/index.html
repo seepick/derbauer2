@@ -10,61 +10,68 @@
 
     <style>
         :root{
+          --page-pad:28px;
+          --header-h:144px;         /* fixed header height */
+          --downloads-h:220px;      /* area reserved for downloads (images 200px + spacing) */
           --bg-top:#8fd3ff;
           --bg-mid:#cfeaff;
           --grass:#48a14b;
           --accent:#ffd166;
           --text:#102916;
-          --header-h:160px;   /* static header height */
-          --downloads-h:220px;/* static downloads area height (images 200px + spacing) */
-          --page-padding:32px;
         }
         *{box-sizing:border-box}
-        html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(to bottom,var(--bg-top) 0%,var(--bg-mid) 60%, #e9f6db 72%, var(--grass) 100%); color:var(--text);}
+        html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(to bottom,var(--bg-top) 0%,var(--bg-mid) 58%, #e9f6db 70%, var(--grass) 100%); color:var(--text);}
 
-        .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:var(--page-padding);}
+        .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:var(--page-pad);}
 
         .card{
-          width:100%;max-width:1200px;background:rgba(255,255,255,0.95);border-radius:14px;padding:18px 20px;
-          box-shadow:0 18px 48px rgba(8,30,18,0.12);position:relative;overflow:visible;backdrop-filter:blur(3px);
+          width:100%;max-width:1200px;background:rgba(255,255,255,0.96);border-radius:14px;padding:18px 20px;
+          position:relative;overflow:visible;backdrop-filter:blur(3px);
+          /* no combined drop-shadow around screenshot+logo wrapper is applied (see requirement) */
         }
 
-        /* scenic SVG fills full card behind content */
-        .scenery{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+        /* small subtle repo link, not below downloads */
+        .repo-link{ position:absolute; right:12px; top:10px; font-size:12px; color:#123b2a; opacity:0.8; text-decoration:none; z-index:6;}
 
-        header{position:relative;z-index:2;height:var(--header-h);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
-        h1{font-family:'Fredoka One',cursive;font-size:48px;margin:6px 0;color:#0b3b28;letter-spacing:0.6px;}
+        header{position:relative;z-index:3;height:var(--header-h);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+        h1{font-family:'Fredoka One',cursive;font-size:48px;margin:4px 0;color:#0c3b28;letter-spacing:0.6px;}
         .tag{font-weight:700;color:#1d593a;font-size:18px;margin-bottom:8px;}
         .desc{max-width:900px;margin:0 auto;color:#234231;font-size:15px;line-height:1.45;padding:0 16px;}
 
-        /* central area: screenshot is the only flexible element */
+        /* full-card scenery - behind everything */
+        .scenery{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+        /* center: screenshot only flexible element - it fills remaining vertical space */
         .center{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:12px;}
-        .screenshot-wrap{position:relative; display:inline-block; width:100%; max-width:1000px;}
-        /* screenshot scales to occupy remaining viewport space but keeps aspect ratio */
+        .screenshot-wrap{position:relative; display:inline-block; width:100%; max-width:980px; /* no shadow on wrapper */ }
         .screenshot{
-          display:block; width:100%; height:auto; max-height: calc(100vh - (var(--header-h) + var(--downloads-h) + var(--page-padding)*2));
-          border-radius:12px; box-shadow:0 14px 36px rgba(6,30,20,0.12); transition: transform .12s ease, box-shadow .12s ease;
+          display:block; width:100%; height:auto;
+          max-height: calc(100vh - (var(--header-h) + var(--downloads-h) + var(--page-pad)*2));
+          border-radius:12px;
+          /* subtle shadow on screenshot image itself for depth (allowed) */
+          box-shadow: 0 10px 28px rgba(6,30,18,0.12);
+          transition: transform .12s ease, box-shadow .12s ease;
           object-fit:contain;
         }
 
-        /* logo overlay bottom-right, no extra border/background */
-        .logo-overlay{ position:absolute; right:18px; bottom:18px; pointer-events:none; }
-        .logo-overlay img{ display:block; width:120px; height:auto; }
+        /* logo overlay bottom-right inside screenshot-wrap, no border/background on the logo */
+        .logo-overlay{ position:absolute; right:18px; bottom:18px; pointer-events:none; z-index:4; }
+        .logo-overlay img{ display:block; width:120px; height:auto; } /* no border, no background */
 
-        /* downloads row (static height) */
-        .downloads{ display:flex; gap:18px; justify-content:center; align-items:flex-end; padding:18px 6px; height:var(--downloads-h); z-index:2; }
-        .download{ display:inline-block; border-radius:10px; overflow:hidden; transition: transform .14s ease, box-shadow .14s ease; cursor:pointer; position:relative;}
+        /* downloads row */
+        .downloads{ display:flex; gap:18px; justify-content:center; align-items:flex-end; padding:16px 6px; height:var(--downloads-h); z-index:3; }
+        .download{ display:inline-block; border-radius:10px; overflow:hidden; transition: transform .14s ease, box-shadow .14s ease; cursor:pointer; position:relative; }
         .download img{ height:200px; width:auto; display:block; }
 
-        .download:hover{ transform: translateY(-8px) scale(1.03); box-shadow: 0 22px 44px rgba(8,36,18,0.16); }
+        .download:hover{ transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 44px rgba(8,36,18,0.16); }
         .download::after{
           content:""; position:absolute; left:-60%; top:0; width:60%; height:100%;
           background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%);
-          transform: skewX(-20deg); transition:all .8s ease; opacity:0; pointer-events:none;
+          transform: skewX(-20deg); transition: all .8s ease; opacity:0; pointer-events:none;
         }
         .download:hover::after{ left:120%; opacity:1; transition:.6s ease; }
 
-        /* responsive tweaks */
+        /* responsive */
         @media (max-width:980px){ h1{font-size:40px} .logo-overlay img{width:100px} .download img{height:160px} }
         @media (max-width:560px){ h1{font-size:30px} .desc{font-size:14px;padding:0 12px} .download img{height:140px} .logo-overlay img{width:88px} }
     </style>
@@ -72,7 +79,10 @@
 <body>
 <div class="page">
     <div class="card" id="card">
-        <!-- scenic background -->
+        <a class="repo-link" href="https://github.com/seepick/derbauer2" rel="noopener" target="_blank">GitHub
+            Repository</a>
+
+        <!-- scenic background SVG: sky, clouds, sun with pupils, hills -->
         <svg aria-hidden="true" class="scenery" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 700">
             <defs>
                 <linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1">
@@ -88,38 +98,38 @@
 
             <rect fill="url(#skyG)" height="700" width="1200" x="0" y="0"/>
 
-            <!-- clouds (animated by CSS/JS) -->
-            <g id="cloud1" opacity="0.98" transform="translate(60,80)">
-                <ellipse cx="160" cy="40" fill="#ffffff" rx="78" ry="32"/>
-                <ellipse cx="210" cy="36" fill="#ffffff" rx="52" ry="26"/>
-                <ellipse cx="120" cy="44" fill="#ffffff" rx="58" ry="28"/>
+            <!-- clouds -->
+            <g id="cloud1" opacity="0.98" transform="translate(40,70)">
+                <ellipse cx="160" cy="40" fill="#fff" rx="78" ry="32"/>
+                <ellipse cx="220" cy="36" fill="#fff" rx="52" ry="26"/>
+                <ellipse cx="120" cy="44" fill="#fff" rx="58" ry="28"/>
             </g>
-            <g id="cloud2" opacity="0.95" transform="translate(720,40)">
-                <ellipse cx="160" cy="36" fill="#ffffff" rx="72" ry="30"/>
-                <ellipse cx="210" cy="34" fill="#ffffff" rx="44" ry="22"/>
-                <ellipse cx="120" cy="40" fill="#ffffff" rx="50" ry="24"/>
+            <g id="cloud2" opacity="0.95" transform="translate(700,30)">
+                <ellipse cx="160" cy="36" fill="#fff" rx="72" ry="30"/>
+                <ellipse cx="210" cy="34" fill="#fff" rx="44" ry="22"/>
+                <ellipse cx="120" cy="40" fill="#fff" rx="50" ry="24"/>
             </g>
 
-            <!-- sun upper-right with pupils -->
-            <g id="sun" transform="translate(980,110)">
-                <g fill="#ffd166" id="spikes">
+            <!-- sun upper-right with pupils to follow cursor -->
+            <g transform="translate(980,110)">
+                <g fill="#ffd166" id="spikes" style="transform-origin:50% 50%; animation:spin 10s linear infinite;">
                     <path d="M0 -48 L8 -20 L36 -8 L12 4 L20 30 L0 14 L-20 30 L-12 4 L-36 -8 L-8 -20 Z"/>
                 </g>
                 <circle cx="0" cy="8" fill="url(#sunGlow)" r="40" stroke="#ffd166" stroke-width="2"/>
-                <g transform="translate(-14,-2)">
+                <g transform="translate(-12,-2)">
                     <circle cx="0" cy="6" fill="#fff" r="6"/>
-                    <circle cx="0" cy="6" fill="#072023" id="pupilL" r="2.2"/>
+                    <circle cx="0" cy="6" fill="#072023" id="pupilL" r="2.4"/>
                 </g>
-                <g transform="translate(14,-2)">
+                <g transform="translate(12,-2)">
                     <circle cx="0" cy="6" fill="#fff" r="6"/>
-                    <circle cx="0" cy="6" fill="#072023" id="pupilR" r="2.2"/>
+                    <circle cx="0" cy="6" fill="#072023" id="pupilR" r="2.4"/>
                 </g>
             </g>
 
-            <!-- hills and simple tree -->
+            <!-- hills and small tree -->
             <g transform="translate(0,420)">
                 <ellipse cx="600" cy="220" fill="#7fc97f" rx="860" ry="320"/>
-                <ellipse cx="920" cy="260" fill="#48a14b" rx="420" ry="220"/>
+                <ellipse cx="920" cy="260" fill="#46a14b" rx="420" ry="220"/>
                 <g transform="translate(160,470)">
                     <rect fill="#7a4a26" height="40" rx="3" width="16" x="-8" y="36"/>
                     <circle cx="0" cy="20" fill="#2f8a3a" r="28"/>
@@ -127,20 +137,20 @@
             </g>
 
             <style>
-                /* small cloud float */
                 @keyframes floatA { 0%{transform:translateX(-6%)} 50%{transform:translateX(6%)} 100%{transform:translateX(-6%)} }
                 @keyframes floatB { 0%{transform:translateX(6%)} 50%{transform:translateX(-6%)} 100%{transform:translateX(6%)} }
                 #cloud1{ animation: floatA 22s linear infinite; }
                 #cloud2{ animation: floatB 28s linear infinite; }
+                @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
             </style>
         </svg>
 
         <header>
             <h1>DerBauer2</h1>
-            <div class="tag">From humble fields to crowned glory — cultivate, expand, and rule your own legend.</div>
-            <p class="desc">Plant and harvest crops, build settlements, trade goods, negotiate treaties, and lead your
-                people through triumphs. Shape an economy, grow a town into a kingdom, and make decisions that echo
-                through generations.</p>
+            <div class="tag">Rise from humble fields to emperor — cultivate, trade, and rule with heart.</div>
+            <p class="desc">Plant crops, build settlements, trade with neighbors, research improvements and lead your
+                people. Make decisions that shape your economy and your legacy — will you prosper with wisdom or
+                daring?</p>
         </header>
 
         <div aria-hidden="false" class="center">
@@ -153,13 +163,16 @@
         </div>
 
         <div aria-label="Download DerBauer2" class="downloads" role="navigation">
-            <a class="download" href="https://www.github.com/download/DerBauer2.exe" title="Download for Windows">
+            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe"
+               rel="noopener" target="_blank" title="Download for Windows">
                 <img alt="Download for Windows" src="images/download-windows.png">
             </a>
-            <a class="download" href="https://www.github.com/download/DerBauer2.dmg" title="Download for macOS">
+            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg"
+               rel="noopener" target="_blank" title="Download for macOS">
                 <img alt="Download for macOS" src="images/download-macos.png">
             </a>
-            <a class="download" href="https://www.github.com/download/DerBauer2.jar" title="Download for Linux">
+            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.jar"
+               rel="noopener" target="_blank" title="Download for Linux">
                 <img alt="Download for Linux" src="images/download-linux.png">
             </a>
         </div>
@@ -187,7 +200,7 @@
       }, {passive:true});
     })();
 
-    // cloud parallax small reaction
+    // mild cloud parallax
     (function(){
       const c1 = document.getElementById('cloud1');
       const c2 = document.getElementById('cloud2');
@@ -195,20 +208,20 @@
       window.addEventListener('mousemove', (e)=>{
         const px = (e.clientX / window.innerWidth) - 0.5;
         const py = (e.clientY / window.innerHeight) - 0.5;
-        c1.style.transform = `translate(${px * 18}px, ${py * 6}px)`;
-        c2.style.transform = `translate(${px * -12}px, ${py * 4}px)`;
+        c1.style.transform = `translate(${px * 16}px, ${py * 6}px)`;
+        c2.style.transform = `translate(${px * -10}px, ${py * 4}px)`;
       }, {passive:true});
     })();
 
-    // subtle screenshot tilt
+    // subtle screenshot tilt for depth
     (function(){
       const wrap = document.getElementById('sWrap');
       const card = document.getElementById('card');
       if(!wrap || !card) return;
-      card.addEventListener('mousemove', (e)=>{
+      card.addEventListener('mousemove', e=>{
         const r = wrap.getBoundingClientRect();
         const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top)  / r.height - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
         const rx = (-py * 5).toFixed(2);
         const ry = (px * 5).toFixed(2);
         wrap.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
@@ -216,7 +229,7 @@
       card.addEventListener('mouseleave', ()=> { wrap.style.transform = 'none'; });
     })();
 
-    // quick click pulse on downloads (preserve default navigation)
+    // small click pulse for download buttons (keeps navigation)
     (function(){
       document.querySelectorAll('.download').forEach(btn=>{
         btn.addEventListener('click', ()=> {

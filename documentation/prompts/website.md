@@ -31,16 +31,24 @@ The website should include:
           remaining space, until it hits maximum width of the page (then it should scale down accordingly to keep aspect
           ratio)
 * application logo
-    * embed the image located at  `/docs/images/logo.png`
-    * make it overlay over the screenshot at the bottom right corner, with some offset
+    * embed the image located at: `/docs/images/logo.png`
+    * make it overlay over the screenshot, at the bottom right corner, with some offset but still overlapping mostly
+        * be VERY careful about doing this, so if the page resizes, that the logo always relatively at the same spot
+          stays with the screenshot
     * do NOT add any additional border or background to the logo, just the image itself
 * download buttons
     * for all three operating systems (windows, macos, linux) provide download buttons
     * the links should point to / image to use for the clickable download buttons:
-        * for windows: `https://www.github.com/download/DerBauer2.exe` and `/docs/images/download-windows.png`
-        * for macos: `https://www.github.com/download/DerBauer2.dmg` and `/docs/images/download-macos.png`
-        * for linux: `https://www.github.com/download/DerBauer2.jar` and `/docs/images/download-linux.png`
+        * for windows: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe` and
+          `/docs/images/download-windows.png`
+        * for macos: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg` and
+          `/docs/images/download-macos.png`
+        * for linux: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.jar` and
+          `/docs/images/download-linux.png`
     * make all three images the same height of 200px, and arrange them horizontally with some spacing in between.
+* somewhere very subtle and small add a link to the source code:
+    * text: "GitHub Repository"
+    * link: `https://github.com/seepick/derbauer2`
 
 ## Style
 
@@ -62,8 +70,7 @@ The website should include:
 * make sure the download buttons have a hover effect (like scaling up a bit, or shadow).
 * make an element of the page react to the position of the mouse cursor (like the eyes of the sun following the cursor,
   or clouds moving slightly).
-* make the background (hills, clouds, etc.) fill the whole page, in width and height, so if scrolling is needed, it
-  still looks good.
+* make the background (hills, clouds, etc.) fill the whole page, in width and height.
 
 ## Technical
 
@@ -78,3 +85,4 @@ The website should include:
 * Don't change the background color when hovering over any element.
 * Don't add a text below the download links.
 * Don't let any element be invisible due to an alpha glitch or similar.
+* Don't add a drop shadow to the combined box around the screenshot and the application logo.

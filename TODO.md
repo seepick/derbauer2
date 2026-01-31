@@ -15,6 +15,8 @@
       food)
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: implement game over (all citizens dead)
+* IT: macos app signing
+* BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 
 ### v3
 
@@ -40,6 +42,8 @@
 
 ### Tech
 
+* GitHub REFACTOR necessary (deprecated functionality used)
+    * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 * REFACTOR ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
 * register HappeningDescriptors as koin beans, get-all via interface lookup; replacing HappeningDescriptorRepo :)
 * Use @OptIn annotation for "secret API"

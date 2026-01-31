@@ -20,6 +20,4 @@ Highlights
 - 🏗️ Build and upgrade — add farms, storage, and buildings that shape your village.
 - 🧭 Explore & claim land — find new plots and make them yours.
 - 🤝 Trade & deals — negotiate resources and sign trade agreements.
-- ... and much, much, more.
-
-Happy farming, trading, and exploring! 🌾⛵️
+- ... and much, much, more you can read on the **[Website](https://seepick.github.io/derbauer2/)**
