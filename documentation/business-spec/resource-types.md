@@ -34,6 +34,7 @@
 * trade/buy it (only later via special feature, highly expensive)
 * used for buildings
 * conquer via military; get waaay more, but have to get+maintain army
+* IDEA: exploration (scouts), discover land (or loot)
 
 ## Food
 

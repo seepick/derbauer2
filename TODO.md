@@ -1,84 +1,71 @@
 # Todo
 
-## Now
+## Versions
 
-* !! finish Technology concept
-* tests for transaction logic
-* if use `object` (not testable) then document
+### v1
 
-## Next
-
-* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
-* BZ: happening amount with probability range
-* BZ: probability (happening) cool-down mechanism to avoid same thing too often
-* BZ: implement game over (all citizens dead)
-* ! BZ: implement birth rate, increase citizens on turn
-* BZ: general variability end turn (production, taxes, consumption)
-* BZ: immigration happening
-* BZ: change designators based on criteria (can be upped and lowered again! different than feature, which is a one-way
-  unlock)
-* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
-
-## Test
-
-* allow for "global config"; set initAssets/custom ones by default applied to all tests within
-* beeper uses some event WarningBus; then catch in itests fail-cases as well
-* itest for build and (not) enough land
-* GameRenderPage ... make reusable also for plain pages (happenings, etc.)
-
-## Misc
-
-* **PackageNaming disabled** (detekt.yml:353): TODO pending package standardization.
-* **Recomposition hack** (textengine/MainWindow.kt): `tick.toString()` forces Compose recomposition. Do not remove.
-* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
-* BZ: exploration, discover land
-* BZ: attack barbarins, or NPCs
-* BZ: decisions impact story, influence
-* IT: very minimal compose test, so AI can verify workings (right now, i start app manually)
-* IT: Use optIn annotation for "secret API"
-* IT: refactor ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
-* IT: if register HappeningDescriptors as bean in koin context, then can get-all via interface lookup; replacing
-  HappeningDescriptorRepo :)
-
-## Release
-
-* Support version number
+* IT: Support version number
     * a single number, e.g. `1`
     * stored in a text file `VERSION.txt` in the root directory
-* Releases done automatically on specific job execution
-    * auto-increment version
-* Later: Windows build :)
-* Later: Auto-update feature
+* IT: Releases done automatically on specific job execution; auto-increment version
 
-## UI
+### v2
 
-- bright/dark mode support
-- certain events make a sound (happening, etc...)
+* !! BZ: finish Technology concept
+* ! BZ: implement birth rate, increase citizens on turn
+* BZ: implement citizens death if no food
+    * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve (currently only starve if 0
+      food)
+* BZ: general variability end turn (production, taxes, consumption)
+* BZ: implement game over (all citizens dead)
 
-## Later
+### v3
 
-* @copilot: music play with memory; auto-play depending on state when application quit; store locally in java
-  preferences
-* make magnituded number from "1k" to "1.2k"
+* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
+
+## Backlog
+
+* BZ: change (user/city) titles/designators based on criteria
+    * can be upped and lowered again! different than feature, which is a one-way unlock
+* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
+* BZ: immigration happening
+* BZ: decisions impact story, influence
+* BZ: probability (happening) cool-down mechanism to avoid same thing too often
+* BZ: happening amount with probability range
+* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+* UI: make magnituded number from "1k" to "1.2k"
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * BZ: extend probability provider
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
-* IT: use ULong within Z
-* IT could each turn calculation, be an external, plugged-in feature instead?
-* UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
-* BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve (currently only starve if 0 food)
-* UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
-    * other hand, it might encode some necessary info, maintaining the order; e.g. how it was feature unlocked,
-      chronologically
 
-## Tech
+- BZ: attack barbarins, or NPCs
 
+### Tech
+
+* REFACTOR ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
+* register HappeningDescriptors as koin beans, get-all via interface lookup; replacing HappeningDescriptorRepo :)
+* Use @OptIn annotation for "secret API"
+* use ULong within Z
+* could each turn calculation be an external/plugged-in feature instead?
 * text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
 * REFACTOR turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
 * REFACTOR ProbabilityProvider: introduce interface for testability
 
 - introduce buildSrc (try again ;)
 
-# Nope
+* TEST for transaction logic
+* TEST allow for "global config"; set initAssets/custom ones by default applied to all tests within
+* TEST beeper uses some event WarningBus; then catch in itests fail-cases as well
+* TEST itest for build and (not) enough land
+* TEST GameRenderPage ... make reusable also for plain pages (happenings, etc.)
+* Later: Windows build :)
+* Later: Auto-update feature
 
-* mutable internal state; make it immutable, find other solution
+### UI
+
+* UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
+* UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
+    * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
+
+- UI: bright/dark mode support
+- UI: certain events make a sound (happening, etc...)

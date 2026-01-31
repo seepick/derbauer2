@@ -17,8 +17,10 @@ Adhere as much as possible to the official Kotlin coding conventions
 * Use **expression body syntax** for functions and properties with single expressions.
     * Do so especially when implementing interfaces/abstract functions.
 * Use **named arguments** for functions with more than 2 parameters.
-* Use **logging** only if it adds value (e.g. for debugging/traceability); always use appropriate log levels and include
-  context.
+* Use **logging** only if it adds value (e.g. for debugging/traceability)
+    * Always use appropriate log levels and include context.
+* Use Kotlin's `object class` declaration for **singletons** which don't hold state or are not meant to be swapped out.
+    * This is okay also in regard to testability.
 
 ### Formatting
 
