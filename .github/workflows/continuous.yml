@@ -8,6 +8,10 @@ jobs:
     name: Execute CI Pipeline
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # unshallow checkout, so sonarqube can do blame analysis
       - uses: ./.github/actions/setup-env
         with:
           setup-sonar: true
