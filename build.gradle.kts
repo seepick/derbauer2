@@ -3,10 +3,26 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val distributionPackageVersion = "1.0.0"
 
+@Suppress("MayBeConstant")
+object Versions {
+    val compose = "1.10.0"
+    val detekt = "1.23.8"
+    val jacoco = "0.8.14"
+    val jlayer = "1.0.1"
+    val junit4 = "4.13.2"
+    val junitVintage = "6.0.2"
+    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
+    val kotest = "6.1.2"
+    val kotlin = "2.3.0"
+    val kotlinLogging = "7.0.14"
+    val logback = "1.5.27"
+    val mockk = "1.14.9"
+}
+
 plugins {
     kotlin("jvm") version "2.3.0"
     id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
-    id("org.jetbrains.compose") version "1.10.0"
+    id("org.jetbrains.compose") version "1.10.0" // duplicate from above :-/
     id("com.github.ben-manes.versions") version "0.53.0"
     id("jacoco")
     id("org.sonarqube") version "7.2.2.6593"
@@ -19,20 +35,8 @@ repositories {
     maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
 }
 
-@Suppress("MayBeConstant")
-object Versions {
-    val detekt = "1.23.8"
-    val jacoco = "0.8.14"
-    val jlayer = "1.0.1"
-    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
-    val kotest = "6.1.2"
-    val kotlinLogging = "7.0.14"
-    val logback = "1.5.27"
-    val mockk = "1.14.9"
-}
-
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect:2.3.0")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
     implementation(compose.desktop.currentOs)
     //  org.jetbrains.compose.desktop:desktop-jvm-macos-arm64 [1.9.0 -> 1.10.0]
     listOf("compose", "compose-viewmodel").forEach {
@@ -49,10 +53,9 @@ dependencies {
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.insert-koin:koin-test:${Versions.koin}")
     // ui tests
-    testImplementation(compose.desktop.uiTestJUnit4)
-//    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.10.0")
-    testImplementation("junit:junit:4.13.2")
-    testImplementation("org.junit.vintage:junit-vintage-engine:6.0.2") // to run JUnit4 with JUnit5
+    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:${Versions.compose}")
+    testImplementation("junit:junit:${Versions.junit4}")
+    testImplementation("org.junit.vintage:junit-vintage-engine:${Versions.junitVintage}") // to run JUnit4 with JUnit5
 }
 
 kotlin {
