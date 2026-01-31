@@ -101,18 +101,21 @@ class ProbabilityDsl(private val koin: KoinTest) : ProbalityProviderAddSourceAnd
     var providers = ProvidersChangeDsl(this)
     var selectors = SelectorsChangeDsl(this)
 
-    override operator fun plus(sourceAndCalc: Pair<ProbabilityProviderSource, ProbabilityCalculator>): ProvidersChangeDsl {
+    override operator fun plus(
+        sourceAndCalc: Pair<ProbabilityProviderSource, ProbabilityCalculator>
+    ): ProvidersChangeDsl {
         val probabilities = koin.get<ProbabilityManager>() as ProbabilityManagerImpl
         probabilities.providers.updateCalc(sourceAndCalc.first, sourceAndCalc.second)
         return providers
     }
 
-    override fun plus(sourceAndCalc: Pair<ProbabilitySelectorSource, ProbabilitySelector<out Any>>): SelectorsChangeDsl {
+    override fun plus(
+        sourceAndCalc: Pair<ProbabilitySelectorSource, ProbabilitySelector<out Any>>
+    ): SelectorsChangeDsl {
         val probabilities = koin.get<ProbabilityManager>() as ProbabilityManagerImpl
         probabilities.selectors.updateSelect(sourceAndCalc.first, sourceAndCalc.second)
         return selectors
     }
-
 }
 
 interface ProbalityProviderAddSourceAndCalc {

@@ -30,14 +30,18 @@ class Textmap(
     private val cols: Int,
     private val rows: Int,
 ) : TextmapWriter {
-    constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
-
     private val buffer = Array(rows) { Array(cols) { ' ' } }
     private val cursor = Cursor()
 
+    constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
+
     override fun line(line: String) = apply {
         for (c in line.toCharArray()) {
-            if (c == '\n') throw InvalidTextmapException("Newline character not allowed in line(): '$line' => use multiLine() instead.")
+            if (c == '\n') {
+                throw InvalidTextmapException(
+                    "Newline character not allowed in line(): '$line' => use multiLine() instead."
+                )
+            }
             set(cursor.x, cursor.y, c)
             cursor.x++
         }

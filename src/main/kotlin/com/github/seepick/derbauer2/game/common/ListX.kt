@@ -21,6 +21,7 @@ interface ListXOps<E : Any> : List<E> {
     fun find(entityClass: KClass<out E>): E =
         findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
 
+    @Suppress("UNCHECKED_CAST")
     fun <X> findAs(entityClass: KClass<out E>): X =
         findOrNull(entityClass) as X ?: errorNotFoundEntity(entityClass, this)
 

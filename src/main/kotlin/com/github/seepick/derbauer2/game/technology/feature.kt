@@ -12,7 +12,8 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 object TechnologyDescriptor : FeatureDescriptor(
     label = "Technology",
     asciiArt = AsciiArt.book,
-    multilineDescription = "Welcome to the age of enlightenment!\nYou can now research new technologies to advance your civilization.",
+    multilineDescription = "Welcome to the age of enlightenment!\n" +
+            "You can now research new technologies to advance your civilization.",
 ) {
     override val enumIdentifier = FeatureDescriptorEnum.Technology
 

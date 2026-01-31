@@ -25,7 +25,6 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import kotlin.math.ceil
 
-
 class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: Turner

@@ -25,5 +25,5 @@ abstract class HappeningDescriptor(
     abstract fun canHappen(user: User): Boolean
     abstract fun build(user: User): Happening
 
-    companion object {} // for extensions
+    companion object // for extensions
 }

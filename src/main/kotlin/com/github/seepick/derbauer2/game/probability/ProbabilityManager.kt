@@ -26,7 +26,7 @@ interface ProbabilityManager {
 
 }
 
-interface ProbabilitySelector<T> {
+fun interface ProbabilitySelector<T> {
     fun select(items: List<T>): T
 }
 
@@ -34,7 +34,7 @@ open class AlwaysSameProbabilitySelector<T>(val index: Int) : ProbabilitySelecto
     override fun select(items: List<T>) = items[index]!!
 }
 
-class AlwaysFirstProbabilitySelector<T>() : AlwaysSameProbabilitySelector<T>(index = 0)
+class AlwaysFirstProbabilitySelector<T> : AlwaysSameProbabilitySelector<T>(index = 0)
 
 class RandomProbabilitySelector<T> : ProbabilitySelector<T> {
     override fun select(items: List<T>) = items.random()

@@ -21,13 +21,14 @@ repositories {
 
 @Suppress("MayBeConstant")
 object Versions {
+    val detekt = "1.23.8"
+    val jacoco = "0.8.14"
+    val jlayer = "1.0.1"
+    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
+    val kotest = "6.1.1"
     val kotlinLogging = "7.0.13"
     val logback = "1.5.23"
-    val kotest = "6.1.1"
-    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
     val mockk = "1.14.7"
-    val jacoco = "0.8.14"
-    val detekt = "1.23.8"
 }
 
 dependencies {
@@ -36,7 +37,7 @@ dependencies {
     listOf("compose", "compose-viewmodel").forEach {
         implementation("io.insert-koin:koin-$it:${Versions.koin}")
     }
-    implementation("javazoom:jlayer:1.0.1") // play mp3s
+    implementation("javazoom:jlayer:${Versions.jlayer}") // play mp3s
     implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")
 

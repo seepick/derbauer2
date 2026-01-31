@@ -36,11 +36,12 @@ class GamePageParser(val pageString: String) {
     val lines = pageString.split("\n").map { it.trim() }
     val contentLines = lines.subList(2, lines.size - 2).dropLastWhile { it.isBlank() }
     val contentLinesString = contentLines.joinToString("\n")
+    private val hrSymbol = "="
 
     init {
         lines shouldHaveSize mainWindowMatrixSize.rows
-        lines[1] shouldBeEqual "=".repeat(mainWindowMatrixSize.cols)
-        lines[lines.size - 2] shouldBeEqual "=".repeat(mainWindowMatrixSize.cols)
+        lines[1] shouldBeEqual hrSymbol.repeat(mainWindowMatrixSize.cols)
+        lines[lines.size - 2] shouldBeEqual hrSymbol.repeat(mainWindowMatrixSize.cols)
     }
 
     // some rough guess with size 10 ;)
@@ -49,7 +50,7 @@ class GamePageParser(val pageString: String) {
 
     companion object {
         operator fun invoke(pageString: String, code: GamePageParser.() -> Unit) {
-            GamePageParser(pageString).also { it.code() }
+            GamePageParser(pageString).apply(code)
         }
     }
 }

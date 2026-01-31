@@ -22,7 +22,7 @@ class MusicPlayer {
     private val threadRef = AtomicReference<Thread?>()
     private val threadId = AtomicInteger(0)
 
-    // turned out tricky to get files in a folder by scanning it during runtime (in the end, packaged via compose in a fat jar)
+    // turned out tricky to get files in a folder by scanning it during runtime (packaged via compose in a fat jar)
     private val audioFilePaths = listOf(
         "adventurers-quest.mp3",
         "another-medieval-village.mp3",

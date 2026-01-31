@@ -37,7 +37,7 @@ private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
     return TxMaybe.Ok(snapshot)
 }
 
-interface TxValidator {
+fun interface TxValidator {
     fun validateTx(user: User): TxResult
 }
 
