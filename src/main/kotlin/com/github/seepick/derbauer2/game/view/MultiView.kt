@@ -3,13 +3,12 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.textengine.Renderer
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-interface MultiViewSubPage {
+interface MultiViewSubPage : Renderer {
     val asciiArt: AsciiArt
-    fun render(textmap: Textmap)
     fun execute(user: User)
 }
 

@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 
 class TechnologyPage : Page {
-    override fun renderText(textmap: Textmap) {
+    override fun render(textmap: Textmap) {
         textmap.line("technology page")
     }
 

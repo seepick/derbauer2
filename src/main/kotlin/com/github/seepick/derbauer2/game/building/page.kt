@@ -9,8 +9,9 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.prompt.Prompt
+import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
 class BuildingsPage(
     private val user: User,
@@ -21,9 +22,9 @@ class BuildingsPage(
     gameRenderer = gameRenderer,
     promptBuilder = {
         if (user.buildings.isEmpty()) {
-            Prompt.EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
+            EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
         } else {
-            Prompt.Select(
+            SelectPrompt(
                 title = "What shall we build next, Sire?",
                 options = user.buildings.map { building ->
                     SelectOption({

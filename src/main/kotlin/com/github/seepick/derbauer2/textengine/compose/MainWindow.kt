@@ -160,7 +160,7 @@ fun showMainWindow(
                             }
                     ) {
                         page.invalidate()
-                        page.renderText(textmap)
+                        page.render(textmap)
                         MainTextArea(
                             text = textmap.toFullString(),
                         )

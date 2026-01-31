@@ -16,7 +16,7 @@ import io.mockk.mockk
 fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, validations: GamePageParser.() -> Unit) {
     val ctx = SetupGamePageContext()
     val page = buildPage(ctx)
-    page.renderText(ctx.textmap)
+    page.render(ctx.textmap)
     val parser = GamePageParser(ctx.textmap.toFullString())
     parser.validations()
 }

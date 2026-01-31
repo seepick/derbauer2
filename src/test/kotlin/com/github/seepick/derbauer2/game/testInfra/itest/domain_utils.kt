@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.testInfra.itest
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
-import com.github.seepick.derbauer2.textengine.prompt.Prompt
+import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
@@ -40,7 +40,7 @@ enum class KeyInput(val asKeyPressed: KeyPressed) {
 }
 
 fun PromptGamePage.indexOfOption(searchLabel: String): Int {
-    val select = prompt as Prompt.Select
+    val select = prompt as SelectPrompt
     val matching = select.options.mapIndexedNotNull { index, option ->
         if (option.label().lowercase().contains(searchLabel.lowercase())) {
             log.debug { "Selected option for '$searchLabel' at index ${index}: $option" }

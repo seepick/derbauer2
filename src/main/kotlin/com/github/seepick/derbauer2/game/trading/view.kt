@@ -19,9 +19,9 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import kotlin.reflect.KClass
 
 class TradingPage(
@@ -43,7 +43,7 @@ class TradePromptBuilder(
     private val user: User,
     private val resultHandler: InteractionResultHandler,
 ) : PromptProvider {
-    override fun buildPrompt() = Prompt.Select(
+    override fun buildPrompt() = SelectPrompt(
         title = "What is it your greed desires?",
         options = buildList {
             // or Gold(Mechanics.buyFoodCostGold.z)?

@@ -9,8 +9,8 @@ import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
 class HomePage(
     turner: Turner,
@@ -21,7 +21,7 @@ class HomePage(
     turner.collectAndExecuteNextTurnReport()
     currentPage.pageClass = ReportPage::class
 }), gameRenderer = gameRenderer, promptBuilder = {
-    Prompt.Select(
+    SelectPrompt(
         title = "What shall we do next, ${user.designator.label}?", buildList {
             add(SelectOption("Trade 💰") {
                 currentPage.pageClass = TradingPage::class

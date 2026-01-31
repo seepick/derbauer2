@@ -12,7 +12,7 @@ abstract class SimpleGamePage(
     private val contentRenderer: (Textmap) -> Unit,
 ) : Page, KeyListener by button {
 
-    override fun renderText(textmap: Textmap) {
+    override fun render(textmap: Textmap) {
         gameRenderer.render(textmap, promptIndicator = button.key.label, emptyList()) {
             contentRenderer(textmap)
         }
@@ -32,7 +32,7 @@ abstract class PromptGamePage(
         prompt = promptBuilder.buildPrompt()
     }
 
-    override fun renderText(textmap: Textmap) {
+    override fun render(textmap: Textmap) {
         gameRenderer.render(textmap, prompt.inputIndicator, buttons) {
             contentRenderer(textmap)
             textmap.emptyLine()
@@ -53,7 +53,7 @@ abstract class NotificationPage(
     private val button: Button,
 ) : Page, KeyListener by button {
 
-    override fun renderText(textmap: Textmap) {
+    override fun render(textmap: Textmap) {
         textmap.line("$emoji $title $emoji")
         textmap.emptyLine()
         textmap.multiLine(asciiArt().value)

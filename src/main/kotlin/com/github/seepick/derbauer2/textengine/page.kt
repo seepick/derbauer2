@@ -12,7 +12,7 @@ interface Page : Renderer, KeyListener {
 }
 
 fun interface Renderer {
-    fun renderText(textmap: Textmap)
+    fun render(textmap: Textmap)
 }
 
 class CurrentPage(
