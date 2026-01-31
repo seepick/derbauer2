@@ -69,6 +69,8 @@ jobs:
       - name: Build Gradle Distribution
         run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}.0.0"
 
+      - run: dir build/compose/binaries/main/exe/
+        if: runner.os == 'Windows'
       - name: Upload Release Asset for Windows
         if: runner.os == 'Windows'
         uses: actions/upload-release-asset@v1
@@ -77,7 +79,7 @@ jobs:
         with:
           upload_url: ${{ needs.prepare-release.outputs.upload-url }}
           # TODO needs to be verified to work
-          asset_path: build/compose/binaries/main/exe/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.exe
+          asset_path: build/compose/binaries/main/exe/DerBauer2.exe
           asset_name: DerBauer2.exe
           asset_content_type: application/vnd.microsoft.portable-executable
       - name: Upload Release Asset for MacOS
