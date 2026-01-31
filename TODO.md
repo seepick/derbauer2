@@ -4,9 +4,6 @@
 
 ### v1
 
-* IT: Support version number
-    * a single number, e.g. `1`
-    * stored in a text file `VERSION.txt` in the root directory
 * IT: Releases done automatically on specific job execution; auto-increment version
 
 ### v2
@@ -37,6 +34,7 @@
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * BZ: extend probability provider
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
+* IT: jar file for linux&co
 
 - BZ: attack barbarins, or NPCs
 
