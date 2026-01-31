@@ -1,8 +1,9 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
+import org.apache.tools.ant.filters.ReplaceTokens
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-// TODO support -Papp_version=42 (inject in resource, display in app); default to 0
-val distributionPackageVersion = "1.0.0"
+val appVersion: String = (project.findProperty("app_version") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
+logger.debug("Gradle appVersion=[$appVersion]")
 
 plugins {
     alias(libs.plugins.kotlin)
@@ -45,10 +46,11 @@ kotlin {
 compose.desktop {
     application {
         mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
+        jvmArgs += listOf("-Xmx512M", "--add-exports", "java.desktop/com.apple.eawt=ALL-UNNAMED")
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Exe)
             packageName = "DerBauer2"
-            packageVersion = distributionPackageVersion
+            packageVersion = appVersion
             modules("java.naming")
 
             macOS {
@@ -56,6 +58,18 @@ compose.desktop {
                 iconFile.set(project.file("src/main/distribution/icon.icns"))
             }
         }
+    }
+}
+
+configure<ProcessResources>("processResources") {
+    from("src/main/resources") {
+        include("app.properties")
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        filter<ReplaceTokens>(
+            "tokens" to mapOf(
+                "version" to appVersion,
+            ),
+        )
     }
 }
 
@@ -105,4 +119,8 @@ tasks.withType<DependencyUpdatesTask> {
             it.matches(candidate.version)
         }
     }
+}
+
+inline fun <reified C> Project.configure(name: String, configuration: C.() -> Unit) {
+    (this.tasks.getByName(name) as C).configuration()
 }
