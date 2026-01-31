@@ -5,9 +5,6 @@ import com.github.seepick.derbauer2.game.transaction.TxValidator
 import org.koin.dsl.module
 
 fun coreModule() = module {
-    single {
-        User(
-            txValidators = getAllCustom<TxValidator>(),
-        )
-    }
+    single { User(txValidators = getAllCustom<TxValidator>()) }
+    single { WarningBus(listeners = getAllCustom<WarningListener>()) }
 }

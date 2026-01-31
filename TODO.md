@@ -46,10 +46,12 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 * **PackageNaming disabled** (detekt.yml:353): TODO pending package standardization.
 * **Recomposition hack** (textengine/MainWindow.kt): `tick.toString()` forces Compose recomposition. Do not remove.
 * `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
-* exploration, discover land
-* attack barbarins, or nps
-* decisions impact story, influence
-* very minimal compose test, so AI can verify workings (right now, i start app manually)
+* BZ: exploration, discover land
+* BZ: attack barbarins, or NPCs
+* BZ: decisions impact story, influence
+* IT: very minimal compose test, so AI can verify workings (right now, i start app manually)
+* IT: Use optIn annotation for "secret API"
+* IT: refactor ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
 
 ## Release
 

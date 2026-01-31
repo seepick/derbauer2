@@ -35,7 +35,6 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import com.github.seepick.derbauer2.game.DerBauer2
-import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.MatrixSize
 import com.github.seepick.derbauer2.textengine.Page
@@ -49,6 +48,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin
 import org.koin.compose.koinInject
+import org.koin.core.Koin
 import org.koin.core.module.Module
 
 private val log = logger {}
@@ -75,12 +75,10 @@ fun textengineModule() = textengineModule(
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
-    initState: (User) -> Unit,
+    initState: (Koin) -> Unit,
 ) {
     application {
         KoinApplication(application = {
-            allowOverride(false)
-            createEagerInstances()
             modules(textengineModule(), mainModule)
         }) {
             val windowDpSize = calcWinSize()
@@ -113,8 +111,7 @@ fun showMainWindow(
                 if (initialized == 0) {
                     initialized = 1
                     log.debug { "Compose is going to initialize state (initialized=$initialized)" }
-                    val user = koinInject<User>()
-                    initState(user)
+                    initState(getKoin())
                 }
                 Window(
                     title = title,

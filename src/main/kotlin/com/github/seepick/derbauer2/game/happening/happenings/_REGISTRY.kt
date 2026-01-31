@@ -23,7 +23,7 @@ abstract class HappeningDescriptor(
     override val nature: HappeningNature
 ) : HappeningData {
     abstract fun canHappen(user: User): Boolean
-    abstract fun build(user: User): Happening
+    abstract fun buildHappening(user: User): Happening
 
     companion object // for extensions
 }

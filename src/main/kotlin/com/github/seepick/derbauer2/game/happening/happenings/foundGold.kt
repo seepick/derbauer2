@@ -21,7 +21,7 @@ object FoundGoldDescriptor : HappeningDescriptor(HappeningNature.Positive) {
     override fun canHappen(user: User) =
         user.hasEntity(Gold::class)
 
-    override fun build(user: User) =
+    override fun buildHappening(user: User) =
         FoundGoldHappening(goldFound = 20.z, this)
 }
 

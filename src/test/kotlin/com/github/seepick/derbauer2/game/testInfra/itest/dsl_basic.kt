@@ -10,6 +10,7 @@ import com.github.seepick.derbauer2.game.initAssets
 import com.github.seepick.derbauer2.game.probability.Probabilities
 import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
 import com.github.seepick.derbauer2.game.probability.ProbabilityCalculator
+import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderHandle
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelector
@@ -27,7 +28,6 @@ import io.mockk.every
 import io.mockk.verify
 import org.koin.test.KoinTest
 import org.koin.test.get
-import org.koin.test.inject
 import org.koin.test.mock.declareMock
 import kotlin.reflect.full.primaryConstructor
 
@@ -54,9 +54,9 @@ fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
             println("TEST beep for reason=[${arg<String>(0)}]")
         }
     }
-    val user by koin.inject<User>()
+    koin.get<ProbabilityInitializer>().registerAll()
     if (initAssets) {
-        user.initAssets()
+        koin.get<User>().initAssets()
     }
     return GivenDsl(koin).apply(code)
 }

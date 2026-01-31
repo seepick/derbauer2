@@ -26,4 +26,5 @@ object TechnologyDescriptor : FeatureDescriptor(
 class TechnologyFeature(descriptor: TechnologyDescriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.Technology(this)
     override fun deepCopy() = this // immutable
+    override fun toString() = "${javaClass.simpleName}[label=$label]"
 }

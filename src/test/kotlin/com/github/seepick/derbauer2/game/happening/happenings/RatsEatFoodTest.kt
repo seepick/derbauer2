@@ -37,18 +37,18 @@ class RatsEatFoodTest : StringSpec({
     context("build") {
         "Given no food Then fail" {
             shouldThrow<IllegalArgumentException> {
-                RatsEatFoodDescriptor.build(user)
+                RatsEatFoodDescriptor.buildHappening(user)
             }
         }
         "Given lots of food Then should eat max amount" {
             user.enableAndSet(Food(), 20.z)
-            val happening = RatsEatFoodDescriptor.build(user)
+            val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual 15.z
         }
         "Given less food than max Then should eat all food" {
             user.enableAndSet(Food(), 2.z)
-            val happening = RatsEatFoodDescriptor.build(user)
+            val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual 2.z
         }
@@ -59,7 +59,7 @@ class RatsEatFoodTest : StringSpec({
             user.enableAndSet(Land(), 10.z)
             user.enableAndSet(Granary(), 1.z)
             user.enableAndSet(Food(), origAmount)
-            val happening = RatsEatFoodDescriptor.build(user)
+            val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.execute(user)
 

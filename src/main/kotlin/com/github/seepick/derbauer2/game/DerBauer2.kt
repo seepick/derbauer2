@@ -14,6 +14,6 @@ object DerBauer2 {
         showMainWindow(
             title = "DerBauer2",
             mainModule = gameModule(),
-        ) { user -> user.initAssets() }
+        ) { koin -> koin.initGame() }
     }
 }

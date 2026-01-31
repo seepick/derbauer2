@@ -17,7 +17,7 @@ class User(
     private val log = logger {}
 
     init {
-        log.info { "Creating new User instance." }
+        log.trace { "New User instance (txValidators.size=${txValidators.size})" }
     }
 
     var designator = UserDesignator.default
@@ -44,7 +44,7 @@ class User(
 
     override fun deepCopy(): User =
         User(txValidators).also { copy ->
-            log.info { "Creating deep copy." }
+            log.trace { "Creating deep copy." }
             all.forEach { entity ->
                 // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
                 copy.enable(entity.deepCopy(), disableCheck = true)

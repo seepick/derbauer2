@@ -2,6 +2,21 @@ package com.github.seepick.derbauer2.game.probability
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
+interface ProbabilityRegistrant {
+    fun registerProbabilities()
+}
+
+class ProbabilityInitializer(
+    private val registrants: List<ProbabilityRegistrant>,
+) {
+    private val log = logger {}
+
+    fun registerAll() {
+        log.debug { "Registering ${registrants.size} probability registrants" }
+        registrants.forEach { it.registerProbabilities() }
+    }
+}
+
 interface Probabilities {
     fun setProvider(source: ProbabilityProviderSource, calculator: ProbabilityCalculator, provider: () -> Any)
     fun getProvision(source: ProbabilityProviderSource): Any?

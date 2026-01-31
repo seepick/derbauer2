@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.probability.GrowthProbabilityCalculator
 import com.github.seepick.derbauer2.game.probability.PercentageProbabilityCalculator
 import com.github.seepick.derbauer2.game.probability.Probabilities
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource
+import com.github.seepick.derbauer2.game.probability.ProbabilityRegistrant
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource
 import com.github.seepick.derbauer2.game.probability.RandomProbabilitySelector
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -15,11 +16,14 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 class HappeningTurner(
     private val user: User,
     private val probabilities: Probabilities,
-    repo: HappeningDescriptorRepo,
-) {
+    private val repo: HappeningDescriptorRepo,
+) : ProbabilityRegistrant {
+
     private val log = logger {}
 
-    init {
+    /** Delayed post-construct initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
+    override fun registerProbabilities() {
+        log.debug { "Registering probabilities." }
         probabilities.setProvider(
             ProbabilityProviderSource.HappeningTurner,
             GrowthProbabilityCalculator(
@@ -33,7 +37,7 @@ class HappeningTurner(
                 (!isNegative || it.nature == HappeningNature.Negative) && it.canHappen(user)
             }
             val descriptor = probabilities.getSelection(ProbabilitySelectorSource.Happenings, descriptors)
-            descriptor.build(user)
+            descriptor.buildHappening(user)
         }
 
         probabilities.setProvider(
@@ -49,8 +53,9 @@ class HappeningTurner(
         )
     }
 
-
     fun buildHappeningMultiPages(): List<Happening> = buildList {
-        (probabilities.getProvision(ProbabilityProviderSource.HappeningTurner) as? Happening)?.let { add(it) }
+        probabilities.getProvision(ProbabilityProviderSource.HappeningTurner)?.also {
+            add(it as Happening)
+        }
     }
 }

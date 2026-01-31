@@ -43,7 +43,7 @@ object Mechanics {
 
     // TECHNOLOGY
     // ========================================================================
-    val technologyUnlockGoldThreshold = 1.z //startingGold * 2
+    val technologyUnlockGoldThreshold = (startingGold.value * 1.5).toLong().z
 
     // END TURN
     // ========================================================================

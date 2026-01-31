@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -18,18 +19,14 @@ import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import org.koin.core.Koin
 
 private val log = logger {}
 
-private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
-    Pair(Gold(), Mechanics.startingGold.asZz),
-    Pair(Land(), Mechanics.startingLand.asZz),
-    Pair(House(), Mechanics.startingHouses.asZz),
-    Pair(Citizen(), Mechanics.startingCitizens.asZz),
-    Pair(Granary(), Mechanics.startingGranaries.asZz),
-    Pair(Farm(), Mechanics.startingFarms.asZz),
-    Pair(Food(), Mechanics.startingFood.asZz)
-)
+fun Koin.initGame() {
+    get<User>().initAssets()
+    get<ProbabilityInitializer>().registerAll()
+}
 
 fun User.initAssets() {
     log.info { "Initializing user assets." }
@@ -43,3 +40,14 @@ fun User.initAssets() {
         }
     }).errorOnFail()
 }
+
+/** Have to re-create instances; do NOT store in variable, as stored state will conflict with tests. */
+private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
+    Pair(Gold(), Mechanics.startingGold.asZz),
+    Pair(Land(), Mechanics.startingLand.asZz),
+    Pair(House(), Mechanics.startingHouses.asZz),
+    Pair(Citizen(), Mechanics.startingCitizens.asZz),
+    Pair(Granary(), Mechanics.startingGranaries.asZz),
+    Pair(Farm(), Mechanics.startingFarms.asZz),
+    Pair(Food(), Mechanics.startingFood.asZz)
+)

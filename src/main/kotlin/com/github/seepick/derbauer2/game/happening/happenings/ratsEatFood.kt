@@ -20,7 +20,7 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
 
     override fun canHappen(user: User) = user.hasEntity(Food::class) && user.resource<Food>().owned > 0
 
-    override fun build(user: User): RatsEatFoodHappening {
+    override fun buildHappening(user: User): RatsEatFoodHappening {
         require(canHappen(user))
         return RatsEatFoodHappening(amountFoodEaten = user.resource<Food>().owned.minOf(15.z))
     }

@@ -34,8 +34,10 @@ class TurnerTest : DescribeSpec({
         user = User()
         reports = ReportIntelligence()
         probabilities = ProbabilitiesImpl()
+        val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo)
+        happeningTurner.registerProbabilities()
         turner = Turner(
-            happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo),
+            happeningTurner = happeningTurner,
             resourceTurner = ResourceTurner(user),
             citizenTurner = CitizenTurner(user),
             featureTurner = FeatureTurner(user),
@@ -43,6 +45,7 @@ class TurnerTest : DescribeSpec({
             user = user,
         )
     }
+
     describe("misc") {
         it("turn changed") {
             val old = turner.turn

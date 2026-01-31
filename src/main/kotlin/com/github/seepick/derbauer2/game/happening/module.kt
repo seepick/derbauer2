@@ -9,7 +9,6 @@ import org.koin.dsl.module
 fun happeningModule() = module {
     singleOf(::HappeningPage)
     singleOf(::HappeningMultiView)
-    // have to be created at start to register providers/selectors
-    single(createdAtStart = true) { HappeningTurner(get(), get(), get()) }
+    singleOf(::HappeningTurner)
     single { DefaultHappeningDescriptorRepo } bind HappeningDescriptorRepo::class
 }

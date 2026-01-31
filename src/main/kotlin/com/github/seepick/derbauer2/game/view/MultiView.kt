@@ -29,7 +29,7 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
         }
         currentPage.pageClass = targetPageClass
         this.onFinishedProcessing = onFinishedProcessing
-        log.debug { "Processing ${toBeProcessed.size}" }
+        log.debug { "Going to process ${toBeProcessed.size} page(s)..." }
         unseen.addAll(toBeProcessed)
         current().execute(user)
     }
