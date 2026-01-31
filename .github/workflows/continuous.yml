@@ -7,11 +7,11 @@ on:
 
 jobs:
   setup-environment:
-    uses: ./.github/workflows/includes/setup-env.yml
+    uses: ./.github/workflows/include-setup-env.yml
     with:
       setup-sonar: true
   exec-quality-gates:
-    uses: ./.github/workflows/includes/exec-quality-gates.yml
+    uses: ./.github/workflows/include-quality-gates.yml
   finalization:
     name: SonarQube
     runs-on: ubuntu-latest
