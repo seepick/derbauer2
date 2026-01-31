@@ -32,22 +32,26 @@ object Versions {
 }
 
 dependencies {
-    implementation(compose.desktop.currentOs)
     implementation(kotlin("reflect"))
+    implementation(compose.desktop.currentOs)
     listOf("compose", "compose-viewmodel").forEach {
         implementation("io.insert-koin:koin-$it:${Versions.koin}")
     }
     implementation("javazoom:jlayer:${Versions.jlayer}") // play mp3s
     implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")
-
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
-
+    // test
     listOf("assertions-core", "property", "runner-junit5", "extensions-koin").forEach {
         testImplementation("io.kotest:kotest-$it:${Versions.kotest}")
     }
     testImplementation("io.mockk:mockk:${Versions.mockk}")
     testImplementation("io.insert-koin:koin-test:${Versions.koin}")
+    // ui tests
+    testImplementation(compose.desktop.uiTestJUnit4)
+//    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:1.10.0")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("org.junit.vintage:junit-vintage-engine:6.0.2") // to run JUnit4 with JUnit5
 }
 
 kotlin {
