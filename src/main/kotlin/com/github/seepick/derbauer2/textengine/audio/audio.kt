@@ -10,29 +10,34 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
+import com.github.seepick.derbauer2.game.probability.ListShuffler
+import com.github.seepick.derbauer2.game.probability.randListOf
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import javazoom.jl.player.Player
+import org.koin.compose.koinInject
 import java.io.InputStream
 import java.util.concurrent.atomic.AtomicInteger
 import java.util.concurrent.atomic.AtomicReference
 
-class MusicPlayer {
+class MusicPlayer(
+    private val shuffler: ListShuffler,
+) {
     private val log = logger {}
     private val playerRef = AtomicReference<Player?>()
     private val threadRef = AtomicReference<Thread?>()
     private val threadId = AtomicInteger(0)
 
     // turned out tricky to get files in a folder by scanning it during runtime (packaged via compose in a fat jar)
-    private val audioFilePaths = listOf(
+    private val audioFilePaths = randListOf(
         "adventurers-quest.mp3",
         "another-medieval-village.mp3",
         "medieval-village.mp3",
         "rise-of-a-kingdom.mp3",
         "travelers-inn.mp3",
         "wild-boars-inn.mp3",
-    ).map { "/bg_music/$it" }
+        shuffler = shuffler,
+    )
 
-    private var currentAudioIdx = 0
     private val stopped = AtomicReference(false)
 
     fun play() {
@@ -48,17 +53,10 @@ class MusicPlayer {
     }
 
     private fun playNext() {
-        val path = nextAudioFilePath()
+        val path = "/bg_music/${audioFilePaths.next()}"
         log.debug { "auto-play next: $path" }
         val stream = MusicPlayer::class.java.getResourceAsStream(path) ?: error("Audio file not found at [$path]!")
         playStream(stream)
-    }
-
-    private fun nextAudioFilePath(): String {
-        if (currentAudioIdx == audioFilePaths.size) {
-            currentAudioIdx = 0
-        }
-        return audioFilePaths[currentAudioIdx++]
     }
 
     fun playStream(audioStream: InputStream) {
@@ -69,8 +67,8 @@ class MusicPlayer {
                     val player = Player(audioStream)
                     playerRef.set(player)
                     player.play() // this is blocking
-                    // notify only if playback finished naturally (not stopped)
                     if (!stopped.get()) {
+                        // notify only if playback finished naturally (not stopped)
                         playNext()
                     }
                 }
@@ -87,10 +85,13 @@ class MusicPlayer {
     }
 }
 
+@Suppress("FunctionName")
 @Composable
-@Suppress("FunctionNaming")
 fun MusicButton(autoPlayMusic: Boolean) {
-    val player = remember { MusicPlayer() }
+    val shuffler = koinInject<ListShuffler>()
+    val player = remember {
+        MusicPlayer(shuffler = shuffler)
+    }
     var playing by remember { mutableStateOf(false) }
 
     if (autoPlayMusic) {

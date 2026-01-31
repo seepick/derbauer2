@@ -2,7 +2,8 @@
 
 ## Now
 
-* !!! finish Technology concept
+* !!! java.awt.HeadlessException at GraphicsEnvironment.java:164
+* !! finish Technology concept
 * tests for transaction logic
 * if use `object` (not testable) then document
 

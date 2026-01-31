@@ -8,4 +8,5 @@ import org.koin.dsl.module
 fun probabilityModule() = module {
     singleOf(::ProbabilitiesImpl) bind Probabilities::class
     single { ProbabilityInitializer(registrants = getAllCustom<ProbabilityRegistrant>()) }
+    single { RandomListShuffler } bind ListShuffler::class
 }
