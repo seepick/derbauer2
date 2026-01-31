@@ -17,6 +17,6 @@ fun textengineModule(initPageClass: KClass<out Page>) = module {
     single { Textmap(MainWin.matrixSize) }
     single { RealBeeper }.bind<Beeper>()
     singleOf(::BeepingWarningListener)
-    single<StateRepository> { PreferencesStateRepository() }
+    singleOf(::PreferencesStateRepository) bind StateRepository::class
     singleOf(::MusicStateManager)
 }
