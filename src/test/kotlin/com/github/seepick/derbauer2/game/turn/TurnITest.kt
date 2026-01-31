@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.testInfra.itest.Given
+import com.github.seepick.derbauer2.game.testInfra.itest.ITest
 import com.github.seepick.derbauer2.game.testInfra.itest.Then
 import com.github.seepick.derbauer2.game.testInfra.itest.When
 import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
@@ -14,7 +15,7 @@ import io.kotest.core.spec.style.FunSpec
 import org.koin.test.KoinTest
 import kotlin.math.ceil
 
-class TurnITest : KoinTest, FunSpec() {
+class TurnITest : ITest, KoinTest, FunSpec() {
     init {
         installGameKoinExtension()
         test("citizens pay taxes") {

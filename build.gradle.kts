@@ -25,15 +25,16 @@ object Versions {
     val jacoco = "0.8.14"
     val jlayer = "1.0.1"
     val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
-    val kotest = "6.1.1"
-    val kotlinLogging = "7.0.13"
-    val logback = "1.5.23"
-    val mockk = "1.14.7"
+    val kotest = "6.1.2"
+    val kotlinLogging = "7.0.14"
+    val logback = "1.5.27"
+    val mockk = "1.14.9"
 }
 
 dependencies {
-    implementation(kotlin("reflect"))
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.3.0")
     implementation(compose.desktop.currentOs)
+    //  org.jetbrains.compose.desktop:desktop-jvm-macos-arm64 [1.9.0 -> 1.10.0]
     listOf("compose", "compose-viewmodel").forEach {
         implementation("io.insert-koin:koin-$it:${Versions.koin}")
     }
@@ -116,7 +117,7 @@ sonar {
 
 tasks.withType<DependencyUpdatesTask> {
     val rejectPatterns = listOf(
-        ".*-ea.*", ".*RC", ".*rc.*", ".*M1", ".*check",
+        ".*-ea.*", ".*RC.*", ".*rc.*", ".*M1", ".*check",
         ".*dev.*", ".*[Bb]eta.*", ".*[Aa]lpha.*", ".*SNAPSHOT.*",
     ).map { Regex(it) }
     rejectVersionIf {

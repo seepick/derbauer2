@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.H
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource.Happenings
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.itest.Given
+import com.github.seepick.derbauer2.game.testInfra.itest.ITest
 import com.github.seepick.derbauer2.game.testInfra.itest.Then
 import com.github.seepick.derbauer2.game.testInfra.itest.When
 import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
@@ -20,7 +21,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.koin.test.KoinTest
 
-class HappeningITest : KoinTest, DescribeSpec() {
+class HappeningITest : ITest, KoinTest, DescribeSpec() {
     init {
         installGameKoinExtension()
         describe("When turn and continue next page") {

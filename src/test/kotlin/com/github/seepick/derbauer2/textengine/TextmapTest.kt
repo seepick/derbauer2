@@ -67,6 +67,11 @@ class TextmapTest : DescribeSpec({
                 Textmap(1, 1).aligned("a", "b")
             }
         }
+        // TODO emojis take up 2 chars, thus calc is off...
+//        it("emoji") {
+//            Textmap(5, 2)
+//                .aligned("😀", "🚗").toFullString() shouldBeEqual "😀 🚗\n     "
+//        }
     }
     describe("fillVertical") {
         it("Given 1x3 and fill all Then 3 empty lines") {

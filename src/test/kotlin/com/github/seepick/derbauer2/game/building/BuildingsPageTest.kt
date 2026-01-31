@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
+import com.github.seepick.derbauer2.game.testInfra.PageTest
 import com.github.seepick.derbauer2.game.testInfra.pageParser.SetupGamePageContext
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
 import io.kotest.core.spec.style.StringSpec
@@ -7,7 +8,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainIgnoringCase
 
-class BuildingsPageTest : StringSpec({
+class BuildingsPageTest : PageTest, StringSpec({
 
     fun SetupGamePageContext.buildBuildingsPage() =
         BuildingsPage(user, currentPage, gameRenderer, resultHandler)
@@ -18,7 +19,7 @@ class BuildingsPageTest : StringSpec({
             ctx.user.enable(Farm())
             ctx.buildBuildingsPage()
         }) {
-            pageString shouldBeEqual """
+            fullPage shouldBeEqual """
                                                                                       Turn 1
             ================================================================================
             Your builders are ready for work.                                               

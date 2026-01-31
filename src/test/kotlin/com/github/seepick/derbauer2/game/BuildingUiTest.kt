@@ -1,24 +1,23 @@
 package com.github.seepick.derbauer2.game
 
-import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.pageParser.keyForSelectOption
 import com.github.seepick.derbauer2.game.testInfra.pageParser.readSingleResource
 import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeTest
+import com.github.seepick.derbauer2.game.testInfra.uitest.UiTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
-import io.github.oshai.kotlinlogging.KLogger
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.string.shouldContainIgnoringCase
 import org.junit.Rule
 import org.junit.Test
 
-class GameUiTest : ComposeTest {
+class BuildingUiTest : UiTest, ComposeTest {
 
-    override val log: KLogger = logger {}
+    override val log = logger {}
     @get:Rule
-    override val ui: ComposeContentTestRule = createComposeRule()
+    override val ui = createComposeRule()
 
     @Test
     fun `When build house Then change assets`() = uiTest {
