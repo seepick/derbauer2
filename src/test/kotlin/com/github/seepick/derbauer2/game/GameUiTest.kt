@@ -18,6 +18,6 @@ class GameUiTest {
             Text("DerBauer2")
         }
 
-        composeTestRule.onNodeWithText("DerBauer2x").assertIsDisplayed()
+        composeTestRule.onNodeWithText("DerBauer2").assertIsDisplayed()
     }
 }
