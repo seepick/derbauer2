@@ -15,7 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
-      - uses: gradle/actions/setup-gradle@v4 # TODO ??
+      #      - uses: gradle/actions/setup-gradle@v4 # TODO ??
+      - name: Make Gradlew executable
+        run: chmod +x ./gradlew # TODO required for win gradlew to work?!
       - name: Build Gradle Distribution 1
         run: ./gradlew package -Papp_version="42.0.0"
       - name: Build Gradle Distribution 2
