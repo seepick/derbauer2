@@ -52,6 +52,8 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 * IT: very minimal compose test, so AI can verify workings (right now, i start app manually)
 * IT: Use optIn annotation for "secret API"
 * IT: refactor ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
+* IT: if register HappeningDescriptors as bean in koin context, then can get-all via interface lookup; replacing
+  HappeningDescriptorRepo :)
 
 ## Release
 

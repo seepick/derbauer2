@@ -14,7 +14,6 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.Textmap
 
-// TODO if register as bean in koin context, then can get-all via interface lookup; replacing HappeningDescriptorRepo :)
 object FoundGoldDescriptor : HappeningDescriptor(HappeningNature.Positive) {
     override val id = HappeningId.FoundGold
 

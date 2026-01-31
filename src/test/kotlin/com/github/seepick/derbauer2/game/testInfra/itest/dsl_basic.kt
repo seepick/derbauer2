@@ -22,14 +22,16 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.audio.Beeper
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.kotest.assertions.withClue
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
 import io.mockk.every
-import io.mockk.verify
 import org.koin.test.KoinTest
 import org.koin.test.get
 import org.koin.test.mock.declareMock
 import kotlin.reflect.full.primaryConstructor
+
+private val log = logger {}
 
 interface GameKoinTestContext {
     val koin: KoinTest
@@ -51,7 +53,7 @@ context(koin: KoinTest)
 fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
     koin.declareMock<Beeper> {
         every { beep(any()) } answers {
-            println("TEST beep for reason=[${arg<String>(0)}]")
+            log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
         }
     }
     koin.get<ProbabilityInitializer>().registerAll()
@@ -80,11 +82,9 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestCont
         ownable.ownedForTest += amount
     }
 
-    inline fun <reified A : Asset> ListX<in A>.findOrSet(): A =
-        findOrNull<A>() ?: createAssetInstance()
+    inline fun <reified A : Asset> ListX<in A>.findOrSet(): A = findOrNull<A>() ?: createAssetInstance()
 
     inline fun <reified A : Asset> createAssetInstance(): A {
-        // TODO write test, that all assets must have no-arg ctor
         val asset = A::class.primaryConstructor!!.call()
         user.enable(asset)
         return asset
@@ -133,24 +133,21 @@ class SelectorsChangeDsl(delegate: ProbalitySelectorAddSourceAndSelector) :
 
 
 fun MutableMap<ProbabilityProviderSource, ProbabilityProviderHandle<Any>>.updateCalc(
-    source: ProbabilityProviderSource,
-    calc: ProbabilityCalculator
+    source: ProbabilityProviderSource, calc: ProbabilityCalculator
 ) {
     val providerProvider = this[source]!!
     this[source] = providerProvider.copy(calculator = calc)
 }
 
 fun MutableMap<ProbabilitySelectorSource, ProbabilitySelectorHandle<Any>>.updateSelect(
-    source: ProbabilitySelectorSource,
-    newSelector: ProbabilitySelector<out Any>
+    source: ProbabilitySelectorSource, newSelector: ProbabilitySelector<out Any>
 ) {
     val selectorSelector = this[source]!!
     this[source] = selectorSelector.withSelector(newSelector) // copy didnt work properly; generics issue
 }
 
 @Suppress("TestFunctionName")
-infix fun GivenDsl.When(code: WhenHomePageDsl.() -> Unit) =
-    WhenHomePageDsl(WhenDslImpl(koin)).apply(code)
+infix fun GivenDsl.When(code: WhenHomePageDsl.() -> Unit) = WhenHomePageDsl(WhenDslImpl(koin)).apply(code)
 
 interface WhenDsl : KoinTest, GameKoinTestContext {
     fun input(key: KeyInput)
@@ -186,8 +183,9 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestConte
     }
 
     fun shouldRaiseWarning(containsMessage: String) {
-        verify(exactly = 1) { // TODO capture all beeps; in the future do it with events
-            get<Beeper>().beep(reason = match { it.contains(containsMessage, ignoreCase = true) })
+        val warnings = koin.get<CollectingWarningListener>().warnings
+        withClue({ "Expected warnings to contain any message which contains [$containsMessage] but was:\n${warnings.map { it.message }}" }) {
+            warnings.any { it.message.contains(containsMessage, ignoreCase = true) } shouldBeEqual true
         }
     }
 }

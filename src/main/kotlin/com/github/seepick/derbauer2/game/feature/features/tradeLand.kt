@@ -3,6 +3,8 @@ package com.github.seepick.derbauer2.game.feature.features
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.feature.Feature
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.view.AsciiArt

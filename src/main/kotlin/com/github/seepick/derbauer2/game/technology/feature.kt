@@ -4,8 +4,8 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.feature.Feature
-import com.github.seepick.derbauer2.game.feature.features.FeatureDescriptor
-import com.github.seepick.derbauer2.game.feature.features.FeatureDescriptorEnum
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
