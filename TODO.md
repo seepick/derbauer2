@@ -2,24 +2,9 @@
 
 ## Now
 
-* finish Technology concept
-* itest for happenings; requires probability provider injection (use enum class to identify source)
-* introduce buildSrc (try again ;)
-* resolve tech debt
-
-    * tests for transaction logic
-    * if use `object` (not testable) then document
-    * showMainWindow too long
-    * split into sub-projects: app, view, logic, textengine
-* alternative to sealed interfaces: use enums as properties for each type; exhaustiveness possible (compiler safety);
-  doc in some MD file (see initAssets)
-* ad ProbabilityProvider: introduce interface for testability
-* let `showMainWindow` be refactored
-
-Jacoco HTML report disabled — poorer developer UX for coverage inspection
-Where: build.gradle.kts — tasks.jacocoTestReport { reports { xml.required = true; html.required = false } }
-Why: Developers commonly inspect HTML coverage locally; disabling HTML makes quick local inspection harder.
-Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI while enabling HTML locally.
+* !!! finish Technology concept
+* tests for transaction logic
+* if use `object` (not testable) then document
 
 ## Next
 
@@ -28,7 +13,6 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 * BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * BZ: implement game over (all citizens dead)
 * ! BZ: implement birth rate, increase citizens on turn
-* IT: refactor `fun showMainWindow` too long
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: immigration happening
 * BZ: change designators based on criteria (can be upped and lowered again! different than feature, which is a one-way
@@ -66,9 +50,15 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 * Later: Windows build :)
 * Later: Auto-update feature
 
+## UI
+
+- bright/dark mode support
+- certain events make a sound (happening, etc...)
+
 ## Later
 
-* UI: certain events make a sound (happening, etc...)
+* @copilot: music play with memory; auto-play depending on state when application quit; store locally in java
+  preferences
 * make magnituded number from "1k" to "1.2k"
 * BZ: material resources (wood, stone, iron, ...), regard when build buildings
 * BZ: extend probability provider
@@ -76,20 +66,19 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 * IT: use ULong within Z
 * IT could each turn calculation, be an external, plugged-in feature instead?
 * UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
-* UI: bright/dark mode support
 * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve (currently only starve if 0 food)
-* IT: cucumber tests; allow for precise setup of the world (Given part)
 * UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
     * other hand, it might encode some necessary info, maintaining the order; e.g. how it was feature unlocked,
       chronologically
 
 ## Tech
 
-* ad turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
-* refactor text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass
-  config-object
-* switch jacoco to kover?
+* text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
+* REFACTOR turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
+* REFACTOR ProbabilityProvider: introduce interface for testability
 
-### Nope
+- introduce buildSrc (try again ;)
+
+# Nope
 
 * mutable internal state; make it immutable, find other solution

@@ -30,6 +30,21 @@ sealed class PrintChar(val char: Char) {
         object Seven : Numeric(7)
         object Eight : Numeric(8)
         object Nine : Numeric(9)
+        companion object {
+            fun fromInt(int: Int): Numeric = when (int) {
+                0 -> Zero
+                1 -> One
+                2 -> Two
+                3 -> Three
+                4 -> Four
+                5 -> Five
+                6 -> Six
+                7 -> Seven
+                8 -> Eight
+                9 -> Nine
+                else -> error("Not a single digit: $int")
+            }
+        }
     }
 
     override fun equals(other: Any?) = other is PrintChar && other.char == char

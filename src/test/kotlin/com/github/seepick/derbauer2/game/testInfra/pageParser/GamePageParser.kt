@@ -1,0 +1,34 @@
+package com.github.seepick.derbauer2.game.testInfra.pageParser
+
+import com.github.seepick.derbauer2.textengine.compose.MainWin
+import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.equals.shouldBeEqual
+
+class GamePageParser(val pageString: String) {
+
+    private val hrSymbol = "="
+    val lines = pageString.split("\n").map { it.trim() }
+    val contentLines = lines.subList(2, lines.size - 2).dropLastWhile { it.isBlank() }
+    val contentLinesString = contentLines.joinToString("\n")
+    /** e.g. "🌍 10 | 💰 500 | 🍖 50 / 100 | 🌍 3 / 10 | 🙎🏻‍♂️ 4 / 5                  Turn 1" */
+    val lineInfo = lines.first()
+    val linePrompt = lines.last()
+
+    private val widthHack = MainWin.matrixSize.cols // TODO scan from right to left, until find "   "
+    val promptLeft: String? = linePrompt.take(widthHack / 2).trim().ifEmpty { null }
+    val promptRight: String? = linePrompt.takeLast(widthHack / 2).trim().ifEmpty { null }
+    val infoLeft = lineInfo.take(widthHack - 10).trim()
+    val infoRight = lineInfo.takeLast(10).trim()
+
+    init {
+        lines shouldHaveSize MainWin.matrixSize.rows
+        lines[1] shouldBeEqual hrSymbol.repeat(MainWin.matrixSize.cols)
+        lines[lines.size - 2] shouldBeEqual hrSymbol.repeat(MainWin.matrixSize.cols)
+    }
+
+    companion object {
+        operator fun invoke(pageString: String, code: GamePageParser.() -> Unit) {
+            GamePageParser(pageString).apply(code)
+        }
+    }
+}

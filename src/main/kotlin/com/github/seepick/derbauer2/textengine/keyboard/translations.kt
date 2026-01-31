@@ -8,7 +8,6 @@ import androidx.compose.ui.input.key.type
 
 private val keyMap = buildMap {
     put(Key.Escape, KeyPressed.Command.Escape)
-    put(Key.Escape, KeyPressed.Command.Escape)
     put(Key.Enter, KeyPressed.Command.Enter)
     put(Key.Spacebar, KeyPressed.Command.Space)
 
@@ -23,6 +22,20 @@ private val keyMap = buildMap {
     put(Key.Eight, KeyPressed.Symbol(PrintChar.Numeric.Eight))
     put(Key.Nine, KeyPressed.Symbol(PrintChar.Numeric.Nine))
 }
+
+val PrintChar.Numeric.asComposeKey
+    get() = when (this) {
+        PrintChar.Numeric.Zero -> Key.Zero
+        PrintChar.Numeric.One -> Key.One
+        PrintChar.Numeric.Two -> Key.Two
+        PrintChar.Numeric.Three -> Key.Three
+        PrintChar.Numeric.Four -> Key.Four
+        PrintChar.Numeric.Five -> Key.Five
+        PrintChar.Numeric.Six -> Key.Six
+        PrintChar.Numeric.Seven -> Key.Seven
+        PrintChar.Numeric.Eight -> Key.Eight
+        PrintChar.Numeric.Nine -> Key.Nine
+    }
 
 fun KeyEvent.toKeyPressed(): KeyPressed? =
     if (type == KeyEventType.KeyDown) {

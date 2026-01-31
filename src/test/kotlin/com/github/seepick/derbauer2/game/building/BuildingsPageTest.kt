@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.testInfra.SetupGamePageContext
-import com.github.seepick.derbauer2.game.testInfra.renderGamePage
+import com.github.seepick.derbauer2.game.testInfra.pageParser.SetupGamePageContext
+import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContain
