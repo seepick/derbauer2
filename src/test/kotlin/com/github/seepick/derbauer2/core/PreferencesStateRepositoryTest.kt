@@ -1,22 +1,22 @@
-package com.github.seepick.derbauer2.textengine.audio
+package com.github.seepick.derbauer2.core
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import java.util.prefs.Preferences
 
-class PreferencesMusicStateRepositoryTest : StringSpec({
+class PreferencesStateRepositoryTest : StringSpec({
 
-    lateinit var repository: PreferencesMusicStateRepository
+    lateinit var repository: PreferencesStateRepository
     lateinit var prefs: Preferences
 
     beforeEach {
-        repository = PreferencesMusicStateRepository(PreferencesMusicStateRepositoryTest::class)
-        prefs = Preferences.userNodeForPackage(PreferencesMusicStateRepositoryTest::class.java)
-        prefs.remove("music.isPlaying")
+        repository = PreferencesStateRepository(PreferencesStateRepositoryTest::class)
+        prefs = Preferences.userNodeForPackage(PreferencesStateRepositoryTest::class.java)
+        prefs.remove(PREF_KEY)
     }
 
     afterEach {
-        prefs.remove("music.isPlaying")
+        prefs.remove(PREF_KEY)
     }
 
     "When load playing state with no saved value Then return default true" {
@@ -32,4 +32,8 @@ class PreferencesMusicStateRepositoryTest : StringSpec({
         repository.savePlayingState(true)
         repository.loadPlayingState() shouldBe true
     }
-})
+}) {
+    companion object {
+        private const val PREF_KEY = "music.isPlaying"
+    }
+}

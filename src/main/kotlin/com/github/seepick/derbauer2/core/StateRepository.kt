@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.textengine.audio
+package com.github.seepick.derbauer2.core
 
 interface StateRepository {
     fun loadPlayingState(): Boolean

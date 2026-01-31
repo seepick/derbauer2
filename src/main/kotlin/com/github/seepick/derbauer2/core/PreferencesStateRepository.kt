@@ -1,11 +1,11 @@
-package com.github.seepick.derbauer2.textengine.audio
+package com.github.seepick.derbauer2.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import java.util.prefs.Preferences
 import kotlin.reflect.KClass
 
-class PreferencesMusicStateRepository(
+class PreferencesStateRepository(
     storagePackage: KClass<*> = DerBauer2::class,
 ) : StateRepository {
     private val log = logger {}
