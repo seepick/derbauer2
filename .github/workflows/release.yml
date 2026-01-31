@@ -7,112 +7,86 @@ permissions:
   contents: write  # required to create releases
 
 jobs:
-
-
-  build-windows-exe:
-    runs-on: windows-latest
-    name: Building and uploading compose artifact
+  prepare-release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
-      #      - uses: gradle/actions/setup-gradle@v4 # TODO ??
-      - name: Make Gradlew executable
-        run: chmod +x ./gradlew # TODO required for win gradlew to work?!
-      - name: Build Gradle Distribution 1
-        run: ./gradlew package -Papp_version="42.0.0"
-      - name: Build Gradle Distribution 2
-        run: ./gradlew packageDistributionForCurrentOS -Papp_version="44.0.0"
-      - name: get directory content of several folders
+      - uses: ./.github/actions/check-quality-gates
+      - name: Update Version Number
+        id: step-version
         run: |
-          dir .
-          dir build\
-          dir build\compose
-          dir build\compose\binaries
-          dir build\compose\binaries\main
-          dir build\compose\binaries\main\exe
+          newVersion=$(./bin/version_increment_and_get.sh)
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "version script failed with exit code $rc" >&2
+            exit $rc
+          fi
+          echo "new_version=$newVersion" >> $GITHUB_OUTPUT
+      - name: Log Version Number
+        run: |
+          echo "New version to be released: ${{ steps.step-version.outputs.new_version }}"
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: Auto-Release for Version ${{ steps.step-version.outputs.new_version }}
+      - name: Create GIT Tag
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ steps.step-version.outputs.new_version }}.0.0
+          message: tag version ${{ steps.step-version.outputs.new_version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.step-version.outputs.new_version }}
+          release_name: Release ${{ steps.step-version.outputs.new_version }}
+          body: Why would you read that anyway?!
+          draft: false
+          prerelease: false
+    outputs:
+      upload-url: ${{ steps.create_release.outputs.upload_url }}
+      version-nr: ${{ steps.step-version.outputs.new_version }}
 
-#  prepare-release:
-#    name: Create GitHub Release
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: ./.github/actions/setup-env
-#      - uses: ./.github/actions/check-quality-gates
-#      - name: Update Version Number
-#        id: step-version
-#        run: |
-#          newVersion=$(./bin/version_increment_and_get.sh)
-#          rc=$?
-#          if [ $rc -ne 0 ]; then
-#            echo "version script failed with exit code $rc" >&2
-#            exit $rc
-#          fi
-#          echo "new_version=$newVersion" >> $GITHUB_OUTPUT
-#      - name: Log Version Number
-#        run: |
-#          echo "New version to be released: ${{ steps.step-version.outputs.new_version }}"
-#      - name: Commit Changes
-#        uses: stefanzweifel/git-auto-commit-action@v7
-#        with:
-#          commit_message: Auto-Release for Version ${{ steps.step-version.outputs.new_version }}
-#      - name: Create GIT Tag
-#        uses: negz/create-tag@v1
-#        with:
-#          version: ${{ steps.step-version.outputs.new_version }}.0.0
-#          message: tag version ${{ steps.step-version.outputs.new_version }}
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#      - name: Create GitHub Release
-#        id: create_release
-#        uses: actions/create-release@latest
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ steps.step-version.outputs.new_version }}
-#          release_name: Release ${{ steps.step-version.outputs.new_version }}
-#          body: Why would you read that anyway?!
-#          draft: false
-#          prerelease: false
-#    outputs:
-#      upload-url: ${{ steps.create_release.outputs.upload_url }}
-#      version-nr: ${{ steps.step-version.outputs.new_version }}
-#
-#  build-and-upload:
-#    needs: prepare-release
-#    strategy:
-#      matrix:
-#        os: [ macos-latest, windows-latest ]
-#    runs-on: ${{ matrix.os }}
-#    name: Building and uploading compose artifact
-#
-#    steps:
-#      - name: Log Info
-#        run: echo "Releasing version ${{ needs.prepare-release.outputs.version-nr }} running on a ${{ runner.os }} / ${{ matrix.os }}"
-#      - uses: actions/checkout@v4
-#      - uses: ./.github/actions/setup-env
-#      - name: Build Gradle Distribution
-#        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}.0.0"
-#
-#      - run: dir build/compose/binaries/main/exe/
-#        if: runner.os == 'Windows'
-#      - name: Upload Release Asset for Windows
-#        if: runner.os == 'Windows'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
-#          # TODO needs to be verified to work
-#          asset_path: build/compose/binaries/main/exe/DerBauer2.exe
-#          asset_name: DerBauer2.exe
-#          asset_content_type: application/vnd.microsoft.portable-executable
-#      - name: Upload Release Asset for MacOS
-#        if: runner.os == 'macOS'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
-#          asset_path: build/compose/binaries/main/dmg/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.dmg
-#          asset_name: DerBauer2.dmg
-#          asset_content_type: application/x-apple-diskimage
+  build-and-upload:
+    needs: prepare-release
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    name: Building and uploading compose artifact
+    steps:
+      - name: Log Info
+        run: echo "Releasing version ${{ needs.prepare-release.outputs.version-nr }} running on a ${{ runner.os }} / ${{ matrix.os }}"
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-env
+      - name: Build Gradle Distribution
+        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}.0.0"
+      - run: dir build/compose/binaries/main/exe/
+        if: runner.os == 'Windows'
+      - name: Upload Release Asset for Windows
+        if: runner.os == 'Windows'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
+          asset_path: build/compose/binaries/main/exe/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.exe
+          asset_name: DerBauer2.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+      - run: ls build/compose/binaries/main/dmg/
+        if: runner.os == 'macOS'
+      - name: Upload Release Asset for MacOS
+        if: runner.os == 'macOS'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
+          asset_path: build/compose/binaries/main/dmg/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.dmg
+          asset_name: DerBauer2.dmg
+          asset_content_type: application/x-apple-diskimage
