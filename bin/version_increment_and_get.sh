@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# FIXME test fail
-exit 42
-
 VERSION_FILE=src/main/distribution/version.txt
 
 if [ ! -f "$VERSION_FILE" ]; then

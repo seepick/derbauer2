@@ -5,17 +5,18 @@ on:
       - main
 permissions:
   contents: write  # required to create releases
+
 jobs:
-  release:
+  prepare-release:
     name: Create Release and Upload Artifacts
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
       - uses: ./.github/actions/check-quality-gates
       - name: Version Number Handling
         id: step-version
-        #          chmod +x ./bin/version_increment_and_get.sh
         run: |
           newVersion=$(./bin/version_increment_and_get.sh)
           rc=$?
@@ -24,74 +25,68 @@ jobs:
             exit $rc
           fi
           echo "new_version=$newVersion" >> $GITHUB_OUTPUT
-      - name: post msg
+      - name: Print Verrsion Numbe
         run: |
           echo "New version to be released: ${{ steps.step-version.outputs.new_version }}"
-        # GIT commit changes: "auto release for version $newVersion"
-        # GIT tag with $newVersion
-        # create GitHub release
-        # matrix [macos, windows]:
-        #    build artifact: run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ new_version }}"
-        #    upload artifact to release
+      - name: Commit Changes
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: Auto-Release for Version ${{ steps.step-version.outputs.new_version }}
+      - name: Create Tag
+        uses: negz/create-tag@v1
+        with:
+          version: ${{ steps.step-version.outputs.new_version }}
+          message: tag version ${{ steps.step-version.outputs.new_version }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.step-version.outputs.new_version }}
+          release_name: Release ${{ steps.step-version.outputs.new_version }}
+          body: Why would you read that anyway?!
+          draft: false
+          prerelease: false
+    outputs:
+      upload-url: ${{ steps.create_release.outputs.upload_url }}
+      version-nr: ${{ steps.step-version.outputs.new_version }}
 
-#  prepare-release:
-#    runs-on: ubuntu-latest
-#    name: Creating GitHub Release
-#    steps:
-#      - name: Create Release # https://github.com/marketplace/actions/create-tag-release
-#        id: create_release
-#        uses: actions/create-release@latest
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          tag_name: ${{ github.ref }}
-#          release_name: Release ${{ github.ref_name }}
-#          body: No changelog provided
-#          draft: false
-#          prerelease: false
-#    outputs:
-#      upload-url: ${{ steps.create_release.outputs.upload_url }}
-#
-#  build-and-upload:
-#    strategy:
-#      matrix:
-#        os: [ macos-latest, windows-latest ]
-#    runs-on: ${{ matrix.os }}
-#    needs: prepare-release
-#    name: Building and uploading compose artifact
-#    steps:
-#      - name: Log Info
-#        run: echo "This job is now running on a ${{ runner.os }} / ${{ matrix.os }}; ref is ${{ github.ref }} and ref_name is ${{ github.ref_name }}"
-#      - name: Checkout Code
-#        uses: actions/checkout@v4
-#      - name: Setup JDK
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: temurin
-#          java-version: 17
-#      - uses: gradle/actions/setup-gradle@v4
-#
-#      - name: Execute Gradle
-#        run: ./gradlew packageDistributionForCurrentOS -Plsc_version="${{ github.ref_name }}" -Plsc_gcalClientId="${{ secrets.GCAL_CLIENT_ID }}" -Plsc_gcalClientSecret="${{ secrets.GCAL_CLIENT_SECRET }}"
-#
-#      - name: Upload Release Asset for Windows
-#        if: runner.os == 'Windows'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
-#          asset_path: build/compose/binaries/main/exe/LocalSportsClub-${{ github.ref_name }}.exe
-#          asset_name: LocalSportsClub.exe
-#          asset_content_type: application/vnd.microsoft.portable-executable
-#
-#      - name: Upload Release Asset for MacOS
-#        if: runner.os == 'macOS'
-#        uses: actions/upload-release-asset@v1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#        with:
-#          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
-#          asset_path: build/compose/binaries/main/dmg/LocalSportsClub-${{ github.ref_name }}.dmg
-#          asset_name: LocalSportsClub.dmg
-#          asset_content_type: application/x-apple-diskimage
+  build-and-upload:
+    needs: prepare-release
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest ]
+    runs-on: ${{ matrix.os }}
+    name: Building and uploading compose artifact
+
+    steps:
+      - name: Log Info
+        run: echo "Releasing version ${{ needs.prepare-release.outputs.version-nr }} running on a ${{ runner.os }} / ${{ matrix.os }}"
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-env
+      - name: Build Gradle Distribution
+        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}"
+
+      - name: Upload Release Asset for Windows
+        if: runner.os == 'Windows'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
+          # TODO needs to be verified to work
+          asset_path: build/compose/binaries/main/exe/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.exe
+          asset_name: DerBauer2.exe
+          asset_content_type: application/vnd.microsoft.portable-executable
+      - name: Upload Release Asset for MacOS
+        if: runner.os == 'macOS'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
+          asset_path: build/compose/binaries/main/dmg/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.dmg
+          asset_name: DerBauer2.dmg
+          asset_content_type: application/x-apple-diskimage
