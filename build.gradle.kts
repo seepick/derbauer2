@@ -1,7 +1,7 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-//val versionNr = File("src/main/distribution/version.txt").readText().trim().toInt()
+// TODO support -Papp_version=42 (inject in resource, display in app); default to 0
 val distributionPackageVersion = "1.0.0"
 
 plugins {
