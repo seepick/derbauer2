@@ -1,6 +1,4 @@
 name: Execute Quality Gate
-on:
-  workflow_call:
 jobs:
   setupEnvironment:
     runs-on: ubuntu-latest

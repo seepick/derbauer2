@@ -1,23 +1,17 @@
 name: Continuous Integration
-
 on:
   push:
     branches:
       - '*'
-
 jobs:
-  setup-environment:
-    uses: ./.github/workflows/include-setup-env.yml
-    with:
-      setup-sonar: true
-  exec-quality-gates:
-    uses: ./.github/workflows/include-quality-gates.yml
-    needs: [ setup-environment ]
-  finalization:
-    name: SonarQube
-    needs: [ exec-quality-gates ]
+  exec-ci:
+    name: Execute CI Pipeline
     runs-on: ubuntu-latest
     steps:
+      - uses: ./.github/workflows/actions/setup-env
+        with:
+          setup-sonar: true
+      - uses: ./.github/workflows/actions/exec-quality-gate
       - name: Trigger SonarQube via Gradle
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

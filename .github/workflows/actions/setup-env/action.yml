@@ -1,11 +1,9 @@
 name: Setup Environment
-on:
-  workflow_call:
-    inputs:
-      setup-sonar:
-        required: false
-        type: boolean
-        default: false
+inputs:
+  setup-sonar:
+    required: false
+    type: boolean
+    default: false
 jobs:
   setupEnvironment:
     runs-on: ubuntu-latest
