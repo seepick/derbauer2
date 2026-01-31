@@ -96,12 +96,11 @@ fun showMainWindow(
             var isCursorNearLeft by remember { mutableStateOf(false) }
             val leftBarAnimationDuration = 200
             val leftBarOffset by animateDpAsState(
-                targetValue = if (isCursorNearLeft) 0.dp else -leftBarWidth,
+                targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
                 animationSpec = tween(durationMillis = leftBarAnimationDuration)
             )
-            val leftBarTargetAlpha = 0.8f
             val leftBarAlpha by animateFloatAsState(
-                targetValue = if (isCursorNearLeft) leftBarTargetAlpha else 0.0f,
+                targetValue = if (isCursorNearLeft) 0.8f else 0.4f,
                 animationSpec = tween(durationMillis = leftBarAnimationDuration)
             )
 
