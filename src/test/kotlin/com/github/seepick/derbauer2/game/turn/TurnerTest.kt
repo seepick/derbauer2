@@ -11,7 +11,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
-import com.github.seepick.derbauer2.game.probability.ProbabilityManagerImpl
+import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -29,11 +29,11 @@ class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: Turner
     lateinit var reports: ReportIntelligence
-    lateinit var probabilities: ProbabilityManagerImpl
+    lateinit var probabilities: ProbabilitiesImpl
     beforeTest {
         user = User()
         reports = ReportIntelligence()
-        probabilities = ProbabilityManagerImpl()
+        probabilities = ProbabilitiesImpl()
         turner = Turner(
             happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo),
             resourceTurner = ResourceTurner(user),

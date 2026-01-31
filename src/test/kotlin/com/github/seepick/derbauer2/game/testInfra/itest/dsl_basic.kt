@@ -7,13 +7,13 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.initAssets
+import com.github.seepick.derbauer2.game.probability.Probabilities
+import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
 import com.github.seepick.derbauer2.game.probability.ProbabilityCalculator
-import com.github.seepick.derbauer2.game.probability.ProbabilityManager
-import com.github.seepick.derbauer2.game.probability.ProbabilityManagerImpl
-import com.github.seepick.derbauer2.game.probability.ProbabilityProviderProvider
+import com.github.seepick.derbauer2.game.probability.ProbabilityProviderHandle
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelector
-import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSelector
+import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorHandle
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.PromptGamePage
@@ -104,16 +104,16 @@ class ProbabilityDsl(private val koin: KoinTest) : ProbalityProviderAddSourceAnd
     override operator fun plus(
         sourceAndCalc: Pair<ProbabilityProviderSource, ProbabilityCalculator>
     ): ProvidersChangeDsl {
-        val probabilities = koin.get<ProbabilityManager>() as ProbabilityManagerImpl
-        probabilities.providers.updateCalc(sourceAndCalc.first, sourceAndCalc.second)
+        val probabilities = koin.get<Probabilities>() as ProbabilitiesImpl
+        probabilities.providerHandles.updateCalc(sourceAndCalc.first, sourceAndCalc.second)
         return providers
     }
 
     override fun plus(
         sourceAndCalc: Pair<ProbabilitySelectorSource, ProbabilitySelector<out Any>>
     ): SelectorsChangeDsl {
-        val probabilities = koin.get<ProbabilityManager>() as ProbabilityManagerImpl
-        probabilities.selectors.updateSelect(sourceAndCalc.first, sourceAndCalc.second)
+        val probabilities = koin.get<Probabilities>() as ProbabilitiesImpl
+        probabilities.selectorHandles.updateSelect(sourceAndCalc.first, sourceAndCalc.second)
         return selectors
     }
 }
@@ -132,7 +132,7 @@ class SelectorsChangeDsl(delegate: ProbalitySelectorAddSourceAndSelector) :
     ProbalitySelectorAddSourceAndSelector by delegate
 
 
-fun MutableMap<ProbabilityProviderSource, ProbabilityProviderProvider<Any>>.updateCalc(
+fun MutableMap<ProbabilityProviderSource, ProbabilityProviderHandle<Any>>.updateCalc(
     source: ProbabilityProviderSource,
     calc: ProbabilityCalculator
 ) {
@@ -140,7 +140,7 @@ fun MutableMap<ProbabilityProviderSource, ProbabilityProviderProvider<Any>>.upda
     this[source] = providerProvider.copy(calculator = calc)
 }
 
-fun MutableMap<ProbabilitySelectorSource, ProbabilitySelectorSelector<Any>>.updateSelect(
+fun MutableMap<ProbabilitySelectorSource, ProbabilitySelectorHandle<Any>>.updateSelect(
     source: ProbabilitySelectorSource,
     newSelector: ProbabilitySelector<out Any>
 ) {

@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescripto
 import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.probability.GrowthProbabilityCalculator
 import com.github.seepick.derbauer2.game.probability.PercentageProbabilityCalculator
-import com.github.seepick.derbauer2.game.probability.ProbabilityManager
+import com.github.seepick.derbauer2.game.probability.Probabilities
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource
 import com.github.seepick.derbauer2.game.probability.RandomProbabilitySelector
@@ -14,13 +14,13 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class HappeningTurner(
     private val user: User,
-    private val probabilities: ProbabilityManager,
+    private val probabilities: Probabilities,
     repo: HappeningDescriptorRepo,
 ) {
     private val log = logger {}
 
     init {
-        probabilities.provider(
+        probabilities.setProvider(
             ProbabilityProviderSource.HappeningTurner,
             GrowthProbabilityCalculator(
                 startValue = Mechanics.turnProbHappeningStart,
@@ -28,22 +28,22 @@ class HappeningTurner(
             )
         ) {
             log.debug { "New happening going to happen." }
-            val isNegative = probabilities.provideIt(ProbabilityProviderSource.HappeningIsNeg) != null
+            val isNegative = probabilities.getProvision(ProbabilityProviderSource.HappeningIsNeg) != null
             val descriptors = repo.all.filter {
                 (!isNegative || it.nature == HappeningNature.Negative) && it.canHappen(user)
             }
-            val descriptor = probabilities.selectIt(ProbabilitySelectorSource.Happenings, descriptors)
+            val descriptor = probabilities.getSelection(ProbabilitySelectorSource.Happenings, descriptors)
             descriptor.build(user)
         }
 
-        probabilities.provider(
+        probabilities.setProvider(
             ProbabilityProviderSource.HappeningIsNeg,
             PercentageProbabilityCalculator(
                 threshold = Mechanics.turnProbHappeningIsNegative
             )
         ) {}
 
-        probabilities.selector<HappeningDescriptor>(
+        probabilities.setSelector<HappeningDescriptor>(
             ProbabilitySelectorSource.Happenings,
             RandomProbabilitySelector()
         )
@@ -51,6 +51,6 @@ class HappeningTurner(
 
 
     fun buildHappeningMultiPages(): List<Happening> = buildList {
-        (probabilities.provideIt(ProbabilityProviderSource.HappeningTurner) as? Happening)?.let { add(it) }
+        (probabilities.getProvision(ProbabilityProviderSource.HappeningTurner) as? Happening)?.let { add(it) }
     }
 }

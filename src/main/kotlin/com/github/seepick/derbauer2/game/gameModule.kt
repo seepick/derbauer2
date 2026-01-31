@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.citizen.citizenModule
 import com.github.seepick.derbauer2.game.core.coreModule
 import com.github.seepick.derbauer2.game.feature.featureModule
 import com.github.seepick.derbauer2.game.happening.happeningModule
+import com.github.seepick.derbauer2.game.probability.probabilityModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
 import com.github.seepick.derbauer2.game.technology.technologyModule
 import com.github.seepick.derbauer2.game.trading.tradingModule
@@ -15,6 +16,7 @@ import org.koin.dsl.module
 fun gameModule() = module {
     includes(
         coreModule(),
+        probabilityModule(),
         resourceModule(),
         buildingModule(),
         citizenModule(),

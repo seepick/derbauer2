@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.common.z
 /**
  * All game mechanics constants; a magic constant provider.
  */
-@Suppress("MayBeConstant", "MagicNumber")
+@Suppress("MayBeConstant", "MagicNumber", "VariableMaxLength")
 object Mechanics {
 
     // INITIAL VALUES
@@ -43,7 +43,7 @@ object Mechanics {
 
     // TECHNOLOGY
     // ========================================================================
-    val technologyFeatureUnlockWithGold = 1.z //startingGold * 2
+    val technologyUnlockGoldThreshold = 1.z //startingGold * 2
 
     // END TURN
     // ========================================================================

@@ -32,7 +32,7 @@ abstract class Feature(
     /**
      * Allows for exhaustive when, although Feature itself is not sealed.
      *
-     *     val feature: Feature = TODO()
+     *     val feature: Feature = getSomeFeature()
      *     when(val discriminator = feature.discriminator) {
      *         is Feature.Discriminator.Technology -> discriminator.asRuntimeType { tech: TechnologyFeature ->
      *         }

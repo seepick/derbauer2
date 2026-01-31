@@ -19,7 +19,6 @@ fun interface PromptProvider {
     fun buildPrompt(): Prompt
 }
 
-// TODO make it NOT sealed...
 sealed interface Prompt : KeyListener {
 
     val inputIndicator: String

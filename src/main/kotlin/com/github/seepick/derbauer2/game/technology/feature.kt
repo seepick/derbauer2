@@ -18,7 +18,7 @@ object TechnologyDescriptor : FeatureDescriptor(
     override val enumIdentifier = FeatureDescriptorEnum.Technology
 
     override fun check(user: User) =
-        user.hasEntity(Gold::class) && user.gold >= Mechanics.technologyFeatureUnlockWithGold
+        user.hasEntity(Gold::class) && user.gold >= Mechanics.technologyUnlockGoldThreshold
 
     override fun build() = TechnologyFeature(this)
 }
