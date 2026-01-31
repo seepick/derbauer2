@@ -9,16 +9,20 @@ permissions:
 jobs:
 
 
-  build-and-upload:
+  build-windows-exe:
     runs-on: windows-latest
     name: Building and uploading compose artifact
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
-      - name: Build Gradle Distribution
+      - uses: gradle/actions/setup-gradle@v4 # TODO ??
+      - name: Build Gradle Distribution 1
+        run: ./gradlew package -Papp_version="42.0.0"
+      - name: Build Gradle Distribution 2
         run: ./gradlew packageDistributionForCurrentOS -Papp_version="44.0.0"
       - name: get directory content of several folders
         run: |
+          dir .
           dir build\
           dir build\compose
           dir build\compose\binaries
