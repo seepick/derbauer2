@@ -1,14 +1,14 @@
 package com.github.seepick.derbauer2.textengine.audio
 
-import com.github.seepick.derbauer2.core.StateRepository
+import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 
 class MusicStateManager(
-    private val repository: StateRepository,
+    private val repository: TextengineStateRepository,
 ) {
     fun shouldAutoPlay() =
-        repository.loadPlayingState()
+        repository.isMusicPlaying()
 
     fun updatePlayingState(isPlaying: Boolean) {
-        repository.savePlayingState(isPlaying)
+        repository.setMusicPlaying(isPlaying)
     }
 }

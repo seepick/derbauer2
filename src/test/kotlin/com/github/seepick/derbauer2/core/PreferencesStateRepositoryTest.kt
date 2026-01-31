@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.core
 
+import com.github.seepick.derbauer2.game.core.PreferencesStateRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import java.util.prefs.Preferences
@@ -20,17 +21,17 @@ class PreferencesStateRepositoryTest : StringSpec({
     }
 
     "When load playing state with no saved value Then return default true" {
-        repository.loadPlayingState() shouldBe true
+        repository.isMusicPlaying() shouldBe true
     }
 
     "When save playing state as false Then load returns false" {
-        repository.savePlayingState(false)
-        repository.loadPlayingState() shouldBe false
+        repository.setMusicPlaying(false)
+        repository.isMusicPlaying() shouldBe false
     }
 
     "When save playing state as true Then load returns true" {
-        repository.savePlayingState(true)
-        repository.loadPlayingState() shouldBe true
+        repository.setMusicPlaying(true)
+        repository.isMusicPlaying() shouldBe true
     }
 }) {
     companion object {

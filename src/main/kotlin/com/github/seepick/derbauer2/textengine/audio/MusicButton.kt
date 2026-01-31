@@ -20,27 +20,27 @@ fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
     val player = remember {
         MusicPlayer(shuffler = shuffler)
     }
-    var playing by remember { mutableStateOf(false) }
+    var isPlaying by remember { mutableStateOf(false) }
 
     if (autoPlayMusic) {
         LaunchedEffect(Unit) {
             player.play()
-            playing = true
+            isPlaying = true
             stateManager.updatePlayingState(true)
         }
     }
     IconButton(onClick = {
-        if (playing) {
+        if (isPlaying) {
             player.stop()
-            playing = false
+            isPlaying = false
             stateManager.updatePlayingState(false)
         } else {
             player.play()
-            playing = true
+            isPlaying = true
             stateManager.updatePlayingState(true)
         }
     }) {
-        Text(if (playing) "⏸️" else "▶️", color = Color.White)
+        Text(if (isPlaying) "⏸️" else "▶️", color = Color.White)
     }
     DisposableEffect(Unit) {
         onDispose {
