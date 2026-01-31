@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -29,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
@@ -55,14 +57,14 @@ private val log = logger {}
 fun showMainWindow(
     title: String = "Main Window",
     mainModule: Module,
-    initState: (Koin) -> Unit,
+    initState: (Koin) -> Unit = {},
 ) {
     application {
         KoinApplication(application = {
             modules(textengineModule(), mainModule)
         }) {
             val state = rememberWindowState(
-                size = MainWinSize.dpSize,
+                size = MainWin.dpSize,
                 position = WindowPosition.Aligned(Alignment.Center),
             )
             var tick by remember { mutableIntStateOf(0) }
@@ -73,15 +75,15 @@ fun showMainWindow(
             val textmap = koinInject<Textmap>()
 
             val density = LocalDensity.current
-            val leftBarWidth = 40.dp
-            val cursorLeftThreshold = with(density) { leftBarWidth.toPx() }
+            val toolbarWidth = 40.dp
+            val cursorLeftThreshold = with(density) { toolbarWidth.toPx() }
             var isCursorNearLeft by remember { mutableStateOf(false) }
             val leftBarAnimationDuration = 200
-            val leftBarOffset by animateDpAsState(
+            val toolbarOffset by animateDpAsState(
                 targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
                 animationSpec = tween(durationMillis = leftBarAnimationDuration)
             )
-            val leftBarAlpha by animateFloatAsState(
+            val toolbarAlpha by animateFloatAsState(
                 targetValue = if (isCursorNearLeft) 0.8f else 0.4f,
                 animationSpec = tween(durationMillis = leftBarAnimationDuration)
             )
@@ -108,12 +110,12 @@ fun showMainWindow(
                         modifier = Modifier
                             .fillMaxSize()
                             .border(
-                                MainWinSize.outerBorder,
+                                MainWin.outerBorder,
                                 Color.fgColor
                             )
-                            .padding(MainWinSize.outerBorder)
+                            .padding(MainWin.outerBorder)
                             .background(Color.bgColor)
-                            .padding(MainWinSize.innerMargin)
+                            .padding(MainWin.innerMargin)
                             .focusRequester(focusRequester)
                             .focusable()
                             .onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
@@ -139,29 +141,35 @@ fun showMainWindow(
                     ) {
                         page.invalidate()
                         page.render(textmap)
-                        MainTextArea(
-                            text = textmap.toFullString(),
-                        )
+                        MainTextArea(text = textmap.toFullString())
                         textmap.reset()
 
-
-                        // left edge sliding bar
-                        Box(modifier = Modifier.fillMaxSize()) {
-                            Box(
-                                modifier = Modifier
-                                    .align(Alignment.CenterStart)
-                                    .offset(x = leftBarOffset)
-                                    .width(leftBarWidth)
-                                    .fillMaxHeight()
-                                    .clip(RoundedCornerShape(4.dp))
-                                    .background(Color.fgColor.copy(alpha = leftBarAlpha))
-                            ) {
-                                MusicButton(autoPlayMusic = false)
-                            }
-                        }
+                        Toolbar(
+                            width = toolbarWidth,
+                            xOffset = toolbarOffset,
+                            bgAlpha = toolbarAlpha,
+                        )
                     }
                 }
             }
+        }
+    }
+}
+
+@Suppress("FunctionName")
+@Composable
+fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .offset(x = xOffset)
+                .width(width)
+                .fillMaxHeight()
+                .clip(RoundedCornerShape(4.dp))
+                .background(Color.fgColor.copy(alpha = bgAlpha))
+        ) {
+            MusicButton(autoPlayMusic = false)
         }
     }
 }
