@@ -12,7 +12,7 @@ class PreferencesStateRepository(
     private val log = logger {}
     private val prefs = Preferences.userNodeForPackage(storagePackage.java)
 
-    override fun isMusicPlaying(): Boolean {
+    override fun getMusicPlaying(): Boolean {
         val state = prefs.getBoolean(KEY_IS_PLAYING, DEFAULT_IS_PLAYING)
         log.debug { "Loaded music playing state: $state" }
         return state

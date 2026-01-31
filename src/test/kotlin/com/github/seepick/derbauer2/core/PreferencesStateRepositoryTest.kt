@@ -21,17 +21,17 @@ class PreferencesStateRepositoryTest : StringSpec({
     }
 
     "When load playing state with no saved value Then return default true" {
-        repository.isMusicPlaying() shouldBe true
+        repository.getMusicPlaying() shouldBe true
     }
 
     "When save playing state as false Then load returns false" {
         repository.setMusicPlaying(false)
-        repository.isMusicPlaying() shouldBe false
+        repository.getMusicPlaying() shouldBe false
     }
 
     "When save playing state as true Then load returns true" {
         repository.setMusicPlaying(true)
-        repository.isMusicPlaying() shouldBe true
+        repository.getMusicPlaying() shouldBe true
     }
 }) {
     companion object {

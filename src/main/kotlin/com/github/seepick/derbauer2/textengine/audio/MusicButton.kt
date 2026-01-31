@@ -11,11 +11,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.github.seepick.derbauer2.game.probability.ListShuffler
+import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import org.koin.compose.koinInject
 
 @Suppress("FunctionName")
 @Composable
-fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
+fun MusicButton(autoPlayMusic: Boolean, stateRepo: TextengineStateRepository) {
     val shuffler = koinInject<ListShuffler>()
     val player = remember {
         MusicPlayer(shuffler = shuffler)
@@ -26,18 +27,18 @@ fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
         LaunchedEffect(Unit) {
             player.play()
             isPlaying = true
-            stateManager.updatePlayingState(true)
+            stateRepo.setMusicPlaying(true)
         }
     }
     IconButton(onClick = {
         if (isPlaying) {
             player.stop()
             isPlaying = false
-            stateManager.updatePlayingState(false)
+            stateRepo.setMusicPlaying(false)
         } else {
             player.play()
             isPlaying = true
-            stateManager.updatePlayingState(true)
+            stateRepo.setMusicPlaying(true)
         }
     }) {
         Text(if (isPlaying) "⏸️" else "▶️", color = Color.White)

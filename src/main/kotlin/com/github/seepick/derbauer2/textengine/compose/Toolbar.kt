@@ -15,16 +15,16 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
-import com.github.seepick.derbauer2.textengine.audio.MusicStateManager
 import com.github.seepick.derbauer2.textengine.fgColor
 import org.koin.compose.koinInject
 
 @Suppress("FunctionName")
 @Composable
 fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
-    val stateManager = koinInject<MusicStateManager>()
-    val autoPlayMusic = remember { stateManager.shouldAutoPlay() }
+    val stateRepo = koinInject<TextengineStateRepository>()
+    val storedMusicPlayState = remember { stateRepo.getMusicPlaying() }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -37,8 +37,8 @@ fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
                 .background(Color.fgColor.copy(alpha = bgAlpha))
         ) {
             MusicButton(
-                autoPlayMusic = autoPlayMusic,
-                stateManager = stateManager,
+                autoPlayMusic = storedMusicPlayState,
+                stateRepo = stateRepo,
             )
         }
     }
