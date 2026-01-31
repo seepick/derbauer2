@@ -3,30 +3,14 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val distributionPackageVersion = "1.0.0"
 
-@Suppress("MayBeConstant")
-object Versions {
-    val compose = "1.10.0"
-    val detekt = "1.23.8"
-    val jacoco = "0.8.14"
-    val jlayer = "1.0.1"
-    val junit4 = "4.13.2"
-    val junitVintage = "6.0.2"
-    val koin = "4.0.2" // NO! 4.1.1 UnsatisfiedLinkError in combination with compose desktop
-    val kotest = "6.1.2"
-    val kotlin = "2.3.0"
-    val kotlinLogging = "7.0.14"
-    val logback = "1.5.27"
-    val mockk = "1.14.9"
-}
-
 plugins {
-    kotlin("jvm") version "2.3.0"
-    id("org.jetbrains.kotlin.plugin.compose") version "2.3.0"
-    id("org.jetbrains.compose") version "1.10.0" // duplicate from above :-/
-    id("com.github.ben-manes.versions") version "0.53.0"
+    alias(libs.plugins.kotlin)
+    alias(libs.plugins.compose.core)
+    alias(libs.plugins.compose.kotlin)
+    alias(libs.plugins.benManes)
     id("jacoco")
-    id("org.sonarqube") version "7.2.2.6593"
-    id("io.gitlab.arturbosch.detekt") version "1.23.8"
+    alias(libs.plugins.sonarqube)
+    alias(libs.plugins.detekt)
 }
 
 repositories {
@@ -36,26 +20,18 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}")
-    implementation(compose.desktop.currentOs)
-    //  org.jetbrains.compose.desktop:desktop-jvm-macos-arm64 [1.9.0 -> 1.10.0]
-    listOf("compose", "compose-viewmodel").forEach {
-        implementation("io.insert-koin:koin-$it:${Versions.koin}")
-    }
-    implementation("javazoom:jlayer:${Versions.jlayer}") // play mp3s
-    implementation("io.github.oshai:kotlin-logging:${Versions.kotlinLogging}")
-    implementation("ch.qos.logback:logback-classic:${Versions.logback}")
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
-    // test
-    listOf("assertions-core", "property", "runner-junit5", "extensions-koin").forEach {
-        testImplementation("io.kotest:kotest-$it:${Versions.kotest}")
-    }
-    testImplementation("io.mockk:mockk:${Versions.mockk}")
-    testImplementation("io.insert-koin:koin-test:${Versions.koin}")
-    // ui tests
-    testImplementation("org.jetbrains.compose.ui:ui-test-junit4:${Versions.compose}")
-    testImplementation("junit:junit:${Versions.junit4}")
-    testImplementation("org.junit.vintage:junit-vintage-engine:${Versions.junitVintage}") // to run JUnit4 with JUnit5
+    implementation(libs.kotlin.reflect)
+    implementation(libs.compose.desktopCurrentOs)
+    implementation(libs.koin.compose)
+    implementation(libs.koin.composeViewmodel)
+    implementation(libs.jlayer) // play mp3s
+    implementation(libs.logging.kotlin)
+    implementation(libs.logging.logback)
+    detektPlugins(libs.detektFormatting)
+    testImplementation(libs.bundles.kotest)
+    testImplementation(libs.mockk)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.bundles.uiTests)
 }
 
 kotlin {
@@ -87,7 +63,7 @@ tasks.withType<Test>().configureEach {
 }
 
 jacoco {
-    toolVersion = Versions.jacoco
+    toolVersion = libs.versions.jacoco.get()
 }
 
 tasks.test {
@@ -102,7 +78,7 @@ tasks.jacocoTestReport {
 }
 
 detekt {
-    toolVersion = Versions.detekt
+    toolVersion = libs.versions.detekt.get()
     source.setFrom("src/main/kotlin", "src/test/kotlin")
     config.setFrom(project.rootDir.absolutePath + "/config/detekt.yml")
     parallel = true

@@ -1,0 +1,48 @@
+# ./gradlew --refresh-dependencies
+
+[versions]
+ben-manes = "0.53.0"
+compose = "1.10.0"
+detekt = "1.23.8"
+jacoco = "0.8.14"
+jlayer = "1.0.1"
+junit4 = "4.13.2"
+junitVintage = "6.0.2"
+koin = "4.0.2"
+kotest = "6.1.2"
+kotlin = "2.3.0"
+kotlinLogging = "7.0.14"
+logback = "1.5.27"
+mockk = "1.14.9"
+sonarqube = "7.2.2.6593"
+
+[plugins]
+benManes = { id = "com.github.ben-manes.versions", version.ref = "ben-manes" }
+compose-core = { id = "org.jetbrains.compose", version.ref = "compose" }
+compose-kotlin = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+
+[libraries]
+compose-desktopCurrentOs = { module = "org.jetbrains.compose.desktop:desktop", version.ref = "compose" }
+compose-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
+detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+jlayer = { module = "javazoom:jlayer", version.ref = "jlayer" }
+junit-v4 = { module = "junit:junit", version.ref = "junit4" }
+junit-vintageEngine = { module = "org.junit.vintage:junit-vintage-engine", version.ref = "junitVintage" }
+koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
+koin-composeViewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test", version.ref = "koin" }
+kotest-assertionsCore = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-extensionsKoin = { module = "io.kotest:kotest-extensions-koin", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-runnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+logging-kotlin = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlinLogging" }
+logging-logback = { module = "ch.qos.logback:logback-classic", version.ref = "logback" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+[bundles]
+kotest = ["kotest-assertionsCore", "kotest-extensionsKoin", "kotest-property", "kotest-runnerJunit5"]
+uiTests = ["compose-junit4", "junit-v4", "junit-vintageEngine"]
