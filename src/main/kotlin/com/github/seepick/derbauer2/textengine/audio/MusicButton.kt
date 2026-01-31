@@ -15,7 +15,7 @@ import org.koin.compose.koinInject
 
 @Suppress("FunctionName")
 @Composable
-fun MusicButton(autoPlayMusic: Boolean) {
+fun MusicButton(autoPlayMusic: Boolean, stateManager: MusicStateManager) {
     val shuffler = koinInject<ListShuffler>()
     val player = remember {
         MusicPlayer(shuffler = shuffler)
@@ -26,20 +26,25 @@ fun MusicButton(autoPlayMusic: Boolean) {
         LaunchedEffect(Unit) {
             player.play()
             playing = true
+            stateManager.updatePlayingState(true)
         }
     }
     IconButton(onClick = {
         if (playing) {
             player.stop()
             playing = false
+            stateManager.updatePlayingState(false)
         } else {
             player.play()
             playing = true
+            stateManager.updatePlayingState(true)
         }
     }) {
         Text(if (playing) "⏸️" else "▶️", color = Color.Companion.White)
     }
     DisposableEffect(Unit) {
-        onDispose { player.stop() }
+        onDispose {
+            player.stop()
+        }
     }
 }
