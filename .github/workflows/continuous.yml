@@ -12,8 +12,10 @@ jobs:
       setup-sonar: true
   exec-quality-gates:
     uses: ./.github/workflows/include-quality-gates.yml
+    needs: [ setup-environment ]
   finalization:
     name: SonarQube
+    needs: [ exec-quality-gates ]
     runs-on: ubuntu-latest
     steps:
       - name: Trigger SonarQube via Gradle
