@@ -8,10 +8,10 @@ jobs:
     name: Execute CI Pipeline
     runs-on: ubuntu-latest
     steps:
-      - uses: ./.github/workflows/actions/setup-env
+      - uses: ./.github/actions/setup-env
         with:
           setup-sonar: true
-      - uses: ./.github/workflows/actions/exec-quality-gate
+      - uses: ./.github/actions/exec-quality-gate
       - name: Trigger SonarQube via Gradle
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
