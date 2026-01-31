@@ -1,6 +1,7 @@
 # Technology
 
-* conventional tech-tree; permanent effects can be enabled (upgrades)
+* conventional tech-tree; permanent effects can be enabled (no need for concept of "upgrade", tech-tree will do it
+  together with Features concept)
 * requires ResearchPoints (produced in tech-buildings) instead Gold to enable/buy
 * attributes:
     * costs: (mostly) ResearchPoints; maybe other resources too (?)

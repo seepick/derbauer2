@@ -5,6 +5,10 @@
     * this is steered by the features enabled/disabled and algorithmic mechanics used
     * some parts will run out, some easy to produce, ... this way influence user's behavior/strategy/focus
 * give them fancy names: bronze age, renessaince, ...
+* in earl stage of game, food is the main thing
+    - later on, gold
+    - later later on, land as buildings require lots of land
+    - push user to get more involved in military actions (as trading is highly expensive)
 
 ## Example
 
@@ -17,7 +21,7 @@
     * rat happening
 1. Food age III
     * trade land
-    * first upgrades possible
+    * first tech possible
 1. Economy age I: gold is "the thing"
     * farm upgrade
     * lots of buildings
@@ -30,7 +34,7 @@
     * lots of advanced buildings
     * happyness continuously low => need social buildings (in next age available only)
 1. Military age II
-    * many new military upgrades/buildings
+    * many new military tech/buildings
     * new social buildings
 1. Military age III
 1. Godly age?

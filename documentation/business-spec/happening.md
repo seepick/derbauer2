@@ -15,9 +15,9 @@
 * Affected by:
     * intensity adjusted (mechanics) by attraction for/resistence to
         * buildings: e.g. defense structure for bandits
-        * upgrades/tech (feature): e.g. better granary for rats
-        * stats: karma/luck, wealth, happyness
-        * previous behavior (use Business Intelligence / History data)
+        * tech (feature): e.g. better granary for rats
+            * stats: karma/luck, wealth, happyness
+            * previous behavior (use Business Intelligence / History data)
 * Effects:
     * gain/lose resources
     * can provide a temporary effect/modifier
@@ -73,12 +73,13 @@ Planetary:
 
 ## Effects
 
-* +/- resource/building/upgrade/army
+* +/- resource/building/army
 * +/- resource prod
 
 ## Ideas
 
-* increase likelyhood of rats if: lots of food, no buildings/upgrades which protect from it + eaten amount depends on
+* increase likelyhood of rats if: lots of food, no buildings/features/tech which protect from it + eaten amount depends
+  on
   amount of stored food
 * ? happenings mit selber viel choices (wie action game)
     - happenings auch waehrend dem turn (evtl durch action triggered)
@@ -88,7 +89,7 @@ Planetary:
     - e.g.: blessing from farm good increases farm productivity for X turns
     - affects: income, prod, efficiency, military
 * when land is lost, building(s) will be destroyed if not enough free land
-* reisender gibt schriftrolle fuer free upgrade
+* reisender gibt schriftrolle fuer free tech
 * new happening: random people/army join; make happening#condition() .. check whether player good capacity/necessary
   features
 

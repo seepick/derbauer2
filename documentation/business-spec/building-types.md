@@ -10,25 +10,25 @@ Areas:
 
 ## Civic
 
-About:
-
 * increase happyness/karma
 * the more people, the more social buildings required
 
 Examples:
 
-* Tent -> House -> Villa -> Mansion
+* Tent -> House -> Villa -> Mansion (nobility quarters)
     * +citizen cap
+    * higher versions provide more "stuff" (states like happyness/karma)
+    * higher levels enabled based on citizens count
+    * higher levels provide more protection from negative happenings
 * Church
     * +happyness/karma
+    * +luck (as praising the lord helps)
 * Pub
     * +happyness/karma
 * Workshop
-* TownHall
+* Town Hall/Center
 
 ## Economy/Resources
-
-About:
 
 * food cap/prod
 * people cap/prod (reproduction rate, immigrants)
@@ -41,6 +41,7 @@ Examples:
     * +food prod
 * Granary
     * +food cap, +rat protection
+    * protection from happenings (not basic granary, but more advanced silo lowers probability of rats happening)
 * "big granary":
     * resistince to happenings
 * Mine
@@ -53,8 +54,6 @@ Examples:
 * Harbor
 
 ## Military
-
-About:
 
 * unit cap/hire (=buy)
 * enable hire (new types)
@@ -74,9 +73,7 @@ Examples:
     * +defense
     * less likely to get raided by bandits
 
-## Research/Tech (upgrade/feature/action)
-
-About:
+## Research/Tech (feature/action)
 
 * gain more research points; faster tech progression
 * unlock certain features with it
@@ -84,11 +81,19 @@ About:
 Examples:
 
 * School
+* University
 * Library
 * Alchemy
 
 ## Special
 
-* Castle
-    * the ultimate building
+* these are one-time enablers of special features/actions/happenings
+
+Examples:
+
+* World Wonder Buildings
+    * think of civilization wonders; e.g. Pyramids, Hanging Gardens, ...
 * Monument
+* Castle
+    * the ultimate building in this game
+    * enables throne room visitors (action or happening?)
