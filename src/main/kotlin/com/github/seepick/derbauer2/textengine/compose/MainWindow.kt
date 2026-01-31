@@ -29,21 +29,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
+import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
-import com.github.seepick.derbauer2.game.DerBauer2
+import com.github.seepick.derbauer2.game.view.textengineModule
 import com.github.seepick.derbauer2.textengine.CurrentPage
-import com.github.seepick.derbauer2.textengine.MatrixSize
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
 import com.github.seepick.derbauer2.textengine.bgColor
 import com.github.seepick.derbauer2.textengine.fgColor
 import com.github.seepick.derbauer2.textengine.keyboard.toKeyPressed
-import com.github.seepick.derbauer2.textengine.textengineModule
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin
@@ -52,24 +50,6 @@ import org.koin.core.Koin
 import org.koin.core.module.Module
 
 private val log = logger {}
-private val outerBorder = 10.dp
-private val innerMargin = 5.dp
-val mainWindowMatrixSize = MatrixSize(rows = 25, cols = 80)
-private val mainContentWidth = 10.85.dp * mainWindowMatrixSize.cols
-private val mainContentHeight = 22.2.dp * mainWindowMatrixSize.rows
-
-private fun calcWinSize(): DpSize {
-    val borderAndMarginGap = outerBorder.times(2) + innerMargin.times(2)
-    return DpSize(
-        width = mainContentWidth + borderAndMarginGap,
-        height = mainContentHeight + borderAndMarginGap, // + 100.dp,
-    )
-}
-
-fun textengineModule() = textengineModule(
-    DerBauer2.initPageClass,
-    mainWindowMatrixSize
-)
 
 @Suppress("LongMethod", "MagicNumber", "CognitiveComplexMethod")
 fun showMainWindow(
@@ -81,8 +61,10 @@ fun showMainWindow(
         KoinApplication(application = {
             modules(textengineModule(), mainModule)
         }) {
-            val windowDpSize = calcWinSize()
-            val state = rememberWindowState(size = windowDpSize)
+            val state = rememberWindowState(
+                size = MainWinSize.dpSize,
+                position = WindowPosition.Aligned(Alignment.Center),
+            )
             var tick by remember { mutableIntStateOf(0) }
             val currentPage = koinInject<CurrentPage>()
             val page = getKoin().get<Page>(clazz = currentPage.pageClass)
@@ -126,12 +108,12 @@ fun showMainWindow(
                         modifier = Modifier
                             .fillMaxSize()
                             .border(
-                                outerBorder,
-                                androidx.compose.ui.graphics.Color.Companion.fgColor
+                                MainWinSize.outerBorder,
+                                Color.fgColor
                             )
-                            .padding(outerBorder)
-                            .background(androidx.compose.ui.graphics.Color.Companion.bgColor)
-                            .padding(innerMargin)
+                            .padding(MainWinSize.outerBorder)
+                            .background(Color.bgColor)
+                            .padding(MainWinSize.innerMargin)
                             .focusRequester(focusRequester)
                             .focusable()
                             .onPreviewKeyEvent { e -> // .onKeyEvent {  } ??

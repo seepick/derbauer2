@@ -23,6 +23,7 @@ Fix: Enable HTML in local builds or add a -Pci flag to produce XML-only in CI wh
 
 ## Next
 
+* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: happening amount with probability range
 * BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * BZ: implement game over (all citizens dead)

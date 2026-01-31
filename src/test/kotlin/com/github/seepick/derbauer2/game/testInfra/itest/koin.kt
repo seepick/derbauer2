@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.testInfra.itest
 import com.github.seepick.derbauer2.game.core.Warning
 import com.github.seepick.derbauer2.game.core.WarningListener
 import com.github.seepick.derbauer2.game.gameModule
-import com.github.seepick.derbauer2.textengine.compose.textengineModule
+import com.github.seepick.derbauer2.game.view.textengineModule
 import io.kotest.core.spec.Extendable
 import io.kotest.koin.KoinExtension
 import io.mockk.mockkClass

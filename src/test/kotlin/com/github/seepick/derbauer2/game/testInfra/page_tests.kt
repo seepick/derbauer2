@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Textmap
-import com.github.seepick.derbauer2.textengine.compose.mainWindowMatrixSize
+import com.github.seepick.derbauer2.textengine.compose.MainWinSize
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equals.shouldBeEqual
 import io.mockk.every
@@ -29,7 +29,7 @@ class SetupGamePageContext {
     }
     val gameRenderer = GameRenderer(user, turner)
     val resultHandler = mockk<InteractionResultHandler>()
-    val textmap = Textmap(mainWindowMatrixSize)
+    val textmap = Textmap(MainWinSize.matrixSize)
 }
 
 class GamePageParser(val pageString: String) {
@@ -39,9 +39,9 @@ class GamePageParser(val pageString: String) {
     private val hrSymbol = "="
 
     init {
-        lines shouldHaveSize mainWindowMatrixSize.rows
-        lines[1] shouldBeEqual hrSymbol.repeat(mainWindowMatrixSize.cols)
-        lines[lines.size - 2] shouldBeEqual hrSymbol.repeat(mainWindowMatrixSize.cols)
+        lines shouldHaveSize MainWinSize.matrixSize.rows
+        lines[1] shouldBeEqual hrSymbol.repeat(MainWinSize.matrixSize.cols)
+        lines[lines.size - 2] shouldBeEqual hrSymbol.repeat(MainWinSize.matrixSize.cols)
     }
 
     // some rough guess with size 10 ;)

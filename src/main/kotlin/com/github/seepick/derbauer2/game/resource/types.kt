@@ -21,7 +21,7 @@ interface ResourceReference {
 class Citizen : StorableResource, HasLabel by Data, HasEmoji by Data {
     object Data : HasLabel, HasEmoji {
         override val labelSingular = "Citizen"
-        override val emojiOrNull = "🧑".emoji
+        override val emojiOrNull = "🙎🏻‍♂️".emoji
     }
 
     override var _setOwnedInternal: Z = 0.z
