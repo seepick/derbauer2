@@ -25,19 +25,19 @@ interface ListXOps<E : Any> : List<E> {
     fun <X> findAs(entityClass: KClass<out E>): X =
         findOrNull(entityClass) as X ?: errorNotFoundEntity(entityClass, this)
 
-    fun <V> letIfExists(type: KClass<out E>, letCode: (E) -> V): V? =
-        findOrNull(type)?.let(letCode)
+    fun <V> letIfExists(klass: KClass<out E>, letCode: (E) -> V): V? =
+        findOrNull(klass)?.let(letCode)
 
     fun alsoIfExists(klass: KClass<out E>, alsoCode: (E) -> Unit) {
         findOrNull(klass)?.also(alsoCode)
     }
 }
 
-fun errorNotFoundEntity(type: KClass<*>, options: List<Any>): Nothing {
-    throw NotFoundEntityException(type, options)
+fun errorNotFoundEntity(notFoundClass: KClass<*>, options: List<Any>): Nothing {
+    throw NotFoundEntityException(notFoundClass, options)
 }
 
-class NotFoundEntityException(type: KClass<*>, options: List<Any>) :
+class NotFoundEntityException(notFoundClass: KClass<*>, options: List<Any>) :
     IllegalArgumentException(
-        "Nothing found for type: ${type.simpleName} (available: ${options.map { it::class.simpleName }})"
+        "Nothing found for ${notFoundClass.simpleName} (available: ${options.map { it::class.simpleName }})"
     )

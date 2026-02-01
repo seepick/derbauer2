@@ -9,15 +9,15 @@ import kotlin.reflect.KClass
 val User.resources get() = ListX(all.filterIsInstance<Resource>())
 
 @Suppress("UNCHECKED_CAST")
-fun <R : Resource> User.resource(type: KClass<R>): R =
-    resources.find(type) as R
+fun <R : Resource> User.resource(resourceClass: KClass<R>): R =
+    resources.find(resourceClass) as R
 
 inline fun <reified R : Resource> User.resource(): R =
     resources.find<R>()
 
 @Suppress("UNCHECKED_CAST")
-fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? =
-    resources.findOrNull(type) as? R?
+fun <R : Resource> User.resourceOrNull(resourceClass: KClass<R>): R? =
+    resources.findOrNull(resourceClass) as? R?
 
 context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)

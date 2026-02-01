@@ -3,6 +3,8 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureMultiView
 import com.github.seepick.derbauer2.game.happening.HappeningMultiView
+import com.github.seepick.derbauer2.game.resource.ResourceChange
+import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.view.ContinueButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -30,8 +32,16 @@ class ReportPage(
         textmap.emptyLine()
         textmap.line("Resource production:")
         val report = user.reports.last()
-        report.resourceChanges.changes.forEach {
-            textmap.line("${it.resource.emojiSpaceOrEmpty}${it.resource.labelPlural} ${it.changeAmount.toPlusString()}")
+        report.resourceChanges.changes.forEach { change ->
+            with(user) {
+                textmap.line(change.toLine())
+            }
         }
     },
 )
+
+context(user: User)
+fun ResourceChange.toLine(): String {
+    val res = user.resource(this.resourceClass)
+    return "${res.emojiSpaceOrEmpty}${res.labelPlural} ${this.changeAmount.toPlusString()}"
+}

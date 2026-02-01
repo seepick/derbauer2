@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 val User.buildings get() = ListX(all.filterIsInstance<Building>())
 
 @Suppress("UNCHECKED_CAST")
-fun <B : Building> User.building(type: KClass<B>): B = buildings.find(type) as B
+fun <B : Building> User.building(buildingClass: KClass<B>): B = buildings.find(buildingClass) as B
 
 context(user: User)
 val BuildingReference.building get() = user.building(buildingClass)

@@ -36,5 +36,5 @@ fun Extendable.installGameKoinExtension() {
     )
 }
 
-fun <T> KoinTest.get(kClass: KClass<*>): T =
-    getKoin().get(kClass)
+fun <T> KoinTest.get(klass: KClass<*>): T =
+    getKoin().get(klass)

@@ -42,7 +42,7 @@ class Turner(
 private fun ResourceChanges.execute(user: User) {
     user.execTx(changes.map { line ->
         TxResource(
-            targetClass = line.resource::class,
+            targetClass = line.resourceClass,
             amount = line.changeAmount,
         )
     }).errorOnFail()

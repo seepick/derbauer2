@@ -12,14 +12,16 @@ fun List<ResourceChange>.mergeToSingleChanges(): ResourceChanges = buildResource
 }
 
 data class ResourceChange(
-    val resource: Resource,
+    val resourceClass: KClass<out Resource>,
     val changeAmount: Zz,
 ) {
-    constructor(resource: Resource, changeAmount: Z) : this(resource, changeAmount.asZz)
+    constructor(resource: Resource, changeAmount: Zz) : this(resource::class, changeAmount)
+    constructor(resourceClass: KClass<out Resource>, changeAmount: Z) : this(resourceClass, changeAmount.asZz)
+    constructor(resource: Resource, changeAmount: Z) : this(resource::class, changeAmount.asZz)
 
     operator fun plus(other: ResourceChange): ResourceChange {
-        require(other.resource::class == this.resource::class)
-        return ResourceChange(resource, changeAmount + other.changeAmount)
+        require(other.resourceClass::class == this.resourceClass::class)
+        return ResourceChange(resourceClass, changeAmount + other.changeAmount)
     }
 }
 
@@ -27,15 +29,18 @@ class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
 ) {
     init {
-        val distinct = changes.map { it.resource::class }.distinct()
+        val distinct = changes.map { it.resourceClass }.distinct()
         require(distinct.size == changes.size) {
-            "Must not contain multiple changes for the same resource!"
+            "Must not contain multiple changes for the same resource!\n" +
+                    "Found duplicates for: ${
+                        distinct.filter { rc -> changes.count { it.resourceClass == rc } > 1 }
+                    }"
         }
     }
 
     fun merge(other: ResourceChanges) = buildResourceChanges {
-        changes.forEach { add(it.resource, it.changeAmount) }
-        other.changes.forEach { add(it.resource, it.changeAmount) }
+        changes.forEach { add(it.resourceClass, it.changeAmount) }
+        other.changes.forEach { add(it.resourceClass, it.changeAmount) }
     }
 
     companion object {
@@ -48,26 +53,39 @@ class ResourceChanges private constructor(
 
     class Builder {
 
-        private val changes = mutableMapOf<KClass<out Resource>, ResourceChange>()
+        private val changesByResourceClass = mutableMapOf<KClass<out Resource>, ResourceChange>()
 
         fun add(newChange: ResourceChange) {
-            val oldChange = changes.getOrPut(newChange.resource::class) { ResourceChange(newChange.resource, 0.zz) }
-            changes[newChange.resource::class] = oldChange + newChange
+            val oldChange = changesByResourceClass.getOrPut(newChange.resourceClass) {
+                ResourceChange(
+                    newChange.resourceClass,
+                    0.zz
+                )
+            }
+            changesByResourceClass[newChange.resourceClass] = oldChange + newChange
         }
 
         fun addAll(newChanges: Iterable<ResourceChange>) {
             newChanges.forEach { add(it) }
         }
 
+        fun add(resourceClass: KClass<out Resource>, change: Zz) {
+            add(ResourceChange(resourceClass, change))
+        }
+
         fun add(resource: Resource, change: Zz) {
-            add(ResourceChange(resource, change))
+            add(resource::class, change)
+        }
+
+        fun add(resourceClass: KClass<out Resource>, change: Z) {
+            add(resourceClass, change.asZz)
         }
 
         fun add(resource: Resource, change: Z) {
-            add(resource, change.asZz)
+            add(resource::class, change.asZz)
         }
 
-        fun build() = ResourceChanges(changes.entries.map { it.value })
+        fun build() = ResourceChanges(changesByResourceClass.entries.map { it.value })
     }
 }
 
