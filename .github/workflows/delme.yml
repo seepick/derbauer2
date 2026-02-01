@@ -19,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          echo "You selected: ${{ github.event.inputs.version_segment }}"
+          echo "You selected version segment '${{ github.event.inputs.version_segment }}' to bump."
+      - uses: actions/checkout@v4
       - name: shell exec
         id: step-version
         run: |
