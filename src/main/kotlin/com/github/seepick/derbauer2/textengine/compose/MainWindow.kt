@@ -66,7 +66,7 @@ fun showMainWindow(
     }
 }
 
-private const val TOOLBAR_ANIMATION_DURATION = 200
+const val TOOLBAR_ANIMATION_DURATION = 200
 
 @Suppress("FunctionName")
 @Composable
@@ -118,40 +118,34 @@ fun MainWindow(
                 focusRequester.requestFocus()
             }
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .testTag(TestTags.mainBox)
-                    .border(
-                        MainWin.outerBorder,
-                        Color.fgColor
-                    )
-                    .padding(MainWin.outerBorder)
-                    .background(Color.bgColor)
-                    .padding(MainWin.innerMargin)
-                    .focusRequester(focusRequester)
-                    .focusable()
-                    .onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
+                modifier = Modifier.fillMaxSize().testTag(TestTags.mainBox).border(
+                    MainWin.outerBorder, Color.fgColor
+                ).padding(MainWin.outerBorder).background(Color.bgColor).padding(MainWin.innerMargin)
+                    .focusRequester(focusRequester).focusable().onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
                         val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
                         page.onKeyPressed(key).also { isHandled ->
                             if (isHandled) {
                                 tick++ // trigger re-composition
                             }
                         }
-                    }
-                    .pointerInput(Unit) {
+                    }.pointerInput(Unit) {
                         awaitPointerEventScope {
                             while (true) {
                                 val event = awaitPointerEvent()
-                                val pos = event.changes.firstOrNull()?.position ?: continue
+                                val pos = event.changes.firstOrNull()?.position
+                                if (pos == null) {
+                                    println("pos is NULL")
+                                    continue
+                                }
                                 val near = pos.x <= cursorLeftThreshold
+                                println("Pointer at x=${pos.x} (thres:$cursorLeftThreshold), nearLeft=$near")
                                 if (near != isCursorNearLeft) {
-                                    log.debug { "Changing toolbar visibility to: $near" }
+                                    log.debug { "Mouse Move: Changing toolbar visibility to: $near" }
                                     isCursorNearLeft = near
                                 }
                             }
                         }
-                    }
-            ) {
+                    }) {
                 page.invalidate()
                 page.render(textmap)
                 MainTextArea(text = textmap.toFullString())

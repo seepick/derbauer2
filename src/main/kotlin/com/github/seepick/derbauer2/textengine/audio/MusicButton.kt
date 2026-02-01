@@ -12,7 +12,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import com.github.seepick.derbauer2.game.probability.ListShuffler
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.koinInject
+
+private val log = logger {}
 
 @Suppress("FunctionName")
 @Composable
@@ -45,6 +48,7 @@ fun MusicButton(autoPlayMusic: Boolean, stateRepo: TextengineStateRepository) {
     }
     DisposableEffect(Unit) {
         onDispose {
+            log.debug { "disposing MusicButton" }
             player.stop()
         }
     }

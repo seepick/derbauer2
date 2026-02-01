@@ -20,14 +20,17 @@ import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
 import com.github.seepick.derbauer2.textengine.fgColor
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.koinInject
+
+private val log = logger {}
 
 @Suppress("FunctionName")
 @Composable
 fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
     val stateRepo = koinInject<TextengineStateRepository>()
     val storedMusicPlayState = remember { stateRepo.getMusicPlaying() }
-
+    log.trace { "Receiveing toolbar.xOffset: $xOffset" }
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
