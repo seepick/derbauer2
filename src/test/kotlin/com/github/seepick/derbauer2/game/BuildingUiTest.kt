@@ -1,6 +1,8 @@
 package com.github.seepick.derbauer2.game
 
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.test.SemanticsMatcher
+import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performMouseInput
@@ -47,15 +49,29 @@ class ToolbarUiTest : UiTest, ComposeTest {
     override val log = logger {}
     @get:Rule
     override val ui = createComposeRule()
+    private val anyYPos = 0.0f
+    private val xPosWithinThreshold = 10.0f
 
     @Test
-    fun `When move cursor left Then`() = uiTest {
+    fun `When move cursor to the left edge Then toolbar moves right`() = uiTest {
+        val toolbar = ui.onNodeWithTag(TestTags.toolbar)
+        toolbar.assert(isToolbarVisible(false))
         ui.onNodeWithTag(TestTags.mainBox).performMouseInput {
-            println("moving")
-            moveTo(Offset(12.0f, 12.0f))
+            moveTo(Offset(xPosWithinThreshold, anyYPos))
         }
-        Thread.sleep(5_000)
+        toolbar.assert(isToolbarVisible(true))
     }
+    // TEST: music player button works
 }
-//    move pointer to left, toolbar swipes open
-//    music player button works
+
+fun isToolbarVisible(expectVisible: Boolean): SemanticsMatcher =
+    SemanticsMatcher("toolbar in") { node ->
+//            node.layoutInfo.getModifierInfo().single { it.modifier ... check node.background.color.alpha }
+        val xPos = node.positionInWindow.x
+        if (expectVisible) {
+            xPos > 0f
+        } else {
+            xPos < 0f
+        }
+    }
+

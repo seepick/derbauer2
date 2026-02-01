@@ -145,6 +145,7 @@ fun MainWindow(
                                 val pos = event.changes.firstOrNull()?.position ?: continue
                                 val near = pos.x <= cursorLeftThreshold
                                 if (near != isCursorNearLeft) {
+                                    log.debug { "Changing toolbar visibility to: $near" }
                                     isCursorNearLeft = near
                                 }
                             }

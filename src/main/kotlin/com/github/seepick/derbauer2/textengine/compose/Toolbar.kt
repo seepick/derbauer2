@@ -13,8 +13,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import com.github.seepick.derbauer2.textengine.audio.MusicButton
 import com.github.seepick.derbauer2.textengine.fgColor
@@ -33,6 +35,7 @@ fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
                 .offset(x = xOffset)
                 .width(width)
                 .fillMaxHeight()
+                .testTag(TestTags.toolbar)
                 .clip(RoundedCornerShape(4.dp))
                 .background(Color.fgColor.copy(alpha = bgAlpha))
         ) {
