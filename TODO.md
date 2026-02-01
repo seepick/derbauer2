@@ -9,18 +9,17 @@ Continuous Cleanup:
 
 ## Versions
 
+### new ideas
+
 ### v5
 
-* release semver like; input which to auto-increment: major, minor, patch
+* UI: make the whole window bigger
+* UI-BUG: width with emojis is wrong
+    * implement spike: render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular
+      table...?
+* BZ: trade is not enabled at startup, first needs... gold become < 10, or so...
 * !! BZ: finish Technology concept
 * ! BZ: implement birth rate, increase citizens on turn
-* BZ: implement citizens death if no food
-    * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve (currently only starve if 0
-      food)
-* BZ: general variability end turn (production, taxes, consumption)
-* BZ: implement game over (all citizens dead)
-* IT: macos app signing
-* BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 
 ### v6
 
@@ -28,6 +27,7 @@ Continuous Cleanup:
 
 ## Backlog
 
+* BZ: general variability end turn (production, taxes, consumption)
 * BZ: change (user/city) titles/designators based on criteria
     * can be upped and lowered again! different than feature, which is a one-way unlock
 * cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
@@ -41,11 +41,16 @@ Continuous Cleanup:
 * BZ: extend probability provider
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
 * IT: jar file for linux&co
+* BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve
+    * currently only starve if 0 food
 
-- BZ: attack barbarins, or NPCs
+- BZ: attack barbarians, or NPCs
+
+* BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 
 ### Tech
 
+* macos app signing
 * ad github workflow: check-quality-gates also does jacoco verify/enforce threshold
 * ad github workflow: check-quality-gates valid doc runs independent from previous step, so both can fail
 * GitHub REFACTOR necessary (deprecated functionality used)

@@ -56,7 +56,7 @@ abstract class NotificationPage(
     override fun render(textmap: Textmap) {
         textmap.line("$emoji $title $emoji")
         textmap.emptyLine()
-        textmap.multiLine(asciiArt().value)
+        textmap.asciiart(asciiArt())
         textmap.emptyLine()
         contentRenderer(textmap)
         textmap.fillVertical(1)

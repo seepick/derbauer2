@@ -19,9 +19,8 @@ import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtensio
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
-import org.koin.test.KoinTest
 
-class HappeningITest : ITest, KoinTest, DescribeSpec() {
+class HappeningITest : ITest, DescribeSpec() {
     init {
         installGameKoinExtension()
         describe("When turn and continue next page") {
@@ -35,7 +34,7 @@ class HappeningITest : ITest, KoinTest, DescribeSpec() {
                         selectors += Happenings to AlwaysFirstProbabilitySelector<HappeningDescriptor>()
                     }
                 } When {
-                    nextTurn {
+                    nextTurnToReport {
                         nextPage()
                     }
                 } Then {

@@ -11,6 +11,7 @@ fun viewModule() = module {
     singleOf(::GameRenderer)
     singleOf(::ReportPage)
     singleOf(::InteractionResultHandler)
+    singleOf(::GameOverPage)
 }
 
 fun textengineModule() = textengineModule(DerBauer2.initPageClass)

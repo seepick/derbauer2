@@ -18,8 +18,9 @@ class HomePage(
     gameRenderer: GameRenderer,
     user: User,
 ) : PromptGamePage(buttons = listOf(ContinueButton("Next Turn") {
-    turner.collectAndExecuteNextTurnReport()
-    currentPage.pageClass = ReportPage::class
+    val report = turner.collectAndExecuteNextTurnReport()
+    currentPage.pageClass = if (report.isGameOver) GameOverPage::class else ReportPage::class
+
 }), gameRenderer = gameRenderer, promptBuilder = {
     SelectPrompt(
         title = "What shall we do next, ${user.designator.label}?", buildList {

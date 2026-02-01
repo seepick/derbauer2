@@ -1,9 +1,13 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.citizen.CitizenTurner
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.citizens
+import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.ResourceReport
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.resource.TxResource
@@ -37,10 +41,18 @@ class Turner(
             resourceReportLines = resourceReport.merge(citizenReport).lines,
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
+            isGameOver = user.isGameOver(),
         ).also { result ->
             reports.addReport(result)
         }
     }
+
+    private fun User.isGameOver(): Boolean =
+        if (!hasEntity<Citizen>()) {
+            false
+        } else {
+            citizens == 0.z
+        }
 }
 
 private fun ResourceReport.execute(user: User) {

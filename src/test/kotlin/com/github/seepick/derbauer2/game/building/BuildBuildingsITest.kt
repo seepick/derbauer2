@@ -9,9 +9,8 @@ import com.github.seepick.derbauer2.game.testInfra.itest.Then
 import com.github.seepick.derbauer2.game.testInfra.itest.When
 import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
 import io.kotest.core.spec.style.DescribeSpec
-import org.koin.test.KoinTest
 
-class BuildBuildingsITest : ITest, KoinTest, DescribeSpec() {
+class BuildBuildingsITest : ITest, DescribeSpec() {
     init {
         installGameKoinExtension()
         describe("When build simple building") {

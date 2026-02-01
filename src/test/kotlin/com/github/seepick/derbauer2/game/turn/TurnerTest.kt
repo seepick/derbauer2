@@ -111,4 +111,28 @@ class TurnerTest : DescribeSpec({
             gold.owned shouldBeEqual 1.z
         }
     }
+    describe("game over") {
+        it("Given no entity Then game cant be over") {
+            val report = turner.collectAndExecuteNextTurnReport()
+
+            report.isGameOver shouldBeEqual false
+        }
+        it("Given >0 citizens When take turn Then game is not over") {
+            val house = House()
+            user.enableAndSet(Land(), house.landUse)
+            user.enableAndSet(house, 1.z)
+            user.enableAndSet(Citizen(), 1.z)
+
+            val report = turner.collectAndExecuteNextTurnReport()
+
+            report.isGameOver shouldBeEqual false
+        }
+        it("Given no citizens When take turn Then game is over") {
+            user.enableAndSet(Citizen(), 0.z)
+
+            val report = turner.collectAndExecuteNextTurnReport()
+
+            report.isGameOver shouldBeEqual true
+        }
+    }
 })

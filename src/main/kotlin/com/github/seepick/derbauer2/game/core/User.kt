@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -63,6 +64,10 @@ class User(
     override fun toString() = "User($_all)"
 }
 
+inline fun <reified E : Entity> User.hasEntity() = all.findOrNull<E>() != null
+
+
 val User.gold get() = resource(Gold::class).owned
 val User.food get() = resource(Food::class).owned
+val User.citizens get() = resource(Citizen::class).owned
 val User.land get() = resource(Land::class).owned

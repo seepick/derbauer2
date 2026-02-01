@@ -9,4 +9,5 @@ data class TurnReport(
     val resourceReportLines: List<ResourceReportLine>,
     val happenings: List<Happening>,
     val newFeatures: List<FeatureInfo>,
+    val isGameOver: Boolean,
 )

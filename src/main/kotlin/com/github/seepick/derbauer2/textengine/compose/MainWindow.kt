@@ -134,11 +134,9 @@ fun MainWindow(
                                 val event = awaitPointerEvent()
                                 val pos = event.changes.firstOrNull()?.position
                                 if (pos == null) {
-                                    println("pos is NULL")
                                     continue
                                 }
                                 val near = pos.x <= cursorLeftThreshold
-                                println("Pointer at x=${pos.x} (thres:$cursorLeftThreshold), nearLeft=$near")
                                 if (near != isCursorNearLeft) {
                                     log.debug { "Mouse Move: Changing toolbar visibility to: $near" }
                                     isCursorNearLeft = near

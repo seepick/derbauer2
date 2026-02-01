@@ -1,5 +1,11 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.textengine.Textmap
+
+fun Textmap.asciiart(asciiArt: AsciiArt) {
+    multiLine(asciiArt.value)
+}
+
 /**
  * See: https://www.asciiart.eu/
  */
