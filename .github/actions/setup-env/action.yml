@@ -2,14 +2,15 @@ name: Setup Environment
 description: Checkout code, setup JDK and caches
 inputs:
   setup-sonar:
+    description: "Whether to setup caching for sonarqube output"
     required: false
-    type: boolean
-    default: false
+    type: "boolean"
+    default: "false"
 runs:
   using: "composite"
   steps:
     - name: Setup JDK
-      uses: actions/setup-java@v4
+      uses: actions/setup-java@v5
       with:
         distribution: temurin
         java-version: '17'

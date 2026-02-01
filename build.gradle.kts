@@ -48,14 +48,22 @@ compose.desktop {
         mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
         jvmArgs += listOf("-Xmx512M", "--add-exports", "java.desktop/com.apple.eawt=ALL-UNNAMED")
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "DerBauer2"
             packageVersion = appVersion
+            vendor = "DerBauer"
+            copyright = "2000-whatever it's yours"
             modules("java.naming")
-
+            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
             macOS {
                 appStore = false
                 iconFile.set(project.file("src/main/distribution/icon.icns"))
+            }
+            windows {
+                iconFile.set(project.file("src/main/distribution/icon.ico"))
+            }
+            linux {
+                iconFile.set(project.file("src/main/distribution/icon.png"))
+                // will generate something like: `derbauer2_{APP_VERSION}-1_amd64.deb`
             }
         }
     }

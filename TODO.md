@@ -39,6 +39,8 @@
 
 ### Tech
 
+* ad github workflow: check-quality-gates also does jacoco verify/enforce threshold
+* ad github workflow: check-quality-gates valid doc runs independent from previous step, so both can fail
 * GitHub REFACTOR necessary (deprecated functionality used)
     * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
 * REFACTOR ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)

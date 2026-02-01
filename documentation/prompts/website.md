@@ -43,7 +43,7 @@ The website should include:
           `/docs/images/download-windows.png`
         * for macos: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg` and
           `/docs/images/download-macos.png`
-        * for linux: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.jar` and
+        * for linux: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb` and
           `/docs/images/download-linux.png`
     * make all three images the same height of 200px, and arrange them horizontally with some spacing in between.
 * somewhere very subtle and small add a link to the source code:

@@ -16,4 +16,10 @@
 * `./gradlew run` - run the compose app locally
 * `./gradlew dependencyUpdates` - check for newer versions (dependeabot is also configured)
 * `./gradlew detekt` - static code analysis
-* 
+
+## GitHub Workflows
+
+* Workflow types:
+    * Continuous Integration: on each push, verifying quality
+    * Release: manually triggered (version bumping/tagging, GitHub release, uploaded artifacts)
+* PS: parse string into json: from `"['ubuntu-latest']"` to: `${{ fromJSON(inputs.runner) }}`

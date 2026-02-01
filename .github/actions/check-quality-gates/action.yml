@@ -9,8 +9,7 @@ runs:
         sudo apt-get install -y xvfb
     - name: Run Gradle Tasks
       shell: bash
-      # TODO jacocoTestReport and enforce threshold
       run: xvfb-run -a -s "-screen 0 1280x1024x24" ./gradlew detekt jacocoTestReport check --console=plain
-    - name: Validate Documentation # TODO should run independent from previous step, so both can fail simultaneously
+    - name: Validate Documentation
       shell: bash
       run: ./bin/validate_documentation.sh

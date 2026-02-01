@@ -3,21 +3,32 @@ on:
   workflow_dispatch:
     branches:
       - main
+    inputs:
+      version_segment:
+        description: 'Version segment to bump'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
 permissions:
   contents: write  # required to create releases
-
 jobs:
   prepare-release:
     name: Create GitHub Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-env
       - uses: ./.github/actions/check-quality-gates
+      - run: |
+          echo "You selected version segment '${{ github.event.inputs.version_segment }}' to bump."
       - name: Update Version Number
         id: step-version
         run: |
-          newVersion=$(./bin/version_increment_and_get.sh)
+          newVersion=$(./bin/version_bump.sh "${{ github.event.inputs.version_segment }}")
           rc=$?
           if [ $rc -ne 0 ]; then
             echo "version script failed with exit code $rc" >&2
@@ -45,7 +56,7 @@ jobs:
         with:
           tag_name: ${{ steps.step-version.outputs.new_version }}
           release_name: Release ${{ steps.step-version.outputs.new_version }}
-          body: Why would you read that anyway?!
+          body: No changelog provided; just play the game ;)
           draft: false
           prerelease: false
     outputs:
@@ -56,7 +67,7 @@ jobs:
     needs: prepare-release
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest ]
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
     name: Building and uploading compose artifact
     steps:
@@ -90,3 +101,17 @@ jobs:
           asset_path: build/compose/binaries/main/dmg/DerBauer2-${{ needs.prepare-release.outputs.version-nr }}.0.0.dmg
           asset_name: DerBauer2.dmg
           asset_content_type: application/x-apple-diskimage
+      - run: |
+          ls -l build/compose/binaries/main/deb/
+          mv build/compose/binaries/main/deb/*.deb build/compose/binaries/main/deb/DerBauer2.deb
+        if: runner.os == 'Linux'
+      - name: Upload Release Asset for Linux-Debian
+        if: runner.os == 'Linux'
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ needs.prepare-release.outputs.upload-url }}
+          asset_path: build/compose/binaries/main/deb/DerBauer2.deb
+          asset_name: DerBauer2.deb
+          asset_content_type: application/x-debian-package
