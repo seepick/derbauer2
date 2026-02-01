@@ -4,238 +4,225 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width,initial-scale=1" name="viewport"/>
     <title>DerBauer2</title>
-
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Inter:wght@300;400;600&display=swap"
-          rel="stylesheet">
-
     <style>
         :root{
-          --page-pad:28px;
-          --header-h:144px;         /* fixed header height */
-          --downloads-h:220px;      /* area reserved for downloads (images 200px + spacing) */
-          --bg-top:#8fd3ff;
-          --bg-mid:#cfeaff;
-          --grass:#48a14b;
-          --accent:#ffd166;
-          --text:#102916;
+          --header-h:160px;
+          --downloads-h:220px; /* includes the 200px image + padding */
+          --gap:60px;
+          --sky-top:#87d8ff;
+          --sky-bot:#6fc8ff;
+          --hill-start:#4bb44a;
+          --hill-end:#2f8a3d;
+          --accent:#ffd24a;
         }
+
+        /* base layout */
+        html,body{height:100%;margin:0;padding:0;overflow:hidden;font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;background:linear-gradient(var(--sky-top),var(--sky-bot));color:#043}
         *{box-sizing:border-box}
-        html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(to bottom,var(--bg-top) 0%,var(--bg-mid) 58%, #e9f6db 70%, var(--grass) 100%); color:var(--text);}
+        .page{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;overflow:hidden}
 
-        .page{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:var(--page-pad);}
+        /* scenery covers whole viewport */
+        .scenery{position:fixed;inset:0;z-index:0;pointer-events:none}
 
-        .card{
-          width:100%;max-width:1200px;background:rgba(255,255,255,0.96);border-radius:14px;padding:18px 20px;
-          position:relative;overflow:visible;backdrop-filter:blur(3px);
-          /* no combined drop-shadow around screenshot+logo wrapper is applied (see requirement) */
+        /* header (fixed height) */
+        header{z-index:6;height:var(--header-h);width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding-top:8px}
+        h1{font-size:48px;margin:0;color:#fff;text-shadow:0 6px 12px rgba(0,0,0,0.28);font-family:"Comic Sans MS","Trebuchet MS",sans-serif;letter-spacing:1px}
+        .tagline{font-size:18px;margin:0;color:#fff;font-weight:700}
+        .desc{font-size:14px;margin:6px 18px 0 18px;color:rgba(255,255,255,0.95);max-width:1100px;text-align:center}
+
+        /* main: fixed header & downloads; only screenshot scales */
+        main{position:relative;z-index:6;height:calc(100vh - var(--header-h) - var(--downloads-h));width:100%;display:flex;align-items:center;justify-content:center;padding:12px}
+        .screenshot-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;max-width:1400px}
+        /* the screenshot itself scales to fill remaining space; NO hover effects, NO border, NO dropshadow */
+        .screenshot{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:8px;display:block;user-select:none}
+        /* overlay logo anchored bottom-right inside wrapper; no border/background */
+        .overlay-logo{position:absolute;right:4%;bottom:4%;max-width:22%;height:auto;z-index:8;pointer-events:none}
+
+        /* downloads row (fixed height) */
+        .downloads{position:relative;z-index:6;height:var(--downloads-h);width:100%;display:flex;align-items:center;justify-content:center;gap:var(--gap);padding:12px;box-sizing:border-box}
+        .dl-btn{display:inline-block;transition:transform 140ms ease,opacity 140ms;cursor:pointer}
+        .dl-btn img{height:200px;width:auto;display:block;object-fit:contain}
+        .dl-btn:hover{transform:scale(1.06);opacity:0.98}
+
+        /* footer github icon at bottom-right */
+        footer{position:fixed;right:12px;bottom:12px;z-index:9}
+        .github-link img{height:40px;width:40px;display:block;opacity:0.98;transition:transform 120ms}
+        .github-link img:hover{transform:scale(1.08)}
+
+        /* clouds animation + style */
+        .cloud{position:absolute;fill:#fff;opacity:0.95;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.06))}
+        .cloud.c1{left:-30%;top:8%;width:420px;animation:cloudMove 56s linear infinite}
+        .cloud.c2{left:-45%;top:22%;width:320px;animation:cloudMove 40s linear infinite;animation-delay:6s}
+        .cloud.c3{left:-20%;top:4%;width:480px;animation:cloudMove 72s linear infinite;animation-delay:12s}
+        @keyframes cloudMove{from{transform:translateX(0)}to{transform:translateX(240%)}}
+
+        /* birds flying across occasionally */
+        .bird{position:absolute;left:-10%;width:64px;height:32px;opacity:0.95;z-index:4;animation:birdFly 12s linear infinite}
+        .bird.b2{top:14%;animation-delay:4s;animation-duration:14s}
+        .bird.b3{top:48%;animation-delay:8s;animation-duration:16s}
+        @keyframes birdFly{0%{transform:translateX(-10%) translateY(0)}50%{transform:translateX(120%) translateY(-10px)}100%{transform:translateX(240%) translateY(0)}}
+
+        /* sun + pupils */
+        .sun{position:absolute;right:6%;top:4%;width:120px;height:120px;z-index:3;pointer-events:none}
+        .pupil{transition:transform 100ms linear}
+
+        /* responsive tweaks */
+        @media (max-width:720px){
+          h1{font-size:34px}
+          .overlay-logo{max-width:30%}
+          .dl-btn img{height:140px}
         }
-
-        /* small subtle repo link, not below downloads */
-        .repo-link{ position:absolute; right:12px; top:10px; font-size:12px; color:#123b2a; opacity:0.8; text-decoration:none; z-index:6;}
-
-        header{position:relative;z-index:3;height:var(--header-h);text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-        h1{font-family:'Fredoka One',cursive;font-size:48px;margin:4px 0;color:#0c3b28;letter-spacing:0.6px;}
-        .tag{font-weight:700;color:#1d593a;font-size:18px;margin-bottom:8px;}
-        .desc{max-width:900px;margin:0 auto;color:#234231;font-size:15px;line-height:1.45;padding:0 16px;}
-
-        /* full-card scenery - behind everything */
-        .scenery{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;}
-
-        /* center: screenshot only flexible element - it fills remaining vertical space */
-        .center{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:12px;}
-        .screenshot-wrap{position:relative; display:inline-block; width:100%; max-width:980px; /* no shadow on wrapper */ }
-        .screenshot{
-          display:block; width:100%; height:auto;
-          max-height: calc(100vh - (var(--header-h) + var(--downloads-h) + var(--page-pad)*2));
-          border-radius:12px;
-          /* subtle shadow on screenshot image itself for depth (allowed) */
-          box-shadow: 0 10px 28px rgba(6,30,18,0.12);
-          transition: transform .12s ease, box-shadow .12s ease;
-          object-fit:contain;
-        }
-
-        /* logo overlay bottom-right inside screenshot-wrap, no border/background on the logo */
-        .logo-overlay{ position:absolute; right:18px; bottom:18px; pointer-events:none; z-index:4; }
-        .logo-overlay img{ display:block; width:120px; height:auto; } /* no border, no background */
-
-        /* downloads row */
-        .downloads{ display:flex; gap:18px; justify-content:center; align-items:flex-end; padding:16px 6px; height:var(--downloads-h); z-index:3; }
-        .download{ display:inline-block; border-radius:10px; overflow:hidden; transition: transform .14s ease, box-shadow .14s ease; cursor:pointer; position:relative; }
-        .download img{ height:200px; width:auto; display:block; }
-
-        .download:hover{ transform: translateY(-8px) scale(1.03); box-shadow: 0 20px 44px rgba(8,36,18,0.16); }
-        .download::after{
-          content:""; position:absolute; left:-60%; top:0; width:60%; height:100%;
-          background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.45) 50%, rgba(255,255,255,0) 100%);
-          transform: skewX(-20deg); transition: all .8s ease; opacity:0; pointer-events:none;
-        }
-        .download:hover::after{ left:120%; opacity:1; transition:.6s ease; }
-
-        /* responsive */
-        @media (max-width:980px){ h1{font-size:40px} .logo-overlay img{width:100px} .download img{height:160px} }
-        @media (max-width:560px){ h1{font-size:30px} .desc{font-size:14px;padding:0 12px} .download img{height:140px} .logo-overlay img{width:88px} }
     </style>
 </head>
 <body>
 <div class="page">
-    <div class="card" id="card">
-        <a class="repo-link" href="https://github.com/seepick/derbauer2" rel="noopener" target="_blank">GitHub
-            Repository</a>
-
-        <!-- scenic background SVG: sky, clouds, sun with pupils, hills -->
-        <svg aria-hidden="true" class="scenery" preserveAspectRatio="xMidYMid slice" viewBox="0 0 1200 700">
+    <!-- Background scenery (fills entire viewport) -->
+    <div aria-hidden="true" class="scenery">
+        <svg preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;" viewBox="0 0 1600 900">
             <defs>
                 <linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stop-color="#8fd3ff"/>
-                    <stop offset="0.6" stop-color="#cfeaff"/>
-                    <stop offset="1" stop-color="#e9f6db"/>
+                    <stop offset="0" stop-color="#87d8ff"/>
+                    <stop offset="1" stop-color="#7ad0ff"/>
                 </linearGradient>
-                <radialGradient cx="50%" cy="50%" id="sunGlow" r="60%">
-                    <stop offset="0%" stop-color="#fff7c9"/>
-                    <stop offset="100%" stop-color="#ffd166"/>
-                </radialGradient>
+                <linearGradient id="hillG" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0" stop-color="#4bb44a"/>
+                    <stop offset="1" stop-color="#2f8a3d"/>
+                </linearGradient>
             </defs>
 
-            <rect fill="url(#skyG)" height="700" width="1200" x="0" y="0"/>
+            <!-- sky -->
+            <rect fill="url(#skyG)" height="900" width="1600" x="0" y="0"></rect>
+
+            <!-- sun with pupils (JS moves pupils) -->
+            <g transform="translate(1280,80)">
+                <g class="sun">
+                    <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 120 120">
+                        <defs>
+                            <radialGradient id="sunr">
+                                <stop offset="0" stop-color="#fff9d6"/>
+                                <stop offset="1" stop-color="#ffd45e"/>
+                            </radialGradient>
+                        </defs>
+                        <circle cx="60" cy="60" fill="url(#sunr)" r="30" stroke="#ffb84d" stroke-width="4"></circle>
+                        <g id="pupils" transform="translate(60,60)">
+                            <circle class="pupil" cx="-10" cy="0" fill="#222" id="p1" r="4"></circle>
+                            <circle class="pupil" cx="10" cy="0" fill="#222" id="p2" r="4"></circle>
+                        </g>
+                    </svg>
+                </g>
+            </g>
+
+            <!-- hills and ground -->
+            <path d="M0,700 C220,640 360,720 760,680 C1120,640 1360,720 1600,700 L1600,900 L0,900 Z"
+                  fill="url(#hillG)"/>
+            <rect fill="#398b3d" height="140" width="1600" x="0" y="760"/>
 
             <!-- clouds -->
-            <g id="cloud1" opacity="0.98" transform="translate(40,70)">
-                <ellipse cx="160" cy="40" fill="#fff" rx="78" ry="32"/>
-                <ellipse cx="220" cy="36" fill="#fff" rx="52" ry="26"/>
-                <ellipse cx="120" cy="44" fill="#fff" rx="58" ry="28"/>
+            <g class="cloud c1">
+                <ellipse cx="100" cy="40" rx="72" ry="34"/>
+                <ellipse cx="148" cy="50" rx="48" ry="28"/>
+                <ellipse cx="56" cy="50" rx="52" ry="30"/>
             </g>
-            <g id="cloud2" opacity="0.95" transform="translate(700,30)">
-                <ellipse cx="160" cy="36" fill="#fff" rx="72" ry="30"/>
-                <ellipse cx="210" cy="34" fill="#fff" rx="44" ry="22"/>
-                <ellipse cx="120" cy="40" fill="#fff" rx="50" ry="24"/>
+            <g class="cloud c2">
+                <ellipse cx="100" cy="40" rx="62" ry="30"/>
+                <ellipse cx="142" cy="48" rx="36" ry="22"/>
+                <ellipse cx="64" cy="46" rx="46" ry="26"/>
             </g>
-
-            <!-- sun upper-right with pupils to follow cursor -->
-            <g transform="translate(980,110)">
-                <g fill="#ffd166" id="spikes" style="transform-origin:50% 50%; animation:spin 10s linear infinite;">
-                    <path d="M0 -48 L8 -20 L36 -8 L12 4 L20 30 L0 14 L-20 30 L-12 4 L-36 -8 L-8 -20 Z"/>
-                </g>
-                <circle cx="0" cy="8" fill="url(#sunGlow)" r="40" stroke="#ffd166" stroke-width="2"/>
-                <g transform="translate(-12,-2)">
-                    <circle cx="0" cy="6" fill="#fff" r="6"/>
-                    <circle cx="0" cy="6" fill="#072023" id="pupilL" r="2.4"/>
-                </g>
-                <g transform="translate(12,-2)">
-                    <circle cx="0" cy="6" fill="#fff" r="6"/>
-                    <circle cx="0" cy="6" fill="#072023" id="pupilR" r="2.4"/>
-                </g>
+            <g class="cloud c3">
+                <ellipse cx="110" cy="40" rx="86" ry="38"/>
+                <ellipse cx="160" cy="60" rx="54" ry="30"/>
+                <ellipse cx="58" cy="60" rx="62" ry="34"/>
             </g>
-
-            <!-- hills and small tree -->
-            <g transform="translate(0,420)">
-                <ellipse cx="600" cy="220" fill="#7fc97f" rx="860" ry="320"/>
-                <ellipse cx="920" cy="260" fill="#46a14b" rx="420" ry="220"/>
-                <g transform="translate(160,470)">
-                    <rect fill="#7a4a26" height="40" rx="3" width="16" x="-8" y="36"/>
-                    <circle cx="0" cy="20" fill="#2f8a3a" r="28"/>
-                </g>
-            </g>
-
-            <style>
-                @keyframes floatA { 0%{transform:translateX(-6%)} 50%{transform:translateX(6%)} 100%{transform:translateX(-6%)} }
-                @keyframes floatB { 0%{transform:translateX(6%)} 50%{transform:translateX(-6%)} 100%{transform:translateX(6%)} }
-                #cloud1{ animation: floatA 22s linear infinite; }
-                #cloud2{ animation: floatB 28s linear infinite; }
-                @keyframes spin { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
-            </style>
         </svg>
+    </div>
 
-        <header>
-            <h1>DerBauer2</h1>
-            <div class="tag">Rise from humble fields to emperor — cultivate, trade, and rule with heart.</div>
-            <p class="desc">Plant crops, build settlements, trade with neighbors, research improvements and lead your
-                people. Make decisions that shape your economy and your legacy — will you prosper with wisdom or
-                daring?</p>
-        </header>
-
-        <div aria-hidden="false" class="center">
-            <div class="screenshot-wrap" id="sWrap">
-                <img alt="DerBauer2 screenshot" class="screenshot" src="images/screenshot.png">
-                <div aria-hidden="true" class="logo-overlay">
-                    <img alt="DerBauer2 logo" src="images/logo.png">
-                </div>
-            </div>
+    <header>
+        <h1>DerBauer2</h1>
+        <div class="tagline">From humble farms to Emperor — build, trade, and rule with heart and guile.</div>
+        <div class="desc">Manage farms and workshops, trade goods, research new technologies, recruit soldiers and
+            expand your realm. Make choices that shape your legend — build, trade, conquer, and charm your people.
         </div>
+    </header>
 
-        <div aria-label="Download DerBauer2" class="downloads" role="navigation">
-            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe"
-               rel="noopener" target="_blank" title="Download for Windows">
-                <img alt="Download for Windows" src="images/download-windows.png">
-            </a>
-            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg"
-               rel="noopener" target="_blank" title="Download for macOS">
-                <img alt="Download for macOS" src="images/download-macos.png">
-            </a>
-            <a class="download" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.jar"
-               rel="noopener" target="_blank" title="Download for Linux">
-                <img alt="Download for Linux" src="images/download-linux.png">
-            </a>
+    <main>
+        <div aria-label="DerBauer2 screenshot area" class="screenshot-wrap" role="img">
+            <!-- the screenshot scales only; no hover, no border, no drop shadow -->
+            <img alt="DerBauer2 screenshot" class="screenshot" id="screenshot" src="images/screenshot.png">
+            <!-- logo overlays bottom-right of screenshot; remains anchored when resized -->
+            <img alt="" class="overlay-logo" src="images/logo.png">
         </div>
+    </main>
+
+    <div aria-hidden="false" class="downloads">
+        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe"
+           title="Download DerBauer2 for Windows">
+            <img alt="Download for Windows" src="images/download-windows.png">
+        </a>
+        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg"
+           title="Download DerBauer2 for macOS">
+            <img alt="Download for macOS" src="images/download-macos.png">
+        </a>
+        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb"
+           title="Download DerBauer2 for Linux">
+            <img alt="Download for Linux" src="images/download-linux.png">
+        </a>
+    </div>
+
+    <footer>
+        <a class="github-link" href="https://github.com/seepick/derbauer2" rel="noopener"
+           target="_blank" title="View the source code on GitHub">
+            <img alt="GitHub" src="images/github-logo.png">
+        </a>
+    </footer>
+
+    <!-- birds (simple SVGs that fly across) -->
+    <div aria-hidden="true" class="bird b1" style="top:28%;">
+        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
+            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
+        </svg>
+    </div>
+    <div aria-hidden="true" class="bird b2" style="left:-12%;">
+        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
+            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
+        </svg>
+    </div>
+    <div aria-hidden="true" class="bird b3" style="left:-20%;">
+        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
+            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
+        </svg>
     </div>
 </div>
 
 <script>
-    // sun pupils follow cursor (bounded)
     (function(){
-      const pL = document.getElementById('pupilL');
-      const pR = document.getElementById('pupilR');
-      if(!pL || !pR) return;
-      const max = 2.6;
+      // pupils follow cursor
+      const p1 = document.getElementById('p1');
+      const p2 = document.getElementById('p2');
       window.addEventListener('mousemove', (e)=>{
-        const cx = window.innerWidth / 2;
-        const cy = window.innerHeight / 2;
-        const dx = Math.max(-1, Math.min(1, (e.clientX - cx) / cx));
-        const dy = Math.max(-1, Math.min(1, (e.clientY - cy) / cy));
-        const ox = (dx * max).toFixed(2);
-        const oy = (dy * max * 0.6).toFixed(2);
-        pL.setAttribute('cx', (0 + Number(ox)).toFixed(2));
-        pL.setAttribute('cy', (6 + Number(oy)).toFixed(2));
-        pR.setAttribute('cx', (0 + Number(ox)).toFixed(2));
-        pR.setAttribute('cy', (6 + Number(oy)).toFixed(2));
-      }, {passive:true});
-    })();
-
-    // mild cloud parallax
-    (function(){
-      const c1 = document.getElementById('cloud1');
-      const c2 = document.getElementById('cloud2');
-      if(!c1 || !c2) return;
-      window.addEventListener('mousemove', (e)=>{
-        const px = (e.clientX / window.innerWidth) - 0.5;
-        const py = (e.clientY / window.innerHeight) - 0.5;
-        c1.style.transform = `translate(${px * 16}px, ${py * 6}px)`;
-        c2.style.transform = `translate(${px * -10}px, ${py * 4}px)`;
-      }, {passive:true});
-    })();
-
-    // subtle screenshot tilt for depth
-    (function(){
-      const wrap = document.getElementById('sWrap');
-      const card = document.getElementById('card');
-      if(!wrap || !card) return;
-      card.addEventListener('mousemove', e=>{
-        const r = wrap.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width - 0.5;
-        const py = (e.clientY - r.top) / r.height - 0.5;
-        const rx = (-py * 5).toFixed(2);
-        const ry = (px * 5).toFixed(2);
-        wrap.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg)`;
-      });
-      card.addEventListener('mouseleave', ()=> { wrap.style.transform = 'none'; });
-    })();
-
-    // small click pulse for download buttons (keeps navigation)
-    (function(){
-      document.querySelectorAll('.download').forEach(btn=>{
-        btn.addEventListener('click', ()=> {
-          btn.animate([{ transform: 'translateY(0) scale(1)' },{ transform: 'translateY(-6px) scale(0.98)' },{ transform: 'translateY(0) scale(1)' }], { duration:220, easing:'ease-out' });
+        const w = window.innerWidth, h = window.innerHeight;
+        const nx = (e.clientX / w - 0.5) * 2; // -1..1
+        const ny = (e.clientY / h - 0.5) * 2;
+        const max = 6; // px
+        const tx = nx * max;
+        const ty = ny * max;
+        if(p1) p1.style.transform = `translate(${tx}px, ${ty}px)`;
+        if(p2) p2.style.transform = `translate(${tx}px, ${ty}px)`;
+        // subtle parallax for clouds
+        document.querySelectorAll('.cloud').forEach((c,i)=>{
+          const factor = 6 + i*2;
+          c.style.transform = `translateX(${nx * factor}px)`;
         });
       });
+
+      // randomize bird delays so they appear occasionally
+      document.querySelectorAll('.bird').forEach((b)=>{
+        b.style.animationDelay = `${Math.random()*8}s`;
+      });
+
+      // ensure layout uses viewport height to avoid scrollbars on resize
+      function clampViewport(){ document.documentElement.style.height = window.innerHeight + 'px'; }
+      window.addEventListener('resize', clampViewport);
+      clampViewport();
     })();
 </script>
 </body>

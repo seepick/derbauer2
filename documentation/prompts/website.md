@@ -2,7 +2,7 @@
 
 * Read these instructions, then write a complete HTML file according to the specifications below.
 * Write all necessary files into the `/docs` folder.
-* Write a HTML file named `index.html`.
+* Write a HTML file named `/docs/index.html`.
 * It should serve as a promotion for the game for new users, attract, and invite to download it.
 * The title of the page (within the head HTML tag) is "DerBauer2"
 
@@ -17,7 +17,8 @@ Use the instructions (consider them also specifications or requirements) provide
 The website should include:
 
 * project title
-    * with big, bold fonts on top of the page add the title: "DerBauer2"
+    * on top of the page add the title: "DerBauer2"
+    * use a big, bold font with some dropshadow
 * tagline
     * beneath the project title add some kind of "subtitle", with smaller font
     * write a text which is catchy, inviting, emotional, inspiring, ... to motivate to play the game.
@@ -27,28 +28,32 @@ The website should include:
     * use the image file located at `/docs/images/screenshot.png`
     * make it positioned in the center of the page
     * adjust the size dynamically so all the content fits on the page without scrolling
-        * all the other elements have a static height, only the screenshot can change size, and will to fill up the
-          remaining space, until it hits maximum width of the page (then it should scale down accordingly to keep aspect
-          ratio)
+        * only the screenshot can change size, all the other elements have a static height
+        * it will to fill up the remaining space, until it hits maximum width of the page
+        * when hit maximum width of the page, then it should scale down accordingly to keep aspect ratio
+    * do NOT apply any hover-effects to it; also NO border or dropshadow around it
 * application logo
     * embed the image located at: `/docs/images/logo.png`
-    * make it overlay over the screenshot, at the bottom right corner, with some offset but still overlapping mostly
-        * be VERY careful about doing this, so if the page resizes, that the logo always relatively at the same spot
-          stays with the screenshot
-    * do NOT add any additional border or background to the logo, just the image itself
+    * position it on top of the screenshot, so that it covers up some of it, at the bottom right corner
+        * be VERY careful about doing this!
+        * if the page resizes, the logo always stays relatively at the same spot with the screenshot
+        * use z-index or similar techniques to achieve this
+        * do NOT add any additional border or background to the logo, just the image itself
 * download buttons
     * for all three operating systems (windows, macos, linux) provide download buttons
-    * the links should point to / image to use for the clickable download buttons:
-        * for windows: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe` and
-          `/docs/images/download-windows.png`
-        * for macos: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg` and
-          `/docs/images/download-macos.png`
-        * for linux: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb` and
-          `/docs/images/download-linux.png`
-    * make all three images the same height of 200px, and arrange them horizontally with some spacing in between.
-* somewhere very subtle and small add a link to the source code:
-    * text: "GitHub Repository"
+    * have a title text indicating to download the game
+        * the links should point to / image to use for the clickable download buttons:
+            * for windows: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe` and
+              `/docs/images/download-windows.png`
+            * for macos: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg` and
+              `/docs/images/download-macos.png`
+            * for linux: `https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb` and
+              `/docs/images/download-linux.png`
+    * make all three images the same height of 200px, and arrange them horizontally with at least 60px in between.
+* add a link to the sourcecode in the footer (bottom right corner) of the page:
+    * use the `/docs/images/github-logo.png` image as an icon; make it the clickable link, no text rendered
     * link: `https://github.com/seepick/derbauer2`
+    * tooltip: "View the source code on GitHub"
 
 ## Style
 
@@ -58,26 +63,29 @@ The website should include:
     * blue sky
     * green grass, trees, and hills
     * some moving (animated) clouds
-    * the sun in the upper righth corner
+    * the sun in the upper right corner
 * thus at the bottom green, and at the top blue
 * use a playful font for headings, and a clean sans-serif font for body text.
 
 ## UX
 
-* use some interactive elements, transitions, alpha, hover effects to make it engaging.
-* transitions are short and feel quick.
-    * play with alpha values and the illusion of depth by using drop shadows.
-* make sure the download buttons have a hover effect (like scaling up a bit, or shadow).
-* make an element of the page react to the position of the mouse cursor (like the eyes of the sun following the cursor,
-  or clouds moving slightly).
 * make the background (hills, clouds, etc.) fill the whole page, in width and height.
+* use some interactive elements, transitions, alpha, hover effects to make it engaging.
+    * transitions are short and feel quick.
+* make sure the download buttons have a hover effect, slightly scale up size (but NO dropshadow or glossy shiny thing).
+* make elements of the page react to the position of the mouse cursor
+    * animate the eyes of the sun following the cursor
+    * clouds moving slightly with the cursor
+* make occassionally elements run through the screen (like birds flying by, or a knight with his horse riding across).
+* no scrollbars are visible at any time, the whole content fits on the screen.
 
 ## Technical
 
 * use CSS for styling, embedded in the HTML file.
 * when embedding images, always keep the aspect ratio!
 * all tags referring to a file in the `/docs` folder should use relative paths.
-    * this means that a file located at `/docs/foo.png` is referenced as`foo.png` in the HTML (`src` tag for example).
+    * this means that a file located at `/docs/foo.png` is referenced as`foo.png` in the HTML
+    * e.g. for images change the `src` attribute accordingly
 
 ## What you should NOT do!
 

@@ -69,13 +69,13 @@ jobs:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest ]
     runs-on: ${{ matrix.os }}
-    name: Building and uploading compose artifact
+    name: Build and Upload
     steps:
       - name: Log Info
         run: echo "Releasing version ${{ needs.prepare-release.outputs.version-nr }} running on a ${{ runner.os }} / ${{ matrix.os }}"
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
-      - name: Build Gradle Distribution
+      - name: Build Compose Artifact
         run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}"
       - run: dir build/compose/binaries/main/exe/
         if: runner.os == 'Windows'
