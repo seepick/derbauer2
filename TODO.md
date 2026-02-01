@@ -2,11 +2,7 @@
 
 ## Versions
 
-### v1
-
-* IT: Releases done automatically on specific job execution; auto-increment version
-
-### v2
+### v5
 
 * !! BZ: finish Technology concept
 * ! BZ: implement birth rate, increase citizens on turn
@@ -18,7 +14,7 @@
 * IT: macos app signing
 * BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 
-### v3
+### v6
 
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 
