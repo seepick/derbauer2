@@ -8,13 +8,11 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.resources
 import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.resource.totalStorageFor
-import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 
 class GameRenderer(
     private val user: User,
-    private val turner: Turner,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
 
@@ -44,7 +42,7 @@ class GameRenderer(
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-        textmap.aligned(renderInfoBar(), "Turn ${turner.turn}")
+        textmap.aligned(renderInfoBar(), "Turn ${user.turn}")
         textmap.hr()
         content(textmap)
         textmap.fillVertical(minus = 2)

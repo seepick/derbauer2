@@ -25,6 +25,7 @@ Refactor window:
 
 ## Backlog
 
+* new chronos: instead of "turn", do it "Week 13 Year 1052"
 * let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: general variability end turn (production, taxes, consumption)

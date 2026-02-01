@@ -9,7 +9,6 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.compose.MainWin
-import io.mockk.every
 import io.mockk.mockk
 
 fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {
@@ -24,9 +23,10 @@ class SetupGamePageContext {
     val user = User()
     val currentPage = CurrentPage(BuildingsPage::class)
     val turner = mockk<Turner> {
-        every { turn } returns 1
+        // collectAndExecuteNextTurnReport()
+        // isGameOver
     }
-    val gameRenderer = GameRenderer(user, turner)
+    val gameRenderer = GameRenderer(user)
     val resultHandler = mockk<InteractionResultHandler>()
     val textmap = Textmap(MainWin.matrixSize)
 }

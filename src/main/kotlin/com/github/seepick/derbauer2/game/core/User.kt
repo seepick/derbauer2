@@ -21,8 +21,14 @@ class User(
         log.trace { "New User instance (txValidators.size=${txValidators.size})" }
     }
 
+    var turn = 1
+        private set
     var designator = UserDesignator.default
     var cityDesignator = CityDesignator.default
+
+    fun nextTurn() {
+        turn++
+    }
 
     // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()

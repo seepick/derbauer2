@@ -37,12 +37,6 @@ class TurnerTest : DescribeSpec({
     }
 
     describe("misc") {
-        it("turn changed") {
-            val old = turner.turn
-            turner.collectAndExecuteNextTurnReport()
-
-            turner.turn shouldBeEqual old + 1
-        }
         it("intelligence updated") {
             val report = turner.collectAndExecuteNextTurnReport()
 

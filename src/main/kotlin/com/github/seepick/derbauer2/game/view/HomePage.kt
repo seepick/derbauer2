@@ -18,28 +18,33 @@ class HomePage(
     currentPage: CurrentPage,
     gameRenderer: GameRenderer,
     user: User,
-) : PromptGamePage(buttons = listOf(ContinueButton("Next Turn") {
-    val report = turner.collectAndExecuteNextTurnReport()
-    currentPage.pageClass = if (report.isGameOver) GameOverPage::class else ReportPage::class
-
-}), gameRenderer = gameRenderer, promptBuilder = {
-    SelectPrompt(
-        title = "What shall we do next, ${user.designator.label}?", buildList {
-            if (user.hasFeature<TradingFeature>()) {
-                add(SelectOption("Trade 💰") {
-                    currentPage.pageClass = TradingPage::class
-                })
-            }
-            add(SelectOption("Build 🛠️") {
-                currentPage.pageClass = BuildingsPage::class
-            })
-            if (user.hasFeature<TechnologyFeature>()) {
-                add(SelectOption("Research 🔬") {
-                    currentPage.pageClass = TechnologyPage::class
-                })
-            }
+) : PromptGamePage(
+    buttons = listOf(
+        ContinueButton("Next Turn") {
+            val report = turner.collectAndExecuteNextTurnReport()
+            user.nextTurn()
+            currentPage.pageClass = if (report.isGameOver) GameOverPage::class else ReportPage::class
         }
-    )
-}, contentRenderer = { textmap ->
-    textmap.line("You are home... 🏠")
-})
+    ),
+    gameRenderer = gameRenderer,
+    promptBuilder = {
+        SelectPrompt(
+            title = "What shall we do next, ${user.designator.label}?", buildList {
+                if (user.hasFeature<TradingFeature>()) {
+                    add(SelectOption("Trade 💰") {
+                        currentPage.pageClass = TradingPage::class
+                    })
+                }
+                add(SelectOption("Build 🛠️") {
+                    currentPage.pageClass = BuildingsPage::class
+                })
+                if (user.hasFeature<TechnologyFeature>()) {
+                    add(SelectOption("Research 🔬") {
+                        currentPage.pageClass = TechnologyPage::class
+                    })
+                }
+            }
+        )
+    }, contentRenderer = { textmap ->
+        textmap.line("You are home... 🏠")
+    })

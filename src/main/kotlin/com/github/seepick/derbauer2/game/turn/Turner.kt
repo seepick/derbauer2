@@ -16,30 +16,26 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 @Suppress("LongParameterList")
 class Turner(
+    private val user: User,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
-    private val user: User,
     private val reports: ReportIntelligence,
     private val resourceTurnSteps: List<ResourceTurnStep>,
 ) {
     private val log = logger {}
 
-    var turn = 1 // TODO move into User object as single data object
-        private set
-
     fun collectAndExecuteNextTurnReport(): TurnReport {
-        turn++
-        log.info { "Taking turn $turn" }
+        log.info { "Taking turn ${user.turn}" }
         val allChanges = buildList {
             addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.First))
             addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.Last))
         }
         return TurnReport(
-            turn = turn - 1,
+            turn = user.turn,
             resourceChanges = allChanges.mergeToSingleChanges(),
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
-            isGameOver = user.isGameOver(),
+            isGameOver = isGameOver(),
         ).also { result ->
             reports.addReport(result)
         }
@@ -49,11 +45,11 @@ class Turner(
         this.filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
             .flatMap { it.calcResourceChanges().also { it.mergeToSingleChanges().execute(user) } }
 
-    private fun User.isGameOver() =
-        if (!hasEntity<Citizen>()) {
+    private fun isGameOver() =
+        if (!user.hasEntity<Citizen>()) {
             false
         } else {
-            citizens == 0.z
+            user.citizens == 0.z
         }
 }
 
