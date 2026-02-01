@@ -113,10 +113,13 @@ data class MagnitutedNumber(
 @Suppress("ObjectPropertyName", "DANGEROUS_CHARACTERS")
 val Double.`%`: Percent get() = Percent(this)
 
+@Suppress("ObjectPropertyName", "DANGEROUS_CHARACTERS", "MagicNumber")
+val Int.`%`: Percent get() = Percent(this.toDouble() / 100.0)
+
 @JvmInline
 value class Percent(val value: Double) {
     init {
-        require(value in 0.0..1.0) { "Percent value must be between 0.0 and 1.0" }
+        require(value in 0.0..1.0) { "Percent value must be between 0.0 and 1.0 but was: $value" }
     }
 
     operator fun compareTo(other: Percent) = this.value.compareTo(other.value)

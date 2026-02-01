@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.resources
-import com.github.seepick.derbauer2.game.resource.storageFor
 import com.github.seepick.derbauer2.game.resource.totalLandUse
+import com.github.seepick.derbauer2.game.resource.totalStorageFor
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
@@ -27,14 +27,14 @@ class GameRenderer(
         }
 
         user.resources.alsoIfExists(Food::class) {
-            add("${it.emojiAndOwned} / ${user.storageFor(Food::class)}")
+            add("${it.emojiAndOwned} / ${user.totalStorageFor(Food::class)}")
         }
         user.resources.alsoIfExists(Land::class) {
             val totalLandUse = user.totalLandUse
             add("${it.emojiSpaceOrEmpty}${totalLandUse} / ${it.owned}")
         }
         user.resources.alsoIfExists(Citizen::class) {
-            add("${it.emojiSpaceOrEmpty}${it.owned} / ${user.storageFor(Citizen::class)}")
+            add("${it.emojiSpaceOrEmpty}${it.owned} / ${user.totalStorageFor(Citizen::class)}")
         }
     }.joinToString(" | ")
 

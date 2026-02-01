@@ -1,6 +1,5 @@
-package com.github.seepick.derbauer2.core
+package com.github.seepick.derbauer2.game.core
 
-import com.github.seepick.derbauer2.game.core.PreferencesStateRepository
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import java.util.prefs.Preferences

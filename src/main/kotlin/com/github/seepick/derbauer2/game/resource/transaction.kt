@@ -53,7 +53,7 @@ fun User.execTxResource(
 object ResourceTxValidator : TxValidator {
     override fun validateTx(user: User) = with(user) {
         resources.filterIsInstance<StorableResource>().map { resource ->
-            if (resource.owned > storageFor(resource)) {
+            if (resource.owned > totalStorageFor(resource)) {
                 TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
             } else TxResult.Success
         }.merge()

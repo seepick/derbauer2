@@ -24,14 +24,14 @@ context(user: User)
 val ResourceReference.resource get() = user.resource(resourceClass)
 
 fun User.isAbleToStore(resource: StorableResource, amount: Z) =
-    amount <= availableOf(resource)
+    amount <= freeStorageFor(resource)
 
 fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Z) =
     resource(resourceClass).owned >= amount
 
 fun User.capResourceAmount(resource: Resource, amount: Z) =
     if (resource is StorableResource) {
-        amount.value.coerceAtMost(availableOf(resource).value).z
+        amount.value.coerceAtMost(freeStorageFor(resource).value).z
     } else {
         amount
     }
