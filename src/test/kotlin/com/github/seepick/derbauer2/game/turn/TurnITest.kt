@@ -19,7 +19,9 @@ class TurnITest : ITest, FunSpec() {
         installGameKoinExtension()
         test("citizens pay taxes") {
             val citizenCount = 100.z
-            val houseCount = ceil(citizenCount.value.toDouble() / Mechanics.houseStoreCitizen).toInt()
+            // ensure sufficient housing also for newborns
+            val citizenCountAfterReproduction = citizenCount + citizenCount * Mechanics.citizenReproductionRate
+            val houseCount = ceil(citizenCountAfterReproduction.value.toDouble() / Mechanics.houseStoreCitizen).toInt()
             val landCount = houseCount * Mechanics.houseLandUse
             Given {
                 setOwned<Gold>(0.z)
@@ -29,7 +31,7 @@ class TurnITest : ITest, FunSpec() {
             } When {
                 nextTurnToReport()
             } Then {
-                val expectedTax = citizenCount * Mechanics.citizenTax
+                val expectedTax = citizenCountAfterReproduction * Mechanics.citizenTax
                 shouldOwn<Gold>(expectedTax)
             }
         }

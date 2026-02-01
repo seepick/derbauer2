@@ -51,6 +51,8 @@ object Mechanics {
     val citizenFoodConsume = 0.3.`%`
     val citizensStarve = 0.01.`%`
     val citizensStarveMinimum = 1.z
+    val citizenReproductionRate = 0.1.`%`
+    val citizenReproductionMinimum = 1.z
 
     val turnProbHappeningStart = 0.0.`%`
     val turnProbHappeningGrowthRate = 0.02.`%`

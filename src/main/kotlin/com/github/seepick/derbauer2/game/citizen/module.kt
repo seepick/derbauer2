@@ -5,4 +5,5 @@ import org.koin.dsl.module
 
 fun citizenModule() = module {
     singleOf(::CitizenTurner)
+    singleOf(::CitizenReproduceResourceTurnStep)
 }

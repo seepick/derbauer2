@@ -19,7 +19,7 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.testInfra.enableAndSet
-import com.github.seepick.derbauer2.game.testInfra.shouldContainLine
+import com.github.seepick.derbauer2.game.testInfra.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeSameInstanceAs
@@ -43,6 +43,7 @@ class TurnerTest : DescribeSpec({
             featureTurner = FeatureTurner(user),
             reports = reports,
             user = user,
+            resourceTurnSteps = emptyList(),
         )
     }
 
@@ -69,7 +70,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.totalProducingResourceAmount
-            report.resourceChanges shouldContainLine (food to farm.totalProducingResourceAmount.asZz)
+            report.resourceChanges shouldContainChange (food to farm.totalProducingResourceAmount.asZz)
         }
         it("Given no food storage When produce Then stay 0") {
             user.enableAndSet(Land(), 10.z)
@@ -79,7 +80,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.z
-            report.resourceChanges shouldContainLine (food to 0.zz)
+            report.resourceChanges shouldContainChange (food to 0.zz)
         }
         it("Given 1 space left When produce 2 Then max capped") {
             user.enableAndSet(Land(), 10.z)
@@ -91,7 +92,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceChanges shouldContainLine (food to diff.zz)
+            report.resourceChanges shouldContainChange (food to diff.zz)
         }
     }
     describe("citizens pay taxes") {
@@ -107,7 +108,7 @@ class TurnerTest : DescribeSpec({
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            report.resourceChanges shouldContainLine (gold to 1.zz)
+            report.resourceChanges shouldContainChange (gold to 1.zz)
             gold.owned shouldBeEqual 1.z
         }
     }

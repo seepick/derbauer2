@@ -52,10 +52,11 @@ data class Z(
     }
 
     val magnitutedValue = translateToMaxMagnitude(value)
-    val asZz get() = value.zz
+    val asZz get() = value.zz // TODO refactor to `toZz()`
+    fun toDouble() = value.toDouble()
 
-    fun maxOf(owned: Z) = if (this > owned) this else owned
-    fun minOf(owned: Z) = if (this < owned) this else owned
+    infix fun orMaxOf(other: Z) = if (this > other) this else other
+    infix fun orMinOf(other: Z) = if (this < other) this else other
 
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()

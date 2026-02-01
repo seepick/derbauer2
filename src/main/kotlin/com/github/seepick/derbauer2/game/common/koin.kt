@@ -6,7 +6,7 @@ import org.koin.java.KoinJavaComponent
 import kotlin.reflect.full.isSubclassOf
 
 @OptIn(KoinInternalApi::class)
-inline fun <reified T : Any> getAllCustom(): List<T> =
+inline fun <reified T : Any> getKoinBeansByType(): List<T> =
     KoinJavaComponent.getKoin().let { koin ->
         koin.instanceRegistry.instances.map { it.value.beanDefinition }
             .filter { it.kind == Kind.Singleton }

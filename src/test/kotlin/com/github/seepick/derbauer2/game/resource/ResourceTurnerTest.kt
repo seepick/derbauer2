@@ -33,37 +33,37 @@ class ResourceTurnerTest : DescribeSpec({
             test(SetupContext(resource, producer, storage))
         }
         it("Given nothing Then do nothing") {
-            val report = ResourceTurner(user).buildTurnReport()
+            val report = ResourceTurner(user).buildResourceChanges()
 
-            report.lines.shouldBeEmpty()
+            report.changes.shouldBeEmpty()
             user.all.shouldBeEmpty()
         }
         it("Given ok setup Then produce And resource untouched") {
             withOkSetup {
                 val resourcesBefore = resource.owned
-                val report = ResourceTurner(user).buildTurnReport()
+                val report = ResourceTurner(user).buildResourceChanges()
 
                 val change = producer.owned * producer.producingResourceAmount
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
+                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
                 resource.owned shouldBeEqual resourcesBefore
             }
         }
         it("Given two forms Then produce both") {
             withOkSetup {
                 producer.ownedForTest = 2.z
-                val report = ResourceTurner(user).buildTurnReport()
+                val report = ResourceTurner(user).buildResourceChanges()
 
                 val change = producer.owned * producer.producingResourceAmount
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
+                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
             }
         }
         it("Given full storage Then still included as 0") {
             withOkSetup {
                 resource.ownedForTest = storage.totalStorageAmount
-                val report = ResourceTurner(user).buildTurnReport()
+                val report = ResourceTurner(user).buildResourceChanges()
 
                 val change = 0.z
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
+                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
             }
         }
     }
