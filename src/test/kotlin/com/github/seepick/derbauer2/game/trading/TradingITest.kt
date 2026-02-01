@@ -18,6 +18,7 @@ class TradingITest : ITest, DescribeSpec() {
                 Given {
                     setOwned<Gold>(0.z)
                     setOwned<Food>(0.z)
+                    user.enable(TradingFeature())
                 } When {
                     selectPrompt("trade")
                     selectPrompt("buy 1 🍖")

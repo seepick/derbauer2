@@ -13,8 +13,9 @@ Continuous Cleanup:
 
 ### v5
 
+* BUG: leftover food not eaten at the end; citizens should start to starve
 * BZ: trade is not enabled at startup, first needs... gold become < 10, or so...
-* !! BZ: finish Technology concept
+* !! BZ: finish Technology concept; tech tree; see specs
 
 Refactor window:
 
@@ -22,12 +23,10 @@ Refactor window:
 * BUG: width with emojis is wrong... implement spike
     * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
 
-### v6
-
-* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
-
 ## Backlog
 
+* let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
+* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: change (user/city) titles/designators based on criteria
     * can be upped and lowered again! different than feature, which is a one-way unlock

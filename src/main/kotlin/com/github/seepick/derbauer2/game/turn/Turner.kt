@@ -24,7 +24,7 @@ class Turner(
 ) {
     private val log = logger {}
 
-    var turn = 1
+    var turn = 1 // TODO move into User object as single data object
         private set
 
     fun collectAndExecuteNextTurnReport(): TurnReport {

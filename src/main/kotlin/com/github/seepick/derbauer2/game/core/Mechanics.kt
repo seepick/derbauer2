@@ -12,7 +12,7 @@ object Mechanics {
     // INITIAL VALUES
     // ========================================================================
     // resources
-    val startingLand = 10.z
+    val startingLand = 20.z
     val startingGold = 500.z
     val startingCitizens = 4.z
     val startingFood = 50.z
