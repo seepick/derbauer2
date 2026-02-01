@@ -83,6 +83,26 @@ configure<ProcessResources>("processResources") {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+
+    if (project.findProperty("debug_tests") != null) {
+        testLogging {
+            events("failed", "skipped", "passed")
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            showExceptions = true
+            showCauses = true
+            showStackTraces = true
+            showStandardStreams = true
+        }
+        afterTest(KotlinClosure2<TestDescriptor, TestResult, Any>({ desc, result ->
+            if (result.resultType == TestResult.ResultType.FAILURE) {
+                println("FAILED: ${desc.className}.${desc.name} (${desc.displayName})")
+                result.exception?.let {
+                    println(it.stackTraceToString())
+                } ?: println("No exception available for failed test.")
+            }
+
+        }))
+    }
 }
 
 jacoco {
