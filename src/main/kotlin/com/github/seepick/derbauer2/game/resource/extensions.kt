@@ -15,7 +15,6 @@ fun <R : Resource> User.resource(type: KClass<R>): R =
 inline fun <reified R : Resource> User.resource(): R =
     resources.find<R>()
 
-
 @Suppress("UNCHECKED_CAST")
 fun <R : Resource> User.resourceOrNull(type: KClass<R>): R? =
     resources.findOrNull(type) as? R?

@@ -7,8 +7,7 @@ import org.koin.dsl.module
 fun turnModule() = module {
     single {
         Turner(
-            get(), get(), get(),
-            get(), get(), get(), getKoinBeansByType()
+            get(), get(), get(), get(), getKoinBeansByType()
         )
     }
     singleOf(::ReportIntelligence)

@@ -29,7 +29,7 @@ class ReportPage(
         textmap.emptyLine()
         textmap.line("Resource production:")
         val report = reports.last()
-        report.resourceChanges.forEach {
+        report.resourceChanges.changes.forEach {
             textmap.line("${it.resource.emojiSpaceOrEmpty}${it.resource.labelPlural} ${it.changeAmount.toPlusString()}")
         }
     },

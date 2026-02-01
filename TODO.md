@@ -52,6 +52,7 @@ Refactor window:
 
 ### Tech
 
+* could provide a UserReadOnly sub-interface
 * macos app signing
 * ad github workflow: check-quality-gates also does jacoco verify/enforce threshold
 * ad github workflow: check-quality-gates valid doc runs independent from previous step, so both can fail
@@ -73,6 +74,9 @@ Refactor window:
 * TEST GameRenderPage ... make reusable also for plain pages (happenings, etc.)
 * Later: Windows build :)
 * Later: Auto-update feature
+* TEST: ResourceTurnerTest
+    * two distinct buildings producing food Then sum
+    * resource producing entity, which is not ownable/count; eg not a building but a feature or anything
 
 ### UI
 

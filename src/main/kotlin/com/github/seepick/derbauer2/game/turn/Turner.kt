@@ -1,8 +1,5 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.citizen.CitizenTurner
-import com.github.seepick.derbauer2.game.citizen.ResourceTurnStep
-import com.github.seepick.derbauer2.game.citizen.TurnPhase
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.citizens
@@ -11,9 +8,8 @@ import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
-import com.github.seepick.derbauer2.game.resource.ResourceTurner
 import com.github.seepick.derbauer2.game.resource.TxResource
-import com.github.seepick.derbauer2.game.resource.toChanges
+import com.github.seepick.derbauer2.game.resource.mergeToSingleChanges
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -21,8 +17,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 @Suppress("LongParameterList")
 class Turner(
     private val happeningTurner: HappeningTurner,
-    private val resourceTurner: ResourceTurner,
-    private val citizenTurner: CitizenTurner,
     private val featureTurner: FeatureTurner,
     private val user: User,
     private val reports: ReportIntelligence,
@@ -36,17 +30,13 @@ class Turner(
     fun collectAndExecuteNextTurnReport(): TurnReport {
         turn++
         log.info { "Taking turn $turn" }
-        execResourceStepsInPhase(TurnPhase.First)
-
-        val resourceResourceChanges = resourceTurner.buildResourceChanges()
-        resourceResourceChanges.execute(user)
-        val citizenResourceChanges = citizenTurner.buildResourceChanges()
-        citizenResourceChanges.execute(user)
-
-        execResourceStepsInPhase(TurnPhase.Last)
+        val allChanges = buildList {
+            addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.First))
+            addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.Last))
+        }
         return TurnReport(
             turn = turn - 1,
-            resourceChanges = resourceResourceChanges.merge(citizenResourceChanges).changes,
+            resourceChanges = allChanges.mergeToSingleChanges(),
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
             isGameOver = user.isGameOver(),
@@ -55,11 +45,9 @@ class Turner(
         }
     }
 
-    private fun execResourceStepsInPhase(phase: TurnPhase) {
-        resourceTurnSteps
-            .filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
-            .forEach { it.calcResourceChanges().toChanges().execute(user) }
-    }
+    private fun List<ResourceTurnStep>.execStepsAndMap(phase: TurnPhase) =
+        this.filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
+            .flatMap { it.calcResourceChanges().also { it.mergeToSingleChanges().execute(user) } }
 
     private fun User.isGameOver() =
         if (!hasEntity<Citizen>()) {

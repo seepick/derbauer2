@@ -13,9 +13,9 @@ import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.equals.shouldBeEqual
 
 private data class SetupContext(
-    val resource: Resource,
-    val producer: ProducesResourceOwnable,
-    val storage: Granary,
+    val food: Resource,
+    val farm: Farm,
+    val granary: Granary,
 )
 
 class ResourceTurnerTest : DescribeSpec({
@@ -23,47 +23,55 @@ class ResourceTurnerTest : DescribeSpec({
     beforeTest {
         user = User()
     }
-
     describe("executeAndReturnReport") {
-        fun withOkSetup(test: SetupContext.() -> Unit) {
-            val resource = user.enable(Food())
-            val producer = user.enableAndSet(Farm(), 1.z)
-            val storage = user.enableAndSet(Granary(), 1.z)
+        fun userWithFarmAndGranary(test: SetupContext.() -> Unit) {
+            val food = user.enable(Food())
+            val farm = user.enableAndSet(Farm(), 1.z)
+            val granary = user.enableAndSet(Granary(), 1.z)
 
-            test(SetupContext(resource, producer, storage))
+            test(SetupContext(food, farm, granary))
         }
         it("Given nothing Then do nothing") {
-            val report = ResourceTurner(user).buildResourceChanges()
+            val actualChanges = ResourceProducingResourceTurnStep(user).calcResourceChanges()
 
-            report.changes.shouldBeEmpty()
-            user.all.shouldBeEmpty()
+            actualChanges.shouldBeEmpty()
         }
         it("Given ok setup Then produce And resource untouched") {
-            withOkSetup {
-                val resourcesBefore = resource.owned
-                val report = ResourceTurner(user).buildResourceChanges()
+            userWithFarmAndGranary {
+                val actualChanges = ResourceProducingResourceTurnStep(user).calcResourceChanges()
 
-                val change = producer.owned * producer.producingResourceAmount
-                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
-                resource.owned shouldBeEqual resourcesBefore
+                actualChanges.shouldBeSingleton().first() shouldBeEqual ResourceChange(
+                    food, farm.owned * farm.producingResourceAmount
+                )
             }
         }
         it("Given two forms Then produce both") {
-            withOkSetup {
-                producer.ownedForTest = 2.z
-                val report = ResourceTurner(user).buildResourceChanges()
+            userWithFarmAndGranary {
+                farm.ownedForTest = 2.z
 
-                val change = producer.owned * producer.producingResourceAmount
-                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
+                val actualChanges = ResourceProducingResourceTurnStep(user).calcResourceChanges()
+
+                actualChanges.shouldBeSingleton().first() shouldBeEqual ResourceChange(
+                    food, farm.owned * farm.producingResourceAmount
+                )
             }
         }
-        it("Given full storage Then still included as 0") {
-            withOkSetup {
-                resource.ownedForTest = storage.totalStorageAmount
-                val report = ResourceTurner(user).buildResourceChanges()
+        it("Given almost full storage Then produce diff") {
+            userWithFarmAndGranary {
+                food.ownedForTest = granary.totalStorageAmount - 1
 
-                val change = 0.z
-                report.changes.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
+                val actualChanges = ResourceProducingResourceTurnStep(user).calcResourceChanges()
+
+                actualChanges.shouldBeSingleton().first() shouldBeEqual ResourceChange(food, 1.z)
+            }
+        }
+        it("Given full storage Then produce zero") {
+            userWithFarmAndGranary {
+                food.ownedForTest = granary.totalStorageAmount
+
+                val actualChanges = ResourceProducingResourceTurnStep(user).calcResourceChanges()
+
+                actualChanges.shouldBeSingleton().first() shouldBeEqual ResourceChange(food, 0.z)
             }
         }
     }

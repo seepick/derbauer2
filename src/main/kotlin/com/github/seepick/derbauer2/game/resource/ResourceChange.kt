@@ -7,8 +7,8 @@ import kotlin.reflect.KClass
 
 fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit) = ResourceChanges.build(code)
 
-fun List<ResourceChange>.toChanges(): ResourceChanges = buildResourceChanges {
-    addAll(this@toChanges)
+fun List<ResourceChange>.mergeToSingleChanges(): ResourceChanges = buildResourceChanges {
+    addAll(this@mergeToSingleChanges)
 }
 
 data class ResourceChange(
