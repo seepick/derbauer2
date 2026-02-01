@@ -1,0 +1,21 @@
+name: Delme
+on:
+  push:
+    branches:
+      - '*'
+jobs:
+  foo:
+    runs-on: ubuntu-latest
+    name: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/setup-env
+      - name: Build Gradle Distribution
+        run: ./gradlew packageDistributionForCurrentOS -Papp_version="55.0.0"
+      - run: |
+          ls .
+          ls build
+          ls build/compose
+          ls build/compose/binaries
+          ls build/compose/binaries/main
+          ls build/compose/binaries/main/deb

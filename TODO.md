@@ -4,6 +4,7 @@
 
 ### v5
 
+* release semver like; input which to auto-increment: major, minor, patch
 * !! BZ: finish Technology concept
 * ! BZ: implement birth rate, increase citizens on turn
 * BZ: implement citizens death if no food

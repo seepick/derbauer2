@@ -48,7 +48,7 @@ compose.desktop {
         mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
         jvmArgs += listOf("-Xmx512M", "--add-exports", "java.desktop/com.apple.eawt=ALL-UNNAMED")
         nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Exe)
+            targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
             packageName = "DerBauer2"
             packageVersion = appVersion
             modules("java.naming")
