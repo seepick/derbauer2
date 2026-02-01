@@ -12,10 +12,6 @@ jobs:
       - uses: ./.github/actions/setup-env
       - name: Build Gradle Distribution
         run: ./gradlew packageDistributionForCurrentOS -Papp_version="55.0.0"
-      - run: |
-          ls .
-          ls build
-          ls build/compose
-          ls build/compose/binaries
-          ls build/compose/binaries/main
-          ls build/compose/binaries/main/deb
+      - run: ls -l build/compose/binaries/main/deb
+      - run: mv build/compose/binaries/main/deb/*.deb build/compose/binaries/main/deb/DerBauer2.deb
+      - run: ls -l build/compose/binaries/main/deb
