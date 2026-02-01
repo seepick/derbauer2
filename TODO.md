@@ -13,13 +13,15 @@ Continuous Cleanup:
 
 ### v5
 
-* UI: make the whole window bigger
-* UI-BUG: width with emojis is wrong
-    * implement spike: render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular
-      table...?
+* ! BZ: implement birth rate, increase citizens on turn
 * BZ: trade is not enabled at startup, first needs... gold become < 10, or so...
 * !! BZ: finish Technology concept
-* ! BZ: implement birth rate, increase citizens on turn
+
+Refactor window:
+
+* make the whole window bigger
+* BUG: width with emojis is wrong... implement spike
+    * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
 
 ### v6
 

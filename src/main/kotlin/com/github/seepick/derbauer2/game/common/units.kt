@@ -13,7 +13,7 @@ val Int.z get() = Z(toLong())
 @Suppress("TooManyFunctions")
 data class Zz(
     val value: Long,
-) {
+) : Comparable<Zz> {
     val magnitutedValue = translateToMaxMagnitude(value)
 
     fun toPlusString() = if (value > 0) "+$this" else toString()
@@ -32,7 +32,7 @@ data class Zz(
     operator fun times(other: Long) = Zz(value * other)
     operator fun times(other: Int) = Zz(value * other)
 
-    operator fun compareTo(other: Zz) = value.compareTo(other.value)
+    override operator fun compareTo(other: Zz) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
@@ -44,7 +44,7 @@ class NegativeZException(val value: Long) :
 @Suppress("TooManyFunctions")
 data class Z(
     val value: Long,
-) {
+) : Comparable<Z> {
     init {
         if (value < 0) {
             throw NegativeZException(value)
@@ -72,7 +72,7 @@ data class Z(
     operator fun times(other: Int) = Z(value * other)
     operator fun times(other: Percent) = Z((value * other.value).toLong())
 
-    operator fun compareTo(other: Z) = value.compareTo(other.value)
+    override operator fun compareTo(other: Z) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }

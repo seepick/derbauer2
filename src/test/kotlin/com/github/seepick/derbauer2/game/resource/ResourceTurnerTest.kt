@@ -44,7 +44,7 @@ class ResourceTurnerTest : DescribeSpec({
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = producer.owned * producer.producingResourceAmount
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(resource, change)
+                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
                 resource.owned shouldBeEqual resourcesBefore
             }
         }
@@ -54,7 +54,7 @@ class ResourceTurnerTest : DescribeSpec({
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = producer.owned * producer.producingResourceAmount
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(resource, change)
+                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
             }
         }
         it("Given full storage Then still included as 0") {
@@ -63,7 +63,7 @@ class ResourceTurnerTest : DescribeSpec({
                 val report = ResourceTurner(user).buildTurnReport()
 
                 val change = 0.z
-                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(resource, change)
+                report.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(resource, change)
             }
         }
     }

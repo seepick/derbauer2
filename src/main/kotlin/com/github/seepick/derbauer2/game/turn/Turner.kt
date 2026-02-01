@@ -38,7 +38,7 @@ class Turner(
         citizenReport.execute(user)
         return TurnReport(
             turn = turn - 1,
-            resourceReportLines = resourceReport.merge(citizenReport).lines,
+            resourceChanges = resourceReport.merge(citizenReport).lines,
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
             isGameOver = user.isGameOver(),

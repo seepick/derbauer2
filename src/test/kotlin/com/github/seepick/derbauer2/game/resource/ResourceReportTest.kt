@@ -28,7 +28,7 @@ class ResourceReportTest : DescribeSpec({
             }
             val merged = report1.merge(report2)
 
-            merged.lines.shouldBeSingleton().first() shouldBeEqual ResourceReportLine(gold, 42.zz)
+            merged.lines.shouldBeSingleton().first() shouldBeEqual ResourceChange(gold, 42.zz)
         }
     }
 })

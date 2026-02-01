@@ -11,15 +11,26 @@ import com.github.seepick.derbauer2.game.resource.buildResourceReport
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.resource.resourceOrNull
 
+//class Logic(
+//    private val user: User,
+//) {
+//
+//}
+
 class CitizenTurner(
     private val user: User,
 ) {
     fun buildReport() = buildResourceReport {
-        if(!user.hasEntity(Citizen::class)) {
+        if (!user.hasEntity(Citizen::class)) {
             return@buildResourceReport
         }
         maybeAddTaxation()
         maybeConsumeFoodOrStarve()
+        reproduce()
+    }
+
+    private fun ResourceReportBuilder.reproduce() {
+
     }
 
     private fun ResourceReportBuilder.maybeAddTaxation() {

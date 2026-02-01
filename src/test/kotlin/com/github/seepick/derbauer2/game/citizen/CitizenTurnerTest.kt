@@ -81,4 +81,15 @@ class CitizenTurnerTest : DescribeSpec({
             report.lines.filter { it.resource is Food }.shouldBeEmpty()
         }
     }
+//    describe("Reproduction") {
+//         it("Given food and citizens Then reproduce") {
+//             val citizen = Citizen()
+//             user.enableAndSet(Food(), 1.z)
+//             user.enableAndSet(citizen, 10.z)
+//
+//             val report = turner.buildReport()
+//
+//             report.lines.single { it.resource is Citizen }.changeAmount shouldBeGreaterThan 0.zz
+//         }
+//    }
 })

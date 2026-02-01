@@ -21,7 +21,7 @@ class ResourceTurner(
     }
 }
 
-data class ResourceReportLine(
+data class ResourceChange(
     val resource: Resource,
     var changeAmount: Zz,
 ) {
@@ -29,7 +29,7 @@ data class ResourceReportLine(
 }
 
 class ResourceReport(
-    val lines: List<ResourceReportLine>,
+    val lines: List<ResourceChange>,
 ) {
     fun merge(other: ResourceReport) = buildResourceReport {
         lines.forEach { add(it.resource, it.changeAmount) }
@@ -49,14 +49,14 @@ fun buildResourceReport(code: ResourceReportBuilder.() -> Unit): ResourceReport 
 
 class ResourceReportBuilder {
 
-    private val changes = mutableMapOf<KClass<out Resource>, ResourceReportLine>()
+    private val changes = mutableMapOf<KClass<out Resource>, ResourceChange>()
 
     fun add(resource: Resource, change: Z) {
         add(resource, change.asZz)
     }
 
     fun add(resource: Resource, change: Zz) {
-        val line = changes.getOrPut(resource::class) { ResourceReportLine(resource, 0.zz) }
+        val line = changes.getOrPut(resource::class) { ResourceChange(resource, 0.zz) }
         line.changeAmount += change
     }
 

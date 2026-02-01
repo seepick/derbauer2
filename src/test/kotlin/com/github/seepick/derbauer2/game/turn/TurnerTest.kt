@@ -69,7 +69,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual farm.totalProducingResourceAmount
-            report.resourceReportLines shouldContainLine (food to farm.totalProducingResourceAmount.asZz)
+            report.resourceChanges shouldContainLine (food to farm.totalProducingResourceAmount.asZz)
         }
         it("Given no food storage When produce Then stay 0") {
             user.enableAndSet(Land(), 10.z)
@@ -79,7 +79,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual 0.z
-            report.resourceReportLines shouldContainLine (food to 0.zz)
+            report.resourceChanges shouldContainLine (food to 0.zz)
         }
         it("Given 1 space left When produce 2 Then max capped") {
             user.enableAndSet(Land(), 10.z)
@@ -91,7 +91,7 @@ class TurnerTest : DescribeSpec({
             val report = turner.collectAndExecuteNextTurnReport()
 
             food.owned shouldBeEqual granary.totalStorageAmount
-            report.resourceReportLines shouldContainLine (food to diff.zz)
+            report.resourceChanges shouldContainLine (food to diff.zz)
         }
     }
     describe("citizens pay taxes") {
@@ -107,7 +107,7 @@ class TurnerTest : DescribeSpec({
 
             val report = turner.collectAndExecuteNextTurnReport()
 
-            report.resourceReportLines shouldContainLine (gold to 1.zz)
+            report.resourceChanges shouldContainLine (gold to 1.zz)
             gold.owned shouldBeEqual 1.z
         }
     }
