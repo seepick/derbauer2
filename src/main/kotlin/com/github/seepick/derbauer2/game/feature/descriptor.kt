@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.technology.TechnologyDescriptor
+import com.github.seepick.derbauer2.game.technology.TechnologyFeatureDescriptor
 import com.github.seepick.derbauer2.game.trading.TradeLandFeatureDescriptor
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.view.AsciiArt
@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 /** Enforce exhaustion despite FeatureDescriptor not being a sealed class */
 enum class FeatureDescriptorEnum(val descriptor: FeatureDescriptor) {
     TradeLand(TradeLandFeatureDescriptor),
-    Technology(TechnologyDescriptor),
+    Technology(TechnologyFeatureDescriptor),
     Trading(TradingFeature.Descriptor),
 }
 

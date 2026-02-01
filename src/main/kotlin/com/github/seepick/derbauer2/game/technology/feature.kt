@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
-object TechnologyDescriptor : FeatureDescriptor(
+object TechnologyFeatureDescriptor : FeatureDescriptor(
     label = "Technology",
     asciiArt = AsciiArt.book,
     multilineDescription = "Welcome to the age of enlightenment!\n" +
@@ -23,7 +23,7 @@ object TechnologyDescriptor : FeatureDescriptor(
     override fun build() = TechnologyFeature(this)
 }
 
-class TechnologyFeature(descriptor: TechnologyDescriptor) : Feature(descriptor) {
+class TechnologyFeature(descriptor: TechnologyFeatureDescriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.Technology(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"

@@ -13,9 +13,8 @@ Continuous Cleanup:
 
 ### v5
 
-* BUG: leftover food not eaten at the end; citizens should start to starve
-* BZ: trade is not enabled at startup, first needs... gold become < 10, or so...
 * !! BZ: finish Technology concept; tech tree; see specs
+* BUG: leftover food not eaten at the end; citizens should start to starve
 
 Refactor window:
 
@@ -25,8 +24,9 @@ Refactor window:
 
 ## Backlog
 
-* new chronos: instead of "turn", do it "Week 13 Year 1052"
-* let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
+* BZ: increase designators (title, city) based on "some criteria"
+* BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
+* UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: general variability end turn (production, taxes, consumption)
 * BZ: change (user/city) titles/designators based on criteria
