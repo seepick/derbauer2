@@ -1,4 +1,8 @@
 package com.github.seepick.derbauer2.game.testInfra.uitest
 
-// marker interface for easier lookup (find implementation)
+import org.junit.experimental.categories.Category
+
+interface UiTestCategory
+
+@Category(UiTestCategory::class)
 interface UiTest

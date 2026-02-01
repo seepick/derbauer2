@@ -76,7 +76,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/setup-env
       - name: Build Compose Artifact
-        run: ./gradlew packageDistributionForCurrentOS -Papp_version="${{ needs.prepare-release.outputs.version-nr }}"
+        run: ./gradlew packageDistributionForCurrentOS -PappVersion="${{ needs.prepare-release.outputs.version-nr }}"
       - run: dir build/compose/binaries/main/exe/
         if: runner.os == 'Windows'
       - name: Upload Release Asset for Windows

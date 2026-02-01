@@ -1,9 +1,15 @@
 import com.github.benmanes.gradle.versions.updates.DependencyUpdatesTask
 import org.apache.tools.ant.filters.ReplaceTokens
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val appVersion: String = (project.findProperty("app_version") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
-logger.debug("Gradle appVersion=[$appVersion]")
+val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
+val debugTests = project.findProperty("debugTests") != null
+
+val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
+val mainClassFqn = "com.github.seepick.derbauer2.game.DerBauer2"
+
+logger.debug("DerBauer2 appVersion=[$appVersion]")
 
 plugins {
     alias(libs.plugins.kotlin)
@@ -45,7 +51,7 @@ kotlin {
 
 compose.desktop {
     application {
-        mainClass = "com.github.seepick.derbauer2.game.DerBauer2"
+        mainClass = mainClassFqn
         jvmArgs += listOf("-Xmx512M", "--add-exports", "java.desktop/com.apple.eawt=ALL-UNNAMED")
         nativeDistributions {
             packageName = "DerBauer2"
@@ -82,12 +88,34 @@ configure<ProcessResources>("processResources") {
 }
 
 tasks.withType<Test>().configureEach {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        excludeEngines("junit-vintage")
+    }
+    debugTestsIfEnabled()
+}
 
-    if (project.findProperty("debug_tests") != null) {
+// CAVE: this name `uiTest` matters; it's the gradle task being used by CI
+val uiTest by tasks.registering(Test::class) {
+    description = "Use JUnit4 to run Compose UI tests."
+    group = "verification"
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+    useJUnit {
+//        if (runUiTests) {
+//            logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
+//        } else {
+//            excludeCategories = setOf("com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory")
+//            logger.lifecycle("UI tests are disabled (default). Use `-PrunUiTests` to enable.")
+//        }
+    }
+    debugTestsIfEnabled()
+}
+
+fun AbstractTestTask.debugTestsIfEnabled() {
+    if (debugTests) {
         testLogging {
             events("failed", "skipped", "passed")
-            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            exceptionFormat = TestExceptionFormat.FULL
             showExceptions = true
             showCauses = true
             showStackTraces = true
@@ -100,7 +128,6 @@ tasks.withType<Test>().configureEach {
                     println(it.stackTraceToString())
                 } ?: println("No exception available for failed test.")
             }
-
         }))
     }
 }

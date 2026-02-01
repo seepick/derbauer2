@@ -35,15 +35,15 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 
 src/test/kotlin/.../game/
 ├── */                          # Unit tests (mirror main structure)
-├── integrationTests/           # High-level integration tests with DSL
 ├── test_assertions.kt          # Custom Kotest matchers
 └── test_domain_utils.kt        # Test builders
 ```
 
 ## Important Files for Agents
 
-* [Coding Standards](/documentation/tech-spec/coding-standards.md)` - when writing code, adhere to those.
+* [Coding Standards](/documentation/tech-spec/coding-standards.md)` - When writing any code, adhere to those.
 * [Software Architecture](/documentation/tech-spec/project-architecture.md) - High level architecture overview.
+* [Gradle Dependencies](/gradle/libs.versions.toml) - Change dependencies if needed.
 
 ## Critical Patterns & Constraints
 
