@@ -1,12 +1,8 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.citizens
-import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource.mergeToSingleChanges
@@ -17,14 +13,14 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 @Suppress("LongParameterList")
 class Turner(
     private val user: User,
+    private val resourceTurnSteps: List<ResourceTurnStep>,
+
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
-    private val reports: ReportIntelligence,
-    private val resourceTurnSteps: List<ResourceTurnStep>,
 ) {
     private val log = logger {}
 
-    fun collectAndExecuteNextTurnReport(): TurnReport {
+    fun executeAndGenerateReport(): TurnReport {
         log.info { "Taking turn ${user.turn}" }
         val allChanges = buildList {
             addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.First))
@@ -35,22 +31,12 @@ class Turner(
             resourceChanges = allChanges.mergeToSingleChanges(),
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
-            isGameOver = isGameOver(),
-        ).also { result ->
-            reports.addReport(result)
-        }
+        )
     }
 
     private fun List<ResourceTurnStep>.execStepsAndMap(phase: TurnPhase) =
         this.filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
             .flatMap { it.calcResourceChanges().also { it.mergeToSingleChanges().execute(user) } }
-
-    private fun isGameOver() =
-        if (!user.hasEntity<Citizen>()) {
-            false
-        } else {
-            user.citizens == 0.z
-        }
 }
 
 private fun ResourceChanges.execute(user: User) {

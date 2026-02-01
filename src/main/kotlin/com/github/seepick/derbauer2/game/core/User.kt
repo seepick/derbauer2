@@ -8,6 +8,9 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.transaction.TxValidator
+import com.github.seepick.derbauer2.game.turn.Reports
+import com.github.seepick.derbauer2.game.turn.ReportsWritable
+import com.github.seepick.derbauer2.game.turn.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -25,10 +28,8 @@ class User(
         private set
     var designator = UserDesignator.default
     var cityDesignator = CityDesignator.default
-
-    fun nextTurn() {
-        turn++
-    }
+    private val _reports = ReportsWritable()
+    val reports: Reports = _reports
 
     // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()
@@ -45,6 +46,11 @@ class User(
             log.info { "Enabling $entity" }
         }
         _all += entity
+    }
+
+    fun nextTurn(report: TurnReport) {
+        turn++
+        _reports.add(report)
     }
 
     fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
@@ -77,3 +83,5 @@ val User.gold get() = resource(Gold::class).owned
 val User.food get() = resource(Food::class).owned
 val User.citizens get() = resource(Citizen::class).owned
 val User.land get() = resource(Land::class).owned
+
+fun User.isGameOver() = hasEntity<Citizen>() && citizens == 0.z

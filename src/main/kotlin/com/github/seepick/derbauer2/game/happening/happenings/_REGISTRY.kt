@@ -13,6 +13,7 @@ object DefaultHappeningDescriptorRepo : HappeningDescriptorRepo {
     override val all: List<HappeningDescriptor> = listOf(
         FoundGoldDescriptor,
         RatsEatFoodDescriptor,
+        // TODO use enum hack again ;)
         // !!!!!!!!!!!!!!!!!!!!!
         // keep MANUALLY in sync
         // !!!!!!!!!!!!!!!!!!!!!

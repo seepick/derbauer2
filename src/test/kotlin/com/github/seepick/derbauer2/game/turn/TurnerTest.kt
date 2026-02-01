@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
@@ -13,41 +14,38 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.enableAndSet
 import com.github.seepick.derbauer2.game.testInfra.User
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.types.shouldBeSameInstanceAs
 
 class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: Turner
-    lateinit var reports: ReportIntelligence
     lateinit var probabilities: ProbabilitiesImpl
     beforeTest {
         user = User()
-        reports = ReportIntelligence()
         probabilities = ProbabilitiesImpl()
         val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo)
         happeningTurner.registerProbabilities()
         turner = Turner(
-            happeningTurner = happeningTurner,
-            featureTurner = FeatureTurner(user),
-            reports = reports,
             user = user,
             resourceTurnSteps = emptyList(),
+            happeningTurner = happeningTurner,
+            featureTurner = FeatureTurner(user),
         )
     }
 
     describe("misc") {
-        it("intelligence updated") {
-            val report = turner.collectAndExecuteNextTurnReport()
+        it("user stays untouched") {
+            turner.executeAndGenerateReport()
 
-            reports.last() shouldBeSameInstanceAs report
+            user.reports.all.shouldBeEmpty()
         }
     }
     describe("game over") {
         it("Given no entity Then game cant be over") {
-            val report = turner.collectAndExecuteNextTurnReport()
+            turner.executeAndGenerateReport()
 
-            report.isGameOver shouldBeEqual false
+            user.isGameOver() shouldBeEqual false
         }
         it("Given >0 citizens When take turn Then game is not over") {
             val house = House()
@@ -55,16 +53,16 @@ class TurnerTest : DescribeSpec({
             user.enableAndSet(house, 1.z)
             user.enableAndSet(Citizen(), 1.z)
 
-            val report = turner.collectAndExecuteNextTurnReport()
+            turner.executeAndGenerateReport()
 
-            report.isGameOver shouldBeEqual false
+            user.isGameOver() shouldBeEqual false
         }
         it("Given no citizens When take turn Then game is over") {
             user.enableAndSet(Citizen(), 0.z)
 
-            val report = turner.collectAndExecuteNextTurnReport()
+            turner.executeAndGenerateReport()
 
-            report.isGameOver shouldBeEqual true
+            user.isGameOver() shouldBeEqual true
         }
     }
 })

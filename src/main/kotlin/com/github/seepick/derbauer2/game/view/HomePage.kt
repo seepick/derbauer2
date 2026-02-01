@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.technology.TechnologyFeature
 import com.github.seepick.derbauer2.game.technology.TechnologyPage
@@ -21,9 +22,9 @@ class HomePage(
 ) : PromptGamePage(
     buttons = listOf(
         ContinueButton("Next Turn") {
-            val report = turner.collectAndExecuteNextTurnReport()
-            user.nextTurn()
-            currentPage.pageClass = if (report.isGameOver) GameOverPage::class else ReportPage::class
+            val report = turner.executeAndGenerateReport()
+            user.nextTurn(report)
+            currentPage.pageClass = if (user.isGameOver()) GameOverPage::class else ReportPage::class
         }
     ),
     gameRenderer = gameRenderer,
