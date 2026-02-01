@@ -1,17 +1,34 @@
-name: Delme
+name: Choice Playground
 on:
-  push:
+  workflow_dispatch:
     branches:
-      - '*'
+      - main
+    inputs:
+      version_segment:
+        description: 'Select which version segment to bump'
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - major
+          - minor
+          - patch
 jobs:
-  foo:
+  prepare-release:
+    name: Create GitHub Release
     runs-on: ubuntu-latest
-    name: build
     steps:
-      - uses: actions/checkout@v4
-      - uses: ./.github/actions/setup-env
-      - name: Build Gradle Distribution
-        run: ./gradlew packageDistributionForCurrentOS -Papp_version="55.0.0"
-      - run: ls -l build/compose/binaries/main/deb
-      - run: mv build/compose/binaries/main/deb/*.deb build/compose/binaries/main/deb/DerBauer2.deb
-      - run: ls -l build/compose/binaries/main/deb
+      - run: |
+          echo "You selected: ${{ github.event.inputs.version_segment }}"
+      - name: shell exec
+        id: step-version
+        run: |
+          newVersion=$(./bin/version_bump.sh "${{ github.event.inputs.version_segment }}")
+          rc=$?
+          if [ $rc -ne 0 ]; then
+            echo "version script failed with exit code $rc" >&2
+            exit $rc
+          fi
+          echo "new_version=$newVersion" >> $GITHUB_OUTPUT
+      - run: |
+          echo "New version: ${{ steps.step-version.outputs.new_version }}"
