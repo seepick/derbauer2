@@ -59,7 +59,6 @@ Continuous Cleanup:
 * REFACTOR turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
 * REFACTOR ProbabilityProvider: introduce interface for testability
 * --- introduce buildSrc (try again ;)
-* TEST UI-test need await (runBlocking thus); once saw a flaky test with assert stmt (text not yet updated?!)
 * TEST for transaction logic
 * TEST allow for "global config"; set initAssets/custom ones by default applied to all tests within
 * TEST beeper uses some event WarningBus; then catch in itests fail-cases as well

@@ -21,7 +21,7 @@ class HappeningTurner(
 
     private val log = logger {}
 
-    /** Delayed post-construct initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
+    /** Delayed post-ctor initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
     override fun registerProbabilities() {
         log.debug { "Registering probabilities." }
         probabilities.setProvider(

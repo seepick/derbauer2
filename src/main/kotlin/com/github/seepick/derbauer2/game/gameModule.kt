@@ -12,10 +12,11 @@ import com.github.seepick.derbauer2.game.trading.tradingModule
 import com.github.seepick.derbauer2.game.turn.turnModule
 import com.github.seepick.derbauer2.game.view.viewModule
 import org.koin.dsl.module
+import kotlin.reflect.KClass
 
-fun gameModule() = module {
+fun gameModule(prefStatePath: KClass<*>) = module {
     includes(
-        coreModule(),
+        coreModule(prefStatePath),
         probabilityModule(),
         resourceModule(),
         buildingModule(),

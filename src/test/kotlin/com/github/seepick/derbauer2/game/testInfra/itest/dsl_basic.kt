@@ -184,7 +184,7 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, GameKoinTestConte
 
     fun shouldRaiseWarning(containsMessage: String) {
         val warnings = koin.get<CollectingWarningListener>().warnings
-        withClue({ "Expected warnings to contain any message which contains [$containsMessage] but was:\n${warnings.map { it.message }}" }) {
+        withClue({ "Expected warnings to contain [$containsMessage] but was:\n${warnings.map { it.message }}" }) {
             warnings.any { it.message.contains(containsMessage, ignoreCase = true) } shouldBeEqual true
         }
     }

@@ -13,8 +13,8 @@ val StorableResource.freeStorage: Z get() = user.freeStorageFor(this)
 context(user: User)
 val StorableResource.totalStorage: Z get() = user.totalStorageFor(this)
 
-@Suppress("MagicNumber")
 context(user: User)
+@Suppress("MagicNumber")
 val StorableResource.storageUsage: Percent get() = (totalStorage.value.toDouble() / owned.value.toDouble() / 100.0).`%`
 
 fun User.totalStorageFor(resource: StorableResource) =

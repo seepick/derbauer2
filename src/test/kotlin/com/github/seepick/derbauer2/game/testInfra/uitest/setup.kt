@@ -14,7 +14,7 @@ fun uitestModule() = module {
 fun ComposeTest.uiTest(testCode: () -> Unit) {
     ui.setContent {
         KoinApplication(application = {
-            modules(textengineModule(), gameModule(), uitestModule())
+            modules(textengineModule(), gameModule(this@uiTest::class), uitestModule())
         }) {
             MainWindow(title = "TestBauer2", { it.initGame() }, {})
         }

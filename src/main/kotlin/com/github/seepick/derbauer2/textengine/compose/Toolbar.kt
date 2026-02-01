@@ -37,7 +37,7 @@ fun Toolbar(width: Dp, xOffset: Dp, bgAlpha: Float) {
                 .background(Color.fgColor.copy(alpha = bgAlpha))
         ) {
             MusicButton(
-                autoPlayMusic = storedMusicPlayState,
+                autoPlayMusic = storedMusicPlayState ?: false,
                 stateRepo = stateRepo,
             )
         }

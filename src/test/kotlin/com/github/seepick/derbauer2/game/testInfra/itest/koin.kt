@@ -28,7 +28,7 @@ fun Extendable.installGameKoinExtension() {
         KoinExtension(
             modules = listOf(
                 textengineModule(),
-                gameModule(),
+                gameModule(this::class),
                 itestModule(),
             ),
             mockProvider = { mockkClass(it, relaxed = true) }

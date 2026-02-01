@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
@@ -33,6 +34,7 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.seepick.derbauer2.game.view.textengineModule
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
+import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.bgColor
 import com.github.seepick.derbauer2.textengine.fgColor
@@ -64,6 +66,8 @@ fun showMainWindow(
     }
 }
 
+private const val TOOLBAR_ANIMATION_DURATION = 200
+
 @Suppress("FunctionName")
 @Composable
 fun MainWindow(
@@ -86,14 +90,13 @@ fun MainWindow(
     val toolbarWidth = 40.dp
     val cursorLeftThreshold = with(density) { toolbarWidth.toPx() }
     var isCursorNearLeft by remember { mutableStateOf(false) }
-    val leftBarAnimationDuration = 200
     val toolbarOffset by animateDpAsState(
         targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
-        animationSpec = tween(durationMillis = leftBarAnimationDuration)
+        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION)
     )
     val toolbarAlpha by animateFloatAsState(
         targetValue = if (isCursorNearLeft) 0.8f else 0.4f,
-        animationSpec = tween(durationMillis = leftBarAnimationDuration)
+        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION)
     )
 
     MaterialTheme {
@@ -117,6 +120,7 @@ fun MainWindow(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
+                    .testTag(TestTags.mainBox)
                     .border(
                         MainWin.outerBorder,
                         Color.fgColor

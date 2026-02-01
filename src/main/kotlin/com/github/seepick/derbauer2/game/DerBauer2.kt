@@ -14,7 +14,7 @@ object DerBauer2 {
         log.info { "Starting Der Bauer 2 (args: ${args.toList()})" }
         showMainWindow(
             title = "DerBauer2 (${AppProperties.instance.version})",
-            mainModule = gameModule(),
+            mainModule = gameModule(DerBauer2::class),
         ) { koin -> koin.initGame() }
     }
 }
