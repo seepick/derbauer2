@@ -57,7 +57,6 @@ class Turner(
         }
 }
 
-
 private fun ResourceChanges.execute(user: User) {
     user.execTx(changes.map { line ->
         TxResource(

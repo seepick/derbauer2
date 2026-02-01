@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
@@ -9,8 +10,8 @@ import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDe
 import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.enableAndSet
 import com.github.seepick.derbauer2.game.testInfra.User
-import com.github.seepick.derbauer2.game.testInfra.enableAndSet
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeSameInstanceAs

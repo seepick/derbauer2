@@ -13,7 +13,6 @@ Continuous Cleanup:
 
 ### v5
 
-* ! BZ: implement birth rate, increase citizens on turn
 * BZ: trade is not enabled at startup, first needs... gold become < 10, or so...
 * !! BZ: finish Technology concept
 

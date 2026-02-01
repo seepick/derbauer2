@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Granary
+import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.User
-import com.github.seepick.derbauer2.game.testInfra.enableAndSet
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue

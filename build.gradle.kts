@@ -95,20 +95,22 @@ tasks.withType<Test>().configureEach {
 }
 
 // CAVE: this name `uiTest` matters; it's the gradle task being used by CI
-val uiTest by tasks.registering(Test::class) {
-    description = "Use JUnit4 to run Compose UI tests."
-    group = "verification"
-    testClassesDirs = sourceSets["test"].output.classesDirs
-    classpath = sourceSets["test"].runtimeClasspath
-    useJUnit {
+if (false) { // FIXME fix this; annoying in IDE; use -PrunUiTests nevertheless
+    val uiTest by tasks.registering(Test::class) {
+        description = "Use JUnit4 to run Compose UI tests."
+        group = "verification"
+        testClassesDirs = sourceSets["test"].output.classesDirs
+        classpath = sourceSets["test"].runtimeClasspath
+        useJUnit {
 //        if (runUiTests) {
 //            logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
 //        } else {
 //            excludeCategories = setOf("com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory")
 //            logger.lifecycle("UI tests are disabled (default). Use `-PrunUiTests` to enable.")
 //        }
+        }
+        debugTestsIfEnabled()
     }
-    debugTestsIfEnabled()
 }
 
 fun AbstractTestTask.debugTestsIfEnabled() {

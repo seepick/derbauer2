@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
+import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.turn.DefaultResourceTurnStep
 import com.github.seepick.derbauer2.game.turn.TurnPhase
@@ -20,9 +21,9 @@ class CitizenReproduceResourceTurnStep(user: User) :
                 changeAmount = if (citizen.owned == 0.z) {
                     0.z
                 } else {
-                    Mechanics.citizenReproductionMinimum.orMaxOf(
-                        citizen.owned * Mechanics.citizenReproductionRate
-                    )
+                    (citizen.owned * Mechanics.citizenReproductionRate)
+                        .orMaxOf(Mechanics.citizenReproductionMinimum)
+                        .orMinOf(user.freeStorageFor(citizen))
                 }
             )
         }

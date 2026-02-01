@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.transaction
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.building.TxBuilding
+import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
@@ -10,8 +11,8 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.TxResource
+import com.github.seepick.derbauer2.game.resource.enableAndSet
 import com.github.seepick.derbauer2.game.testInfra.User
-import com.github.seepick.derbauer2.game.testInfra.enableAndSet
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
