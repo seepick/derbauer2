@@ -107,3 +107,7 @@ class ResourceChanges private constructor(
     }
 }
 
+fun ResourceChanges.toTextmapRendering() =
+    changes.joinToString(", ") { change ->
+        "${change.resourceClass}: ${change.changeAmount}"
+    }

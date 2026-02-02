@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.ResourceChanges
+import com.github.seepick.derbauer2.game.resource.toTextmapRendering
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -11,10 +11,6 @@ import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
-
-fun ResourceChanges.toTextmapRendering(): String {
-    return "asfd" // FIXME implement me
-}
 
 class TechPage(
     private val user: User,
