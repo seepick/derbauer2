@@ -67,7 +67,7 @@ class CapitalismTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-    // TODO increase tax income
+
     object Data : TechStaticData {
         override val label = "Capitalism"
         override val type = TechType.CAPITALISM
@@ -87,7 +87,7 @@ class JunkFoodTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-    // TODO decrease food consumption
+
     object Data : TechStaticData {
         override val label = "Junk Food"
         override val type = TechType.JUNK_FOOD
@@ -107,7 +107,7 @@ class WarfareTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-    // TODO enable military feature
+
     object Data : TechStaticData {
         override val label = "Warfare"
         override val type = TechType.WARFARE

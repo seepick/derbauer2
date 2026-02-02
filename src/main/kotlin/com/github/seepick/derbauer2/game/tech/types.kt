@@ -10,18 +10,13 @@ import com.github.seepick.derbauer2.game.resource.WarfareTechTreeItem
 
 enum class TechType(val treeItemBuilder: () -> TechTreeItem) {
     AGRICULTURE(::AgricultureTechTreeItem), // +food production
-    IRRIGATION(::IrrigationTechTreeItem), // +food production // TODO refactor to a lvl II upgrade
+    IRRIGATION(::IrrigationTechTreeItem), // +food production
     CAPITALISM(::CapitalismTechTreeItem), // +tax
     JUNK_FOOD(::JunkFoodTechTreeItem), // -food eaten (+happiness?)
     WARFARE(::WarfareTechTreeItem), // -food eaten (+happiness?)
-//    POTTERY,     // enables granaries
-    // ???  +food storage
-//    HOUSES,      // upgrade from tents; replaces building? then auto-upgrade necessary (keep UI items low as ascend)
 }
 
 interface Tech : Entity, TechStaticData {
-    // check end turn, enable if not yet enabled
-    // used as precondition filter for actions/etc.
     override val labelSingular get() = label
 }
 

@@ -12,6 +12,10 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
     * tech can have description
     * IT: remove enum-pseudo-sealed again, and introduce repo; the DefaultRepo holds a manual list; so what...
         * otherwise not testable; too hard-wired with enum.entries; no real "dynamicism"
+    * refactor irrigation to a lvl II agriculture upgrade
+    * pottery, enables granaries
+    * houses, upgrade from tents; replaces building? then auto-upgrade necessary (keep UI items low as ascend)
+    * finish 3 tech modifiers
 
 * BUG: when 9/10 food, and produce way more, then should be +1 but was 0!!!
 * BUG: leftover food not eaten at the end; citizens should start to starve
