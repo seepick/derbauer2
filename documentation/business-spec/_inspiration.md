@@ -1,4 +1,6 @@
-# Other similar games
+# Inspiration
+
+Other similar games:
 
 * Warsim
     * very big, nice game (5 USD, win only)

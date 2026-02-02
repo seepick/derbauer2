@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.technology.TechnologyFeature
+import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trading.TradeLandFeature
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.view.AsciiArt

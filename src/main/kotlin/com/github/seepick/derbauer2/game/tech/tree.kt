@@ -1,29 +1,10 @@
-package com.github.seepick.derbauer2.game.technology
+package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
-
-/*
-develop a format based on YAML
-
----
-technologies:
-    - id: advanced_agriculture
-        label: Advanced Agriculture
-        prerequisites: []
-    - id: irrigation
-        label: Irrigation
-        prerequisites:
-        - advanced_agriculture
-    - id: wheel
-        label: Wheel
-        prerequisites:
-        - advanced_agriculture
----
-
-tree structure, outgoing nodes
-
- */
 
 enum class TechType {
     AGRICULTURE, // +food production
@@ -31,23 +12,27 @@ enum class TechType {
     POTTERY,     // enable granaries
 }
 
-interface Technology : Entity, TechnologyStaticData {
+interface Tech : Entity, TechStaticData {
     // check end turn, enable if not yet enabled
     // used as precondition filter for actions/etc.
     override val labelSingular get() = label
 }
 
-interface TechnologyStaticData {
+interface TechStaticData {
     val label: String
     val type: TechType
     val requirements: Set<TechType>
     val costs: ResourceChanges
 }
 
-class Agriculture(data: Data = Data) : Technology, TechnologyStaticData by data {
+fun interface ResourceProductionModifier {
+    fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
+}
+
+class AgricultureTech(data: Data = Data) : Tech, TechStaticData by data {
     override fun deepCopy() = this // immutable
 
-    object Data : TechnologyStaticData {
+    object Data : TechStaticData {
         override val label = "Agriculture"
         override val type = TechType.AGRICULTURE
         override val requirements = emptySet<TechType>()
@@ -55,10 +40,10 @@ class Agriculture(data: Data = Data) : Technology, TechnologyStaticData by data 
     }
 }
 
-interface TechnologyDescriptor
+interface TechDescriptor
 
 class TechTree {
-    fun getAvailable(): List<TechnologyDescriptor> {
+    fun getAvailable(): List<TechDescriptor> {
         TODO("Not yet implemented")
     }
 }

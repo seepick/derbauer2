@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.core
 
 @Suppress("MagicNumber")
-enum class CityDesignator(
+enum class CityTitle(
     val label: String,
     val order: Int,
 ) {
@@ -11,12 +11,12 @@ enum class CityDesignator(
     Metropolis("Metropolis", 3);
 
     companion object {
-        val default = entries.minBy { it.order }
+        val initial = entries.minBy { it.order }
     }
 }
 
 @Suppress("MagicNumber")
-enum class UserDesignator(
+enum class UserTitle(
     val label: String,
     val order: Int,
 ) {
@@ -26,6 +26,6 @@ enum class UserDesignator(
     Emperor("Emperor", 3);
 
     companion object {
-        val default = entries.minBy { it.order }
+        val initial = entries.minBy { it.order }
     }
 }

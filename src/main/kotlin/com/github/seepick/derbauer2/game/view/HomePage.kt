@@ -4,8 +4,8 @@ import com.github.seepick.derbauer2.game.building.BuildingsPage
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.technology.TechnologyFeature
-import com.github.seepick.derbauer2.game.technology.TechnologyPage
+import com.github.seepick.derbauer2.game.tech.TechPage
+import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
@@ -30,7 +30,7 @@ class HomePage(
     gameRenderer = gameRenderer,
     promptBuilder = {
         SelectPrompt(
-            title = "What shall we do next, ${user.designator.label}?", buildList {
+            title = "What shall we do next, ${user.userTitle.label}?", buildList {
                 if (user.hasFeature<TradingFeature>()) {
                     add(SelectOption("Trade 💰") {
                         currentPage.pageClass = TradingPage::class
@@ -41,7 +41,7 @@ class HomePage(
                 })
                 if (user.hasFeature<TechnologyFeature>()) {
                     add(SelectOption("Research 🔬") {
-                        currentPage.pageClass = TechnologyPage::class
+                        currentPage.pageClass = TechPage::class
                     })
                 }
             }

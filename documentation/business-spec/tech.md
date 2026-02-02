@@ -1,6 +1,6 @@
 # Technology
 
-* just a conventional tech-tree, enabling permanent [features](feature.md)
+* just a conventional tech-tree, enabling permanent [features](feature.md); aka "research"
 * attributes:
     * costs: (mostly) knowledge; maybe other resources too (?)
     * prerequisites: other technology, buildings (military strength, resources?), ...

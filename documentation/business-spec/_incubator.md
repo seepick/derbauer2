@@ -1,4 +1,4 @@
-# Ideas
+# Incubator of Ideas
 
 * Supply Chain and Logistics (factorio)
     * buildings consume to produce other (higher) resources; respect ratio
@@ -48,6 +48,12 @@
         * e.g. trade a lot -> better prices
     * unlock features, gain achievements
 * e.g. global military expertize: each time attack, it increases and leads to improved global att/def
+
+## Interaction
+
+* about: keep track how user interacts with the game
+    * like a message queue/event store
+* e.g. traded x-times, build y-times, attacked z-times, ... did mini games, ... past decisions.
 
 ## Achievement
 

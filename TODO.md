@@ -24,6 +24,7 @@ Refactor window:
 
 ## Backlog
 
+* BZ: reverse engineer DerBauer1
 * BZ: increase designators (title, city) based on "some criteria"
 * BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
 * UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!

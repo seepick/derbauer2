@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.technology
+package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User

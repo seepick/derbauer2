@@ -28,7 +28,7 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 ├── bin/                          # Contains shellscripts for mostly local execution; the documentation validation script is also executed in the CI build (github workflow)
 ├── config/                       # Contains miscellaneous configuration files; especially the `detect.yml` file is interesting for coding standards
 ├── documentation/                # Contains documentation for the project, including business and technical requirements.
-│   ├── prompts/                  # Disregard those when working on the project; used prompts for previous AI tasks.
+│   ├── ai-prompts/               # Disregard those when working on the project; used prompts for previous AI tasks.
 │   ├── business-spec/            # Feature specifications; business requirements.
 │   └── tech-spec/                # Technical description; architecture, patterns, etc.
 └── src/                          # Contains the source code for the game, following typical convention.

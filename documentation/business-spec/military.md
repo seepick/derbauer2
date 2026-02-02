@@ -63,5 +63,9 @@
 
 ### Defend
 
-* if no more armies => people will fight
-* when lose (land!) => building destroyed
+* at end of turn, probability of being attacked
+* lose:
+    * armies, obviously
+    * citizens will fight ("angry farmer"), if no more armies left
+    * resources and even buildings (destroyed); watch out: if lose land, not overuse capacity
+* game over if no more citizens

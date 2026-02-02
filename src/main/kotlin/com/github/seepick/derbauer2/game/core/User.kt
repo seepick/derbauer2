@@ -26,8 +26,8 @@ class User(
 
     var turn = 1
         private set
-    var designator = UserDesignator.default
-    var cityDesignator = CityDesignator.default
+    var userTitle = UserTitle.initial
+    var cityTitle = CityTitle.initial
     private val _reports = ReportsWritable()
     val reports: Reports = _reports
 
