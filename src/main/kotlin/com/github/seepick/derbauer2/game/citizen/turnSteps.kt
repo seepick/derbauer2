@@ -9,11 +9,11 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.resource.resource
-import com.github.seepick.derbauer2.game.turn.DefaultResourceTurnStep
+import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 
-class CitizenReproduceResourceTurnStep(user: User) :
-    DefaultResourceTurnStep(user, TurnPhase.First, listOf(Citizen::class)) {
+class CitizenReproduceTurnStep(user: User) :
+    DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class)) {
     override fun calcResourceChange() =
         user.resource<Citizen>().let { citizen ->
             ResourceChange(
@@ -29,8 +29,8 @@ class CitizenReproduceResourceTurnStep(user: User) :
         }
 }
 
-class CitizenFoodEatenResourceTurnStep(user: User) :
-    DefaultResourceTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
+class CitizenFoodEatenTurnStep(user: User) :
+    DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
     override fun calcResourceChange(): ResourceChange {
         val food = user.resource<Food>()
         val citizen = user.resource<Citizen>()
@@ -46,8 +46,8 @@ class CitizenFoodEatenResourceTurnStep(user: User) :
     }
 }
 
-class CitizenTaxesResourceTurnStep(user: User) :
-    DefaultResourceTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
+class CitizenTaxesTurnStep(user: User) :
+    DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
     override fun calcResourceChange(): ResourceChange {
         val citizen = user.resource<Citizen>()
         val taxIncome = citizen.owned * Mechanics.citizenTax

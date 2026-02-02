@@ -5,5 +5,5 @@ import org.koin.dsl.module
 
 fun resourceModule() = module {
     single { ResourceTxValidator }
-    singleOf(::ResourceProducingResourceTurnStep)
+    singleOf(::ProducesResourceTurnStep)
 }

@@ -4,7 +4,7 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
 fun citizenModule() = module {
-    singleOf(::CitizenReproduceResourceTurnStep)
-    singleOf(::CitizenFoodEatenResourceTurnStep)
-    singleOf(::CitizenTaxesResourceTurnStep)
+    singleOf(::CitizenReproduceTurnStep)
+    singleOf(::CitizenFoodEatenTurnStep)
+    singleOf(::CitizenTaxesTurnStep)
 }

@@ -25,7 +25,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             user.givenStorage<Citizen>(100.z)
             val citizen = user.enableAndSet(Citizen(), 0.z)
 
-            val change = CitizenReproduceResourceTurnStep(user).calcResourceChange()
+            val change = CitizenReproduceTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(citizen, 0.z)
         }
@@ -33,7 +33,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             user.givenStorage<Citizen>(100.z)
             val citizen = user.enableAndSet(Citizen(), 1.z)
 
-            val change = CitizenReproduceResourceTurnStep(user).calcResourceChange()
+            val change = CitizenReproduceTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(citizen, Mechanics.citizenReproductionMinimum)
         }
@@ -41,7 +41,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             user.givenStorage<Citizen>(200.z)
             val citizen = user.enableAndSet(Citizen(), 100.z)
 
-            val change = CitizenReproduceResourceTurnStep(user).calcResourceChange()
+            val change = CitizenReproduceTurnStep(user).calcResourceChange()
 
             val expected = citizen.owned * Mechanics.citizenReproductionRate
             change shouldBeEqual ResourceChange(citizen, expected)
@@ -50,7 +50,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             user.givenStorage<Citizen>(102.z)
             val citizen = user.enableAndSet(Citizen(), 100.z)
 
-            val change = CitizenReproduceResourceTurnStep(user).calcResourceChange()
+            val change = CitizenReproduceTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(citizen, 2.z)
         }
@@ -60,7 +60,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             val citizen = user.enableAndSet(Citizen(), 10.z)
             val food = user.enableAndSet(Food(), 10.z)
 
-            val change = CitizenFoodEatenResourceTurnStep(user).calcResourceChange()
+            val change = CitizenFoodEatenTurnStep(user).calcResourceChange()
 
             val eatenFood = citizen.owned * Mechanics.citizenFoodConsume
             change shouldBeEqual ResourceChange(food, -eatenFood)
@@ -69,7 +69,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             user.enableAndSet(Citizen(), 10.z)
             val food = user.enableAndSet(Food(), 1.z)
 
-            val change = CitizenFoodEatenResourceTurnStep(user).calcResourceChange()
+            val change = CitizenFoodEatenTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(food, -food.owned)
         }
@@ -77,7 +77,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             val citizen = user.enableAndSet(Citizen(), 3.z)
             user.enableAndSet(Food(), 0.z)
 
-            val change = CitizenFoodEatenResourceTurnStep(user).calcResourceChange()
+            val change = CitizenFoodEatenTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(citizen, -Mechanics.citizensStarveMinimum)
         }
@@ -89,7 +89,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             )
             user.enableAndSet(Food(), 0.z)
 
-            val change = CitizenFoodEatenResourceTurnStep(user).calcResourceChange()
+            val change = CitizenFoodEatenTurnStep(user).calcResourceChange()
 
             change shouldBeEqual ResourceChange(citizen, -expectedStarve.z)
         }
@@ -99,7 +99,7 @@ class CitizenResourceTurnerTest : DescribeSpec({
             val gold = user.enableAndSet(Gold(), 0.z)
             val citizen = user.enableAndSet(Citizen(), 10.z)
 
-            val change = CitizenTaxesResourceTurnStep(user).calcResourceChange()
+            val change = CitizenTaxesTurnStep(user).calcResourceChange()
 
             val expectedTax = citizen.owned * Mechanics.citizenTax
             change shouldBeEqual ResourceChange(gold, expectedTax.asZz)

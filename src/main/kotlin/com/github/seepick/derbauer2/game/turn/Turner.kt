@@ -13,7 +13,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 @Suppress("LongParameterList")
 class Turner(
     private val user: User,
-    private val resourceTurnSteps: List<ResourceTurnStep>,
+    private val turnSteps: List<TurnStep>,
 
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
@@ -23,8 +23,8 @@ class Turner(
     fun executeAndGenerateReport(): TurnReport {
         log.info { "Taking turn ${user.turn}" }
         val allChanges = buildList {
-            addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.First))
-            addAll(resourceTurnSteps.execStepsAndMap(TurnPhase.Last))
+            addAll(turnSteps.execStepsAndMap(TurnPhase.First))
+            addAll(turnSteps.execStepsAndMap(TurnPhase.Last))
         }
         return TurnReport(
             turn = user.turn,
@@ -34,7 +34,7 @@ class Turner(
         )
     }
 
-    private fun List<ResourceTurnStep>.execStepsAndMap(phase: TurnPhase) =
+    private fun List<TurnStep>.execStepsAndMap(phase: TurnPhase) =
         this.filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
             .flatMap { it.calcResourceChanges().also { it.mergeToSingleChanges().execute(user) } }
 }

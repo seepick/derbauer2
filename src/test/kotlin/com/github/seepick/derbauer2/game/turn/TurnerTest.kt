@@ -28,7 +28,7 @@ class TurnerTest : DescribeSpec({
         happeningTurner.registerProbabilities()
         turner = Turner(
             user = user,
-            resourceTurnSteps = emptyList(),
+            turnSteps = emptyList(),
             happeningTurner = happeningTurner,
             featureTurner = FeatureTurner(user),
         )
