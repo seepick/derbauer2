@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.tech.AbstractTechTreeItem
@@ -19,11 +19,11 @@ class AgricultureTech(
 
     override fun deepCopy() = this
 
-    override fun handlesResource(resource: Resource) =
-        resource is Food
-
-    override fun modifyAmount(user: User, source: Z) =
+    override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techAgricultureFoodProductionMultiplier
+
+    override val handlingResource = Food::class
+
 
     object Data : TechStaticData {
         override val label = "Agriculture"

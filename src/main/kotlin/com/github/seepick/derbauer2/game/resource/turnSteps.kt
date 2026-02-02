@@ -1,33 +1,63 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 import com.github.seepick.derbauer2.game.turn.TurnStep
+import kotlin.reflect.KClass
 
 /** This includes obviously mostly buildings. */
 class ProducesResourceTurnStep(val user: User) : TurnStep {
     override val phase = TurnPhase.First
 
     override fun calcResourceChanges(): ResourceChanges {
-        val modifiers = user.all.filterIsInstance<ResourceProductionModifier>()
-        // FIXME implement me
-        return ResourceChanges(
+        val totalProduction = ResourceChanges(
             user.all.filterIsInstance<ProducesResource>().map { producer ->
-                val resource = user.findResource(producer.producingResourceClass)
-                val producingAmount = if (producer is ProducesResourceOwnable) {
-                    producer.totalProducingResourceAmount
-                } else {
-                    producer.producingResourceAmount
-                }
-                // TODO could become negative! cap at 0; TEST: inject modifier which turns down a lot
-                val adjustedProducingAmount = user.capResourceAmount(resource, producingAmount)
-                ResourceChange(resource, adjustedProducingAmount)
+                ResourceChange(
+                    resource = user.findResource(producer.producingResourceClass),
+                    changeAmount = if (producer is ProducesResourceOwnable) {
+                        producer.totalProducingResourceAmount
+                    } else {
+                        producer.producingResourceAmount
+                    }
+                )
             })
+        val modifiersByResource =
+            user.all.filterIsInstance<ResourceProductionModifier>().groupBy { it.handlingResource }
+        return buildResourceChanges {
+            totalProduction.changes.forEach { change ->
+                val modifiers = modifiersByResource[change.resourceClass] ?: emptyList()
+                val modifiedAmount = modifiers.fold(change.changeAmount) { acc, modifier ->
+                    modifier.modifyAmount(user, acc)
+                }
+                val resource = user.findResource(change.resourceClass)
+                val limittedAmount =
+                    if (modifiedAmount > 0) { // is positive
+                        val positiveChange = modifiedAmount.toZ()
+                        if (resource is StorableResource) { // limit to max
+                            positiveChange.value.coerceAtMost(user.freeStorageFor(resource).value).zz
+                        } else { // as much as you want
+                            positiveChange.zz
+                        }
+                    } else { // is negative
+                        if (resource is StorableResource) {
+                            if (resource.owned.zz + modifiedAmount < 0.zz) { // can't lose more than owned
+                                -resource.owned.zz
+                            } else {
+                                modifiedAmount
+                            }
+                        } else {
+                            modifiedAmount // ok to be negative
+                        }
+                    }
+                add(ResourceChange(resource, limittedAmount))
+            }
+        }
     }
 }
 
 interface ResourceProductionModifier {
-    fun handlesResource(resource: Resource): Boolean
-    fun modifyAmount(user: User, source: Z): Z
+    val handlingResource: KClass<out Resource>
+    fun modifyAmount(user: User, source: Zz): Zz
 }

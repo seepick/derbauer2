@@ -10,6 +10,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
     * tech tree; let AI generate print tree statement
     * tech can enable Features
 
+* BUG: when 9/10 food, and produce way more, then should be +1 but was 0!!!
 * BUG: leftover food not eaten at the end; citizens should start to starve
 
 #### Window Refactoring
@@ -64,6 +65,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 ### Tech
 
 * -- use AOP to log methods with annotation
+* maybe Percent can be any Double (not limited to 0..1)?!
 * could provide a UserReadOnly sub-interface
 * macos app signing
 * ad github workflow: check-quality-gates also does jacoco verify/enforce threshold

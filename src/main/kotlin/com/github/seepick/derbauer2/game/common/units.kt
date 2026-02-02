@@ -32,6 +32,7 @@ data class Zz(
     operator fun times(other: Zz) = Zz(value * other.value)
     operator fun times(other: Long) = Zz(value * other)
     operator fun times(other: Int) = Zz(value * other)
+    operator fun times(other: Percent) = Zz((value.toDouble() * other.value).toLong())
 
     override operator fun compareTo(other: Zz) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
@@ -120,10 +121,6 @@ val Int.`%`: Percent get() = Percent(this.toDouble() / 100.0)
 
 @JvmInline
 value class Percent(val value: Double) {
-    init {
-        require(value in 0.0..1.0) { "Percent value must be between 0.0 and 1.0 but was: $value" }
-    }
-
     operator fun compareTo(other: Percent) = this.value.compareTo(other.value)
     operator fun compareTo(other: Double) = this.value.compareTo(other)
     operator fun plus(other: Percent) = Percent(this.value + other.value)

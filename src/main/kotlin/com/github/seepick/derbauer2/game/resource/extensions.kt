@@ -2,7 +2,6 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
@@ -28,9 +27,3 @@ fun User.isAbleToStore(resource: StorableResource, amount: Z) =
 fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Z) =
     findResource(resourceClass).owned >= amount
 
-fun User.capResourceAmount(resource: Resource, amount: Z) =
-    if (resource is StorableResource) {
-        amount.value.coerceAtMost(freeStorageFor(resource).value).z
-    } else {
-        amount
-    }

@@ -10,6 +10,10 @@ import com.github.seepick.derbauer2.game.startApp
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 
 object DerBauer2DevApp {
+    init {
+        System.setProperty("derbauer2.devMode", "true")
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
         startApp(

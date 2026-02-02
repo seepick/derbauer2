@@ -3,9 +3,9 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.testInfra.z
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContain
 import kotlin.reflect.KClass
@@ -54,16 +54,15 @@ inline fun <reified SR : StorableResource> User.givenStorage(amount: Z) =
 
 fun foodProductionModifier(multiplier: Double) = ResourceProductionModifierStub(
     handlingResource = Food::class,
-    modifier = { source -> (source.value.toDouble() * multiplier).z }
+    modifier = { source -> (source.value.toDouble() * multiplier).toLong().zz }
 )
 
 class ResourceProductionModifierStub(
-    private val handlingResource: KClass<out Resource>,
-    private val modifier: User.(Z) -> Z,
+    override val handlingResource: KClass<out Resource>,
+    private val modifier: User.(Zz) -> Zz,
     override val labelSingular: String = "Foo",
 ) : Entity, ResourceProductionModifier {
 
-    override fun handlesResource(resource: Resource) = resource::class == handlingResource
-    override fun modifyAmount(user: User, source: Z) = user.modifier(source)
+    override fun modifyAmount(user: User, source: Zz) = user.modifier(source)
     override fun deepCopy() = this
 }

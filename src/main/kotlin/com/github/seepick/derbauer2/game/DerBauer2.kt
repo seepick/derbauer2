@@ -12,9 +12,13 @@ object DerBauer2 {
     private val log = logger {}
     val isDevMode = System.getProperty("derbauer2.devMode") != null
 
+    init {
+        log.info { "DerBauer2 devMode=${isDevMode}" }
+    }
+
     @JvmStatic
     fun main(args: Array<String>) {
-        log.info { "Starting Der Bauer 2 - devMode=${isDevMode} (args: ${args.toList()})" }
+        log.info { "Starting DerBauer2 (args=${args.toList()})" }
         startApp(
             isDevMode = isDevMode,
             version = AppProperties.instance.version,
