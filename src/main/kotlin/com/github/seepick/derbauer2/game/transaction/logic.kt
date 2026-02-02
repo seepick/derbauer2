@@ -16,25 +16,36 @@ fun User.execTx(first: Tx, vararg other: Tx) =
 fun User.execTx(txs: List<Tx>): TxResult {
     log.debug { "Executing transactions: $txs" }
     return when (val maybeSnapshot = copyAndApply(txs)) {
-        is TxMaybe.Fail -> maybeSnapshot.fail
-        is TxMaybe.Ok -> validateAndExec(txs, maybeSnapshot.value)
+        is TxCopyResult.Ok -> {
+            validateAndExec(txs, maybeSnapshot.value)
+        }
+
+        is TxCopyResult.Fail -> {
+            when (maybeSnapshot) {
+                is TxCopyResult.Fail.NegativeAmount -> {
+                    log.debug(maybeSnapshot.e) { "Negative value during snapshot creation and TX application." }
+                    TxResult.Fail.InsufficientResources("Transactions blocked due to negative value.")
+                }
+            }
+        }
     }
 }
 
-private sealed interface TxMaybe<T> {
-    data class Ok<T>(val value: T) : TxMaybe<T>
-    class Fail<T>(val fail: TxResult.Fail) : TxMaybe<T>
+private sealed interface TxCopyResult<T> {
+    data class Ok<T>(val value: T) : TxCopyResult<T>
+    sealed interface Fail<T> : TxCopyResult<T> {
+        class NegativeAmount<T>(val e: NegativeZException) : Fail<T>
+    }
 }
 
-private fun User.copyAndApply(txs: List<Tx>): TxMaybe<User> {
+private fun User.copyAndApply(txs: List<Tx>): TxCopyResult<User> {
     val snapshot = deepCopy()
     try {
         txs.forEach { snapshot._applyTx(it) }
-    } catch (_: NegativeZException) {
-        log.info { "Transactions blocked already during snapshot due to negative value." }
-        return TxMaybe.Fail(TxResult.Fail.InsufficientResources())
+    } catch (e: NegativeZException) {
+        return TxCopyResult.Fail.NegativeAmount(e)
     }
-    return TxMaybe.Ok(snapshot)
+    return TxCopyResult.Ok(snapshot)
 }
 
 fun interface TxValidator {

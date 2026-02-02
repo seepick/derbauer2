@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.core.Ownable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.ResourceTxValidator
 
-fun User(): User = User(txValidators = listOf(ResourceTxValidator, BuildingTxValidator))
+fun User(): User = User(txValidators = listOf(ResourceTxValidator(), BuildingTxValidator()))
 
 var Ownable.ownedForTest
     get() = owned

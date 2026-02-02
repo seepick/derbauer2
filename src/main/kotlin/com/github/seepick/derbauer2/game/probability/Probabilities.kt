@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.probability
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-interface ProbabilityRegistrant {
+fun interface ProbabilityRegistrant {
     fun registerProbabilities()
 }
 

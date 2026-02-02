@@ -51,6 +51,7 @@ class ResourceChanges private constructor(
         }
     }
 
+    @Suppress("MethodOverloading")
     class Builder {
 
         private val changesByResourceClass = mutableMapOf<KClass<out Resource>, ResourceChange>()

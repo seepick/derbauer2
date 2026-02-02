@@ -50,8 +50,9 @@ fun User.execTxResource(
     )
 )
 
-object ResourceTxValidator : TxValidator {
-    override fun validateTx(user: User) = with(user) {
+@Suppress("FunctionName")
+fun ResourceTxValidator() = TxValidator { user ->
+    with(user) {
         resources.filterIsInstance<StorableResource>().map { resource ->
             if (resource.owned > totalStorageFor(resource)) {
                 TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")

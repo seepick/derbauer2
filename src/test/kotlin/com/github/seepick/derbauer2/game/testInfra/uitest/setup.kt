@@ -21,8 +21,7 @@ private val log = logger {}
 fun moveRealMouseOverWindow() {
     log.debug { "capture host OS mouse and put it above displayed window ;)" }
     val robot = Robot()
-    val window = Window.getWindows().firstOrNull { it.isVisible }
-        ?: throw IllegalStateException("No visible window found for the test")
+    val window = Window.getWindows().firstOrNull { it.isVisible } ?: error("No visible window found for the test")
     val centerX = window.locationOnScreen.x + window.width / 2
     val centerY = window.locationOnScreen.y + window.height / 2
     robot.mouseMove(centerX, centerY)

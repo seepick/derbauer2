@@ -18,6 +18,7 @@ Continuous Cleanup:
 
 Refactor window:
 
+* first break up MainWindow() god function into smaller pieces
 * make the whole window bigger
 * BUG: width with emojis is wrong... implement spike
     * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)

@@ -39,7 +39,9 @@ sealed interface TxResult {
         val message: String
 
         class LandOveruse(override val message: String = "Using more land than available") : Fail
-        class InsufficientResources(override val message: String = "Insufficient resources") : Fail
+        class InsufficientResources(additionalMessage: String? = null) : Fail {
+            override val message: String = "Insufficient resources" + (additionalMessage?.let { ": $it" } ?: "")
+        }
 
         class CompoundFail(
             val fails: List<Fail>,

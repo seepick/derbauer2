@@ -60,8 +60,9 @@ fun User.execTxBuilding(
     )
 )
 
-object BuildingTxValidator : TxValidator {
-    override fun validateTx(user: User) = with(user) {
+@Suppress("FunctionName")
+fun BuildingTxValidator() = TxValidator { user ->
+    with(user) {
         if (hasEntity(Land::class) && totalLandUse > landOwned) {
             TxResult.Fail.LandOveruse()
         } else {

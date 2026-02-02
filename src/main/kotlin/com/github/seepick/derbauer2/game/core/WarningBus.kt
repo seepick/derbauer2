@@ -19,6 +19,6 @@ class WarningBus(
 
 data class Warning(val message: String)
 
-interface WarningListener {
+fun interface WarningListener {
     fun onWarning(warning: Warning)
 }
