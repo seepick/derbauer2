@@ -9,6 +9,9 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * !! BZ: finish Technology concept
     * tech tree; let AI generate print tree statement
     * tech can enable Features
+    * tech can have description
+    * IT: remove enum-pseudo-sealed again, and introduce repo; the DefaultRepo holds a manual list; so what...
+        * otherwise not testable; too hard-wired with enum.entries; no real "dynamicism"
 
 * BUG: when 9/10 food, and produce way more, then should be +1 but was 0!!!
 * BUG: leftover food not eaten at the end; citizens should start to starve
@@ -27,9 +30,12 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: general variability end turn (production, taxes, consumption)
     * tell AI to code gaussian distribution generator (mean = x, stddev = y)
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
+* game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
+* let AI generate doc, based on code (before that, align documents with package structure)
 
 ## Backlog
 
+* IT: could make TechState a proper state pattern implementation
 * BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true
     * thus: do rounds of applying, until no feature returns check==true anymore

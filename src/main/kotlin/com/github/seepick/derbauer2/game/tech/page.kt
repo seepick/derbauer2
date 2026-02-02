@@ -24,7 +24,7 @@ class TechPage(
     promptBuilder = {
         val items = techTree.filterResearchableItems()
         if (items.isEmpty()) {
-            EmptyPagePromptProvider("Your mind is empty...\nGo ahead and read some books first")
+            EmptyPagePromptProvider("Your mind is empty...\nGo ahead and read some books first.")
         } else {
             SelectPrompt(
                 title = "What do you want to research?",

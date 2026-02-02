@@ -53,8 +53,14 @@ object Mechanics {
     // TECHNOLOGY
     // ========================================================================
     val techAgricultureCostsGold = if (DEV) 10.z else 300.z
+    val techAgricultureFoodProductionMultiplier = if (DEV) 2.0.`%` else 1.1.`%`
+    val techIrrigationCostsGold = 450.z
+    val techIrrigationFoodProductionMultiplier = if (DEV) 2.0.`%` else 1.15.`%`
+    val techJunkFoodCostsGold = 100.z
+
     val techCapitalismCostsGold = if (DEV) 20.z else 800.z
-    val techAgricultureFoodProductionMultiplier = if (DEV) 1.9.`%` else 1.1.`%`
+
+    val techWarfareCostsGold = 100.z
 
     // END TURN
     // ========================================================================

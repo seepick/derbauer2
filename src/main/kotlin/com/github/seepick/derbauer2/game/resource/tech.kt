@@ -34,6 +34,32 @@ class AgricultureTech(
     }
 }
 
+class IrrigationTechTreeItem : AbstractTechTreeItem(
+    data = IrrigationTech.Data,
+    techBuilder = ::IrrigationTech,
+)
+
+class IrrigationTech(
+    data: Data = Data,
+) : Tech, TechStaticData by data, ResourceProductionModifier {
+
+    override val handlingResource = Food::class
+
+    override fun deepCopy() = this
+
+    override fun modifyAmount(user: User, source: Zz) =
+        source * Mechanics.techIrrigationFoodProductionMultiplier
+
+    object Data : TechStaticData {
+        override val label = "Irrigation"
+        override val type = TechType.IRRIGATION
+        override val requirements = setOf(TechType.AGRICULTURE)
+        override val costs = buildResourceChanges {
+            add(Gold::class, Mechanics.techIrrigationCostsGold)
+        }
+    }
+}
+
 class CapitalismTechTreeItem : AbstractTechTreeItem(
     data = CapitalismTech.Data,
     techBuilder = ::CapitalismTech,
@@ -50,6 +76,46 @@ class CapitalismTech(
         override val requirements = emptySet<TechType>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techCapitalismCostsGold)
+        }
+    }
+}
+
+class JunkFoodTechTreeItem : AbstractTechTreeItem(
+    data = JunkFoodTech.Data,
+    techBuilder = ::JunkFoodTech,
+)
+
+class JunkFoodTech(
+    data: Data = Data,
+) : Tech, TechStaticData by data {
+    override fun deepCopy() = this
+
+    object Data : TechStaticData {
+        override val label = "Junk Food"
+        override val type = TechType.JUNK_FOOD
+        override val requirements = setOf(TechType.AGRICULTURE)
+        override val costs = buildResourceChanges {
+            add(Gold::class, Mechanics.techJunkFoodCostsGold)
+        }
+    }
+}
+
+class WarfareTechTreeItem : AbstractTechTreeItem(
+    data = WarfareTech.Data,
+    techBuilder = ::WarfareTech,
+)
+
+class WarfareTech(
+    data: Data = Data,
+) : Tech, TechStaticData by data {
+    override fun deepCopy() = this
+
+    object Data : TechStaticData {
+        override val label = "Warfare"
+        override val type = TechType.WARFARE
+        override val requirements = emptySet<TechType>()
+        override val costs = buildResourceChanges {
+            add(Gold::class, Mechanics.techWarfareCostsGold)
         }
     }
 }

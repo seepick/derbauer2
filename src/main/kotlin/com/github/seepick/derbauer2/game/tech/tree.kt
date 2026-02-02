@@ -1,20 +1,27 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.requireAllNonNegative
 
 class TechTree(
-    private val user: User,
     val all: List<TechTreeItem>,
 ) {
+    private val byType = all.associateBy { it.type }
+
     init {
         all.flatMap { it.costs.changes }.requireAllNonNegative()
+        // TODO check for cycles in prerequisites
     }
 
     fun filterResearchableItems(): List<TechTreeItem> =
         all.filter {
-            it.state is TechState.Unresearched
-            // TODO && all prerequisites researched
+            it.state is TechState.Unresearched &&
+                    hasResearchedAll(it.requirements)
+        }
+
+    private fun hasResearchedAll(requirements: Set<TechType>): Boolean =
+        requirements.all { req ->
+            val item = byType[req] ?: error("woops, no tech tree item for tech type $req")
+            item.state is TechState.Researched && hasResearchedAll(item.requirements)
         }
 }
 
@@ -22,6 +29,11 @@ interface TechTreeItem : TechStaticData {
     var state: TechState
 
     fun buildTech(): Tech
+
+    fun updateResearchedState() {
+        require(state is TechState.Unresearched)
+        state = TechState.Researched(buildTech())
+    }
 }
 
 abstract class AbstractTechTreeItem(
@@ -41,4 +53,12 @@ abstract class AbstractTechTreeItem(
 sealed interface TechState {
     object Unresearched : TechState
     class Researched(val tech: Tech) : TechState
+}
+
+fun TechTree.toPrettyString(): String {
+    this.all.forEach {
+        it.requirements
+    }
+    // FIXME let AI implement this
+    return ""
 }

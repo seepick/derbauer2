@@ -7,11 +7,9 @@ fun techModule() = module {
     singleOf(::TechPage)
     single {
         TechTree(
-            user = get(),
             all = TechType.entries.map { type ->
                 type.treeItemBuilder()
             }
         )
     }
 }
-
