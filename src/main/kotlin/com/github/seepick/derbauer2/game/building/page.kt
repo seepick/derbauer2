@@ -33,7 +33,7 @@ class BuildingPage(
                                 "${Land.Data.emojiSpaceOrEmpty}${building.landUse} " +
                                 "(owned: ${building.owned})"
                     }) {
-                        resultHandler.handle(user.build(building::class))
+                        resultHandler.handle(user.buildBuilding(building::class))
                     }
                 }
             )

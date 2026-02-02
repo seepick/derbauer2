@@ -14,10 +14,10 @@ import com.github.seepick.derbauer2.game.transaction.TxValidatorType
 import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
-fun User.build(buildingClass: KClass<out Building>): TxResult =
+fun User.buildBuilding(buildingClass: KClass<out Building>): TxResult =
     execTx(
         TxOwnable(buildingClass, 1.zz),
-        TxOwnable(Gold::class, -building(buildingClass).costsGold),
+        TxOwnable(Gold::class, -findBuilding(buildingClass).costsGold),
     )
 
 object BuildingTxValidator : TxValidator {

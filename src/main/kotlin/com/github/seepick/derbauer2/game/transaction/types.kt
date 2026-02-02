@@ -38,18 +38,23 @@ fun List<TxResult>.merge(): TxResult {
 }
 
 sealed interface TxResult {
+    val isSuccess: Boolean
+    val isFail: Boolean get() = !isSuccess
 
-    object Success : TxResult
+    object Success : TxResult {
+        override val isSuccess = true
+    }
 
-    sealed interface Fail : TxResult {
-        val warningType: WarningType
-        val message: String
+    sealed class Fail : TxResult {
+        abstract val warningType: WarningType
+        abstract val message: String
+        override val isSuccess = false
 
-        class LandOveruse(override val message: String = "Using more land than available") : Fail {
+        class LandOveruse(override val message: String = "Using more land than available") : Fail() {
             override val warningType = WarningType.LAND_OVERUSE
         }
 
-        class InsufficientResources(additionalMessage: String? = null) : Fail {
+        class InsufficientResources(additionalMessage: String? = null) : Fail() {
             override val warningType = WarningType.INSUFFICIENT_RESOURCES
             override val message: String = "Insufficient resources" + (additionalMessage?.let { ": $it" } ?: "")
         }
@@ -57,7 +62,7 @@ sealed interface TxResult {
         class CompoundFail(
             val fails: List<Fail>,
             override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}"
-        ) : Fail {
+        ) : Fail() {
             override val warningType = WarningType.COMPOUND
         }
 

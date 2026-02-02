@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
@@ -35,19 +35,19 @@ class BuildTxTest : DescribeSpec({
         it("Given enough money and land Then succeed") {
             val house = user.givenSufficientResourcesForHouse()
 
-            user.build(house::class).shouldBeSuccess()
+            user.buildBuilding(house::class).shouldBeSuccess()
         }
         it("Given not enough money Then fail") {
             val house = user.givenSufficientResourcesForHouse()
-            user.resource(Gold::class).ownedForTest = house.costsGold - 1
+            user.findResource(Gold::class).ownedForTest = house.costsGold - 1
 
-            user.build(house::class).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
+            user.buildBuilding(house::class).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }
         it("Given not enough land Then fail") {
             val house = user.givenSufficientResourcesForHouse()
-            user.resource(Land::class).ownedForTest = 0.z
+            user.findResource(Land::class).ownedForTest = 0.z
 
-            user.build(house::class).shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
+            user.buildBuilding(house::class).shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
     }
 })

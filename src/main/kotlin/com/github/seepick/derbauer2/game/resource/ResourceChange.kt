@@ -7,8 +7,8 @@ import kotlin.reflect.KClass
 
 fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit) = ResourceChanges.build(code)
 
-fun List<ResourceChange>.mergeToSingleChanges(): ResourceChanges = buildResourceChanges {
-    addAll(this@mergeToSingleChanges)
+fun List<ResourceChange>.toSingleChangesObject(): ResourceChanges = buildResourceChanges {
+    addAll(this@toSingleChangesObject)
 }
 
 data class ResourceChange(
@@ -25,6 +25,14 @@ data class ResourceChange(
     }
 }
 
+
+fun List<ResourceChange>.requireAllNonNegative() {
+    val negativeChanges = filter { it.changeAmount < 0.zz }
+    require(negativeChanges.isEmpty()) {
+        "All resource changes must be non-negative, but found negative changes: $negativeChanges"
+    }
+}
+
 class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
 ) {
@@ -38,10 +46,19 @@ class ResourceChanges private constructor(
         }
     }
 
+    fun requireAllNonNegative() {
+        changes.requireAllNonNegative()
+    }
+
     fun merge(other: ResourceChanges) = buildResourceChanges {
         changes.forEach { add(it.resourceClass, it.changeAmount) }
         other.changes.forEach { add(it.resourceClass, it.changeAmount) }
     }
+
+    fun invertSig() =
+        buildResourceChanges {
+            changes.forEach { add(it.resourceClass, -it.changeAmount) }
+        }
 
     companion object {
         fun build(code: Builder.() -> Unit): ResourceChanges {

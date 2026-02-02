@@ -13,3 +13,13 @@ fun ifDo(condition: Boolean, execution: () -> Unit): Boolean {
     if (condition) execution()
     return condition
 }
+
+@OptIn(ExperimentalContracts::class)
+fun <T> List<T>.ifNotEmpty(code: (List<T>) -> Unit) {
+    contract {
+        callsInPlace(code, InvocationKind.AT_MOST_ONCE)
+    }
+    if (isNotEmpty()) {
+        code(this)
+    }
+}

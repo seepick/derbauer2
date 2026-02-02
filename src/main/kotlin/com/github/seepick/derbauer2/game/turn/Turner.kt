@@ -1,14 +1,13 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.resource.ResourceChanges
-import com.github.seepick.derbauer2.game.resource.mergeToSingleChanges
+import com.github.seepick.derbauer2.game.resource.ResourceChange
+import com.github.seepick.derbauer2.game.resource.execTx
+import com.github.seepick.derbauer2.game.resource.toSingleChangesObject
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
-import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 @Suppress("LongParameterList")
@@ -29,22 +28,18 @@ class Turner(
         }
         return TurnReport(
             turn = user.turn,
-            resourceChanges = allChanges.mergeToSingleChanges(),
+            resourceChanges = allChanges.toSingleChangesObject(),
             happenings = happeningTurner.buildHappeningMultiPages(),
             newFeatures = featureTurner.buildFeaturMultiPages(),
         )
     }
 
-    private fun List<TurnStep>.execStepsAndMap(phase: TurnPhase) =
-        this.filter { it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) } }
-            .flatMap { it.calcResourceChanges().also { it.mergeToSingleChanges().execute(user) } }
-}
-
-private fun ResourceChanges.execute(user: User) {
-    user.execTx(changes.map { line ->
-        TxOwnable(
-            ownableClass = line.resourceClass,
-            amount = line.changeAmount,
-        )
-    }).errorOnFail()
+    private fun List<TurnStep>.execStepsAndMap(phase: TurnPhase): List<ResourceChange> =
+        filter {
+            it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) }
+        }.flatMap { step ->
+            step.calcResourceChanges().also { changes ->
+                user.execTx(changes.toSingleChangesObject()).errorOnFail()
+            }
+        }
 }

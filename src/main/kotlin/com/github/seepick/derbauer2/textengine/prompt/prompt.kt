@@ -15,10 +15,10 @@ fun interface PromptProvider {
     fun buildPrompt(): Prompt
 }
 
-class EmptyPagePromptProvider(private val emptyMessage: String) : Prompt {
+class EmptyPagePromptProvider(private val emptyMultiLineMessage: String) : Prompt {
     override val inputIndicator: String = KeyPressed.Command.Enter.label
     override fun render(textmap: Textmap) {
-        textmap.line(emptyMessage)
+        textmap.multiLine(emptyMultiLineMessage)
     }
 
     override fun onKeyPressed(key: KeyPressed) = false

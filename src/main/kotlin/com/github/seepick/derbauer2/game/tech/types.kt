@@ -1,10 +1,13 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.resource.AgricultureTechTreeItem
+import com.github.seepick.derbauer2.game.resource.CapitalismTechTreeItem
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 
 enum class TechType(val treeItemBuilder: () -> TechTreeItem) {
     AGRICULTURE(::AgricultureTechTreeItem), // +food production
+    CAPITALISM(::CapitalismTechTreeItem),
 //    POTTERY,     // enables granaries
 //    HOUSES,      // upgrade from tents
 }

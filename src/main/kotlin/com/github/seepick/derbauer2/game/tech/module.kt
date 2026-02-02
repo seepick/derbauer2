@@ -8,9 +8,10 @@ fun techModule() = module {
     single {
         TechTree(
             user = get(),
-            items = TechType.entries.map { type ->
+            all = TechType.entries.map { type ->
                 type.treeItemBuilder()
-            })
+            }
+        )
     }
 }
 

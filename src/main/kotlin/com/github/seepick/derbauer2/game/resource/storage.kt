@@ -15,7 +15,7 @@ fun User.storageUsage(resource: StorableResource): Percent =
 //    storageUsage(resource(resourceClass))
 
 inline fun <reified SR : StorableResource> User.storageUsage(): Percent =
-    storageUsage(resource(SR::class))
+    storageUsage(findResource(SR::class))
 
 context(user: User)
 val StorableResource.storageUsage: Percent get() = user.storageUsage(this)

@@ -9,24 +9,24 @@ import kotlin.reflect.KClass
 val User.resources get() = ListX(all.filterIsInstance<Resource>())
 
 @Suppress("UNCHECKED_CAST")
-fun <R : Resource> User.resource(resourceClass: KClass<R>): R =
+fun <R : Resource> User.findResource(resourceClass: KClass<R>): R =
     resources.find(resourceClass) as R
 
-inline fun <reified R : Resource> User.resource(): R =
+inline fun <reified R : Resource> User.findResource(): R =
     resources.find<R>()
 
 @Suppress("UNCHECKED_CAST")
-fun <R : Resource> User.resourceOrNull(resourceClass: KClass<R>): R? =
+fun <R : Resource> User.findResourceOrNull(resourceClass: KClass<R>): R? =
     resources.findOrNull(resourceClass) as? R?
 
 context(user: User)
-val ResourceReference.resource get() = user.resource(resourceClass)
+val ResourceReference.resource get() = user.findResource(resourceClass)
 
 fun User.isAbleToStore(resource: StorableResource, amount: Z) =
     amount <= freeStorageFor(resource)
 
 fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Z) =
-    resource(resourceClass).owned >= amount
+    findResource(resourceClass).owned >= amount
 
 fun User.capResourceAmount(resource: Resource, amount: Z) =
     if (resource is StorableResource) {

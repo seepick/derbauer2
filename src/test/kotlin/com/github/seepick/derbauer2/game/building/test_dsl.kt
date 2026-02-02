@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 @TestDsl
 class WhenBuildPageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl {
     fun build(buildingClass: KClass<out Building>) {
-        val building = user.building(buildingClass)
+        val building = user.findBuilding(buildingClass)
         selectPrompt("build ${building.labelSingular}")
     }
 

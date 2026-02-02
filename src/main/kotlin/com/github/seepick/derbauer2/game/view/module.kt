@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.textengine.textengineModule
 import org.koin.core.module.dsl.singleOf
@@ -14,4 +13,4 @@ fun viewModule() = module {
     singleOf(::GameOverPage)
 }
 
-fun textengineModule() = textengineModule(DerBauer2.initPageClass)
+fun textengineModule() = textengineModule(HomePage::class)

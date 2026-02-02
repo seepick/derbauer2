@@ -53,7 +53,8 @@ object Mechanics {
 
     // TECHNOLOGY
     // ========================================================================
-    val techAgricultureCostsGold = 300.z
+    val techAgricultureCostsGold = if (DEV) 10.z else 300.z
+    val techCapitalismCostsGold = if (DEV) 20.z else 800.z
 
     // END TURN
     // ========================================================================

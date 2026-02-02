@@ -10,6 +10,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
     * tech tree; let AI generate print statement
     * implement modifier which is considered in turner; can enable Features
     * user.research(): TX logic ... check requirements, costs, etc.
+      //fun interface ResourceProductionModifier {
+      // fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
 
 
 * BUG: leftover food not eaten at the end; citizens should start to starve

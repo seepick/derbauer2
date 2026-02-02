@@ -7,15 +7,15 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
+import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
-import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 
 class CitizenReproduceTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class)) {
     override fun calcResourceChange() =
-        user.resource<Citizen>().let { citizen ->
+        user.findResource<Citizen>().let { citizen ->
             ResourceChange(
                 resource = citizen,
                 changeAmount = if (citizen.owned == 0.z) {
@@ -32,11 +32,11 @@ class CitizenReproduceTurnStep(user: User) :
 class CitizenFoodEatenTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
     override fun calcResourceChange(): ResourceChange {
-        val citizen = user.resource<Citizen>()
+        val citizen = user.findResource<Citizen>()
         if (citizen.owned == 0.z) {
             return ResourceChange(citizen, 0.z)
         }
-        val food = user.resource<Food>()
+        val food = user.findResource<Food>()
         return if (food.owned == 0.z) {
             val rawStarving = citizen.owned * Mechanics.citizensStarve
             val starving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
@@ -52,8 +52,8 @@ class CitizenFoodEatenTurnStep(user: User) :
 class CitizenTaxesTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
     override fun calcResourceChange(): ResourceChange {
-        val citizen = user.resource<Citizen>()
+        val citizen = user.findResource<Citizen>()
         val taxIncome = citizen.owned * Mechanics.citizenTax
-        return ResourceChange(user.resource<Gold>(), taxIncome)
+        return ResourceChange(user.findResource<Gold>(), taxIncome)
     }
 }

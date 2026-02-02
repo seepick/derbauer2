@@ -10,7 +10,7 @@ class ProducesResourceTurnStep(val user: User) : TurnStep {
 
     override fun calcResourceChanges(): List<ResourceChange> =
         user.all.filterIsInstance<ProducesResource>().map { producer ->
-            val resource = user.resource(producer.producingResourceClass)
+            val resource = user.findResource(producer.producingResourceClass)
             val producingAmount = if (producer is ProducesResourceOwnable) {
                 producer.totalProducingResourceAmount
             } else {

@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.resource
+import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
@@ -61,10 +61,10 @@ class TradePromptBuilder(
         vararg counters: Pair<KClass<out Resource>, Z>
     ) = SelectOption(
         label = {
-            val targetResource = user.resource(targetResourceClass)
+            val targetResource = user.findResource(targetResourceClass)
             "${operation.label} 1 ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
-                        val counterResource = user.resource(counterResource)
+                        val counterResource = user.findResource(counterResource)
                         "$counterAmount ${counterResource.emojiSpaceOrEmpty}${
                             counterResource.labelFor(counterAmount)
                         }"
