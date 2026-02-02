@@ -2,6 +2,7 @@
 
 Continuous Cleanup:
 
+* Resolve Task Tags
 * Resolve Detekt issues
 * Resolve SonarQube issues
 * Upgrade dependency versions
@@ -9,9 +10,7 @@ Continuous Cleanup:
 
 ## Versions
 
-### new ideas
-
-### v5
+### Next Release
 
 * !! BZ: finish Technology concept; tech tree; see specs
 * BUG: leftover food not eaten at the end; citizens should start to starve

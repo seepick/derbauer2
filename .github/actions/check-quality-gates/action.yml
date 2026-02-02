@@ -9,7 +9,7 @@ runs:
         sudo apt-get install -y xvfb
     - name: Run Gradle Tasks
       shell: bash
-      run: xvfb-run -a -s "-screen 0 1280x1024x24" ./gradlew detekt test uiTest check jacocoTestReport -PdebugTests --console=plain
+      run: xvfb-run -a -s "-screen 0 1280x1024x24" ./gradlew detekt test uiTest check jacocoTestReport -PrunUiTests -PdebugTests --console=plain
     - name: Validate Documentation
       shell: bash
       run: ./bin/validate_documentation.sh

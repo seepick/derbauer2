@@ -5,6 +5,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
+val runUiTests = project.findProperty("runUiTests") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
 val mainClassFqn = "com.github.seepick.derbauer2.game.DerBauer2"
@@ -89,49 +90,45 @@ configure<ProcessResources>("processResources") {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform {
-        excludeEngines("junit-vintage")
+        excludeEngines("junit-vintage") // handled by the `uiTest` task
     }
-    debugTestsIfEnabled()
+    if (debugTests) {
+        enableTestLogging()
+    }
 }
 
-// CAVE: this name `uiTest` matters; it's the gradle task being used by CI
-if (false) { // FIXME fix this; annoying in IDE; use -PrunUiTests nevertheless
+if (runUiTests) {
+    // CAVE: this name `uiTest` matters; it's the gradle task being used by CI
     val uiTest by tasks.registering(Test::class) {
+        logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
         description = "Use JUnit4 to run Compose UI tests."
         group = "verification"
         testClassesDirs = sourceSets["test"].output.classesDirs
         classpath = sourceSets["test"].runtimeClasspath
-        useJUnit {
-//        if (runUiTests) {
-//            logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
-//        } else {
-//            excludeCategories = setOf("com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory")
-//            logger.lifecycle("UI tests are disabled (default). Use `-PrunUiTests` to enable.")
-//        }
+        useJUnit()
+        if (debugTests) {
+            enableTestLogging()
         }
-        debugTestsIfEnabled()
     }
 }
 
-fun AbstractTestTask.debugTestsIfEnabled() {
-    if (debugTests) {
-        testLogging {
-            events("failed", "skipped", "passed")
-            exceptionFormat = TestExceptionFormat.FULL
-            showExceptions = true
-            showCauses = true
-            showStackTraces = true
-            showStandardStreams = true
-        }
-        afterTest(KotlinClosure2<TestDescriptor, TestResult, Any>({ desc, result ->
-            if (result.resultType == TestResult.ResultType.FAILURE) {
-                println("FAILED: ${desc.className}.${desc.name} (${desc.displayName})")
-                result.exception?.let {
-                    println(it.stackTraceToString())
-                } ?: println("No exception available for failed test.")
-            }
-        }))
+fun AbstractTestTask.enableTestLogging() {
+    testLogging {
+        events("failed", "skipped", "passed")
+        exceptionFormat = TestExceptionFormat.FULL
+        showExceptions = true
+        showCauses = true
+        showStackTraces = true
+        showStandardStreams = true
     }
+    afterTest(KotlinClosure2<TestDescriptor, TestResult, Any>({ desc, result ->
+        if (result.resultType == TestResult.ResultType.FAILURE) {
+            println("FAILED: ${desc.className}.${desc.name} (${desc.displayName})")
+            result.exception?.let {
+                println(it.stackTraceToString())
+            } ?: println("No exception available for failed test.")
+        }
+    }))
 }
 
 jacoco {
