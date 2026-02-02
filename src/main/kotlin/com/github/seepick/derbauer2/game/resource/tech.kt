@@ -17,13 +17,12 @@ class AgricultureTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data, ResourceProductionModifier {
 
+    override val handlingResource = Food::class
+
     override fun deepCopy() = this
 
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techAgricultureFoodProductionMultiplier
-
-    override val handlingResource = Food::class
-
 
     object Data : TechStaticData {
         override val label = "Agriculture"

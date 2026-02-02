@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.resource.execTx
 import com.github.seepick.derbauer2.game.resource.resourceChangesOf
-import com.github.seepick.derbauer2.game.resource.toSingleChangesObject
+import com.github.seepick.derbauer2.game.resource.toResourceChanges
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 
 @Suppress("LongParameterList")
@@ -35,5 +35,5 @@ class Turner(
             val stepChanges = step.calcResourceChanges()
             user.execTx(stepChanges).errorOnFail()
             stepChanges.changes
-        }.toSingleChangesObject()
+        }.toResourceChanges()
 }

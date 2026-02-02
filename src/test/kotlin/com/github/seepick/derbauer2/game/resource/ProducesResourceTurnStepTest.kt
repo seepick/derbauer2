@@ -6,9 +6,8 @@ import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
+import com.github.seepick.derbauer2.game.testInfra.zz
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldBeSingleton
-import io.kotest.matchers.equals.shouldBeEqual
 
 private data class SetupContext(
     val step: ProducesResourceTurnStep,
@@ -35,7 +34,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
     describe("happy cases") {
         it("Given ok setup Then produce And resource untouched") {
             `user with 0 🍖, 1 granary, 1 farm` {
-                calcStepChanges().shouldBeSingleton().first() shouldBeEqual ResourceChange(
+                calcStepChanges().shouldContainChange(
                     food, 1.z * farm.producingResourceAmount
                 )
             }
@@ -44,7 +43,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
             `user with 0 🍖, 1 granary, 1 farm` {
                 farm.ownedForTest = 2.z
 
-                calcStepChanges().shouldBeSingleton().first() shouldBeEqual ResourceChange(
+                calcStepChanges().shouldContainChange(
                     food, 2.z * farm.producingResourceAmount
                 )
             }
@@ -63,29 +62,55 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 val diff = 1.z
                 food.ownedForTest = granary.totalStorageAmount - diff
 
-                calcStepChanges().shouldBeSingleton().first() shouldBeEqual ResourceChange(food, diff)
+                calcStepChanges().shouldContainChange(food, diff)
             }
         }
         it("Given full storage Then produce zero") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 food.ownedForTest = granary.totalStorageAmount
 
-                calcStepChanges().shouldBeSingleton().first() shouldBeEqual ResourceChange(food, 0.z)
+                calcStepChanges().shouldContainChange(food, 0.z)
             }
         }
     }
-    context("ResourceProductionModifier") {
-        describe("Sunshine") {
-            it("When modifier 2x Then produce 2x") {
-                `user with 0 🍖, 1 granary, 1 farm` {
-                    user.enable(foodProductionModifier(2.0))
 
-                    calcStepChanges().shouldContainChange(
-                        food, 2.z * farm.producingResourceAmount
-                    )
-                }
+    describe("modifier interactions") {
+        it("When modifier 2x Then produce 2x") {
+            `user with 0 🍖, 1 granary, 1 farm` {
+                val multiplier = 2
+                user.enable(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
+
+                calcStepChanges().shouldContainChange(food, farm.producingResourceAmount * multiplier)
             }
         }
-        // TODO implement more tests
+        it("When 2x but storage limited Then produce up to free storage") {
+            `user with 0 🍖, 1 granary, 1 farm` {
+                val diff = 1.z
+                food.ownedForTest = granary.totalStorageAmount - diff
+                user.enable(ResourceProductionMultiplierStub(Food::class, 2.0))
+
+                calcStepChanges().shouldContainChange(food, diff)
+            }
+        }
+        it("When modifier makes negative beyond owned Then clamp to -owned") {
+            `user with 0 🍖, 1 granary, 1 farm` {
+                farm.ownedForTest = 1.z
+                val ownedFood = 1.z
+                food.ownedForTest = ownedFood
+                user.enable(ResourceProductionMultiplierStub(Food::class, -2.0))
+
+                calcStepChanges().shouldContainChange(food, -ownedFood)
+            }
+        }
+
+        it("When multiple modifiers fold sequentially Then apply both") {
+            `user with 0 🍖, 1 granary, 1 farm` {
+                val baseProduction = farm.totalProducingResourceAmount
+                user.enable(ResourceProductionMultiplierStub1(Food::class, 2.0))
+                user.enable(ResourceProductionMultiplierStub2(Food::class, 0.5))
+
+                calcStepChanges().shouldContainChange(food, (baseProduction.toDouble() * 2.0 * 0.5).zz)
+            }
+        }
     }
 })

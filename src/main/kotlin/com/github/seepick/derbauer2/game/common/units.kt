@@ -80,6 +80,8 @@ data class Z(
     operator fun compareTo(other: Int) = value.compareTo(other.toLong())
 }
 
+// operator fun Long.plus(other: Z) = Z(this + other.value) .........
+
 @Suppress("MagicNumber")
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {
     // AI generated code ;)

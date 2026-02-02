@@ -14,7 +14,7 @@ class TechTree(
     fun filterResearchableItems(): List<TechTreeItem> =
         all.filter {
             it.state is TechState.Unresearched
-            // && all prerequisites researched
+            // TODO && all prerequisites researched
         }
 }
 

@@ -11,6 +11,7 @@ import kotlin.reflect.KClass
 class ProducesResourceTurnStep(val user: User) : TurnStep {
     override val phase = TurnPhase.First
 
+    @Suppress("CognitiveComplexMethod")
     override fun calcResourceChanges(): ResourceChanges {
         val totalProduction = ResourceChanges(
             user.all.filterIsInstance<ProducesResource>().map { producer ->

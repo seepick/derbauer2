@@ -26,6 +26,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * BZ: general variability end turn (production, taxes, consumption)
     * tell AI to code gaussian distribution generator (mean = x, stddev = y)
+* IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
 
 ## Backlog
 
@@ -64,6 +65,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Tech
 
+* refactor ProducesResourceTurnStep#calcResourceChanges (too big/complex)
+* refactor MainWindow (too big/complex)
 * -- use AOP to log methods with annotation
 * maybe Percent can be any Double (not limited to 0..1)?!
 * could provide a UserReadOnly sub-interface

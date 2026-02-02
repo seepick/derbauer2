@@ -4,7 +4,6 @@ import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
 
-
 /**
  * All game mechanics constants; a magic constant provider.
  */
@@ -32,7 +31,7 @@ object Mechanics {
     val houseStoreCitizen = 5
 
     val farmCostsGold = 120.z
-    val farmProduceFood = 3
+    val farmProduceFood = 3.z
     val farmLandUse = 4.z
 
     val granaryCostsGold = 80

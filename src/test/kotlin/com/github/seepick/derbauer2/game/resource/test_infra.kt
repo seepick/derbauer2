@@ -52,17 +52,33 @@ inline fun <reified SR : StorableResource> User.givenStorage(amount: Z) =
         storageAmount = amount
     ).also { enable(it, disableCheck = true) }
 
-fun foodProductionModifier(multiplier: Double) = ResourceProductionModifierStub(
-    handlingResource = Food::class,
-    modifier = { source -> (source.value.toDouble() * multiplier).toLong().zz }
+
+interface ResourceProductionModifierEntity : Entity, ResourceProductionModifier
+
+// need concrete classes (no abstract/lambda) to identify in User.enable/find
+
+class ResourceProductionMultiplierStub(handlingResource: KClass<out Resource>, multiplier: Double) :
+    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+
+class ResourceProductionMultiplierStub1(handlingResource: KClass<out Resource>, multiplier: Double) :
+    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+
+class ResourceProductionMultiplierStub2(handlingResource: KClass<out Resource>, multiplier: Double) :
+    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+
+abstract class AbstractResourceProductionMultiplierStub(
+    handlingResource: KClass<out Resource>,
+    multiplier: Double
+) : AbstractResourceProductionModifierStub(
+    handlingResource = handlingResource,
+    modifier = { source -> (source.value.toDouble() * multiplier).toLong().zz },
 )
 
-class ResourceProductionModifierStub(
+abstract class AbstractResourceProductionModifierStub(
     override val handlingResource: KClass<out Resource>,
     private val modifier: User.(Zz) -> Zz,
-    override val labelSingular: String = "Foo",
-) : Entity, ResourceProductionModifier {
-
+) : ResourceProductionModifierEntity {
+    override val labelSingular: String get() = this::class.simpleName!!
     override fun modifyAmount(user: User, source: Zz) = user.modifier(source)
     override fun deepCopy() = this
 }

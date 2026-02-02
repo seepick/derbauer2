@@ -9,12 +9,11 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.enableAndSet
+import com.github.seepick.derbauer2.game.resource.shouldContainChange
 import com.github.seepick.derbauer2.game.testInfra.z
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.equals.shouldBeEqual
 
 class CitizenFoodEatenTurnStepTest : DescribeSpec({
     lateinit var user: User
@@ -23,7 +22,7 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
     }
     fun calc() = CitizenFoodEatenTurnStep(user).calcResourceChanges()
     fun expectResourceChange(resource: Resource, changeAmount: Zz) {
-        calc() shouldBeEqual ResourceChange(resource, changeAmount)
+        calc().shouldContainChange(resource, changeAmount)
     }
     describe("Edgecase") {
         it("Given nothing Then fail") {

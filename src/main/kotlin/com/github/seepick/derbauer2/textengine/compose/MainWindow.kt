@@ -68,7 +68,7 @@ fun showMainWindow(
 
 const val TOOLBAR_ANIMATION_DURATION = 200
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "LongMethod", "CognitiveComplexMethod")
 @Composable
 fun MainWindow(
     title: String,

@@ -15,13 +15,15 @@ data class TxOwnable(
     val operation: TxOperation,
     val amount: Z
 ) : Tx, OwnableReference {
+
+    override val type = TxType.OWNABLE
+
     constructor(ownableClass: KClass<out Ownable>, amount: Zz) : this(
         ownableClass = ownableClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.toZ()
     )
 
-    override val type = TxType.OWNABLE
     override fun toString() = "TxOwned(${ownableClass.simpleName} ${operation.symbol}[$amount])"
 }
 

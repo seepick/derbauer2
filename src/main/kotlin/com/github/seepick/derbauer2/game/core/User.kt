@@ -32,13 +32,19 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
     val all = ListX(_all)
 
     fun <E : Entity> enable(entity: E, disableCheck: Boolean = false) = entity.also {
-        if (!disableCheck && entity is Ownable) {
-            require(entity.owned == 0.z) { "Enable must have 0 owned; change it later via TX: $entity" }
+        if (entity::class.simpleName == null) {
+            throw UserEnableException(
+                "Cannot enable anonymous class (entity=$entity / entity.label='${entity.labelSingular}')"
+            )
+        }
+        log.debug { "Trying to enable '$entity' (disableCheck=$disableCheck)" }
+        if (!disableCheck && entity is Ownable && entity.owned != 0.z) {
+            throw UserEnableException("Enable must have 0 owned; change it later via TX: $entity")
         }
         if (all.any { it::class == entity::class }) {
-            error("Entity ${entity::class.simpleName} already exists!")
+            throw UserEnableException("Entity ${entity::class.simpleName} already exists!")
         }
-        if (!disableCheck) {
+        if (!disableCheck) { // don't log if doing deep copy (for TX simulation)
             log.info { "Enabling $entity" }
         }
         _all += entity
@@ -49,18 +55,17 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
         _reports.add(report)
     }
 
-    override fun deepCopy(): User =
-        User(txValidators).also { copy ->
-            log.trace { "Creating deep copy." }
-            copy.turn = turn
-            copy.userTitle = userTitle
-            copy.cityTitle = cityTitle
-            copy._reports = _reports
-            all.forEach { entity ->
-                // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
-                copy.enable(entity.deepCopy(), disableCheck = true)
-            }
+    override fun deepCopy(): User = User(txValidators).also { copy ->
+        log.trace { "Creating deep copy." }
+        copy.turn = turn
+        copy.userTitle = userTitle
+        copy.cityTitle = cityTitle
+        copy._reports = _reports
+        all.forEach { entity ->
+            // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
+            copy.enable(entity.deepCopy(), disableCheck = true)
         }
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -68,8 +73,7 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
         return _all == other._all
     }
 
-    override fun hashCode(): Int =
-        _all.hashCode()
+    override fun hashCode(): Int = _all.hashCode()
 
     override fun toString() = "User($_all)"
 }
@@ -83,3 +87,5 @@ val User.citizens get() = findResource(Citizen::class).owned
 val User.land get() = findResource(Land::class).owned
 
 fun User.isGameOver() = hasEntity<Citizen>() && citizens == 0.z
+
+class UserEnableException(message: String) : Exception(message)

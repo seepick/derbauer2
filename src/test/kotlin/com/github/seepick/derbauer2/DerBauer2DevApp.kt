@@ -26,8 +26,8 @@ object DerBauer2DevApp {
                 user.enableFeature(FeatureDescriptorType.Technology)
                 user.enableFeature(FeatureDescriptorType.Trading)
                 user.enableFeature(FeatureDescriptorType.TradeLand)
-//                val agriTech = koin.get<TechTree>().filterResearchableItems().single { it.type == TechType.AGRICULTURE }
-//                user.researchTech(agriTech)
+//                val agr = koin.get<TechTree>().filterResearchableItems().single { it.type == TechType.AGRICULTURE }
+//                user.researchTech(agr)
             }
         )
     }

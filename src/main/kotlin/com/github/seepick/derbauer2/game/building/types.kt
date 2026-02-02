@@ -51,7 +51,7 @@ class Farm : Building, ProducesResourceOwnable, HasLabels by Data,
     override val costsGold = Mechanics.farmCostsGold
     override val landUse = Mechanics.farmLandUse
     override val producingResourceClass = Food::class
-    override val producingResourceAmount = Mechanics.farmProduceFood.z
+    override val producingResourceAmount = Mechanics.farmProduceFood
 
     override fun deepCopy() = Farm().also { it._setOwnedInternal = owned }
     override fun toString() = "Farm(owned=$owned)"

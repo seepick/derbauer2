@@ -1,3 +1,4 @@
+@file:Suppress("UnusedImports") // detekt can't detect context imports usage -haha, fail :D
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
@@ -22,10 +23,6 @@ fun resourceChangesOf(changesChanges: List<ResourceChanges>): ResourceChanges =
             }
     }
 
-fun List<ResourceChange>.toSingleChangesObject(): ResourceChanges = buildResourceChanges {
-    addAll(this@toSingleChangesObject)
-}
-
 data class ResourceChange(
     val resourceClass: KClass<out Resource>,
     val changeAmount: Zz,
@@ -40,15 +37,8 @@ data class ResourceChange(
     }
 }
 
-
-fun List<ResourceChange>.requireAllNonNegative() {
-    val negativeChanges = filter { it.changeAmount < 0.zz }
-    require(negativeChanges.isEmpty()) {
-        "All resource changes must be non-negative, but found negative changes: $negativeChanges"
-    }
-}
-
-class ResourceChanges private constructor(
+@ConsistentCopyVisibility
+data class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
 ) {
     init {
@@ -118,7 +108,19 @@ class ResourceChanges private constructor(
     }
 }
 
-context(user: User)
-fun ResourceChanges.toTextmapRendering() = changes.joinToString(", ") { change ->
-    "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.changeAmount}"
+fun List<ResourceChange>.requireAllNonNegative() {
+    val negativeChanges = filter { it.changeAmount < 0.zz }
+    require(negativeChanges.isEmpty()) {
+        "All resource changes must be non-negative, but found negative changes: $negativeChanges"
+    }
 }
+
+fun List<ResourceChange>.toResourceChanges() = buildResourceChanges {
+    addAll(this@toResourceChanges)
+}
+
+context(user: User)
+fun ResourceChanges.toTextmapRendering() =
+    changes.joinToString(", ") { change ->
+        "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.changeAmount}"
+    }
