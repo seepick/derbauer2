@@ -7,7 +7,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-fun User.researchTech(item: TechTreeItem): TxResult {
+fun User.researchTech(item: TechItem): TxResult {
     log.info { "User.research($item)" }
     require(item.state is TechState.Unresearched)
 

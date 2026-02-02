@@ -3,20 +3,19 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.tech.AbstractTechTreeItem
+import com.github.seepick.derbauer2.game.tech.AbstractTechItem
 import com.github.seepick.derbauer2.game.tech.Tech
 import com.github.seepick.derbauer2.game.tech.TechStaticData
-import com.github.seepick.derbauer2.game.tech.TechType
 
-class AgricultureTechTreeItem : AbstractTechTreeItem(
+/**
+ * CAVE: Register in [com.github.seepick.derbauer2.game.tech.DefaultTechItemRepo]
+ */
+object AgricultureTechItem : AbstractTechItem(
     data = AgricultureTech.Data,
     techBuilder = ::AgricultureTech,
 )
 
-class AgricultureTech(
-    data: Data = Data,
-) : Tech, TechStaticData by data, ResourceProductionModifier {
-
+class AgricultureTech : Tech, TechStaticData by Data, ResourceProductionModifier {
     override val handlingResource = Food::class
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techAgricultureFoodProductionMultiplier
@@ -25,23 +24,19 @@ class AgricultureTech(
 
     object Data : TechStaticData {
         override val label = "Agriculture"
-        override val type = TechType.AGRICULTURE
-        override val requirements = emptySet<TechType>()
+        override val requirements = emptySet<TechStaticData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techAgricultureCostsGold)
         }
     }
 }
 
-class IrrigationTechTreeItem : AbstractTechTreeItem(
+object IrrigationTechItem : AbstractTechItem(
     data = IrrigationTech.Data,
     techBuilder = ::IrrigationTech,
 )
 
-class IrrigationTech(
-    data: Data = Data,
-) : Tech, TechStaticData by data, ResourceProductionModifier {
-
+class IrrigationTech : Tech, TechStaticData by Data, ResourceProductionModifier {
     override val handlingResource = Food::class
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techIrrigationFoodProductionMultiplier
@@ -50,68 +45,58 @@ class IrrigationTech(
 
     object Data : TechStaticData {
         override val label = "Irrigation"
-        override val type = TechType.IRRIGATION
-        override val requirements = setOf(TechType.AGRICULTURE)
+        override val requirements = setOf(AgricultureTech.Data)
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techIrrigationCostsGold)
         }
     }
 }
 
-class CapitalismTechTreeItem : AbstractTechTreeItem(
+object CapitalismTechItem : AbstractTechItem(
     data = CapitalismTech.Data,
     techBuilder = ::CapitalismTech,
 )
 
-class CapitalismTech(
-    data: Data = Data,
-) : Tech, TechStaticData by data {
+class CapitalismTech : Tech, TechStaticData by Data {
     override fun deepCopy() = this
 
     object Data : TechStaticData {
         override val label = "Capitalism"
-        override val type = TechType.CAPITALISM
-        override val requirements = emptySet<TechType>()
+        override val requirements = emptySet<TechStaticData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techCapitalismCostsGold)
         }
     }
 }
 
-class JunkFoodTechTreeItem : AbstractTechTreeItem(
+object JunkFoodTechItem : AbstractTechItem(
     data = JunkFoodTech.Data,
     techBuilder = ::JunkFoodTech,
 )
 
-class JunkFoodTech(
-    data: Data = Data,
-) : Tech, TechStaticData by data {
+class JunkFoodTech : Tech, TechStaticData by Data {
     override fun deepCopy() = this
 
     object Data : TechStaticData {
         override val label = "Junk Food"
-        override val type = TechType.JUNK_FOOD
-        override val requirements = setOf(TechType.AGRICULTURE)
+        override val requirements = setOf(AgricultureTech.Data)
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techJunkFoodCostsGold)
         }
     }
 }
 
-class WarfareTechTreeItem : AbstractTechTreeItem(
+object WarfareTechItem : AbstractTechItem(
     data = WarfareTech.Data,
     techBuilder = ::WarfareTech,
 )
 
-class WarfareTech(
-    data: Data = Data,
-) : Tech, TechStaticData by data {
+class WarfareTech : Tech, TechStaticData by Data {
     override fun deepCopy() = this
 
     object Data : TechStaticData {
         override val label = "Warfare"
-        override val type = TechType.WARFARE
-        override val requirements = emptySet<TechType>()
+        override val requirements = emptySet<TechStaticData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techWarfareCostsGold)
         }
