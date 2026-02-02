@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.testInfra.pageParser
 
 import com.github.seepick.derbauer2.game.building.BuildingPage
-import com.github.seepick.derbauer2.game.testInfra.User
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler

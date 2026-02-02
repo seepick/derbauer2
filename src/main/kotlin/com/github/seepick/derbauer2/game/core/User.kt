@@ -8,30 +8,26 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.transaction.TxValidator
+import com.github.seepick.derbauer2.game.transaction.TxValidatorType
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.turn.ReportsWritable
 import com.github.seepick.derbauer2.game.turn.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-class User(
-    val txValidators: List<TxValidator>,
-) : DeepCopyable<User> {
+class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopyable<User> {
 
     private val log = logger {}
 
-    init {
-        log.trace { "New User instance (txValidators.size=${txValidators.size})" }
-    }
-
     var turn = 1
         private set
+
     var userTitle = UserTitle.initial
     var cityTitle = CityTitle.initial
-    private val _reports = ReportsWritable()
+
+    private var _reports = ReportsWritable()
     val reports: Reports = _reports
 
-    // var title: UserTitle; var cityTitle: CityTitle; etc could be here
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)
 
@@ -53,11 +49,13 @@ class User(
         _reports.add(report)
     }
 
-    fun hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
-
     override fun deepCopy(): User =
         User(txValidators).also { copy ->
             log.trace { "Creating deep copy." }
+            copy.turn = turn
+            copy.userTitle = userTitle
+            copy.cityTitle = cityTitle
+            copy._reports = _reports
             all.forEach { entity ->
                 // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
                 copy.enable(entity.deepCopy(), disableCheck = true)
@@ -76,8 +74,8 @@ class User(
     override fun toString() = "User($_all)"
 }
 
-inline fun <reified E : Entity> User.hasEntity() = all.findOrNull<E>() != null
-
+fun User.hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
+inline fun <reified E : Entity> User.hasEntity() = hasEntity(E::class)
 
 val User.gold get() = resource(Gold::class).owned
 val User.food get() = resource(Food::class).owned

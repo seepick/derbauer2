@@ -7,7 +7,6 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.enableAndSet
 import com.github.seepick.derbauer2.game.resource.givenStorage
-import com.github.seepick.derbauer2.game.testInfra.User
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 

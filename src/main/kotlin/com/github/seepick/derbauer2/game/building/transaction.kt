@@ -3,12 +3,14 @@ package com.github.seepick.derbauer2.game.building
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landOwned
 import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.TxValidator
+import com.github.seepick.derbauer2.game.transaction.TxValidatorType
 import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
@@ -18,8 +20,9 @@ fun User.build(buildingClass: KClass<out Building>): TxResult =
         TxOwnable(Gold::class, -building(buildingClass).costsGold),
     )
 
-
 object BuildingTxValidator : TxValidator {
+    override val type = TxValidatorType.Building
+
     override fun validateTx(user: User) =
         with(user) {
             if (hasEntity(Land::class) && totalLandUse > landOwned) {

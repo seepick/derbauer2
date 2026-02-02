@@ -6,7 +6,6 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.transaction.shouldBeFail
 import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess

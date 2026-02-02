@@ -55,10 +55,6 @@ private fun User._applyTx(tx: Tx) {
     }
 }
 
-fun interface TxValidator {
-    fun validateTx(user: User): TxResult
-}
-
 private sealed interface TxCopyResult<T> {
     data class Ok<T>(val value: T) : TxCopyResult<T>
     sealed interface Fail<T> : TxCopyResult<T> {

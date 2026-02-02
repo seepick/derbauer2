@@ -8,7 +8,6 @@ import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.enableAndSet
-import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.transaction.TxResult

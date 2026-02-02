@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.building.OccupiesLand
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.hasEntity
 
 val User.totalLandUse: Z
     get() {

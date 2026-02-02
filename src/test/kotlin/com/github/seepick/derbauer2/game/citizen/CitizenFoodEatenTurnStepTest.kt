@@ -19,7 +19,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class CitizenFoodEatenTurnStepTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = com.github.seepick.derbauer2.game.testInfra.User()
+        user = User()
     }
     fun calc() = CitizenFoodEatenTurnStep(user).calcResourceChange()
     fun expectResourceChange(resource: Resource, changeAmount: Zz) {

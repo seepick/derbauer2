@@ -13,7 +13,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class CitizenTaxesTurnStepTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = com.github.seepick.derbauer2.game.testInfra.User()
+        user = User()
     }
 
     describe("When taxes paid") {
