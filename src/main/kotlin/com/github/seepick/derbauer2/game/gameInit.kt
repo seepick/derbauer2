@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.building.House
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.core.TxOwned
+import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -34,7 +34,7 @@ fun User.initAssets() {
     execTx(assets.map { (asset, amount) ->
         when (asset) {
             is Resource, //-> TxResource(asset::class, amount)
-            is Building -> TxOwned(asset::class, amount)
+            is Building -> TxOwnable(asset::class, amount)
 
             else -> error("Unknown asset type: ${asset::class}")
         }

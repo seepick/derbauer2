@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
-import com.github.seepick.derbauer2.game.core.TxOwned
+import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.transaction.execTx
@@ -21,7 +21,7 @@ class ResourceTxTest : DescribeSpec({
     describe("simple non-storageable") {
         it("When add Then added") {
             val resource = user.enable(Gold())
-            user.execTx(TxOwned(resource::class, 1.zz)).shouldBeSuccess()
+            user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeSuccess()
             resource.owned shouldBeEqual 1.z
         }
     }
@@ -29,13 +29,13 @@ class ResourceTxTest : DescribeSpec({
         it("Given no storage When add Then fail") {
             val resource = user.enable(Food())
 
-            user.execTx(TxOwned(resource::class, 1.zz)).shouldBeFail("Not enough storage")
+            user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeFail("Not enough storage")
         }
         it("Given enough storage When add Then succeed") {
             user.enableAndSet(Granary(), 1.z)
             val resource = user.enable(Food())
 
-            user.execTx(TxOwned(resource::class, 1.zz)).shouldBeSuccess()
+            user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeSuccess()
         }
     }
 })

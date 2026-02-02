@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.common.NegativeZException
-import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core._applyOwnableTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -29,13 +28,6 @@ fun User.execTx(txs: List<Tx>): TxResult {
     }
 }
 
-private sealed interface TxCopyResult<T> {
-    data class Ok<T>(val value: T) : TxCopyResult<T>
-    sealed interface Fail<T> : TxCopyResult<T> {
-        class NegativeAmount<T>(val e: NegativeZException) : Fail<T>
-    }
-}
-
 private fun User.copyAndApply(txs: List<Tx>): TxCopyResult<User> {
     val snapshot = deepCopy()
     try {
@@ -44,10 +36,6 @@ private fun User.copyAndApply(txs: List<Tx>): TxCopyResult<User> {
         return TxCopyResult.Fail.NegativeAmount(e)
     }
     return TxCopyResult.Ok(snapshot)
-}
-
-fun interface TxValidator {
-    fun validateTx(user: User): TxResult
 }
 
 /** @param snapshot got the TXs already applied to it. */
@@ -62,9 +50,18 @@ private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
 
 @Suppress("FunctionName", "kotlin:S100")
 private fun User._applyTx(tx: Tx) {
-    when (tx) {
-        // TODO make exhaustive
-        is TxOwned -> _applyOwnableTx(tx)
-        else -> error("Unknown Tx type: ${tx::class}")
+    when (val ref = tx.type.ref) {
+        is TxTypeRef.Ownable -> ref.casted(tx) { _applyOwnableTx(it) }
+    }
+}
+
+fun interface TxValidator {
+    fun validateTx(user: User): TxResult
+}
+
+private sealed interface TxCopyResult<T> {
+    data class Ok<T>(val value: T) : TxCopyResult<T>
+    sealed interface Fail<T> : TxCopyResult<T> {
+        class NegativeAmount<T>(val e: NegativeZException) : Fail<T>
     }
 }

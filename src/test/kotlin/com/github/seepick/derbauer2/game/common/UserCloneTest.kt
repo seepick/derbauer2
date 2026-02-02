@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.TxOwned
+import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.enableAndSet
@@ -22,7 +22,7 @@ class UserCloneTest : StringSpec({
         user1.enableAndSet(Gold(), 2.z)
 
         val user2 = user1.deepCopy()
-        user2.execTx(TxOwned(Gold::class, 40.zz))
+        user2.execTx(TxOwnable(Gold::class, 40.zz))
 
         user2.gold shouldBeEqual 42.z
         user1.gold shouldBeEqual 2.z

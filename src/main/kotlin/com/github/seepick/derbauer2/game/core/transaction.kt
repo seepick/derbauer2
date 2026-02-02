@@ -4,27 +4,29 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.transaction.Tx
 import com.github.seepick.derbauer2.game.transaction.TxOperation
+import com.github.seepick.derbauer2.game.transaction.TxType
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
 private val log = logger {}
 
-data class TxOwned(
+data class TxOwnable(
     override val ownableClass: KClass<out Ownable>,
     val operation: TxOperation,
     val amount: Z
 ) : Tx, OwnableReference {
-    constructor(targetClass: KClass<out Ownable>, amount: Zz) : this(
-        ownableClass = targetClass,
+    constructor(ownableClass: KClass<out Ownable>, amount: Zz) : this(
+        ownableClass = ownableClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.toZ()
     )
 
+    override val type = TxType.OWNABLE
     override fun toString() = "TxOwned(${ownableClass.simpleName} ${operation.symbol}[$amount])"
 }
 
 @Suppress("FunctionName", "kotlin:S100")
-fun User._applyOwnableTx(tx: TxOwned) {
+fun User._applyOwnableTx(tx: TxOwnable) {
     val ownableEntity: Ownable = all.find(tx.ownableClass) as Ownable
     log.trace { "Applying: $tx for $ownableEntity" }
     when (tx.operation) {

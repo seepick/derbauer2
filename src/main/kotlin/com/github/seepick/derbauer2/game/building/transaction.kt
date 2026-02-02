@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.common.zz
-import com.github.seepick.derbauer2.game.core.TxOwned
+import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -14,8 +14,8 @@ import kotlin.reflect.KClass
 
 fun User.build(buildingClass: KClass<out Building>): TxResult =
     execTx(
-        TxOwned(buildingClass, 1.zz),
-        TxOwned(Gold::class, -building(buildingClass).costsGold),
+        TxOwnable(buildingClass, 1.zz),
+        TxOwnable(Gold::class, -building(buildingClass).costsGold),
     )
 
 

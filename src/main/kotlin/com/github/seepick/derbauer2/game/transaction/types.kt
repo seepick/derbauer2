@@ -1,12 +1,26 @@
 package com.github.seepick.derbauer2.game.transaction
 
+import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.transaction.TxResult.Fail
 import com.github.seepick.derbauer2.game.transaction.TxResult.Success
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.contract
 
-interface Tx
+enum class TxType(val ref: TxTypeRef) {
+    OWNABLE(TxTypeRef.Ownable);
+}
+
+/** Indirection via enum to centralize type-cast here and make it exhaustive everywhere else. */
+sealed interface TxTypeRef {
+    object Ownable : TxTypeRef {
+        fun <R> casted(tx: Tx, code: (TxOwnable) -> R) = code(tx as TxOwnable)
+    }
+}
+
+interface Tx {
+    val type: TxType
+}
 
 enum class TxOperation(val symbol: String) {
     INCREASE("+"),
