@@ -35,6 +35,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Backlog
 
+* BZ: once stats are implemented, then let junkfood-tech also increase happiness
 * IT: could make TechState a proper state pattern implementation
 * BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true

@@ -6,7 +6,7 @@ import kotlin.reflect.KClass
 interface Entity : DeepCopyable<Entity>, HasLabels, HasEmoji
 
 /** Needed to validate transactions; create a copy/snapshot, apply TXs, and then validate. */
-fun interface DeepCopyable<T> {
+interface DeepCopyable<T> {
     fun deepCopy(): T
 }
 

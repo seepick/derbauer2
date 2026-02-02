@@ -18,11 +18,10 @@ class AgricultureTech(
 ) : Tech, TechStaticData by data, ResourceProductionModifier {
 
     override val handlingResource = Food::class
-
-    override fun deepCopy() = this
-
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techAgricultureFoodProductionMultiplier
+
+    override fun deepCopy() = this
 
     object Data : TechStaticData {
         override val label = "Agriculture"
@@ -44,11 +43,10 @@ class IrrigationTech(
 ) : Tech, TechStaticData by data, ResourceProductionModifier {
 
     override val handlingResource = Food::class
-
-    override fun deepCopy() = this
-
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techIrrigationFoodProductionMultiplier
+
+    override fun deepCopy() = this
 
     object Data : TechStaticData {
         override val label = "Irrigation"
@@ -69,7 +67,7 @@ class CapitalismTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-
+    // TODO increase tax income
     object Data : TechStaticData {
         override val label = "Capitalism"
         override val type = TechType.CAPITALISM
@@ -89,7 +87,7 @@ class JunkFoodTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-
+    // TODO decrease food consumption
     object Data : TechStaticData {
         override val label = "Junk Food"
         override val type = TechType.JUNK_FOOD
@@ -109,7 +107,7 @@ class WarfareTech(
     data: Data = Data,
 ) : Tech, TechStaticData by data {
     override fun deepCopy() = this
-
+    // TODO enable military feature
     object Data : TechStaticData {
         override val label = "Warfare"
         override val type = TechType.WARFARE
