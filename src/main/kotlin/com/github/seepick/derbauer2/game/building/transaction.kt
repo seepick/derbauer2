@@ -10,10 +10,7 @@ import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.TxValidator
 import com.github.seepick.derbauer2.game.transaction.execTx
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
-
-private val log = logger {}
 
 fun User.build(buildingClass: KClass<out Building>): TxResult =
     execTx(

@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.Feature
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -25,7 +25,7 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
         asciiArt = AsciiArt.coin,
         multilineDescription = "A marketplace has opened for you. Enjoy you darn capitalist! 🤑",
     ) {
-        override val enumIdentifier = FeatureDescriptorEnum.Trading
+        override val enumIdentifier = FeatureDescriptorType.Trading
         override fun check(user: User) =
             user.hasEntity<Gold>() &&
                     user.gold <= Mechanics.featureTradingThresholdGoldLesser
@@ -44,7 +44,7 @@ object TradeLandFeatureDescriptor : FeatureDescriptor(
     multilineDescription = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\n" +
             "And some more... hehe 😅",
 ) {
-    override val enumIdentifier = FeatureDescriptorEnum.TradeLand
+    override val enumIdentifier = FeatureDescriptorType.TradeLand
     override fun check(user: User) =
         user.hasFeature<TradingFeature>() &&
                 user.hasEntity<Land>() &&

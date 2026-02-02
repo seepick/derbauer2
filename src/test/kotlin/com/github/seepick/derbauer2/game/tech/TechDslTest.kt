@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
+import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.feature.enableFeature
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -19,7 +19,7 @@ class TechDslTest : DslTest, StringSpec() {
         installDslExtension()
         "Given tech feature enabled When re-render page Then prompt contains research option" {
             Given {
-                user.enableFeature(FeatureDescriptorEnum.Technology)
+                user.enableFeature(FeatureDescriptorType.Technology)
             } When {
                 page.invalidate()
             } Then {
@@ -29,7 +29,7 @@ class TechDslTest : DslTest, StringSpec() {
         "Given tech When research Then it is enabled" {
             Given {
                 setOwned<Gold>(1000.z)
-                user.enableFeature(FeatureDescriptorEnum.Technology)
+                user.enableFeature(FeatureDescriptorType.Technology)
                 page.invalidate()
             } When {
                 selectPrompt("research")

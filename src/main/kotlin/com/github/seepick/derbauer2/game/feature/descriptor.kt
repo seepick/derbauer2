@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 /** Enforce exhaustion despite FeatureDescriptor not being a sealed class */
-enum class FeatureDescriptorEnum(val descriptor: FeatureDescriptor) {
+enum class FeatureDescriptorType(val descriptor: FeatureDescriptor) {
     TradeLand(TradeLandFeatureDescriptor),
     Technology(TechnologyFeatureDescriptor),
     Trading(TradingFeature.Descriptor),
@@ -20,13 +20,13 @@ abstract class FeatureDescriptor(
 ) : FeatureData {
 
     @Suppress("unused")
-    abstract val enumIdentifier: FeatureDescriptorEnum // only to enforce registration here ;)
+    abstract val enumIdentifier: FeatureDescriptorType // only to enforce registration here ;)
     abstract fun check(user: User): Boolean
     abstract fun build(): Feature
 
     companion object {
         val all: List<FeatureDescriptor> by lazy {
-            FeatureDescriptorEnum.entries.toList().map { it.descriptor }
+            FeatureDescriptorType.entries.toList().map { it.descriptor }
         }
     }
 }

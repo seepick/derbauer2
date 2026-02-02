@@ -7,8 +7,9 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
-import com.github.seepick.derbauer2.game.happening.HappeningId
+import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
+import com.github.seepick.derbauer2.game.happening.HappeningType
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
@@ -16,7 +17,7 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.Textmap
 
 object FoundGoldDescriptor : HappeningDescriptor(HappeningNature.Positive) {
-    override val id = HappeningId.FoundGold
+    override val type = HappeningType.FoundGold
 
     override fun canHappen(user: User) =
         user.hasEntity(Gold::class)

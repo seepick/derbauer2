@@ -1,7 +1,5 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
-import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

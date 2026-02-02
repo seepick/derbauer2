@@ -4,7 +4,6 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
-import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptor
 import com.github.seepick.derbauer2.game.probability.AlwaysFirstProbabilitySelector
 import com.github.seepick.derbauer2.game.probability.AlwaysProbabilityCalculator
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.HappeningIsNeg

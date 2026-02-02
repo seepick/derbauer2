@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
+import com.github.seepick.derbauer2.game.happening.DefaultHappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Land
