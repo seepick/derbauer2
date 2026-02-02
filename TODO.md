@@ -8,10 +8,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * !! BZ: finish Technology concept
     * tech tree; let AI generate print tree statement
-        * implement modifier which is considered in turner; can enable Features
-          //fun interface ResourceProductionModifier {
-          // fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
-
+    * tech can enable Features
 
 * BUG: leftover food not eaten at the end; citizens should start to starve
 
@@ -92,6 +89,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * TEST: ResourceTurnerTest
     * two distinct buildings producing food Then sum
     * resource producing entity, which is not ownable/count; eg not a building but a feature or anything
+* -- provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 
 ### UI
 

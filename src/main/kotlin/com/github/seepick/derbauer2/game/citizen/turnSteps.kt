@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
+import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
@@ -14,46 +15,50 @@ import com.github.seepick.derbauer2.game.turn.TurnPhase
 
 class CitizenReproduceTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class)) {
-    override fun calcResourceChange() =
-        user.findResource<Citizen>().let { citizen ->
+    override fun calcResourceChanges() = buildResourceChanges {
+        val citizen = user.findResource<Citizen>()
+        add(
             ResourceChange(
                 resource = citizen,
                 changeAmount = if (citizen.owned == 0.z) {
                     0.z
                 } else {
-                    (citizen.owned * Mechanics.citizenReproductionRate)
-                        .orMaxOf(Mechanics.citizenReproductionMinimum)
-                        .orMinOf(user.freeStorageFor(citizen))
+                    val raw = citizen.owned * Mechanics.citizenReproductionRate
+                    raw orMaxOf Mechanics.citizenReproductionMinimum orMinOf user.freeStorageFor(citizen)
                 }
             )
-        }
+        )
+    }
 }
 
 class CitizenFoodEatenTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
-    override fun calcResourceChange(): ResourceChange {
+    override fun calcResourceChanges() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
-        if (citizen.owned == 0.z) {
-            return ResourceChange(citizen, 0.z)
-        }
-        val food = user.findResource<Food>()
-        return if (food.owned == 0.z) {
-            val rawStarving = citizen.owned * Mechanics.citizensStarve
-            val starving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
-            ResourceChange(citizen, -starving)
-        } else {
-            val rawFoodConsumed = citizen.owned * Mechanics.citizenFoodConsume
-            val foodConsumed = rawFoodConsumed orMaxOf 1.z orMinOf food.owned
-            ResourceChange(food, -foodConsumed)
-        }
+        add(
+            if (citizen.owned == 0.z) {
+                ResourceChange(citizen, 0.z)
+            } else {
+                val food = user.findResource<Food>()
+                if (food.owned == 0.z) {
+                    val rawStarving = citizen.owned * Mechanics.citizensStarve
+                    val adjustedStarving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
+                    ResourceChange(citizen, -adjustedStarving)
+                } else {
+                    val rawConsumed = citizen.owned * Mechanics.citizenFoodConsume
+                    val adjustedConsumed = rawConsumed orMaxOf 1.z orMinOf food.owned
+                    ResourceChange(food, -adjustedConsumed)
+                }
+            }
+        )
     }
 }
 
 class CitizenTaxesTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
-    override fun calcResourceChange(): ResourceChange {
+    override fun calcResourceChanges() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         val taxIncome = citizen.owned * Mechanics.citizenTax
-        return ResourceChange(user.findResource<Gold>(), taxIncome)
+        add(ResourceChange(user.findResource<Gold>(), taxIncome))
     }
 }

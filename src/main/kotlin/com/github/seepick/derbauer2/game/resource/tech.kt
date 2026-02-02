@@ -1,10 +1,16 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.tech.AbstractTechTreeItem
 import com.github.seepick.derbauer2.game.tech.Tech
 import com.github.seepick.derbauer2.game.tech.TechStaticData
 import com.github.seepick.derbauer2.game.tech.TechType
+
+fun interface ResourceProductionModifier {
+    fun modify(user: User, resource: Resource, source: Z): Z
+}
 
 class AgricultureTechTreeItem : AbstractTechTreeItem(
     data = AgricultureTech.Data,

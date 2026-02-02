@@ -21,7 +21,7 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
     beforeTest {
         user = User()
     }
-    fun calc() = CitizenFoodEatenTurnStep(user).calcResourceChange()
+    fun calc() = CitizenFoodEatenTurnStep(user).calcResourceChanges()
     fun expectResourceChange(resource: Resource, changeAmount: Zz) {
         calc() shouldBeEqual ResourceChange(resource, changeAmount)
     }

@@ -6,7 +6,21 @@ import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
-fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit) = ResourceChanges.build(code)
+fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit): ResourceChanges {
+    val builder = ResourceChanges.Builder()
+    builder.code()
+    return builder.build()
+}
+
+fun resourceChangesOf(changesChanges: List<ResourceChanges>): ResourceChanges =
+    when (changesChanges.size) {
+        0 -> ResourceChanges.empty
+        1 -> changesChanges.first()
+        else ->
+            changesChanges.reduce { acc, resourceChanges ->
+                acc.merge(resourceChanges)
+            }
+    }
 
 fun List<ResourceChange>.toSingleChangesObject(): ResourceChanges = buildResourceChanges {
     addAll(this@toSingleChangesObject)
@@ -60,10 +74,9 @@ class ResourceChanges private constructor(
     }
 
     companion object {
-        fun build(code: Builder.() -> Unit): ResourceChanges {
-            val builder = Builder()
-            code(builder)
-            return builder.build()
+        val empty = buildResourceChanges { }
+        operator fun invoke(changes: List<ResourceChange>) = buildResourceChanges {
+            addAll(changes)
         }
     }
 
