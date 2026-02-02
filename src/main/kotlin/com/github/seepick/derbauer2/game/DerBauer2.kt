@@ -16,8 +16,11 @@ object DerBauer2 {
     @JvmStatic
     fun main(args: Array<String>) {
         log.info { "Starting Der Bauer 2 - devMode=${isDevMode} (args: ${args.toList()})" }
+
+        val appTitle = "DerBauer2 ${Emoji.derbauer2}"
+        val devModeSuffix = if (isDevMode) " ⛑️ Dev Mode ⛑️" else ""
         showMainWindow(
-            title = "DerBauer2 ${Emoji.derbauer2} v${AppProperties.instance.version}${if (isDevMode) " ⛑️ Dev Mode ⛑️" else ""}",
+            title = "$appTitle v${AppProperties.instance.version}$devModeSuffix",
             mainModule = gameModule(DerBauer2::class),
         ) { koin -> koin.initGame() }
     }

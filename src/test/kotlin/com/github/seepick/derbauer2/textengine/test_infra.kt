@@ -82,7 +82,7 @@ fun Prompt.indexOfOptionOrNull(searchLabel: String): Int? {
     return if (matching.isEmpty()) {
         null
     } else {
-        withClue({ "Expected single matching option for '$searchLabel', but was: $matching (all: ${select.options})" }) {
+        withClue({ "Expected single option for '$searchLabel' but was: $matching (all: ${select.options})" }) {
             matching.shouldBeSingleton().first().first
         }
     }

@@ -1,12 +1,6 @@
 # Todo
 
-Continuous Cleanup:
-
-* Resolve Task Tags
-* Resolve Detekt issues
-* Resolve SonarQube issues
-* Upgrade dependency versions
-* Increase test coverage
+Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Versions
 
@@ -31,6 +25,10 @@ Refactor window:
 
 ## Backlog
 
+* BZ: FeatureTurner
+    * TX-exec one, could later allow another to check==true
+    * thus: do rounds of applying, until no feature returns check==true anymore
+    * e.g.: TradingFeature enables TradeLandFeature; should BOTH appear in turn screens
 * IT: runUiTest needs proper implementation
     * disabled by default; enableable via CI
     * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)

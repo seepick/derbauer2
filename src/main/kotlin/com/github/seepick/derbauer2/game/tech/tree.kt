@@ -14,9 +14,9 @@ class TechTree(
 }
 
 interface TechTreeItem : TechStaticData {
-    fun buildTech(): Tech
-
     var state: TechState
+
+    fun buildTech(): Tech
 }
 
 abstract class AbstractTechTreeItem(

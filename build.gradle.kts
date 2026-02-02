@@ -159,6 +159,7 @@ sonar {
         property("sonar.projectKey", "seepick_derbauer2")
         property("sonar.host.url", "https://sonarcloud.io")
         property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
+        property("sonar.exclusions", "docs/index.html")
     }
 }
 
