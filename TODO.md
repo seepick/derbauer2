@@ -4,19 +4,18 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Versions
 
-### Next Release
+### Current
 
 * !! BZ: finish Technology concept
-    * tech tree; let AI generate print statement
-    * implement modifier which is considered in turner; can enable Features
-    * user.research(): TX logic ... check requirements, costs, etc.
-      //fun interface ResourceProductionModifier {
-      // fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
+    * tech tree; let AI generate print tree statement
+        * implement modifier which is considered in turner; can enable Features
+          //fun interface ResourceProductionModifier {
+          // fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
 
 
 * BUG: leftover food not eaten at the end; citizens should start to starve
 
-Refactor window:
+#### Window Refactoring
 
 * first break up MainWindow() god function into smaller pieces
 * make the whole window bigger
@@ -24,6 +23,11 @@ Refactor window:
     * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
     * HomePageTest disabled emoji width calc issue
     * TextmapTest disabled emojis take up 2 chars, thus calc is off...
+
+### Next
+
+* BZ: general variability end turn (production, taxes, consumption)
+    * tell AI to code gaussian distribution generator (mean = x, stddev = y)
 
 ## Backlog
 
@@ -40,7 +44,6 @@ Refactor window:
 * BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
 * UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
-* BZ: general variability end turn (production, taxes, consumption)
 * BZ: change (user/city) titles/designators based on criteria
     * can be upped and lowered again! different than feature, which is a one-way unlock
 * cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)

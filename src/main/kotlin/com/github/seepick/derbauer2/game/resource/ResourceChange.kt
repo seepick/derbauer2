@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 
 fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit) = ResourceChanges.build(code)
@@ -39,10 +40,9 @@ class ResourceChanges private constructor(
     init {
         val distinct = changes.map { it.resourceClass }.distinct()
         require(distinct.size == changes.size) {
-            "Must not contain multiple changes for the same resource!\n" +
-                    "Found duplicates for: ${
-                        distinct.filter { rc -> changes.count { it.resourceClass == rc } > 1 }
-                    }"
+            "Must not contain multiple changes for the same resource!\n" + "Found duplicates for: ${
+                distinct.filter { rc -> changes.count { it.resourceClass == rc } > 1 }
+            }"
         }
     }
 
@@ -55,10 +55,9 @@ class ResourceChanges private constructor(
         other.changes.forEach { add(it.resourceClass, it.changeAmount) }
     }
 
-    fun invertSig() =
-        buildResourceChanges {
-            changes.forEach { add(it.resourceClass, -it.changeAmount) }
-        }
+    fun invertSig() = buildResourceChanges {
+        changes.forEach { add(it.resourceClass, -it.changeAmount) }
+    }
 
     companion object {
         fun build(code: Builder.() -> Unit): ResourceChanges {
@@ -76,8 +75,7 @@ class ResourceChanges private constructor(
         fun add(newChange: ResourceChange) {
             val oldChange = changesByResourceClass.getOrPut(newChange.resourceClass) {
                 ResourceChange(
-                    newChange.resourceClass,
-                    0.zz
+                    newChange.resourceClass, 0.zz
                 )
             }
             changesByResourceClass[newChange.resourceClass] = oldChange + newChange
@@ -107,7 +105,7 @@ class ResourceChanges private constructor(
     }
 }
 
-fun ResourceChanges.toTextmapRendering() =
-    changes.joinToString(", ") { change ->
-        "${change.resourceClass}: ${change.changeAmount}"
-    }
+context(user: User)
+fun ResourceChanges.toTextmapRendering() = changes.joinToString(", ") { change ->
+    "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.changeAmount}"
+}

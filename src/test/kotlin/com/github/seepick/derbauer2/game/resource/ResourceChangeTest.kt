@@ -1,25 +1,43 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.User
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.core.spec.style.scopes.DescribeSpecContainerScope
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldBeEmpty
 
 class ResourceChangeTest : DescribeSpec({
+    lateinit var user: User
+    beforeTest {
+        user = User()
+    }
+    suspend fun DescribeSpecContainerScope.test(testName: String, code: User.() -> Unit) {
+        it(testName) {
+            with(user) {
+                code()
+            }
+        }
+    }
     describe("toTextmapRendering") {
-        it("Given nothing Then empty") {
+        test("Given nothing Then empty") {
             buildResourceChanges {}.toTextmapRendering().shouldBeEmpty()
         }
-        it("Given single resource Then rendered") {
+        test("Given single resource Then rendered") {
+            enable(Gold())
+
             buildResourceChanges {
                 add(Gold::class, 2.z)
-            }.toTextmapRendering() shouldBeEqual "2 ${Gold.Data.emojiOrNull}"
+            }.toTextmapRendering() shouldBeEqual "${Gold.Data.emojiOrNull} 2"
         }
-        it("Given two resources Then both rendered") {
+        test("Given two resources Then both rendered") {
+            enable(Gold())
+            enable(Food())
+
             buildResourceChanges {
                 add(Gold::class, 2.z)
                 add(Food::class, 3.z)
-            }.toTextmapRendering() shouldBeEqual "2 ${Gold.Data.emojiOrNull}, 3 ${Food.Data.emojiOrNull}"
+            }.toTextmapRendering() shouldBeEqual "${Gold.Data.emojiOrNull} 2, ${Food.Data.emojiOrNull} 3"
         }
     }
 })

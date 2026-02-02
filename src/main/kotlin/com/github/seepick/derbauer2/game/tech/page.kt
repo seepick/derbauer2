@@ -29,7 +29,9 @@ class TechPage(
                 title = "What do you want to research?",
                 options = items.map { item ->
                     SelectOption({
-                        "Research ${item.label} - ${item.costs.toTextmapRendering()}"
+                        with(user) {
+                            "Research ${item.label} - ${item.costs.toTextmapRendering()}"
+                        }
                     }) {
                         resultHandler.handle(user.researchTech(item))
                     }
