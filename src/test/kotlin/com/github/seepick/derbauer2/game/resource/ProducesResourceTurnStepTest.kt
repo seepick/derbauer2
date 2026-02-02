@@ -75,8 +75,8 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         }
     }
     context("ResourceProductionModifier") {
-        describe("foo") {
-            it("sf") {
+        describe("Sunshine") {
+            it("When modifier 2x Then produce 2x") {
                 `user with 0 🍖, 1 granary, 1 farm` {
                     user.enable(foodProductionModifier(2.0))
 
@@ -86,5 +86,6 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 }
             }
         }
+        // TODO implement more tests
     }
 })
