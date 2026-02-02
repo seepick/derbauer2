@@ -26,6 +26,8 @@ value class Emoji(val value: String) {
     }
 
     override fun toString() = value
+
+    companion object
 }
 
 val <T> T.emojiAndLabelSingular: String where T : HasLabels, T : HasEmoji

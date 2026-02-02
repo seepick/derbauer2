@@ -11,18 +11,18 @@ import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.H
 import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.HappeningTurner
 import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource.Happenings
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.testInfra.itest.Given
-import com.github.seepick.derbauer2.game.testInfra.itest.ITest
-import com.github.seepick.derbauer2.game.testInfra.itest.Then
-import com.github.seepick.derbauer2.game.testInfra.itest.When
-import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
+import com.github.seepick.derbauer2.game.testInfra.DslTest
+import com.github.seepick.derbauer2.game.testInfra.dsl.Given
+import com.github.seepick.derbauer2.game.testInfra.dsl.Then
+import com.github.seepick.derbauer2.game.testInfra.dsl.When
+import com.github.seepick.derbauer2.game.testInfra.installDslExtension
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-class HappeningITest : ITest, DescribeSpec() {
+class HappeningDslTest : DslTest, DescribeSpec() {
     init {
-        installGameKoinExtension()
+        installDslExtension()
         describe("When turn and continue next page") {
             it("Given probability for GoldFound is guaranteed Then it happens") {
                 Given {

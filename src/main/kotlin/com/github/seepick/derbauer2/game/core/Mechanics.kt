@@ -1,7 +1,9 @@
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
+
 
 /**
  * All game mechanics constants; a magic constant provider.
@@ -9,10 +11,12 @@ import com.github.seepick.derbauer2.game.common.z
 @Suppress("MayBeConstant", "MagicNumber", "VariableMaxLength")
 object Mechanics {
 
+    private val DEV = DerBauer2.isDevMode
+
     // INITIAL VALUES
     // ========================================================================
     // resources
-    val startingLand = 20.z
+    val startingLand = 15.z
     val startingGold = 500.z
     val startingCitizens = 4.z
     val startingFood = 50.z
@@ -23,13 +27,13 @@ object Mechanics {
 
     // BUILDINGS
     // ========================================================================
-    val houseCostsGold = 40
-    val houseLandUse = 1
+    val houseCostsGold = 40.z
+    val houseLandUse = 1.z
     val houseStoreCitizen = 5
 
-    val farmCostsGold = 120
+    val farmCostsGold = 120.z
     val farmProduceFood = 3
-    val farmLandUse = 4
+    val farmLandUse = 4.z
 
     val granaryCostsGold = 80
     val granaryCapacity = 100
@@ -41,9 +45,15 @@ object Mechanics {
     val sellFoodGainGold = 3
     val buyLandCostGold = 50
 
+    // FEATURE
+    // ========================================================================
+    val featureTradingThresholdGoldLesser = if (DEV) 400.z else 200.z
+    val featureTradeLandThresholdLandAvailableLesser = 2.z
+    val featureTechGoldThresholdGreater = if (DEV) 0.z else (startingGold.value * 1.5).toLong().z
+
     // TECHNOLOGY
     // ========================================================================
-    val technologyUnlockGoldThreshold = (startingGold.value * 1.5).toLong().z
+    val techAgricultureCostsGold = 300.z
 
     // END TURN
     // ========================================================================
@@ -54,7 +64,7 @@ object Mechanics {
     val citizenReproductionRate = 0.1.`%`
     val citizenReproductionMinimum = 1.z
 
-    val turnProbHappeningStart = 0.0.`%`
-    val turnProbHappeningGrowthRate = 0.02.`%`
-    val turnProbHappeningIsNegative = 0.1.`%`
+    val happeningInitialProb = 0.0.`%`
+    val happeningGrowthRate = 0.02.`%`
+    val happeningIsNegativeChance = 0.1.`%`
 }

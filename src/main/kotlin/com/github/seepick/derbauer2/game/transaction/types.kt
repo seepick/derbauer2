@@ -16,9 +16,9 @@ interface TxOwned<T : Ownable> : Tx {
 
 interface Tx
 
-enum class TxOperation {
-    INCREASE,
-    DECREASE,
+enum class TxOperation(val symbol: String) {
+    INCREASE("+"),
+    DECREASE("-");
 }
 
 fun List<TxResult>.merge(): TxResult {

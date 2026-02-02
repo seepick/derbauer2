@@ -8,10 +8,10 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainIgnoringCase
 
-class BuildingsPageTest : PageTest, StringSpec({
+class BuildingPageTest : PageTest, StringSpec({
 
     fun SetupGamePageContext.buildBuildingsPage() =
-        BuildingsPage(user, currentPage, gameRenderer, resultHandler)
+        BuildingPage(user, currentPage, gameRenderer, resultHandler)
 
     "Given some Then check whole screen" {
         renderGamePage({ ctx ->

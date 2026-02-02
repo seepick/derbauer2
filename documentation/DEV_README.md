@@ -1,5 +1,7 @@
 # Developer's Handbook
 
+* Run app in development mode: `-Dderbauer2.devMode=true`
+
 ## Quicklinks
 
 * SonarQube: https://sonarcloud.io/summary/new_code?id=seepick_derbauer2

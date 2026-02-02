@@ -1,49 +1,33 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.ResourceChanges
 
-enum class TechType {
-    AGRICULTURE, // +food production
-    HOUSES,      // upgrade from tents
-    POTTERY,     // enable granaries
+class TechTree(
+    private val user: User,
+    private val items: List<TechTreeItem>,
+) {
+    fun getAvailableToBeResearched(): List<TechTreeItem> =
+        items.filter {
+            it.state is TechState.Unresearched
+            // FIXME && all prerequisites researched
+        }
 }
 
-interface Tech : Entity, TechStaticData {
-    // check end turn, enable if not yet enabled
-    // used as precondition filter for actions/etc.
-    override val labelSingular get() = label
+interface TechTreeItem : TechStaticData {
+    fun buildTech(): Tech
+
+    var state: TechState
 }
 
-interface TechStaticData {
-    val label: String
-    val type: TechType
-    val requirements: Set<TechType>
-    val costs: ResourceChanges
+abstract class AbstractTechTreeItem(
+    data: TechStaticData,
+    private val techBuilder: () -> Tech,
+) : TechTreeItem, TechStaticData by data {
+    override var state: TechState = TechState.Unresearched
+    override fun buildTech() = techBuilder()
 }
 
-fun interface ResourceProductionModifier {
-    fun modify(user: User/*read-only*/, resource: Resource, source: Z): Z
-}
-
-class AgricultureTech(data: Data = Data) : Tech, TechStaticData by data {
-    override fun deepCopy() = this // immutable
-
-    object Data : TechStaticData {
-        override val label = "Agriculture"
-        override val type = TechType.AGRICULTURE
-        override val requirements = emptySet<TechType>()
-        override val costs = TODO("")
-    }
-}
-
-interface TechDescriptor
-
-class TechTree {
-    fun getAvailable(): List<TechDescriptor> {
-        TODO("Not yet implemented")
-    }
+sealed interface TechState {
+    object Unresearched : TechState
+    class Researched(val tech: Tech) : TechState
 }

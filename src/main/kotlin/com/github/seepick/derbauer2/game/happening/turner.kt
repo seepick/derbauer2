@@ -27,8 +27,8 @@ class HappeningTurner(
         probabilities.setProvider(
             ProbabilityProviderSource.HappeningTurner,
             GrowthProbabilityCalculator(
-                startValue = Mechanics.turnProbHappeningStart,
-                growthRate = Mechanics.turnProbHappeningGrowthRate,
+                startValue = Mechanics.happeningInitialProb,
+                growthRate = Mechanics.happeningGrowthRate,
             )
         ) {
             log.debug { "New happening going to happen." }
@@ -43,7 +43,7 @@ class HappeningTurner(
         probabilities.setProvider(
             ProbabilityProviderSource.HappeningIsNeg,
             PercentageProbabilityCalculator(
-                threshold = Mechanics.turnProbHappeningIsNegative
+                threshold = Mechanics.happeningIsNegativeChance
             )
         ) {}
 

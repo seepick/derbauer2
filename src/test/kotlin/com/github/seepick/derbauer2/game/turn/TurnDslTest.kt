@@ -6,23 +6,23 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.testInfra.itest.Given
-import com.github.seepick.derbauer2.game.testInfra.itest.ITest
-import com.github.seepick.derbauer2.game.testInfra.itest.Then
-import com.github.seepick.derbauer2.game.testInfra.itest.When
-import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
+import com.github.seepick.derbauer2.game.testInfra.DslTest
+import com.github.seepick.derbauer2.game.testInfra.dsl.Given
+import com.github.seepick.derbauer2.game.testInfra.dsl.Then
+import com.github.seepick.derbauer2.game.testInfra.dsl.When
+import com.github.seepick.derbauer2.game.testInfra.installDslExtension
 import io.kotest.core.spec.style.FunSpec
 import kotlin.math.ceil
 
-class TurnITest : ITest, FunSpec() {
+class TurnDslTest : DslTest, FunSpec() {
     init {
-        installGameKoinExtension()
+        installDslExtension()
         test("citizens pay taxes") {
             val citizenCount = 100.z
             // ensure sufficient housing also for newborns
             val citizenCountAfterReproduction = citizenCount + citizenCount * Mechanics.citizenReproductionRate
             val houseCount = ceil(citizenCountAfterReproduction.value.toDouble() / Mechanics.houseStoreCitizen).toInt()
-            val landCount = houseCount * Mechanics.houseLandUse
+            val landCount = houseCount * Mechanics.houseLandUse.value
             Given {
                 setOwned<Gold>(0.z)
                 changeOwned<Land>(landCount.z)

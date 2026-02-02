@@ -1,7 +1,6 @@
-package com.github.seepick.derbauer2.game.testInfra.itest
+package com.github.seepick.derbauer2.game.testInfra
 
-import com.github.seepick.derbauer2.game.core.Warning
-import com.github.seepick.derbauer2.game.core.WarningListener
+import com.github.seepick.derbauer2.game.core.CollectingWarningListener
 import com.github.seepick.derbauer2.game.gameModule
 import com.github.seepick.derbauer2.game.view.textengineModule
 import io.kotest.core.spec.Extendable
@@ -10,31 +9,24 @@ import io.mockk.mockkClass
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import org.koin.test.KoinTest
-import kotlin.reflect.KClass
 
-class CollectingWarningListener : WarningListener {
-    val warnings = mutableListOf<Warning>()
-    override fun onWarning(warning: Warning) {
-        warnings += warning
-    }
-}
+// (also) marker interface for easier lookup (find implementation)
+interface DslTest : KoinTest
 
-fun itestModule() = module {
+fun dslTestModule() = module {
     singleOf(::CollectingWarningListener)
 }
 
-fun Extendable.installGameKoinExtension() {
+/** Does NOT initialize starting game assets; clean state for tests + more stability (independence). */
+fun Extendable.installDslExtension() {
     extension(
         KoinExtension(
             modules = listOf(
                 textengineModule(),
                 gameModule(this::class),
-                itestModule(),
+                dslTestModule(),
             ),
             mockProvider = { mockkClass(it, relaxed = true) }
         )
     )
 }
-
-fun <T> KoinTest.get(klass: KClass<*>): T =
-    getKoin().get(klass)

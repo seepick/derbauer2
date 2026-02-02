@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.testInfra.pageParser
 
-import com.github.seepick.derbauer2.game.building.BuildingsPage
+import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
@@ -21,7 +21,7 @@ fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: Game
 
 class SetupGamePageContext {
     val user = User()
-    val currentPage = CurrentPage(BuildingsPage::class)
+    val currentPage = CurrentPage(BuildingPage::class)
     val turner = mockk<Turner> {
         // collectAndExecuteNextTurnReport()
         // isGameOver

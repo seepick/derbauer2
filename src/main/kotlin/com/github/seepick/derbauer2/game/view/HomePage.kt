@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.building.BuildingsPage
+import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature
@@ -37,7 +37,7 @@ class HomePage(
                     })
                 }
                 add(SelectOption("Build 🛠️") {
-                    currentPage.pageClass = BuildingsPage::class
+                    currentPage.pageClass = BuildingPage::class
                 })
                 if (user.hasFeature<TechnologyFeature>()) {
                     add(SelectOption("Research 🔬") {

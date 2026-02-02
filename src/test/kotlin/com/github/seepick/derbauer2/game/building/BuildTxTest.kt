@@ -14,7 +14,7 @@ import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-class BuildTest : DescribeSpec({
+class BuildTxTest : DescribeSpec({
     var user = User()
     beforeTest {
         user = User()

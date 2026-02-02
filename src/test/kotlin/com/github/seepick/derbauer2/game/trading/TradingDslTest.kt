@@ -3,16 +3,16 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.testInfra.itest.Given
-import com.github.seepick.derbauer2.game.testInfra.itest.ITest
-import com.github.seepick.derbauer2.game.testInfra.itest.Then
-import com.github.seepick.derbauer2.game.testInfra.itest.When
-import com.github.seepick.derbauer2.game.testInfra.itest.installGameKoinExtension
+import com.github.seepick.derbauer2.game.testInfra.DslTest
+import com.github.seepick.derbauer2.game.testInfra.dsl.Given
+import com.github.seepick.derbauer2.game.testInfra.dsl.Then
+import com.github.seepick.derbauer2.game.testInfra.dsl.When
+import com.github.seepick.derbauer2.game.testInfra.installDslExtension
 import io.kotest.core.spec.style.DescribeSpec
 
-class TradingITest : ITest, DescribeSpec() {
+class TradingDslTest : DslTest, DescribeSpec() {
     init {
-        installGameKoinExtension()
+        installDslExtension()
         describe("When buy resource") {
             it("Given no gold Then warn") {
                 Given {

@@ -32,8 +32,8 @@ class House : Building, StoresResource, HasLabels by Data, HasEmoji by Data {
     }
 
     override var _setOwnedInternal: Z = 0.z
-    override val costsGold = Mechanics.houseCostsGold.z
-    override val landUse = Mechanics.houseLandUse.z
+    override val costsGold = Mechanics.houseCostsGold
+    override val landUse = Mechanics.houseLandUse
     override val storableResourceClass = Citizen::class
     override val storageAmount = Mechanics.houseStoreCitizen.z
 
@@ -48,8 +48,8 @@ class Farm : Building, ProducesResourceOwnable, HasLabels by Data,
     }
 
     override var _setOwnedInternal: Z = 0.z
-    override val costsGold = Mechanics.farmCostsGold.z
-    override val landUse = Mechanics.farmLandUse.z
+    override val costsGold = Mechanics.farmCostsGold
+    override val landUse = Mechanics.farmLandUse
     override val producingResourceClass = Food::class
     override val producingResourceAmount = Mechanics.farmProduceFood.z
 

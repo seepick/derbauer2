@@ -52,6 +52,7 @@ fun interface TxValidator {
     fun validateTx(user: User): TxResult
 }
 
+/** @param snapshot got the TXs already applied to it. */
 private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
     val fails = txValidators.map { it.validateTx(snapshot) }.filterIsInstance<TxResult.Fail>()
     if (fails.isNotEmpty()) {

@@ -5,4 +5,12 @@ import org.koin.dsl.module
 
 fun techModule() = module {
     singleOf(::TechPage)
+    single {
+        TechTree(
+            user = get(),
+            items = TechType.entries.map { type ->
+                type.treeItemBuilder()
+            })
+    }
 }
+

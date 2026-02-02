@@ -28,6 +28,8 @@ data class TxResource(
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )
+
+    override fun toString() = "TxResource(${ownableClass.simpleName} ${operation.symbol}[$amount])"
 }
 
 fun User.execTxResource(
@@ -51,14 +53,15 @@ fun User.execTxResource(
 )
 
 @Suppress("FunctionName")
-fun ResourceTxValidator() = TxValidator { user ->
-    with(user) {
-        resources.filterIsInstance<StorableResource>().map { resource ->
-            if (resource.owned > totalStorageFor(resource)) {
-                TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
-            } else TxResult.Success
-        }.merge()
-    }
+object ResourceTxValidator : TxValidator {
+    override fun validateTx(user: User) =
+        with(user) {
+            resources.filterIsInstance<StorableResource>().map { resource ->
+                if (resource.owned > totalStorageFor(resource)) {
+                    TxResult.Fail.InsufficientResources("Not enough storage for ${resource.emojiAndLabelPlural}")
+                } else TxResult.Success
+            }.merge()
+        }
 }
 
 @Suppress("FunctionName", "kotlin:S100")

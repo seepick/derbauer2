@@ -13,7 +13,7 @@ import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
-class BuildingsPage(
+class BuildingPage(
     private val user: User,
     private val currentPage: CurrentPage,
     gameRenderer: GameRenderer,

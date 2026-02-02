@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.trading
 
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.core.gold
@@ -29,7 +29,7 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
         override val enumIdentifier = FeatureDescriptorEnum.Trading
         override fun check(user: User) =
             user.hasEntity<Gold>() &&
-                    user.gold < 100.z
+                    user.gold <= Mechanics.featureTradingThresholdGoldLesser
         // FIXME check for turns, and/or money owned
 //                user.storageUsage<Food>() >= 0.8.`%`
 
@@ -49,7 +49,7 @@ object TradeLandFeatureDescriptor : FeatureDescriptor(
     override fun check(user: User) =
         user.hasFeature<TradingFeature>() &&
                 user.hasEntity<Land>() &&
-                user.landAvailable <= 2
+                user.landAvailable <= Mechanics.featureTradeLandThresholdLandAvailableLesser
 
     override fun build() = TradeLandFeature(this)
 }

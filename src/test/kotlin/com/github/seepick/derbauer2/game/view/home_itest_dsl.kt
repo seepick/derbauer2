@@ -1,18 +1,16 @@
-package com.github.seepick.derbauer2.game.testInfra.itest
+package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.building.Building
-import com.github.seepick.derbauer2.game.building.BuildingsPage
-import com.github.seepick.derbauer2.game.building.building
+import com.github.seepick.derbauer2.game.building.BuildingPage
+import com.github.seepick.derbauer2.game.building.WhenBuildPageDsl
+import com.github.seepick.derbauer2.game.testInfra.dsl.TestDsl
+import com.github.seepick.derbauer2.game.testInfra.dsl.WhenDsl
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
-import com.github.seepick.derbauer2.game.view.GameOverPage
+import com.github.seepick.derbauer2.game.turn.WhenReportPageDsl
+import com.github.seepick.derbauer2.textengine.KeyInput
 import io.kotest.matchers.types.shouldBeInstanceOf
-import kotlin.reflect.KClass
 
-@DslMarker
-annotation class TestEngineDsl
-
-@TestEngineDsl
+@TestDsl
 interface HomePageDsl {
     fun nextTurnToReport(code: WhenReportPageDsl.() -> Unit = {})
     fun selectTrade()
@@ -38,26 +36,8 @@ class WhenHomePageDsl(private val whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePa
 
     override fun selectBuild(code: WhenBuildPageDsl.() -> Unit) {
         selectPrompt("build")
-        page.shouldBeInstanceOf<BuildingsPage>()
+        page.shouldBeInstanceOf<BuildingPage>()
         WhenBuildPageDsl(this).code()
     }
 }
 
-@TestEngineDsl
-class WhenReportPageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl {
-    fun nextPage() {
-        input(KeyInput.Enter)
-    }
-}
-
-@TestEngineDsl
-class WhenBuildPageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl {
-    fun build(buildingClass: KClass<out Building>) {
-        val building = user.building(buildingClass)
-        selectPrompt("build ${building.labelSingular}")
-    }
-
-    fun back() {
-        input(KeyInput.Enter)
-    }
-}

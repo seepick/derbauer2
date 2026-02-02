@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
-class TxResourceTest : DescribeSpec({
+class ResourceTxTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
         user = User()

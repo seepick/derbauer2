@@ -38,6 +38,8 @@ data class TxBuilding(
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
         amount = amount.asZ()
     )
+
+    override fun toString() = "TxBuilding(${ownableClass.simpleName} ${operation.symbol}[$amount])"
 }
 
 fun User.execTxBuilding(
@@ -60,19 +62,19 @@ fun User.execTxBuilding(
     )
 )
 
-@Suppress("FunctionName")
-fun BuildingTxValidator() = TxValidator { user ->
-    with(user) {
-        if (hasEntity(Land::class) && totalLandUse > landOwned) {
-            TxResult.Fail.LandOveruse()
-        } else {
-            TxResult.Success
+object BuildingTxValidator : TxValidator {
+    override fun validateTx(user: User) =
+        with(user) {
+            if (hasEntity(Land::class) && totalLandUse > landOwned) {
+                TxResult.Fail.LandOveruse()
+            } else {
+                TxResult.Success
+            }
         }
-    }
 }
 
 @Suppress("FunctionName", "kotlin:S100")
-fun User._applyBuildTx(tx: TxBuilding) {
+fun User._applyBuildTx(tx: TxBuilding) { // TODO rewrite using Ownable (instead of TxBuilding)
     val building = building(tx.buildingClass)
     log.trace { "Applying: $tx for $building" }
     when (tx.operation) {
