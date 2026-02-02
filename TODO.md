@@ -12,7 +12,12 @@ Continuous Cleanup:
 
 ### Next Release
 
-* !! BZ: finish Technology concept; tech tree; see specs
+* !! BZ: finish Technology concept
+    * tech tree; let AI generate print statement
+    * implement modifier which is considered in turner; can enable Features
+    * user.research(): TX logic ... check requirements, costs, etc.
+
+
 * BUG: leftover food not eaten at the end; citizens should start to starve
 
 Refactor window:
@@ -21,9 +26,15 @@ Refactor window:
 * make the whole window bigger
 * BUG: width with emojis is wrong... implement spike
     * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
+    * HomePageTest disabled emoji width calc issue
+    * TextmapTest disabled emojis take up 2 chars, thus calc is off...
 
 ## Backlog
 
+* IT: runUiTest needs proper implementation
+    * disabled by default; enableable via CI
+    * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)
+* BZ: ad TradingFeature check logic: look for turns played (and/or money owned?)
 * BZ: reverse engineer DerBauer1
 * BZ: increase designators (title, city) based on "some criteria"
 * BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
@@ -68,6 +79,7 @@ Refactor window:
 * REFACTOR ProbabilityProvider: introduce interface for testability
 * --- introduce buildSrc (try again ;)
 * TEST for transaction logic
+* TEST ad GamePageParser: private val widthHack ==> scan from right to left, until find "   "
 * TEST allow for "global config"; set initAssets/custom ones by default applied to all tests within
 * TEST beeper uses some event WarningBus; then catch in itests fail-cases as well
 * TEST itest for build and (not) enough land

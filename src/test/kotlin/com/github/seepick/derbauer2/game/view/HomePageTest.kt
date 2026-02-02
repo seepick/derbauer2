@@ -7,7 +7,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
 class HomePageTest : PageTest, StringSpec({
-    // FIXME emoji width calc issue
     "Given init assets Then render home page".config(enabled = false) {
         renderGamePage({ ctx ->
             ctx.user.initAssets()

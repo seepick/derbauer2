@@ -16,7 +16,7 @@ class AgricultureTechTreeItem : AbstractTechTreeItem(
 
 class AgricultureTech(
     data: Data = Data,
-) : Tech, TechStaticData by data { // FIXME implement modifier which is considered in turner; can enable Features
+) : Tech, TechStaticData by data {
     override fun deepCopy() = this
 
     object Data : TechStaticData {

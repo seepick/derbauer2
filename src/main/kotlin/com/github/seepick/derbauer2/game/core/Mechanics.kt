@@ -47,7 +47,7 @@ object Mechanics {
 
     // FEATURE
     // ========================================================================
-    val featureTradingThresholdGoldLesser = if (DEV) 400.z else 200.z
+    val featureTradingThresholdGoldLesser = if (DEV) 400.z else 100.z
     val featureTradeLandThresholdLandAvailableLesser = 2.z
     val featureTechGoldThresholdGreater = if (DEV) 0.z else (startingGold.value * 1.5).toLong().z
 

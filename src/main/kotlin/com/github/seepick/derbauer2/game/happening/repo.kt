@@ -9,9 +9,9 @@ interface HappeningDescriptorRepo {
 object DefaultHappeningDescriptorRepo : HappeningDescriptorRepo {
 
     // must be lazy, as entries are not initialized at object creation time :-/
-    private val allDescriptors by lazy {
+    private val lazyDescriptors by lazy {
         entries.map { it.descriptor }
     }
 
-    override fun getAllDescriptors() = allDescriptors
+    override fun getAllDescriptors() = lazyDescriptors
 }

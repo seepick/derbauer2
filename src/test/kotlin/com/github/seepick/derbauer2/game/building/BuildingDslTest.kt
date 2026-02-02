@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -37,7 +38,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                         build<House>()
                     }
                 } Then {
-                    shouldRaiseWarning("insufficient resources")
+                    shouldHaveRaisedWarning(WarningType.INSUFFICIENT_RESOURCES)
                     shouldOwn<House>(0.z) // untouched
                     shouldOwn<Gold>(1.z) // untouched
                 }
@@ -54,7 +55,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                         build<Farm>()
                     }
                 } Then {
-                    shouldRaiseWarning("using more land than available")
+                    shouldHaveRaisedWarning(WarningType.LAND_OVERUSE)
                     shouldOwn<Gold>(sufficientGold) // untouched
                     shouldOwn<Land>(insufficientLand) // untouched
                     shouldOwn<Farm>(0.z) // untouched

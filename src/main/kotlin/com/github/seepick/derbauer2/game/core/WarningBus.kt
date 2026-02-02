@@ -17,7 +17,17 @@ class WarningBus(
     }
 }
 
-data class Warning(val message: String) // TODO introduce exhaustive warning types for testing purposes
+enum class WarningType {
+    OTHER,
+    LAND_OVERUSE,
+    INSUFFICIENT_RESOURCES,
+    COMPOUND,
+}
+
+data class Warning(
+    val type: WarningType,
+    val message: String,
+)
 
 fun interface WarningListener {
     fun onWarning(warning: Warning)

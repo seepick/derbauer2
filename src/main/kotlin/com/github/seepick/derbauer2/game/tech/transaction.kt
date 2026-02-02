@@ -5,7 +5,6 @@ import com.github.seepick.derbauer2.game.transaction.TxResult
 
 fun User.research(item: TechTreeItem): TxResult {
     require(item.state is TechState.Unresearched)
-    // FIXME TX logic ... check requirements, costs, etc.
 //    execTx(item.costs.toTxs())
     val tech = item.buildTech()
     item.state = TechState.Researched(tech)

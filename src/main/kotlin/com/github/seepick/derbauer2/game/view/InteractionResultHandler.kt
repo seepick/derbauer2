@@ -13,7 +13,12 @@ class InteractionResultHandler(
             TxResult.Success -> { /* no-op */
             }
 
-            is TxResult.Fail -> warningBus.dispatch(Warning("Transaction failed: ${result.message}"))
+            is TxResult.Fail -> warningBus.dispatch(
+                Warning(
+                    type = result.warningType,
+                    message = "Transaction failed: ${result.message}",
+                )
+            )
         }
     }
 }

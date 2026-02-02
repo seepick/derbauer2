@@ -1,8 +1,11 @@
 package com.github.seepick.derbauer2.game.core
 
 class CollectingWarningListener : WarningListener {
-    val warnings = mutableListOf<Warning>()
+
+    private val _warnings = mutableListOf<Warning>()
+    val warnings: List<Warning> = _warnings
+
     override fun onWarning(warning: Warning) {
-        warnings += warning
+        _warnings += warning
     }
 }

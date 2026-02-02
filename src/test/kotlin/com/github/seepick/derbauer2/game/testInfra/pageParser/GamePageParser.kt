@@ -14,7 +14,7 @@ class GamePageParser(val fullPage: String) {
     val lineInfo = lines.first()
     val linePrompt = lines.last()
 
-    private val widthHack = MainWin.matrixSize.cols // TODO scan from right to left, until find "   "
+    private val widthHack = MainWin.matrixSize.cols
     val promptLeft: String? = linePrompt.take(widthHack / 2).trim().ifEmpty { null }
     val promptRight: String? = linePrompt.takeLast(widthHack / 2).trim().ifEmpty { null }
     val infoLeft = lineInfo.take(widthHack - 10).trim()

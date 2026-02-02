@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
 import androidx.compose.ui.test.junit4.createComposeRule
+import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.pageParser.keyForSelectOption
 import com.github.seepick.derbauer2.game.testInfra.pageParser.readSingleResource
@@ -10,6 +11,7 @@ import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.comparables.shouldBeLessThan
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContainIgnoringCase
 import org.junit.Rule
 import org.junit.Test
@@ -42,8 +44,7 @@ class BuildingUiTest : UiTest, ComposeTest {
         }
 
         ui.mainClock.advanceTimeBy(500L)
-        ctx.warningsCollector.warnings.shouldBeSingleton().first().message shouldContainIgnoringCase
-                "using more land than available"
+        ctx.warningsCollector.warnings.shouldBeSingleton().first().type shouldBeEqual WarningType.LAND_OVERUSE
     }
 }
 

@@ -27,10 +27,7 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
     ) {
         override val enumIdentifier = FeatureDescriptorType.Trading
         override fun check(user: User) =
-            user.hasEntity<Gold>() &&
-                    user.gold <= Mechanics.featureTradingThresholdGoldLesser
-        // FIXME check for turns, and/or money owned
-//                user.storageUsage<Food>() >= 0.8.`%`
+            user.hasEntity<Gold>() && user.gold <= Mechanics.featureTradingThresholdGoldLesser
 
         override fun build() = TradingFeature()
     }

@@ -9,7 +9,7 @@ class TechTree(
     fun getAvailableToBeResearched(): List<TechTreeItem> =
         items.filter {
             it.state is TechState.Unresearched
-            // FIXME && all prerequisites researched
+            // && all prerequisites researched
         }
 }
 

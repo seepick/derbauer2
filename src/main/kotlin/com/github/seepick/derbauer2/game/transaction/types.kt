@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.transaction
 
+import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.transaction.TxResult.Fail
 import com.github.seepick.derbauer2.game.transaction.TxResult.Success
 import kotlin.contracts.ExperimentalContracts
@@ -27,17 +28,24 @@ sealed interface TxResult {
     object Success : TxResult
 
     sealed interface Fail : TxResult {
+        val warningType: WarningType
         val message: String
 
-        class LandOveruse(override val message: String = "Using more land than available") : Fail
+        class LandOveruse(override val message: String = "Using more land than available") : Fail {
+            override val warningType = WarningType.LAND_OVERUSE
+        }
+
         class InsufficientResources(additionalMessage: String? = null) : Fail {
+            override val warningType = WarningType.INSUFFICIENT_RESOURCES
             override val message: String = "Insufficient resources" + (additionalMessage?.let { ": $it" } ?: "")
         }
 
         class CompoundFail(
             val fails: List<Fail>,
             override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}"
-        ) : Fail
+        ) : Fail {
+            override val warningType = WarningType.COMPOUND
+        }
 
         companion object {
             fun of(fails: List<Fail>): Fail {

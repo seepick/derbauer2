@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -23,7 +24,7 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     selectPrompt("trade")
                     selectPrompt("buy 1 🍖")
                 } Then {
-                    shouldRaiseWarning("insufficient resources")
+                    shouldHaveRaisedWarning(WarningType.INSUFFICIENT_RESOURCES)
                 }
             }
         }
