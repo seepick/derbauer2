@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasEmoji
-import com.github.seepick.derbauer2.game.core.HasLabel
+import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.Ownable
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -26,8 +26,8 @@ interface BuildingReference {
     val buildingClass: KClass<out Building>
 }
 
-class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class House : Building, StoresResource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "House"
     }
 
@@ -41,9 +41,9 @@ class House : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
     override fun toString() = "House(owned=$owned)"
 }
 
-class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
+class Farm : Building, ProducesResourceOwnable, HasLabels by Data,
     HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Farm"
     }
 
@@ -57,8 +57,8 @@ class Farm : Building, ProducesResourceOwnable, HasLabel by Data,
     override fun toString() = "Farm(owned=$owned)"
 }
 
-class Granary : Building, StoresResource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class Granary : Building, StoresResource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Granary"
         override val labelPlural = "Granaries"
     }

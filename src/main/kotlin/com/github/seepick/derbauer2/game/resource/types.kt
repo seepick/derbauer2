@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasEmoji
-import com.github.seepick.derbauer2.game.core.HasLabel
+import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.emoji
 import kotlin.reflect.KClass
 
@@ -18,8 +18,8 @@ interface ResourceReference {
     val resourceClass: KClass<out Resource>
 }
 
-class Citizen : StorableResource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Citizen"
         override val emojiOrNull = "🙎🏻‍♂️".emoji
     }
@@ -29,8 +29,8 @@ class Citizen : StorableResource, HasLabel by Data, HasEmoji by Data {
     override fun toString() = "Citizen(owned=$owned)"
 }
 
-class Gold : Resource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class Gold : Resource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Gold"
         override val labelPlural = labelSingular
         override val emojiOrNull = "💰".emoji
@@ -41,8 +41,8 @@ class Gold : Resource, HasLabel by Data, HasEmoji by Data {
     override fun toString() = "Gold(owned=$owned)"
 }
 
-class Food : StorableResource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class Food : StorableResource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Food"
         override val labelPlural = labelSingular
         override val emojiOrNull = "🍖".emoji
@@ -53,8 +53,8 @@ class Food : StorableResource, HasLabel by Data, HasEmoji by Data {
     override fun toString() = "Food(owned=$owned)"
 }
 
-class Land : Resource, HasLabel by Data, HasEmoji by Data {
-    object Data : HasLabel, HasEmoji {
+class Land : Resource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
         override val labelSingular = "Land"
         override val labelPlural = labelSingular
         override val emojiOrNull = "🌍".emoji

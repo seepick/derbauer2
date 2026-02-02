@@ -2,8 +2,9 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.Z
 
-interface Entity : DeepCopyable<Entity>, HasLabel, HasEmoji
+interface Entity : DeepCopyable<Entity>, HasLabels, HasEmoji
 
+/** Needed to validate transactions; create a copy/snapshot, apply TXs, and then validate. */
 fun interface DeepCopyable<T> {
     fun deepCopy(): T
 }
@@ -13,9 +14,6 @@ fun interface DeepCopyable<T> {
  * PS: itest assumes that all Assets have a zero-argument constructor; see GivenDsl#createAssetInstance
  */
 interface Asset : Entity, Ownable
-
-interface EntityEffect
-
 
 interface Ownable {
     val owned: Z get() = _setOwnedInternal
