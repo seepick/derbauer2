@@ -17,7 +17,7 @@ class WarningBus(
     }
 }
 
-data class Warning(val message: String)
+data class Warning(val message: String) // TODO introduce exhaustive warning types for testing purposes
 
 fun interface WarningListener {
     fun onWarning(warning: Warning)

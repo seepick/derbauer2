@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.UiTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.string.shouldContainIgnoringCase
 import org.junit.Rule
@@ -30,7 +31,20 @@ class BuildingUiTest : UiTest, ComposeTest {
         ui.mainClock.advanceTimeBy(500L)
         gameText.readSingleResource(Gold.Data.emojiOrNull).owned shouldBeLessThan initialGold
     }
-    // TEST: invalid build
+
+    @Test
+    fun `When build many farms Then fail`() = uiTest { ctx ->
+        gameText.contentLinesString shouldContainIgnoringCase "you are home"
+
+        pressKey(gameText.keyForSelectOption("build"))
+        repeat(4) {
+            pressKey(gameText.keyForSelectOption("farm"))
+        }
+
+        ui.mainClock.advanceTimeBy(500L)
+        ctx.warningsCollector.warnings.shouldBeSingleton().first().message shouldContainIgnoringCase
+                "using more land than available"
+    }
 }
 
 // TEST: class NextTurnReportUiTest : UiTest, ComposeTest {

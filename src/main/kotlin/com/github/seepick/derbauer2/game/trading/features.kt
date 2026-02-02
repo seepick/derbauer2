@@ -9,7 +9,6 @@ import com.github.seepick.derbauer2.game.feature.Feature
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorEnum
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.happening.happenings.goldPot
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
@@ -23,7 +22,7 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
 
     object Descriptor : FeatureDescriptor(
         label = "Trading",
-        asciiArt = AsciiArt.goldPot, // TODO other ascii art
+        asciiArt = AsciiArt.coin,
         multilineDescription = "A marketplace has opened for you. Enjoy you darn capitalist! 🤑",
     ) {
         override val enumIdentifier = FeatureDescriptorEnum.Trading

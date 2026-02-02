@@ -97,20 +97,20 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-if (runUiTests) {
-    // CAVE: this name `uiTest` matters; it's the gradle task being used by CI
-    val uiTest by tasks.registering(Test::class) {
-        logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
-        description = "Use JUnit4 to run Compose UI tests."
-        group = "verification"
-        testClassesDirs = sourceSets["test"].output.classesDirs
-        classpath = sourceSets["test"].runtimeClasspath
-        useJUnit()
-        if (debugTests) {
-            enableTestLogging()
-        }
+//if (runUiTests) { // FIXME needs proper solution
+// CAVE: this name `uiTest` matters; it's the gradle task being used by CI
+val uiTest by tasks.registering(Test::class) {
+    logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
+    description = "Use JUnit4 to run Compose UI tests."
+    group = "verification"
+    testClassesDirs = sourceSets["test"].output.classesDirs
+    classpath = sourceSets["test"].runtimeClasspath
+    useJUnit()
+    if (debugTests) {
+        enableTestLogging()
     }
 }
+//}
 
 fun AbstractTestTask.enableTestLogging() {
     testLogging {

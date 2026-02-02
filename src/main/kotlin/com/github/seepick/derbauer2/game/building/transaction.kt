@@ -36,7 +36,7 @@ data class TxBuilding(
     constructor(targetClass: KClass<out Building>, amount: Zz) : this(
         ownableClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-        amount = amount.asZ()
+        amount = amount.toZ()
     )
 
     override fun toString() = "TxBuilding(${ownableClass.simpleName} ${operation.symbol}[$amount])"
@@ -58,7 +58,7 @@ fun User.execTxBuilding(
 ) = execTx(
     TxBuilding(
         targetClass = buildingClass,
-        amount = amount.asZz,
+        amount = amount.zz,
     )
 )
 

@@ -12,6 +12,18 @@ fun Textmap.asciiart(asciiArt: AsciiArt) {
 @JvmInline
 value class AsciiArt(val value: String) {
     companion object {
+        val coin = AsciiArt(
+            """
+                             ______________
+                __,.,---'''''              '''''---..._
+             ,-'             .....:::''::.:            '`-.
+            '           ...:::.....       '
+                        ''':::'''''       .               ,
+            |'-.._           ''''':::..::':          __,,-
+             '-.._''`---.....______________.....---''__,,-
+                  ''`---.....______________.....--
+            """.trimIndent()
+        )
         val book = AsciiArt(
             """
                   __...--~~~~~-._   _.-~~~~~--...__

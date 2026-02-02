@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.resource.ResourceChanges
 
 enum class TechType(val treeItemBuilder: () -> TechTreeItem) {
     AGRICULTURE(::AgricultureTechTreeItem), // +food production
-//    POTTERY,     // TODO enable granaries
+//    POTTERY,     // enables granaries
 //    HOUSES,      // upgrade from tents
 }
 

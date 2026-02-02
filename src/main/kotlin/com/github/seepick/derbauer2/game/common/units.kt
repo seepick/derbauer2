@@ -19,7 +19,8 @@ data class Zz(
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
-    fun asZ() = abs(value).z
+    fun toZ() = abs(value).z
+    fun toDouble() = value.toDouble()
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Zz) = Zz(value + other.value)
@@ -52,7 +53,7 @@ data class Z(
     }
 
     val magnitutedValue = translateToMaxMagnitude(value)
-    val asZz get() = value.zz // TODO refactor to `toZz()`
+    val zz get() = value.zz
     fun toDouble() = value.toDouble()
 
     infix fun orMaxOf(other: Z) = if (this > other) this else other

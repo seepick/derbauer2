@@ -26,7 +26,7 @@ data class TxResource(
     constructor(targetClass: KClass<out Resource>, amount: Zz) : this(
         ownableClass = targetClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-        amount = amount.asZ()
+        amount = amount.toZ()
     )
 
     override fun toString() = "TxResource(${ownableClass.simpleName} ${operation.symbol}[$amount])"
@@ -48,7 +48,7 @@ fun User.execTxResource(
 ) = execTx(
     TxResource(
         targetClass = resourceClass,
-        amount = amount.asZz,
+        amount = amount.zz,
     )
 )
 

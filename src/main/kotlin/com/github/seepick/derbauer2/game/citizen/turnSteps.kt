@@ -32,15 +32,18 @@ class CitizenReproduceTurnStep(user: User) :
 class CitizenFoodEatenTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
     override fun calcResourceChange(): ResourceChange {
-        val food = user.resource<Food>()
         val citizen = user.resource<Citizen>()
+        if (citizen.owned == 0.z) {
+            return ResourceChange(citizen, 0.z)
+        }
+        val food = user.resource<Food>()
         return if (food.owned == 0.z) {
             val rawStarving = citizen.owned * Mechanics.citizensStarve
             val starving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
             ResourceChange(citizen, -starving)
         } else {
             val rawFoodConsumed = citizen.owned * Mechanics.citizenFoodConsume
-            val foodConsumed = rawFoodConsumed orMaxOf 1.z orMinOf food.owned // TODO test this
+            val foodConsumed = rawFoodConsumed orMaxOf 1.z orMinOf food.owned
             ResourceChange(food, -foodConsumed)
         }
     }

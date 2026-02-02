@@ -16,8 +16,8 @@ data class ResourceChange(
     val changeAmount: Zz,
 ) {
     constructor(resource: Resource, changeAmount: Zz) : this(resource::class, changeAmount)
-    constructor(resourceClass: KClass<out Resource>, changeAmount: Z) : this(resourceClass, changeAmount.asZz)
-    constructor(resource: Resource, changeAmount: Z) : this(resource::class, changeAmount.asZz)
+    constructor(resourceClass: KClass<out Resource>, changeAmount: Z) : this(resourceClass, changeAmount.zz)
+    constructor(resource: Resource, changeAmount: Z) : this(resource::class, changeAmount.zz)
 
     operator fun plus(other: ResourceChange): ResourceChange {
         require(other.resourceClass::class == this.resourceClass::class)
@@ -79,11 +79,11 @@ class ResourceChanges private constructor(
         }
 
         fun add(resourceClass: KClass<out Resource>, change: Z) {
-            add(resourceClass, change.asZz)
+            add(resourceClass, change.zz)
         }
 
         fun add(resource: Resource, change: Z) {
-            add(resource::class, change.asZz)
+            add(resource::class, change.zz)
         }
 
         fun build() = ResourceChanges(changesByResourceClass.entries.map { it.value })

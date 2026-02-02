@@ -27,8 +27,8 @@ class BuildTxTest : DescribeSpec({
             enable(Land())
             enable(house)
             execTx(
-                TxResource(Gold::class, house.costsGold.asZz),
-                TxResource(Land::class, house.landUse.asZz),
+                TxResource(Gold::class, house.costsGold.zz),
+                TxResource(Land::class, house.landUse.zz),
             )
             return house
         }

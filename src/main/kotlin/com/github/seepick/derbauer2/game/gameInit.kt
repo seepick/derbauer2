@@ -43,11 +43,11 @@ fun User.initAssets() {
 
 /** Have to re-create instances; do NOT store in variable, as stored state will conflict with tests. */
 private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
-    Pair(Gold(), Mechanics.startingGold.asZz),
-    Pair(Land(), Mechanics.startingLand.asZz),
-    Pair(House(), Mechanics.startingHouses.asZz),
-    Pair(Citizen(), Mechanics.startingCitizens.asZz),
-    Pair(Granary(), Mechanics.startingGranaries.asZz),
-    Pair(Farm(), Mechanics.startingFarms.asZz),
-    Pair(Food(), Mechanics.startingFood.asZz)
+    Pair(Gold(), Mechanics.startingGold.zz),
+    Pair(Land(), Mechanics.startingLand.zz),
+    Pair(House(), Mechanics.startingHouses.zz),
+    Pair(Citizen(), Mechanics.startingCitizens.zz),
+    Pair(Granary(), Mechanics.startingGranaries.zz),
+    Pair(Farm(), Mechanics.startingFarms.zz),
+    Pair(Food(), Mechanics.startingFood.zz)
 )
