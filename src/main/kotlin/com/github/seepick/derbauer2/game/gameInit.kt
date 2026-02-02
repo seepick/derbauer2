@@ -4,10 +4,10 @@ import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
-import com.github.seepick.derbauer2.game.building.TxBuilding
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -15,7 +15,6 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -34,8 +33,9 @@ fun User.initAssets() {
     assets.forEach { enable(it.first) }
     execTx(assets.map { (asset, amount) ->
         when (asset) {
-            is Resource -> TxResource(asset::class, amount)
-            is Building -> TxBuilding(asset::class, amount)
+            is Resource, //-> TxResource(asset::class, amount)
+            is Building -> TxOwned(asset::class, amount)
+
             else -> error("Unknown asset type: ${asset::class}")
         }
     }).errorOnFail()

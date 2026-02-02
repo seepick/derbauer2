@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.testInfra.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
@@ -27,8 +27,8 @@ class BuildTxTest : DescribeSpec({
             enable(Land())
             enable(house)
             execTx(
-                TxResource(Gold::class, house.costsGold.zz),
-                TxResource(Land::class, house.landUse.zz),
+                TxOwned(Gold::class, house.costsGold.zz),
+                TxOwned(Land::class, house.landUse.zz),
             )
             return house
         }

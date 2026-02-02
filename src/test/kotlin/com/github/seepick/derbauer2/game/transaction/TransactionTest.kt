@@ -2,15 +2,14 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
-import com.github.seepick.derbauer2.game.building.TxBuilding
 import com.github.seepick.derbauer2.game.building.enableAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource.enableAndSet
 import com.github.seepick.derbauer2.game.testInfra.User
 import io.kotest.assertions.throwables.shouldThrow
@@ -28,7 +27,7 @@ class TransactionTest : DescribeSpec({
     describe("When changing resource and storage") {
         it("Given nothing When adding non-existing resource Then fail") {
             shouldThrow<IllegalArgumentException> {
-                user.execTx(TxResource(Land::class, 1.zz))
+                user.execTx(TxOwned(Land::class, 1.zz))
             }.message.shouldNotBeNull().should {
                 it.contains("nothing found")
                 it.contains("Land")
@@ -38,7 +37,7 @@ class TransactionTest : DescribeSpec({
         it("Given zero gold When remove gold Then fail") {
             user.enable(Gold())
 
-            user.execTx(TxResource(Gold::class, (-1).zz))
+            user.execTx(TxOwned(Gold::class, (-1).zz))
                 .shouldBeInstanceOf<TxResult.Fail>().message.should {
                     it.lowercase().contains("negative")
                 }
@@ -48,14 +47,14 @@ class TransactionTest : DescribeSpec({
             user.enable(Land())
             user.enable(House())
 
-            user.execTx(TxBuilding(House::class, 1.zz))
+            user.execTx(TxOwned(House::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
         it("Given no storage When adding resource Then fail") {
             user.enable(Land())
             user.enable(Food())
 
-            user.execTx(TxResource(Food::class, 1.zz))
+            user.execTx(TxOwned(Food::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail>().message.should {
                     it.lowercase().contains("not enough storage")
                 }
@@ -65,7 +64,7 @@ class TransactionTest : DescribeSpec({
             user.enableAndSet(Granary(), 1.z)
             user.enable(Food())
 
-            user.execTx(TxResource(Food::class, 1.zz)).shouldBeSuccess()
+            user.execTx(TxOwned(Food::class, 1.zz)).shouldBeSuccess()
         }
         it("Given enough storage When adding resource and removing storage Then fail") {
             user.enableAndSet(Land(), 20.z)
@@ -73,8 +72,8 @@ class TransactionTest : DescribeSpec({
             user.enable(Food())
 
             user.execTx(
-                TxResource(Food::class, 1.zz),
-                TxBuilding(Granary::class, (-1).zz)
+                TxOwned(Food::class, 1.zz),
+                TxOwned(Granary::class, (-1).zz)
             ).shouldBeFail("Not enough storage")
         }
     }

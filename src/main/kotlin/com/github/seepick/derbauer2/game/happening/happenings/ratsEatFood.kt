@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.happening.happenings
 
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.happening.Happening
@@ -9,9 +10,9 @@ import com.github.seepick.derbauer2.game.happening.HappeningData
 import com.github.seepick.derbauer2.game.happening.HappeningId
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.execTxResource
 import com.github.seepick.derbauer2.game.resource.resource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
+import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.Textmap
 
@@ -40,7 +41,7 @@ class RatsEatFoodHappening(
     }
 
     override fun execute(user: User) {
-        user.execTxResource(Food::class, -amountFoodEaten).errorOnFail()
+        user.execTx(TxOwned(Food::class, -amountFoodEaten)).errorOnFail()
     }
 }
 

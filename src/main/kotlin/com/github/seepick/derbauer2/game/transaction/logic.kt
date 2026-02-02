@@ -1,11 +1,9 @@
 package com.github.seepick.derbauer2.game.transaction
 
-import com.github.seepick.derbauer2.game.building.TxBuilding
-import com.github.seepick.derbauer2.game.building._applyBuildTx
 import com.github.seepick.derbauer2.game.common.NegativeZException
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.TxResource
-import com.github.seepick.derbauer2.game.resource._applyResourceTx
+import com.github.seepick.derbauer2.game.core._applyOwnableTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
@@ -65,8 +63,8 @@ private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
 @Suppress("FunctionName", "kotlin:S100")
 private fun User._applyTx(tx: Tx) {
     when (tx) {
-        is TxResource -> _applyResourceTx(tx)
-        is TxBuilding -> _applyBuildTx(tx)
+        // TODO make exhaustive
+        is TxOwned -> _applyOwnableTx(tx)
         else -> error("Unknown Tx type: ${tx::class}")
     }
 }

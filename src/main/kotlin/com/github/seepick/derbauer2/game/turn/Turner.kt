@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.core.TxOwned
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
-import com.github.seepick.derbauer2.game.resource.TxResource
 import com.github.seepick.derbauer2.game.resource.mergeToSingleChanges
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
@@ -41,7 +41,7 @@ class Turner(
 
 private fun ResourceChanges.execute(user: User) {
     user.execTx(changes.map { line ->
-        TxResource(
+        TxOwned(
             targetClass = line.resourceClass,
             amount = line.changeAmount,
         )

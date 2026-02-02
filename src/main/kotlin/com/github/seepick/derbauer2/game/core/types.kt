@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.Z
+import kotlin.reflect.KClass
 
 interface Entity : DeepCopyable<Entity>, HasLabels, HasEmoji
 
@@ -15,11 +16,15 @@ fun interface DeepCopyable<T> {
  */
 interface Asset : Entity, Ownable
 
-interface Ownable {
+interface Ownable : Entity {
     val owned: Z get() = _setOwnedInternal
 
     @Suppress("PropertyName", "VariableNaming")
     var _setOwnedInternal: Z
 
     // funny things possible ;) operator fun unaryMinus(): Zz = -owned
+}
+
+interface OwnableReference {
+    val ownableClass: KClass<out Ownable>
 }
