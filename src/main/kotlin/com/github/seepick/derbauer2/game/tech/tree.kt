@@ -6,13 +6,13 @@ class TechTree(
     val all: List<TechItem>,
 ) {
     private val byLabel = all.associateBy { it.label } // nice hack ;)
+    private val finder: (TechStaticData) -> TechItem = { data ->
+        byLabel[data.label] ?: error("woops, no tech tree item for tech label: $data")
+    }
 
     init {
         all.flatMap { it.costs.changes }.requireAllNonNegative()
-
-        all.forEach {
-            it.requirements // TODO check for cycles in requirements
-        }
+        validateRequirements(finder, all)
     }
 
     fun filterResearchableItems(): List<TechItem> =
@@ -22,10 +22,33 @@ class TechTree(
         }
 
     private fun hasResearchedAll(requirements: Set<TechStaticData>): Boolean =
-        requirements.all { req ->
-            val item = byLabel[req.label] ?: error("woops, no tech tree item for tech label: $req")
-            item.state is TechState.Researched && hasResearchedAll(item.requirements)
+        requirements.all { requirementData ->
+            val requirementItem = finder(requirementData)
+            requirementItem.state is TechState.Researched && hasResearchedAll(requirementItem.requirements)
         }
+
+    companion object {
+        private fun validateRequirements(finder: (TechStaticData) -> TechItem, all: List<TechItem>) {
+            val adjacency = all.associateWith { item ->
+                item.requirements.map { finder(it) }
+            }
+            val visiting = mutableSetOf<TechItem>()
+            val visited = mutableSetOf<TechItem>()
+            fun dfs(node: TechItem) {
+                if (node in visited) {
+                    return
+                }
+                if (node in visiting) {
+                    throw IllegalArgumentException("cycle detected in tech requirements at: ${node.label}")
+                }
+                visiting += node
+                adjacency[node]?.forEach { dfs(it) }
+                visiting -= node
+                visited += node
+            }
+            all.forEach { dfs(it) }
+        }
+    }
 }
 
 interface TechItem : TechStaticData {
