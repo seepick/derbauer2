@@ -5,10 +5,9 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.enableAndSet
+import com.github.seepick.derbauer2.game.resource.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.equals.shouldBeEqual
 
 class CitizenTaxesTurnStepTest : DescribeSpec({
     lateinit var user: User
@@ -21,10 +20,10 @@ class CitizenTaxesTurnStepTest : DescribeSpec({
             val gold = user.enableAndSet(Gold(), 0.z)
             val citizen = user.enableAndSet(Citizen(), 10.z)
 
-            val change = CitizenTaxesTurnStep(user).calcResourceChange()
+            val changes = CitizenTaxesTurnStep(user).calcResourceChanges()
 
             val expectedTax = citizen.owned * Mechanics.citizenTax
-            change shouldBeEqual ResourceChange(gold, expectedTax.zz)
+            changes.shouldContainChange(gold, expectedTax.zz)
         }
     }
 })

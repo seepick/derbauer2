@@ -63,6 +63,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Tech
 
+* -- use AOP to log methods with annotation
 * could provide a UserReadOnly sub-interface
 * macos app signing
 * ad github workflow: check-quality-gates also does jacoco verify/enforce threshold

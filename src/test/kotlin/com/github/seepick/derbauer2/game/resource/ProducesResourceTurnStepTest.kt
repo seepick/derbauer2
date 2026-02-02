@@ -7,7 +7,6 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.equals.shouldBeEqual
 
@@ -18,7 +17,7 @@ private data class SetupContext(
     val farm: Farm,
     val granary: Granary,
 ) {
-    fun calcStepChanges() = step.calcResourceChanges()
+    fun calcStepChanges() = step.calcResourceChanges().changes
 }
 
 private fun `user with 0 🍖, 1 granary, 1 farm`(
@@ -72,6 +71,19 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 food.ownedForTest = granary.totalStorageAmount
 
                 calcStepChanges().shouldBeSingleton().first() shouldBeEqual ResourceChange(food, 0.z)
+            }
+        }
+    }
+    context("ResourceProductionModifier") {
+        describe("foo") {
+            it("sf") {
+                `user with 0 🍖, 1 granary, 1 farm` {
+                    user.enable(foodProductionModifier(2.0))
+
+                    calcStepChanges().shouldContainChange(
+                        food, 2.z * farm.producingResourceAmount
+                    )
+                }
             }
         }
     }

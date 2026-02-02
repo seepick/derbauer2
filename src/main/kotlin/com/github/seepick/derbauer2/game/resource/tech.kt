@@ -8,10 +8,6 @@ import com.github.seepick.derbauer2.game.tech.Tech
 import com.github.seepick.derbauer2.game.tech.TechStaticData
 import com.github.seepick.derbauer2.game.tech.TechType
 
-fun interface ResourceProductionModifier {
-    fun modify(user: User, resource: Resource, source: Z): Z
-}
-
 class AgricultureTechTreeItem : AbstractTechTreeItem(
     data = AgricultureTech.Data,
     techBuilder = ::AgricultureTech,
@@ -19,8 +15,15 @@ class AgricultureTechTreeItem : AbstractTechTreeItem(
 
 class AgricultureTech(
     data: Data = Data,
-) : Tech, TechStaticData by data {
+) : Tech, TechStaticData by data, ResourceProductionModifier {
+
     override fun deepCopy() = this
+
+    override fun handlesResource(resource: Resource) =
+        resource is Food
+
+    override fun modifyAmount(user: User, source: Z) =
+        source * Mechanics.techAgricultureFoodProductionMultiplier
 
     object Data : TechStaticData {
         override val label = "Agriculture"
