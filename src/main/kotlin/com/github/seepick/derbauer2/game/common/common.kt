@@ -23,3 +23,11 @@ fun <T> List<T>.ifNotEmpty(code: (List<T>) -> Unit) {
         code(this)
     }
 }
+
+fun <T, R> List<T>.requireUniqueBy(prefixMessage: String? = null, fieldExtractor: (T) -> R) {
+    val distinctFields = map(fieldExtractor).distinct()
+    require(this.size == distinctFields.size) {
+        val duplicates = distinctFields.filter { field -> this.count { fieldExtractor(it) == field } > 1 }
+        (if (prefixMessage != null) "$prefixMessage\n" else "") + "Found duplicates for field: $duplicates"
+    }
+}

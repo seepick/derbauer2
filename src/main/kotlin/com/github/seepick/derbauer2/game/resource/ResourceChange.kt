@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.requireUniqueBy
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
@@ -42,16 +43,13 @@ data class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
 ) {
     init {
-        val distinct = changes.map { it.resourceClass }.distinct()
-        require(distinct.size == changes.size) {
-            "Must not contain multiple changes for the same resource!\n" + "Found duplicates for: ${
-                distinct.filter { rc -> changes.count { it.resourceClass == rc } > 1 }
-            }"
+        changes.requireUniqueBy("Must not contain multiple changes for the same resource!") {
+            it.resourceClass
         }
     }
 
-    fun requireAllNonNegative() {
-        changes.requireAllNonNegative()
+    fun requireAllZeroOrPositive() {
+        changes.requireAllZeroOrPositive()
     }
 
     fun merge(other: ResourceChanges) = buildResourceChanges {
@@ -108,7 +106,7 @@ data class ResourceChanges private constructor(
     }
 }
 
-fun List<ResourceChange>.requireAllNonNegative() {
+fun List<ResourceChange>.requireAllZeroOrPositive() {
     val negativeChanges = filter { it.changeAmount < 0.zz }
     require(negativeChanges.isEmpty()) {
         "All resource changes must be non-negative, but found negative changes: $negativeChanges"

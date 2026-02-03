@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.resource.requireAllNonNegative
+import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 
 class TechTree(
     val all: List<TechItem>,
@@ -11,7 +11,7 @@ class TechTree(
     }
 
     init {
-        all.flatMap { it.costs.changes }.requireAllNonNegative()
+        all.flatMap { it.costs.changes }.requireAllZeroOrPositive()
         validateRequirements(finder, all)
     }
 

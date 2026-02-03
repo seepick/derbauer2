@@ -32,7 +32,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 ### Next
 
 * BZ: general variability end turn (production, taxes, consumption)
-    * tell AI to code gaussian distribution generator (mean = x, stddev = y)
+    * use java.util.Random().nextGaussian(mean, standardDeviation)
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
 * game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * let AI generate doc, based on code (before that, align documents with package structure)
