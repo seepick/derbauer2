@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabels
-import com.github.seepick.derbauer2.game.core.emoji
 import kotlin.reflect.KClass
 
 interface Resource : Asset {

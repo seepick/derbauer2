@@ -146,7 +146,7 @@ fun MainWindow(
                     }) {
                 page.invalidate()
                 page.render(textmap)
-                MainTextArea(text = textmap.toFullString())
+                MainTextArea(textmap, tick)
                 textmap.reset()
 
                 Toolbar(

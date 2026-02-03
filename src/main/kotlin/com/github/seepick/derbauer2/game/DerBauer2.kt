@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.AppProperties
-import com.github.seepick.derbauer2.game.core.Emoji
-import com.github.seepick.derbauer2.game.core.emoji
 import com.github.seepick.derbauer2.textengine.compose.showMainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.core.Koin

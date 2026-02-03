@@ -67,9 +67,9 @@ class TextmapTest : DescribeSpec({
                 Textmap(1, 1).aligned("a", "b")
             }
         }
-        it("emoji").config(enabled = false) {
+        it("emoji") {
             Textmap(5, 2)
-                .aligned("😀", "🚗").toFullString() shouldBeEqual "😀 🚗\n     "
+                .aligned("😀", "🚗").toFullString() shouldBeEqual "😀   🚗\n     "
         }
     }
     describe("fillVertical") {
