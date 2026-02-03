@@ -18,7 +18,7 @@ class GameRenderer(
 
     private fun renderInfoBar(): String = buildList {
         user.resources.alsoIfExists(Land::class) {
-            add(it.emojiAndOwned)
+            add(it.emojiAndOwned) // TODO Resource.renderInfoBarItem()
         }
         user.resources.alsoIfExists(Gold::class) {
             add(it.emojiAndOwned)

@@ -6,6 +6,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Current
 
+* make only farm availabe at start; later unlock house/granary
 * BUG!!! eat + birth clash; both try to adjust population/food; need to sequence properly
 * BZ: growth diffuser for: birth, starvation (already for taxes, eat)
 * break up MainWindow() god function into smaller pieces
