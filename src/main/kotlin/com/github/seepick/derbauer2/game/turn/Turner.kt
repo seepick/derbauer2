@@ -13,7 +13,6 @@ import com.github.seepick.derbauer2.game.resource.StorableResource
 import com.github.seepick.derbauer2.game.resource.execTx
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
-import com.github.seepick.derbauer2.game.resource.toResourceChanges
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 
 class Turner(
@@ -22,18 +21,26 @@ class Turner(
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
 ) {
+    // assume TXs were already validated
     fun executeAndGenerateReport() = TurnReport(
         turn = user.turn,
         resourceChanges = steps
             .filter { it.requiresEntities.all { required -> user.hasEntity(required) } }
             .sortedBy { it.order }
-            .flatMap { it.calcResourceChanges().changes }
-            .toResourceChanges()
-            .toLimitedAmounts()
-            .also { user.execTx(it).errorOnFail() }, // assume was already validated
+            .map { execStepToRCs(it) }
+            .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
+//            .flatMap { it.calcResourceChanges().changes }
+//            .toResourceChanges()
+//            .toLimitedAmounts()
+//            .also { user.execTx(it).errorOnFail() },
         happenings = happeningTurner.buildHappeningMultiPages(),
         newFeatures = featureTurner.buildFeaturMultiPages(),
     )
+
+    private fun execStepToRCs(step: TurnStep): ResourceChanges =
+        step.calcResourceChanges().toLimitedAmounts().also {
+            user.execTx(it).errorOnFail()
+        }
 
     private fun ResourceChanges.toLimitedAmounts() = ResourceChanges(
         changes.map { change ->
