@@ -106,9 +106,7 @@ class TurnerTest : DescribeSpec({
             turner.execShouldContainChange(food, 1.zz)
         }
         it("Given 9/10 in storage When change +5 And change -1 Then changed by +1") {
-            // execute sequentially, not together
-            // FIXME not true!... need something way more sophisticated
-            // e.g. how about merging all changes for the same resource first, then applying capping only once?
+            // execute together by resource (not plain sequentially or all at once)
             val foodStorageAvailable = 1.z
             val granary = user.addBuilding(Granary(), 1.z) // 100 capacity
             val food = user.addResource(Food(), granary.totalStorageAmount - foodStorageAvailable) // almost full
@@ -117,7 +115,8 @@ class TurnerTest : DescribeSpec({
                 TurnStep.build(food, (-1).zz), // then decrease
             )
 
-            turner.execShouldContainChange(food, 0.zz) // NOPE!!! foodStorageAvailable.zz)
+            turner.execShouldContainChange(food, foodStorageAvailable.zz)
         }
+        // TEST different resources executed separate from each other (in different TX)
     }
 })

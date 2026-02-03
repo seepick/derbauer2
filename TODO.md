@@ -15,6 +15,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Next
 
+* BZ: have some sort of SeasonModifier
 * !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
     * can enable Features; have description (for when displaying in turn report)
 * UI: events/interactions make sounds (happening, etc...) for better feedback

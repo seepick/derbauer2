@@ -10,6 +10,7 @@ import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.TxValidator
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.turn.ReportsWritable
+import com.github.seepick.derbauer2.game.turn.Turn
 import com.github.seepick.derbauer2.game.turn.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
@@ -18,7 +19,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     private val log = logger {}
 
-    var turn = 1
+    var turn = Turn()
         private set
 
     var userTitle = UserTitle.initial
@@ -52,7 +53,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     }
 
     fun nextTurn(report: TurnReport) {
-        turn++
+        turn = turn.increment()
         _reports.add(report)
     }
 

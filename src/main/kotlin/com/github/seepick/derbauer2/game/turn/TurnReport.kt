@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 
 data class TurnReport(
-    val turn: Int,
+    val turn: Turn,
     val resourceChanges: ResourceChanges,
     val happenings: List<Happening>,
     val newFeatures: List<FeatureInfo>,
