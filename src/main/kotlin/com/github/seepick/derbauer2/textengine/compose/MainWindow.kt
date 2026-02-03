@@ -125,6 +125,7 @@ fun MainWindow(
                         val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
                         page.onKeyPressed(key).also { isHandled ->
                             if (isHandled) {
+                                log.info { "TickTack, user said: $key" }
                                 tick++ // trigger re-composition
                             }
                         }

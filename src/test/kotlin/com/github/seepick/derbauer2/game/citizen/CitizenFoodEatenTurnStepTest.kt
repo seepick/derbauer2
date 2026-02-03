@@ -58,7 +58,6 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
 
             expectResourceChange(food, -expectEaten)
         }
-        // TODO test for going over storage limit
     }
 
     describe("Given no 🍖") {

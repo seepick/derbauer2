@@ -3,18 +3,24 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KClass
 
 interface TurnStep {
-    val phase: TurnPhase
+    val order: Int
     val requiresEntities: List<KClass<out Entity>> get() = emptyList()
     fun calcResourceChanges(): ResourceChanges
     // more to come ...
     companion object // for extension functions
 }
 
-enum class TurnPhase {
-    First, Last;
+object TurnStepOrder {
+    private val incrementor = AtomicInteger(0)
+    // order is of relevance!
+    val producesResources = incrementor.getAndIncrement()
+    val citizenEat = incrementor.getAndIncrement()
+    val citizenBirth = incrementor.getAndIncrement()
+    val citizenTaxes = incrementor.getAndIncrement()
 }
 
 interface TurnStepSingle : TurnStep {
@@ -23,6 +29,6 @@ interface TurnStepSingle : TurnStep {
 
 abstract class DefaultTurnStep(
     val user: User,
-    override val phase: TurnPhase,
+    override val order: Int,
     override val requiresEntities: List<KClass<out Entity>>
 ) : TurnStepSingle

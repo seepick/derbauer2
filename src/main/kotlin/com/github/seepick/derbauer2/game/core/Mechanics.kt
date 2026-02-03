@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
 
@@ -9,7 +10,7 @@ import com.github.seepick.derbauer2.game.common.z
 @Suppress("MayBeConstant", "MagicNumber", "VariableMaxLength")
 object Mechanics {
 
-    private val DEV = false//DerBauer2.isDevMode
+    private val DEV = DerBauer2.isDevMode
 
     // INITIAL VALUES
     // ========================================================================

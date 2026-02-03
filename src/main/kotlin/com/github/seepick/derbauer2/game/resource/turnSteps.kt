@@ -2,13 +2,13 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.turn.TurnPhase
 import com.github.seepick.derbauer2.game.turn.TurnStep
+import com.github.seepick.derbauer2.game.turn.TurnStepOrder
 import kotlin.reflect.KClass
 
 /** This includes obviously mostly buildings. */
 class ProducesResourceTurnStep(val user: User) : TurnStep {
-    override val phase = TurnPhase.First
+    override val order = TurnStepOrder.producesResources
 
     @Suppress("CognitiveComplexMethod")
     override fun calcResourceChanges() = buildResourceChanges {

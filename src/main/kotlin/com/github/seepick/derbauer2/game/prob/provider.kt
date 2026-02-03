@@ -20,7 +20,7 @@ data class ProbProviderHandle<T>(
 
 @JvmInline
 value class ProbProviderKey<T>(val name: String) {
-    override fun toString() = "ProbProviderKey[name]"
+    override fun toString() = "${this::class.simpleName}[$name]"
 
     companion object
 }

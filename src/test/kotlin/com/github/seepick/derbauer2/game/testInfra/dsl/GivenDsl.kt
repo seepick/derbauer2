@@ -6,8 +6,14 @@ import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.happening.happeningTurner
 import com.github.seepick.derbauer2.game.initAssets
+import com.github.seepick.derbauer2.game.prob.AlwaysFalseProbCalculator
+import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbRegistrator
+import com.github.seepick.derbauer2.game.prob.Probs
+import com.github.seepick.derbauer2.game.prob.ProbsImpl
+import com.github.seepick.derbauer2.game.prob.updateProvider
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.Beeper
@@ -63,6 +69,19 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         user.add(asset)
         return asset
     }
+
+    fun turnOff(off: TurnOff) {
+        when (off) {
+            TurnOff.happenings -> {
+                val probs = koin.get<Probs>() as ProbsImpl
+                probs.updateProvider(ProbProviderKey.happeningTurner, AlwaysFalseProbCalculator)
+            }
+        }
+    }
+}
+
+enum class TurnOff {
+    happenings
 }
 
 @Suppress("TestFunctionName")
