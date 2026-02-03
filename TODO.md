@@ -19,7 +19,9 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Next
 
+* BZ: ad CitizenTaxesTurnStep: update deviation, adjust relative "roughly" to ... diffuser.deviation = ...
 * BZ: tech: finish techs (warfare, junkfood, etc. implement actual effects)
+* BZ: ad prob: need a "growth spreader", using gaussian underneath; only positive values; percentage of deviation
 
 ## Backlog
 

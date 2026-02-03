@@ -68,8 +68,7 @@ class CitizenTaxesTurnStep(
     DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
 
     private val taxProb = ProbDiffuserKey.taxKey
-    // TODO what i need is actually a "growth spreader", which uses a gaussian underneath; only positive values; and percentage of deviation
-    private val diffuser = GaussianDiffuser(deviation = 4.z) // TODO maybe too much?!
+    private val diffuser = GaussianDiffuser(deviation = 4.z)
 
     override fun initProb() {
         probs.setDiffuser(taxProb, diffuser)
@@ -78,7 +77,6 @@ class CitizenTaxesTurnStep(
     override fun calcResourceChanges() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         val rawTax = citizen.owned * Mechanics.citizenTaxRate
-        // TODO update deviation, adjust relative "roughly" to ... diffuser.deviation = ...
         val rawDiffusedTax = probs.getDiffused(taxProb, rawTax.zz)
         val limittedTax = rawDiffusedTax.toZLimitMinZero()
         add(Gold::class, limittedTax)
