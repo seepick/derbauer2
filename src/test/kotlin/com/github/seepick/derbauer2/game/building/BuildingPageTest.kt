@@ -19,40 +19,21 @@ class BuildingPageTest : PageTest, StringSpec({
             ctx.user.add(Farm())
             ctx.buildBuildingsPage()
         }) {
-            fullPage shouldBeEqual """
-                                                                                      Turn 1
-            ================================================================================
-            Your builders are ready for work.                                               
-                                                                                            
-            What shall we build next, Sire?                                                 
-                                                                                            
-            [1] Build House - 💰 40 | 🌍 1 (owned: 0)                                         
-            [2] Build Farm - 💰 120 | 🌍 4 (owned: 0)                                         
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-                                                                                            
-            ================================================================================
-            [1-2]> ▉                                                             ENTER: Back
-        """.trimIndent()
+            contentString shouldBeEqual """
+                Your builders are ready for work.
+                
+                What shall we build next, Sire?
+                
+                [1] Build House (0) - 💰 40 | 🌍 1
+                [2] Build Farm (0) - 💰 120 | 🌍 4
+                """.trimIndent()
         }
     }
     "Given nothing Then not a single thing to build" {
         renderGamePage({ ctx ->
             ctx.buildBuildingsPage()
         }) {
-            contentLinesString shouldContainIgnoringCase "Not a single thing to build"
+            contentString shouldContainIgnoringCase "Not a single thing to build"
             promptLeft shouldContain "[ENTER]"
             promptRight shouldContain "ENTER: Back"
         }

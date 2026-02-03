@@ -24,7 +24,7 @@ class BuildingUiTest : UiTest, ComposeTest {
 
     @Test
     fun `When build house Then change assets`() = uiTest {
-        gameText.contentLinesString shouldContainIgnoringCase "you are home"
+        gameText.contentString shouldContainIgnoringCase "you are home"
         val initialGold = gameText.readSingleResource(Gold.Data.emojiOrNull).owned
 
         pressKey(gameText.keyForSelectOption("build"))
@@ -36,7 +36,7 @@ class BuildingUiTest : UiTest, ComposeTest {
 
     @Test
     fun `When build many farms Then fail`() = uiTest { ctx ->
-        gameText.contentLinesString shouldContainIgnoringCase "you are home"
+        gameText.contentString shouldContainIgnoringCase "you are home"
 
         pressKey(gameText.keyForSelectOption("build"))
         repeat(4) {

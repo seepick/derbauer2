@@ -7,12 +7,14 @@ import io.kotest.matchers.equals.shouldBeEqual
 class GamePageParser(val fullPage: String) {
 
     private val hrSymbol = "="
+
     val lines = fullPage.split("\n").map { it.trim() }
-    val contentLines = lines.subList(2, lines.size - 2).dropLastWhile { it.isBlank() }
-    val contentLinesString = contentLines.joinToString("\n")
     /** e.g. "🌍 10 | 💰 500 | 🍖 50 / 100 | 🌍 3 / 10 | 🙎🏻‍♂️ 4 / 5                  Turn 1" */
     val lineInfo = lines.first()
     val linePrompt = lines.last()
+
+    val contentLines = lines.subList(2, lines.size - 2).dropLastWhile { it.isBlank() }
+    val contentString = contentLines.joinToString("\n")
 
     private val widthHack = MainWin.matrixSize.cols
     val promptLeft: String? = linePrompt.take(widthHack / 2).trim().ifEmpty { null }

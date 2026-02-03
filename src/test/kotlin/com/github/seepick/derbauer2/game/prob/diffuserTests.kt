@@ -11,7 +11,7 @@ import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.equals.shouldBeEqual
 
 class DiffuserTests : StringSpec({
-    val printOutcomes = true
+    val printOutcomes = false
     fun ProbDiffuser.createSampleSet(baseValue: Zz, sampleSize: Int = 1000): List<Long> {
         val outcomes = (1..sampleSize).map { diffuse(baseValue).value }
         if (printOutcomes) {
@@ -50,7 +50,6 @@ class DiffuserTests : StringSpec({
         }
     }
 })
-
 
 fun List<Long>.printOccurences() {
     sorted().associateWith { res -> count { res == it } }.forEach { (number, occurence) ->

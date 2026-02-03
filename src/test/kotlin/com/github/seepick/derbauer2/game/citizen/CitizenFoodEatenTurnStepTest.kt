@@ -45,17 +45,18 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
         }
     }
     describe("Given some 🍖") {
-        it("Given 1 🙎🏻‍♂️and sufficient 🍖️Then minimum 🍖 consumed") {
+        it("Given 1 🙎🏻‍♂️and sufficient 🍖️Then minimum 🍖 eaten") {
             val food = user.addResource(Food(), 10.z)
             user.addResource(Citizen(), 1.z)
 
             expectResourceChange(food, (-1).zz)
         }
-        it("Given some 🙎🏻‍♂️and sufficient 🍖 Then some 🍖 consumed") {
-            val food = user.addResource(Food(), 10.z)
-            val citizen = user.addResource(Citizen(), 10.z)
+        it("Given some 🙎🏻‍♂️and exactly enough 🍖 Then all 🍖 eaten") {
+            val citizen = user.addResource(Citizen(), 100.z)
+            val expectEaten = citizen.owned * Mechanics.citizenEatAmount
+            val food = user.addResource(Food(), expectEaten)
 
-            expectResourceChange(food, -(citizen.owned * Mechanics.citizenEatAmount))
+            expectResourceChange(food, -expectEaten)
         }
         // TODO test for going over storage limit
     }

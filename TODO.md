@@ -31,6 +31,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * BZ: rat happening: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
 * BZ: happening amount with probability range
+* BZ: happenings are dependent on feature
+    * rat only if has food; when military feature then attacks; when certain buildings exist, etc.
 
 ### New Game Concepts
 
