@@ -26,8 +26,8 @@ class BuildingPageTest : PageTest, StringSpec({
                                                                                             
             What shall we build next, Sire?                                                 
                                                                                             
-            [1] Build House - 💰 40 | 🌍 1 (owned: 0)                                       
-            [2] Build Farm - 💰 120 | 🌍 4 (owned: 0)                                       
+            [1] Build House - 💰 40 | 🌍 1 (owned: 0)                                         
+            [2] Build Farm - 💰 120 | 🌍 4 (owned: 0)                                         
                                                                                             
                                                                                             
                                                                                             

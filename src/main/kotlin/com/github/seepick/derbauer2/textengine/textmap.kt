@@ -30,29 +30,36 @@ class Textmap(
     private val cols: Int,
     private val rows: Int,
 ) : TextmapWriter {
-    private val buffer = Array(rows) { Array(cols) { ' ' } }
+    private val buffer = Array(rows) { Array(cols) { " " } }
     private val cursor = Cursor()
 
     constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
 
     override fun line(line: String) = apply {
-        for (c in line.toCharArray()) {
-            if (c == '\n') {
+        var i = 0
+        while (i < line.length) {
+            val codePoint = line.codePointAt(i)
+            if (codePoint == '\n'.code) {
                 throw InvalidTextmapException(
                     "Newline character not allowed in line(): '$line' => use multiLine() instead."
                 )
             }
-            set(cursor.x, cursor.y, c)
+            val charCount = Character.charCount(codePoint)
+            val cell = line.substring(i, i + charCount)
+            set(cursor.x, cursor.y, cell)
             cursor.x++
+            i += charCount
         }
         cursor.nextLine()
     }
 
     override fun aligned(left: String, right: String) = apply {
-        if (left.length + right.length > cols) {
+        val leftCells = countCells(left)
+        val rightCells = countCells(right)
+        if (leftCells + rightCells > cols) {
             throw InvalidTextmapException("Cannot align left='$left' and right='$right' in width $cols")
         }
-        val gap = " ".repeat(cols - left.length - right.length)
+        val gap = " ".repeat(cols - leftCells - rightCells)
         line("$left$gap$right")
     }
 
@@ -76,17 +83,30 @@ class Textmap(
     fun reset() = apply {
         for (x in buffer.indices) {
             for (y in buffer[x].indices) {
-                buffer[x][y] = ' '
+                buffer[x][y] = " "
             }
         }
         cursor.reset()
     }
 
-    private fun set(x: Int, y: Int, char: Char) {
+    private fun set(x: Int, y: Int, cell: String) {
         if (x >= cols || y >= rows) {
-            throw InvalidTextmapException("Textmap overflow at ($x,$y) for size ${cols}x$rows; char=[$char]")
+            throw InvalidTextmapException("Textmap overflow at ($x,$y) for size ${cols}x$rows; cell=[$cell]")
         }
-        buffer[y][x] = char
+        buffer[y][x] = cell
+    }
+
+    fun getGrid(): Array<Array<String>> = buffer
+
+    private fun countCells(text: String): Int {
+        var count = 0
+        var i = 0
+        while (i < text.length) {
+            val codePoint = text.codePointAt(i)
+            count++
+            i += Character.charCount(codePoint)
+        }
+        return count
     }
 
     companion object {
