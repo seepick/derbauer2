@@ -16,14 +16,14 @@ import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
-class CitizenTaxesTurnStepTest : DescribeSpec({
+class TaxesTurnStepTest : DescribeSpec({
     lateinit var user: User
     lateinit var probs: ProbsImpl
-    lateinit var step: CitizenTaxesTurnStep
+    lateinit var step: TaxesTurnStep
     beforeTest {
         user = User()
         probs = ProbsImpl()
-        step = CitizenTaxesTurnStep(user, probs)
+        step = TaxesTurnStep(user, probs)
         step.initProb()
     }
 
@@ -44,7 +44,7 @@ class CitizenTaxesTurnStepTest : DescribeSpec({
                 val goldBefore = gold.owned
                 citizen.ownedForTest = 10.z
 
-                calcChanges().shouldContainChange(Gold::class, (citizen.owned * Mechanics.citizenTaxRate).zz)
+                calcChanges().shouldContainChange(Gold::class, (citizen.owned * Mechanics.taxRate).zz)
                 gold.owned shouldBeEqual goldBefore
             }
         }

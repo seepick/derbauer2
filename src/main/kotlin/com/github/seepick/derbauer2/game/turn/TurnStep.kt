@@ -18,9 +18,10 @@ object TurnStepOrder {
     private val incrementor = AtomicInteger(0)
     // order is of relevance!
     val producesResources = incrementor.getAndIncrement()
-    val citizenEat = incrementor.getAndIncrement()
-    val citizenBirth = incrementor.getAndIncrement()
-    val citizenTaxes = incrementor.getAndIncrement()
+
+    val citizen = incrementor.getAndIncrement()
+
+    val taxes = incrementor.getAndIncrement()
 }
 
 interface TurnStepSingle : TurnStep {

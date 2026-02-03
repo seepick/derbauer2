@@ -5,6 +5,20 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.game.resource.Citizen
+import com.github.seepick.derbauer2.game.resource.Food
+import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Resource
+import kotlin.reflect.KClass
+
+private val emojiMap = mapOf(
+    Food::class to Food.Data.emojiOrNull.value,
+    Gold::class to Gold.Data.emojiOrNull.value,
+    Citizen::class to Citizen.Data.emojiOrNull.value,
+    // TODO continue
+)
+private val defaultEmoji = "❌"
+val KClass<out Resource>.maybeEmojiOrSimpleName: String get() = emojiMap[this] ?: simpleName ?: defaultEmoji
 
 interface HasLabels {
     val labelSingular: String

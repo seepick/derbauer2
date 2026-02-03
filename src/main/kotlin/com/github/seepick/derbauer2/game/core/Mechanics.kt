@@ -62,14 +62,13 @@ object Mechanics {
 
     // END TURN
     // ========================================================================
-    val citizenTaxRate = 5.`%` // multiplied by citizens.amount
-    val citizenTaxGrowthVariation = 20.`%`
-    val citizenEatAmount = 3.`%`
+    val taxRate = 5.`%` // multiplied by citizens.amount
+    val taxGrowthVariation = 20.`%`
+    val citizenEatAmount = 10.`%`
     val citizenEatGrowthVariation = 20.`%`
     val citizensStarve = 1.`%`
     val citizensStarveMinimum = 1.z
-    val citizenReproductionRate = 10.`%`
-    val citizenReproductionMinimum = 1.z
+    val citizenBirthRate = 10.`%`
 
     // HAPPENINGS
     val happeningInitialProb = 0.`%`

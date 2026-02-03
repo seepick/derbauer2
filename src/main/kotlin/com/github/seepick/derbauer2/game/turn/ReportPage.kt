@@ -43,5 +43,5 @@ class ReportPage(
 context(user: User)
 fun ResourceChange.toLine(): String {
     val res = user.findResource(this.resourceClass)
-    return "${res.emojiSpaceOrEmpty}${res.labelPlural} ${this.changeAmount.toPlusString()}"
+    return "${res.emojiSpaceOrEmpty}${res.labelPlural} ${this.changeAmount.toSymboledString()}"
 }

@@ -18,6 +18,9 @@ inline fun <reified R : Resource> User.findResource(): R =
 fun <R : Resource> User.findResourceOrNull(resourceClass: KClass<R>): R? =
     resources.findOrNull(resourceClass) as? R?
 
+inline fun <reified R : Resource> User.findResourceOrNull(): R? =
+    resources.findOrNull<R>()
+
 context(user: User)
 val ResourceReference.resource get() = user.findResource(resourceClass)
 

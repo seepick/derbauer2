@@ -23,7 +23,7 @@ class TurnDslTest : DslTest, FunSpec() {
         test("citizens pay taxes") {
             val citizenCount = 100.z
             // ensure sufficient housing also for newborns
-            val citizenCountAfterReproduction = citizenCount + citizenCount * Mechanics.citizenReproductionRate
+            val citizenCountAfterReproduction = citizenCount + citizenCount * Mechanics.citizenBirthRate
             val houseCount = ceil(citizenCountAfterReproduction.value.toDouble() / Mechanics.houseStoreCitizen).toInt()
             val landCount = houseCount * Mechanics.houseLandUse.value
             Given {
@@ -37,7 +37,7 @@ class TurnDslTest : DslTest, FunSpec() {
             } When {
                 nextTurnToReport()
             } Then {
-                val expectedTax = citizenCountAfterReproduction * Mechanics.citizenTaxRate
+                val expectedTax = citizenCountAfterReproduction * Mechanics.taxRate
                 shouldOwn<Gold>(expectedTax)
             }
         }

@@ -4,13 +4,16 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import java.util.concurrent.atomic.AtomicInteger
 
+private val turnStepCounter = AtomicInteger(0)
 fun TurnStep.Companion.build(
     resource: Resource,
     change: Zz,
-    phase: TurnPhase = TurnPhase.First,
+    order: Int = turnStepCounter.getAndIncrement(),
 ) = object : TurnStep {
-    override val phase = phase
+    override val order = order
+
     override fun calcResourceChanges() = buildResourceChanges {
         add(resource, change)
     }

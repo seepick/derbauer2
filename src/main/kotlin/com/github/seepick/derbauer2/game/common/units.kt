@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.common
 
 import kotlin.math.abs
+import kotlin.math.ceil
 
 val Long.zz get() = Zz(this)
 @Suppress("VariableMinLength")
@@ -16,7 +17,7 @@ data class Zz(
 ) : Comparable<Zz> {
     val magnitutedValue = translateToMaxMagnitude(value)
 
-    fun toPlusString() = if (value > 0) "+$this" else toString()
+    fun toSymboledString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
     /** Will simply remove "-" sign if present, returning its absolute value. */
@@ -132,6 +133,8 @@ value class Percent(val value: Double) {
     operator fun compareTo(other: Percent) = this.value.compareTo(other.value)
     operator fun compareTo(other: Double) = this.value.compareTo(other)
     operator fun plus(other: Percent) = Percent(this.value + other.value)
+
+    fun neededToGetTo(amount: Int): Z = ceil((1.0 / value) * amount).toLong().z
 }
 
 operator fun Double.compareTo(other: Percent) = this.compareTo(other.value)

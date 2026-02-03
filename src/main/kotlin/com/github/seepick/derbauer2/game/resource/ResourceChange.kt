@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.requireUniqueBy
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.maybeEmojiOrSimpleName
 import kotlin.reflect.KClass
 
 fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit): ResourceChanges {
@@ -36,7 +37,11 @@ data class ResourceChange(
         require(other.resourceClass::class == this.resourceClass::class)
         return ResourceChange(resourceClass, changeAmount + other.changeAmount)
     }
+
+    override fun toString() =
+        "${this::class.simpleName}(${changeAmount.toSymboledString()} ${resourceClass.maybeEmojiOrSimpleName})"
 }
+
 
 @ConsistentCopyVisibility
 data class ResourceChanges private constructor(
