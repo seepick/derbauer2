@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.prob
 
+import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
@@ -17,10 +18,31 @@ interface ProbDiffuser {
     fun diffuse(baseValue: Zz): Zz
 }
 
-class GaussianDiffuser(var deviation: Z) : ProbDiffuser {
+class GrowthDiffuser(private val variation: Percent) : ProbDiffuser {
+    private val random = Random()
+
+    init {
+        require(variation.value >= 0.0)
+    }
+
+    override fun diffuse(baseValue: Zz): Zz =
+        if (baseValue <= 0.zz) {
+            0.zz
+        } else {
+            random.nextGaussianInRange(
+                mean = baseValue.toDouble(),
+                sd = baseValue.toDouble() * variation.value,
+            ).roundToLong().zz
+        }
+}
+
+class GaussianDiffuser(private val deviation: Z) : ProbDiffuser {
     private val random = Random()
     override fun diffuse(baseValue: Zz): Zz =
-        random.nextGaussianInRange(baseValue.toDouble(), deviation.toDouble()).roundToLong().zz
+        random.nextGaussianInRange(
+            mean = baseValue.toDouble(),
+            sd = deviation.toDouble()
+        ).roundToLong().zz
 }
 
 fun Random.nextGaussianInRange(mean: Double, sd: Double, maxAttempts: Int = 10000): Double {
