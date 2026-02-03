@@ -26,7 +26,8 @@ object MainWin {
     val cellWidth = 10.85.dp
     val cellHeight = 22.2.dp
     private val mainContentWidth = cellWidth * matrixSize.cols
-    private val mainContentHeight = cellHeight * matrixSize.rows
+    // Add extra vertical space to ensure last line is fully visible with absolute positioning
+    private val mainContentHeight = cellHeight * matrixSize.rows + cellHeight * 0.1f
 
     // FontFamily.Monospace ... NO! bug fix emojis, line height changes, jumping UI!
     private val monoPlusEmoji = FontFamily(Font(resource = "JetBrainsMono-Regular.ttf"))
