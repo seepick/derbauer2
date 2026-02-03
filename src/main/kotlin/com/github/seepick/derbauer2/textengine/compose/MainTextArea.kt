@@ -25,8 +25,6 @@ fun MainTextArea(textmap: Textmap) {
             .semantics { text = AnnotatedString(fullText) }
     ) {
         val grid = textmap.getGrid()
-        val cellWidth = 10.85.dp
-        val cellHeight = 22.2.dp
 
         grid.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { colIndex, cell ->
@@ -34,8 +32,8 @@ fun MainTextArea(textmap: Textmap) {
                     Text(
                         text = cell,
                         modifier = Modifier.offset(
-                            x = cellWidth * colIndex,
-                            y = cellHeight * rowIndex
+                            x = MainWin.cellWidth * colIndex,
+                            y = MainWin.cellHeight * rowIndex
                         ),
                         style = MainWin.mainTextStyle,
                     )

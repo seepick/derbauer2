@@ -96,7 +96,7 @@ class Textmap(
         buffer[y][x] = cell
     }
 
-    fun getGrid(): Array<Array<String>> = buffer
+    fun getGrid(): Array<Array<String>> = buffer.map { it.copyOf() }.toTypedArray()
 
     private fun countCells(text: String): Int {
         var count = 0
