@@ -36,19 +36,15 @@ class Textmap(
     constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
 
     override fun line(line: String) = apply {
-        var i = 0
-        while (i < line.length) {
-            val codePoint = line.codePointAt(i)
-            if (codePoint == '\n'.code) {
-                throw InvalidTextmapException(
-                    "Newline character not allowed in line(): '$line' => use multiLine() instead."
-                )
-            }
-            val charCount = Character.charCount(codePoint)
-            val cell = line.substring(i, i + charCount)
-            set(cursor.x, cursor.y, cell)
+        if (line.contains('\n')) {
+            throw InvalidTextmapException(
+                "Newline character not allowed in line(): '$line' => use multiLine() instead."
+            )
+        }
+        val graphemes = line.extractGraphemes()
+        graphemes.forEach { grapheme ->
+            set(cursor.x, cursor.y, grapheme)
             cursor.x++
-            i += charCount
         }
         cursor.nextLine()
     }
@@ -98,15 +94,60 @@ class Textmap(
 
     fun getGrid(): Array<Array<String>> = buffer.map { it.copyOf() }.toTypedArray()
 
-    private fun countCells(text: String): Int {
-        var count = 0
+    private fun countCells(text: String): Int = text.extractGraphemes().size
+
+    private fun String.extractGraphemes(): List<String> {
+        val result = mutableListOf<String>()
+        var start = 0
         var i = 0
-        while (i < text.length) {
-            val codePoint = text.codePointAt(i)
-            count++
+
+        while (i < this.length) {
+            // Consume base codepoint
+            val codePoint = this.codePointAt(i)
             i += Character.charCount(codePoint)
+
+            // Keep consuming modifiers, combiners, and ZWJ sequences
+            while (i < this.length) {
+                val nextCodePoint = this.codePointAt(i)
+
+                when {
+                    // Variation selectors
+                    nextCodePoint in 0xFE00..0xFE0F || nextCodePoint in 0xE0100..0xE01EF -> {
+                        i += Character.charCount(nextCodePoint)
+                    }
+                    // Combining diacritical marks
+                    nextCodePoint in 0x0300..0x036F -> {
+                        i += Character.charCount(nextCodePoint)
+                    }
+                    // Emoji modifiers (skin tones)
+                    nextCodePoint in 0x1F3FB..0x1F3FF -> {
+                        i += Character.charCount(nextCodePoint)
+                    }
+                    // Zero-width joiner
+                    nextCodePoint == 0x200D -> {
+                        i += Character.charCount(nextCodePoint)
+                        // Consume the character after ZWJ
+                        if (i < this.length) {
+                            val afterZWJ = this.codePointAt(i)
+                            i += Character.charCount(afterZWJ)
+                            // Check for variation selector after the emoji following ZWJ
+                            if (i < this.length) {
+                                val maybeVS = this.codePointAt(i)
+                                if (maybeVS in 0xFE00..0xFE0F || maybeVS in 0xE0100..0xE01EF) {
+                                    i += Character.charCount(maybeVS)
+                                }
+                            }
+                        }
+                    }
+                    else -> break // Not a combining/modifier character
+                }
+            }
+
+            result.add(this.substring(start, i))
+            start = i
         }
-        return count
+
+        return result
     }
 
     companion object {
