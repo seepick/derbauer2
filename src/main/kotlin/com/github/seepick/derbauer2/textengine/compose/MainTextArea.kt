@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.key
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
@@ -18,25 +19,27 @@ import com.github.seepick.derbauer2.textengine.Textmap
 @Composable
 fun MainTextArea(textmap: Textmap) {
     val fullText = textmap.toFullString()
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .testTag(TestTags.mainTextArea)
-            .semantics { text = AnnotatedString(fullText) }
-    ) {
-        val grid = textmap.getGrid()
+    key(fullText) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .testTag(TestTags.mainTextArea)
+                .semantics { text = AnnotatedString(fullText) }
+        ) {
+            val grid = textmap.getGrid()
 
-        grid.forEachIndexed { rowIndex, row ->
-            row.forEachIndexed { colIndex, cell ->
-                if (cell != " ") {
-                    Text(
-                        text = cell,
-                        modifier = Modifier.offset(
-                            x = MainWin.cellWidth * colIndex,
-                            y = MainWin.cellHeight * rowIndex
-                        ),
-                        style = MainWin.mainTextStyle,
-                    )
+            grid.forEachIndexed { rowIndex, row ->
+                row.forEachIndexed { colIndex, cell ->
+                    if (cell != " ") {
+                        Text(
+                            text = cell,
+                            modifier = Modifier.offset(
+                                x = MainWin.cellWidth * colIndex,
+                                y = MainWin.cellHeight * rowIndex
+                            ),
+                            style = MainWin.mainTextStyle,
+                        )
+                    }
                 }
             }
         }
