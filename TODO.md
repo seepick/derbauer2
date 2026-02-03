@@ -8,13 +8,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * BUG!!! eat + birth clash; both try to adjust population/food; need to sequence properly
 * BZ: growth diffuser for: birth, starvation (already for taxes, eat)
-* Window Refactoring
-    * first break up MainWindow() god function into smaller pieces
-    * make the whole window bigger
-    * BUG: width with emojis is wrong... implement spike
-        * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
-        * HomePageTest disabled emoji width calc issue
-        * TextmapTest disabled emojis take up 2 chars, thus calc is off...
+* break up MainWindow() god function into smaller pieces
+* make the whole window bigger
 
 ### Next
 
