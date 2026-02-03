@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.addAndSet
+import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
@@ -27,8 +27,8 @@ private fun `user with 0 🍖, 1 granary, 1 farm`(
 ) {
     val user = User(DefaultTxValidatorRepo.validators)
     val food = user.add(Food())
-    val farm = user.addAndSet(Farm(), 1.z)
-    val granary = user.addAndSet(Granary(), 1.z)
+    val farm = user.addBuilding(Farm(), 1.z)
+    val granary = user.addBuilding(Granary(), 1.z)
 
     test(SetupContext(ProducesResourceTurnStep(user), user, food, farm, granary))
 }

@@ -5,43 +5,50 @@ import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
-import com.github.seepick.derbauer2.game.resource.addAndSet
-import com.github.seepick.derbauer2.game.resource.givenFakeStorage
-import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.resource.Food
+import com.github.seepick.derbauer2.game.resource.addResource
+import com.github.seepick.derbauer2.game.turn.calcShouldContain
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.longs.shouldBeGreaterThan
+
 
 class CitizenReproduceTurnStepTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
         user = User()
     }
+    fun turner() = CitizenReproduceTurnStep(user)
 
-    describe("When reproduce") {
-        it("Given no citizens Then stay zero") {
-            user.givenFakeStorage<Citizen>(100.z)
-            val citizen = user.addAndSet(Citizen(), 0.z)
 
-            val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
+    describe("When reproduce aka birth without 🍖 food") {
+        it("Given 0 🙎🏻‍♂️ Then change 0") {
+            val citizen = user.addResource(Citizen(), 0.z)
 
-            changes.shouldContainChange(citizen, 0.zz)
+            turner().calcShouldContain(citizen, 0.zz)
         }
-        it("Given 1 citizen Then get minimum of 1") {
-            user.givenFakeStorage<Citizen>(100.z)
-            val citizen = user.addAndSet(Citizen(), 1.z)
+        it("Given 1 🙎🏻‍♂️ Then +1 minimum birth") {
+            val citizen = user.addResource(Citizen(), 1.z)
 
-            val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
-
-            changes.shouldContainChange(citizen, Mechanics.citizenReproductionMinimum.zz)
+            turner().calcShouldContain(citizen, Mechanics.citizenReproductionMinimum.zz)
         }
-        it("Given 100 citizen Then increase by reproduction rate") {
-            user.givenFakeStorage<Citizen>(200.z)
-            val citizen = user.addAndSet(Citizen(), 100.z)
+        it("Given many 🙎🏻‍♂️ Then +many by reproduction rate") {
+            val citizen = user.addResource(Citizen(), 100.z)
 
-            val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
-
-            val expected = citizen.owned * Mechanics.citizenReproductionRate
-            changes.shouldContainChange(citizen, expected.zz)
+            turner().calcShouldContain(citizen, (citizen.owned * Mechanics.citizenReproductionRate).zz)
         }
-        // TODO test for going over storage limit
+    }
+    describe("With 🍖 food") {
+        it("Given many 🙎🏻‍♂️ and 0 🍖 Then change 0 as starvation will take over elsewhere") {
+            val citizen = user.addResource(Citizen(), 100.z)
+            user.addResource(Food(), 0.z)
+
+            turner().calcShouldContain(citizen, 0.zz)
+        }
+        it("Given many 🙎🏻‍♂️ and some 🍖 Then +change") {
+            user.addResource(Citizen(), 100.z)
+            user.addResource(Food(), 1.z)
+
+            turner().calcResourceChanges().changes.first().changeAmount.value shouldBeGreaterThan 0
+        }
     }
 })

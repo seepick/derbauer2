@@ -6,19 +6,17 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Current
 
-* BUG: leftover food not eaten at the end; citizens should start to starve
-
-#### Window Refactoring
-
-* first break up MainWindow() god function into smaller pieces
-* make the whole window bigger
-* BUG: width with emojis is wrong... implement spike
-    * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
-    * HomePageTest disabled emoji width calc issue
-    * TextmapTest disabled emojis take up 2 chars, thus calc is off...
+* Window Refactoring
+    * first break up MainWindow() god function into smaller pieces
+    * make the whole window bigger
+    * BUG: width with emojis is wrong... implement spike
+        * render X*Y raster-matrix, each char a separate UI-component to draw into, like a regular table (?)
+        * HomePageTest disabled emoji width calc issue
+        * TextmapTest disabled emojis take up 2 chars, thus calc is off...
 
 ### Next
 
+* add more variability (using gaussian in only one place, but many more there to go...)
 * BZ: ad CitizenTaxesTurnStep: update deviation, adjust relative "roughly" to ... diffuser.deviation = ...
 * BZ: tech: finish techs (warfare, junkfood, etc. implement actual effects)
 * BZ: ad prob: need a "growth spreader", using gaussian underneath; only positive values; percentage of deviation

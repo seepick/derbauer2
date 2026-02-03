@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.addAndSet
+import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
@@ -13,7 +13,7 @@ import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.addAndSet
+import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.givenFakeStorage
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
@@ -51,7 +51,7 @@ class TurnerTest : DescribeSpec({
     describe("Resource") {
         fun test(given: Int, changeBy: Int, shouldChange: Int) {
             // use Gold, as it is not of type StorableResource
-            val gold = user.addAndSet(Gold(), given.z)
+            val gold = user.addResource(Gold(), given.z)
             val turner = Turner.build(TurnStep.build(gold, changeBy.zz))
 
             turner.execShouldContainChange(gold, shouldChange.zz)
@@ -80,7 +80,7 @@ class TurnerTest : DescribeSpec({
             turner.execShouldContainChange(food, 0.zz)
         }
         it("Given 1 resource When change -2 Then changed by max possible -1") {
-            val food = user.addAndSet(Food(), 1.z)
+            val food = user.addResource(Food(), 1.z)
             val turner = Turner.build(TurnStep.build(food, (-2).zz))
 
             turner.execShouldContainChange(food, (-1).zz)
@@ -93,14 +93,14 @@ class TurnerTest : DescribeSpec({
             turner.execShouldContainChange(food, (+1).zz)
         }
         it("Given 1/1 resource When change +1 Then change nothing") {
-            val food = user.addAndSet(Food(), 1.z)
+            val food = user.addResource(Food(), 1.z)
             user.givenFakeStorage<Food>(1.z)
             val turner = Turner.build(TurnStep.build(food, (+1).zz))
 
             turner.execShouldContainChange(food, 0.zz)
         }
         it("Given 1/2 resources When change +2 Then changed by max possible +1") {
-            val food = user.addAndSet(Food(), 1.z)
+            val food = user.addResource(Food(), 1.z)
             user.givenFakeStorage<Food>(2.z)
             val turner = Turner.build(TurnStep.build(food, (+2).zz))
 
@@ -109,7 +109,7 @@ class TurnerTest : DescribeSpec({
         it("Given 9/10 in storage When change +5 And change -1 Then changed by +1") {
             // execute together not sequentially
             val foodStorageAvailable = 1.z
-            val granary = user.addAndSet(Granary(), 1.z)
+            val granary = user.addBuilding(Granary(), 1.z)
             val food = user.add(Food())
             food.ownedForTest = granary.totalStorageAmount - foodStorageAvailable // almost full
             val turner = Turner.build(

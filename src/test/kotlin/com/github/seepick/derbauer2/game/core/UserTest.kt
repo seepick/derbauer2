@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.resource.Citizen
-import com.github.seepick.derbauer2.game.resource.addAndSet
+import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.testInfra.shouldContainInAnyOrder
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -41,12 +41,12 @@ class UserTest : DescribeSpec({
             user.isGameOver() shouldBeEqual false
         }
         it("Given 1 🙎🏻‍♂️ When take turn Then game is not over") {
-            user.addAndSet(Citizen(), 1.z)
+            user.addResource(Citizen(), 1.z)
 
             user.isGameOver() shouldBeEqual false
         }
         it("Given 0 🙎🏻‍♂️ Then game is over ☠️") {
-            user.addAndSet(Citizen(), 0.z)
+            user.addResource(Citizen(), 0.z)
 
             user.isGameOver() shouldBeEqual true
         }

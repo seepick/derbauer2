@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.addAndSet
+import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.food
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.addAndSet
+import com.github.seepick.derbauer2.game.resource.addResource
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
@@ -25,12 +25,12 @@ class RatsEatFoodTest : StringSpec({
             RatsEatFoodDescriptor.canHappen(user).shouldBeFalse()
         }
         "Given zero food Then no" {
-            user.addAndSet(Food(), 0.z)
+            user.addResource(Food(), 0.z)
             RatsEatFoodDescriptor.canHappen(user).shouldBeFalse()
         }
         "Given non-zero food Then yes" {
             val user = User()
-            user.addAndSet(Food(), 1.z)
+            user.addResource(Food(), 1.z)
             RatsEatFoodDescriptor.canHappen(user).shouldBeTrue()
         }
     }
@@ -41,13 +41,13 @@ class RatsEatFoodTest : StringSpec({
             }
         }
         "Given lots of food Then should eat max amount" {
-            user.addAndSet(Food(), 20.z)
+            user.addResource(Food(), 20.z)
             val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual 15.z
         }
         "Given less food than max Then should eat all food" {
-            user.addAndSet(Food(), 2.z)
+            user.addResource(Food(), 2.z)
             val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual 2.z
@@ -56,9 +56,9 @@ class RatsEatFoodTest : StringSpec({
     context("execute") {
         "should change user food amount" {
             val origAmount = 20.z
-            user.addAndSet(Land(), 10.z)
-            user.addAndSet(Granary(), 1.z)
-            user.addAndSet(Food(), origAmount)
+            user.addResource(Land(), 10.z)
+            user.addBuilding(Granary(), 1.z)
+            user.addResource(Food(), origAmount)
             val happening = RatsEatFoodDescriptor.buildHappening(user)
 
             happening.execute(user)

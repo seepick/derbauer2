@@ -10,7 +10,7 @@ import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContain
 import kotlin.reflect.KClass
 
-fun <R : Resource> User.addAndSet(resource: R, amount: Z): R {
+fun <R : Resource> User.addResource(resource: R, amount: Z): R {
     add(resource)
     // by-pass validation via transaction
     resource._setOwnedInternal = amount

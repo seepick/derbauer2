@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.citizen
 
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
@@ -13,24 +14,34 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
+import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 
 class CitizenReproduceTurnStep(user: User) :
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class)) {
+
     override fun calcResourceChanges() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         add(
             ResourceChange(
                 resource = citizen,
-                changeAmount = if (citizen.owned == 0.z) {
-                    0.z
-                } else {
-                    val raw = citizen.owned * Mechanics.citizenReproductionRate
-                    raw orMaxOf Mechanics.citizenReproductionMinimum
-                }
+                changeAmount =
+                    if (citizen.owned == 0.z) 0.z
+                    else if (foodAvailable()) rawProduction(citizen)
+                    else 0.z
             )
         )
+    }
+
+    private fun foodAvailable(): Boolean {
+        val food = user.findResourceOrNull(Food::class) ?: return true
+        return food.owned != 0.z
+    }
+
+    private fun rawProduction(citizen: Citizen): Z {
+        val raw = citizen.owned * Mechanics.citizenReproductionRate
+        return raw orMaxOf Mechanics.citizenReproductionMinimum
     }
 }
 
@@ -63,8 +74,7 @@ val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 class CitizenTaxesTurnStep(
     user: User,
     private val probs: Probs,
-) : ProbInitializer,
-    DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
+) : ProbInitializer, DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
 
     private val taxProb = ProbDiffuserKey.taxKey
     private val diffuser = GaussianDiffuser(deviation = 4.z)

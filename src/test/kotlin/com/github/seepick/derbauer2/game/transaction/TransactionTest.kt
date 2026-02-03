@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
-import com.github.seepick.derbauer2.game.building.addAndSet
+import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.TxOwnable
@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.addAndSet
+import com.github.seepick.derbauer2.game.resource.addResource
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -59,15 +59,15 @@ class TransactionTest : DescribeSpec({
                 }
         }
         it("Given enough storage When adding resource Then succeed") {
-            user.addAndSet(Land(), 50.z)
-            user.addAndSet(Granary(), 1.z)
+            user.addResource(Land(), 50.z)
+            user.addBuilding(Granary(), 1.z)
             user.add(Food())
 
             user.execTx(TxOwnable(Food::class, 1.zz)).shouldBeSuccess()
         }
         it("Given enough storage When adding resource and removing storage Then fail") {
-            user.addAndSet(Land(), 20.z)
-            user.addAndSet(Granary(), 1.z)
+            user.addResource(Land(), 20.z)
+            user.addBuilding(Granary(), 1.z)
             user.add(Food())
 
             user.execTx(
