@@ -1,31 +1,31 @@
-package com.github.seepick.derbauer2.game.probability
+package com.github.seepick.derbauer2.game.prob
 
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.compareTo
 import kotlin.random.Random
 
-fun interface ProbabilityCalculator {
+fun interface ProbCalculator {
     fun nextBoolean(): Boolean
 }
 
-class AlwaysProbabilityCalculator(private val always: Boolean) : ProbabilityCalculator {
+class AlwaysProbCalculator(private val always: Boolean) : ProbCalculator {
     override fun nextBoolean() = always
 }
 
-class PercentageProbabilityCalculator(
+class PercentageProbCalculator(
     /** Will be true if: random < threshold */
     private val threshold: Percent,
-) : ProbabilityCalculator {
+) : ProbCalculator {
     override fun nextBoolean(): Boolean {
         return Random.nextDouble(0.0, 1.0) < threshold
     }
 }
 
-class GrowthProbabilityCalculator(
+class GrowthProbCalculator(
     startValue: Percent,
     private val growthRate: Percent,
-) : ProbabilityCalculator {
+) : ProbCalculator {
 
     init {
         require(startValue >= 0.0) { "startValue must be >= 0.0 but was: $startValue" }

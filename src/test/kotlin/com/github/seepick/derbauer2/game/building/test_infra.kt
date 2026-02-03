@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.User
 
 fun <B : Building> User.enableAndSet(building: B, amount: Z): B {
-    enable(building)
+    add(building)
     // by-pass validation via transaction
     building._setOwnedInternal = amount
     return building

@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.probability
+package com.github.seepick.derbauer2.game.prob
 
 import io.kotest.core.spec.style.StringSpec
 

@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
+import com.github.seepick.derbauer2.game.prob.ProbRegistrator
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -24,13 +24,13 @@ private val log = logger {}
 
 fun Koin.initGame() {
     get<User>().initAssets()
-    get<ProbabilityInitializer>().registerAll()
+    get<ProbRegistrator>().registerAll()
 }
 
 fun User.initAssets() {
     log.info { "Initializing user assets." }
     val assets = createInitAssets()
-    assets.forEach { enable(it.first) }
+    assets.forEach { add(it.first) }
     execTx(assets.map { (asset, amount) ->
         when (asset) {
             is Resource, //-> TxResource(asset::class, amount)

@@ -19,7 +19,11 @@ data class Zz(
     fun toPlusString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
-    fun toZ() = abs(value).z
+    /** Will simply remove "-" sign if present, returning its absolute value. */
+    fun toZAbs() = abs(value).z
+    /** Will throw if negative. */
+    fun toZLimitMinZero() = if (value < 0) 0.z else value.z
+    fun toZOrThrowIfNegative() = value.z
     fun toDouble() = value.toDouble()
 
     operator fun unaryMinus() = Zz(-value)

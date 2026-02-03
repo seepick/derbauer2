@@ -4,11 +4,9 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
-import com.github.seepick.derbauer2.game.probability.AlwaysFirstProbabilitySelector
-import com.github.seepick.derbauer2.game.probability.AlwaysProbabilityCalculator
-import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.HappeningIsNeg
-import com.github.seepick.derbauer2.game.probability.ProbabilityProviderSource.HappeningTurner
-import com.github.seepick.derbauer2.game.probability.ProbabilitySelectorSource.Happenings
+import com.github.seepick.derbauer2.game.prob.ProbProviderKey
+import com.github.seepick.derbauer2.game.prob.ProbSelectorKey
+import com.github.seepick.derbauer2.game.prob.prob
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
 import com.github.seepick.derbauer2.game.testInfra.dsl.Given
@@ -27,10 +25,10 @@ class HappeningDslTest : DslTest, DescribeSpec() {
                 Given {
                     setOwned<Gold>(0.z)
                     mockHappeningDescriptorRepoReturns(FoundGoldDescriptor)
-                    probability {
-                        providers += HappeningTurner to AlwaysProbabilityCalculator(true)
-                        providers += HappeningIsNeg to AlwaysProbabilityCalculator(false)
-                        selectors += Happenings to AlwaysFirstProbabilitySelector<HappeningDescriptor>()
+                    prob {
+                        updateProvider(ProbProviderKey.happeningTurner, true)
+                        updateProvider(ProbProviderKey.happeningIsNegative, false)
+                        updateSelectorAlwaysFirst(ProbSelectorKey.happeningChoice)
                     }
                 } When {
                     nextTurnToReport {

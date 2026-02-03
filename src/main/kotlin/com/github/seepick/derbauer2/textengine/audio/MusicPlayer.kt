@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.textengine.audio
 
-import com.github.seepick.derbauer2.game.probability.ListShuffler
-import com.github.seepick.derbauer2.game.probability.randListOf
+import com.github.seepick.derbauer2.game.prob.ListShuffler
+import com.github.seepick.derbauer2.game.prob.randListOf
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import javazoom.jl.player.Player
 import java.io.InputStream

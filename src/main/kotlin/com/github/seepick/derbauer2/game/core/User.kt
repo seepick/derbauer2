@@ -31,15 +31,18 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)
 
-    fun <E : Entity> enable(entity: E, disableCheck: Boolean = false) = entity.also {
+    fun <E : Entity> add(entity: E, disableCheck: Boolean = false) = entity.also {
         if (entity::class.simpleName == null) {
             throw UserEnableException(
-                "Cannot enable anonymous class (entity=$entity / entity.label='${entity.labelSingular}')"
+                "Cannot add anonymous class (entity=$entity / entity.label='${entity.labelSingular}')"
             )
         }
-        log.debug { "Trying to enable '$entity' (disableCheck=$disableCheck)" }
+        log.debug { "Trying to add '$entity' (disableCheck=$disableCheck)" }
         if (!disableCheck && entity is Ownable && entity.owned != 0.z) {
-            throw UserEnableException("Enable must have 0 owned; change it later via TX: $entity")
+            throw UserEnableException(
+                "Adding ownable ${entity.labelSingular} must be 0 but was: ${entity.owned}; " +
+                        "(change it later via TX or: disable checks, but for tests only!)"
+            )
         }
         if (all.any { it::class == entity::class }) {
             throw UserEnableException("Entity ${entity::class.simpleName} already exists!")
@@ -63,7 +66,7 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
         copy._reports = _reports
         all.forEach { entity ->
             // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
-            copy.enable(entity.deepCopy(), disableCheck = true)
+            copy.add(entity.deepCopy(), disableCheck = true)
         }
     }
 
@@ -79,6 +82,7 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
 }
 
 fun User.hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
+
 inline fun <reified E : Entity> User.hasEntity() = hasEntity(E::class)
 
 val User.gold get() = findResource(Gold::class).owned

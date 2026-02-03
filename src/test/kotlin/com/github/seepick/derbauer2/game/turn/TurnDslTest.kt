@@ -1,8 +1,11 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.citizen.taxKey
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
+import com.github.seepick.derbauer2.game.prob.prob
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -28,10 +31,13 @@ class TurnDslTest : DslTest, FunSpec() {
                 changeOwned<Land>(landCount.z)
                 changeOwned<House>(houseCount.z)
                 setOwned<Citizen>(citizenCount)
+                prob {
+                    updateDiffuserPassthrough(ProbDiffuserKey.taxKey)
+                }
             } When {
                 nextTurnToReport()
             } Then {
-                val expectedTax = citizenCountAfterReproduction * Mechanics.citizenTax
+                val expectedTax = citizenCountAfterReproduction * Mechanics.citizenTaxRate
                 shouldOwn<Gold>(expectedTax)
             }
         }

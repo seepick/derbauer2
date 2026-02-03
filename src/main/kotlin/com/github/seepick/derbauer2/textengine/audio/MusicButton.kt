@@ -10,7 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
-import com.github.seepick.derbauer2.game.probability.ListShuffler
+import com.github.seepick.derbauer2.game.prob.ListShuffler
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.koinInject

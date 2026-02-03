@@ -14,20 +14,20 @@ class UserTest : DescribeSpec({
 
     describe("enable") {
         it("stores resource") {
-            val citizen = user.enable(Citizen())
+            val citizen = user.add(Citizen())
 
             user.all.find<Citizen>() shouldBeSameInstanceAs citizen
         }
         it("duplicate fail") {
-            user.enable(Citizen())
+            user.add(Citizen())
 
             shouldThrow<UserEnableException> {
-                user.enable(Citizen())
+                user.add(Citizen())
             }.message shouldContain "Citizen"
         }
         it("lambda fails") {
             shouldThrow<UserEnableException> {
-                user.enable(object : Entity {
+                user.add(object : Entity {
                     override val labelSingular = "fail in lambda"
                     override fun deepCopy() = this
                 })

@@ -24,15 +24,15 @@ class ResourceChangeTest : DescribeSpec({
             buildResourceChanges {}.toTextmapRendering().shouldBeEmpty()
         }
         test("Given single resource Then rendered") {
-            enable(Gold())
+            add(Gold())
 
             buildResourceChanges {
                 add(Gold::class, 2.z)
             }.toTextmapRendering() shouldBeEqual "${Gold.Data.emojiOrNull} 2"
         }
         test("Given two resources Then both rendered") {
-            enable(Gold())
-            enable(Food())
+            add(Gold())
+            add(Food())
 
             buildResourceChanges {
                 add(Gold::class, 2.z)

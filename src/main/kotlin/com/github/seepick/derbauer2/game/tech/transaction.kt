@@ -17,6 +17,6 @@ fun User.researchTech(item: TechItem): TxResult {
         return txResult
     }
     val tech = item.buildTechAndUpdateState().second
-    enable(tech)
+    add(tech)
     return TxResult.Success
 }

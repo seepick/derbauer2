@@ -3,6 +3,10 @@ package com.github.seepick.derbauer2.game.citizen
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.prob.GaussianDiffuser
+import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
+import com.github.seepick.derbauer2.game.prob.ProbInitializer
+import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -54,11 +58,26 @@ class CitizenFoodEatenTurnStep(user: User) :
     }
 }
 
-class CitizenTaxesTurnStep(user: User) :
+private val probTaxKey = ProbDiffuserKey("tax")
+val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
+
+class CitizenTaxesTurnStep(
+    user: User,
+    private val probs: Probs,
+) : ProbInitializer,
     DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
+
+    private val taxProb = ProbDiffuserKey.taxKey
+
+    override fun initProb() {
+        probs.setDiffuser(taxProb, GaussianDiffuser())
+    }
+
     override fun calcResourceChanges() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
-        val taxIncome = citizen.owned * Mechanics.citizenTax
-        add(ResourceChange(user.findResource<Gold>(), taxIncome))
+        val rawTax = citizen.owned * Mechanics.citizenTaxRate
+        val rawDiffusedTax = probs.getDiffused(taxProb, rawTax.zz)
+        val limittedTax = rawDiffusedTax.toZLimitMinZero()
+        add(Gold::class, limittedTax)
     }
 }

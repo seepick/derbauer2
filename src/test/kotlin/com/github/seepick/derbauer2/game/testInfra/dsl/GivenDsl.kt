@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.initAssets
-import com.github.seepick.derbauer2.game.probability.ProbabilityInitializer
+import com.github.seepick.derbauer2.game.prob.ProbRegistrator
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.Beeper
@@ -28,7 +28,7 @@ fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
             log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
         }
     }
-    koin.get<ProbabilityInitializer>().registerAll()
+    koin.get<ProbRegistrator>().registerAll()
     if (initAssets) {
         koin.get<User>().initAssets()
     }
@@ -60,12 +60,8 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
     inline fun <reified A : Asset> createAssetInstance(): A {
         val asset = A::class.primaryConstructor!!.call()
-        user.enable(asset)
+        user.add(asset)
         return asset
-    }
-
-    fun probability(code: ProbabilityDsl.() -> Unit) {
-        ProbabilityDsl(koin).code()
     }
 }
 

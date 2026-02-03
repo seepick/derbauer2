@@ -35,7 +35,7 @@ class ProducesResourceTurnStep(val user: User) : TurnStep {
                 val resource = user.findResource(change.resourceClass)
                 val limittedAmount =
                     if (modifiedAmount > 0) { // is positive
-                        val positiveChange = modifiedAmount.toZ()
+                        val positiveChange = modifiedAmount.toZAbs()
                         if (resource is StorableResource) { // limit to max
                             positiveChange.value.coerceAtMost(user.freeStorageFor(resource).value).zz
                         } else { // as much as you want

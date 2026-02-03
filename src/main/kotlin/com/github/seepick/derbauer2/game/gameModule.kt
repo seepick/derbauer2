@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.citizen.citizenModule
 import com.github.seepick.derbauer2.game.core.coreModule
 import com.github.seepick.derbauer2.game.feature.featureModule
 import com.github.seepick.derbauer2.game.happening.happeningModule
-import com.github.seepick.derbauer2.game.probability.probabilityModule
+import com.github.seepick.derbauer2.game.prob.probModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
 import com.github.seepick.derbauer2.game.tech.techModule
 import com.github.seepick.derbauer2.game.trading.tradingModule
@@ -17,7 +17,7 @@ import kotlin.reflect.KClass
 
 fun gameModule(prefStatePath: KClass<*>) = module {
     includes(
-        probabilityModule(),
+        probModule(),
         coreModule(prefStatePath),
         resourceModule(),
         buildingModule(),

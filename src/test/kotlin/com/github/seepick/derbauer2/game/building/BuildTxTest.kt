@@ -22,9 +22,9 @@ class BuildTxTest : DescribeSpec({
     describe("general") {
         fun User.givenSufficientResourcesForHouse(): House {
             val house = House()
-            enable(Gold())
-            enable(Land())
-            enable(house)
+            add(Gold())
+            add(Land())
+            add(house)
             execTx(
                 TxOwnable(Gold::class, house.costsGold.zz),
                 TxOwnable(Land::class, house.landUse.zz),

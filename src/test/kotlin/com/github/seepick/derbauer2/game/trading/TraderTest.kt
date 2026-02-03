@@ -25,13 +25,13 @@ class TraderTest : DescribeSpec({
     context("Buy") {
         describe("Results") {
             it("When buy infinite resource like gold Then succeed") {
-                user.enable(Gold())
+                user.add(Gold())
                 user.trade(
                     TradeRequest(Gold::class, Buy, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
             it("Given enough storage When buy storable Then succeed") {
-                user.enable(Food())
+                user.add(Food())
                 user.enableAndSet(Granary(), 1.z)
 
                 user.trade(
@@ -39,7 +39,7 @@ class TraderTest : DescribeSpec({
                 ) shouldBeEqual TxResult.Success
             }
             it("Given no storage When buy Then fail") {
-                user.enable(Food())
+                user.add(Food())
 
                 user.trade(
                     TradeRequest(Food::class, Buy, 1.z),
@@ -49,7 +49,7 @@ class TraderTest : DescribeSpec({
 
         describe("Operation") {
             it("When buy infinite resource gold Then increased") {
-                user.enable(Gold())
+                user.add(Gold())
                 user.trade(TradeRequest(Gold::class, Buy, 1.z))
                 user.gold shouldBeEqual 1.z
             }
@@ -59,7 +59,7 @@ class TraderTest : DescribeSpec({
     context("Sell") {
         describe("Results") {
             it("Given no gold When selling Then fails") {
-                user.enable(Gold())
+                user.add(Gold())
 
                 user.trade(
                     TradeRequest(Gold::class, Sell, 1.z),
@@ -75,7 +75,7 @@ class TraderTest : DescribeSpec({
         }
         describe("Operation") {
             it("Given no gold When selling Then gold unchanged") {
-                user.enable(Gold())
+                user.add(Gold())
                 user.trade(TradeRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }

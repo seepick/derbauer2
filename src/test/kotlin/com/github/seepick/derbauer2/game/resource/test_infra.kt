@@ -11,7 +11,7 @@ import io.kotest.matchers.collections.shouldContain
 import kotlin.reflect.KClass
 
 fun <R : Resource> User.enableAndSet(resource: R, amount: Z): R {
-    enable(resource)
+    add(resource)
     // by-pass validation via transaction
     resource._setOwnedInternal = amount
     return resource
@@ -21,12 +21,20 @@ fun ResourceChanges.shouldContainChange(resource: Resource, amount: Zz) {
     changes.shouldContainChange(resource, amount)
 }
 
+fun ResourceChanges.shouldContainChange(resourceClass: KClass<out Resource>, amount: Zz) {
+    changes.shouldContainChange(resourceClass, amount)
+}
+
 fun ResourceChanges.shouldContainChange(resource: Resource, amount: Z) {
     shouldContainChange(resource, amount.zz)
 }
 
 fun List<ResourceChange>.shouldContainChange(resource: Resource, amount: Zz) {
     shouldContain(ResourceChange(resource, amount))
+}
+
+fun List<ResourceChange>.shouldContainChange(resourceClass: KClass<out Resource>, amount: Zz) {
+    shouldContain(ResourceChange(resourceClass, amount))
 }
 
 fun List<ResourceChange>.shouldContainChange(resource: Resource, amount: Z) {
@@ -50,7 +58,7 @@ inline fun <reified SR : StorableResource> User.givenStorage(amount: Z) =
     FakeStorage(
         storableResourceClass = SR::class,
         storageAmount = amount
-    ).also { enable(it, disableCheck = true) }
+    ).also { add(it, disableCheck = true) }
 
 
 interface ResourceProductionModifierEntity : Entity, ResourceProductionModifier

@@ -19,7 +19,7 @@ class TradingDslTest : DslTest, DescribeSpec() {
                 Given {
                     setOwned<Gold>(0.z)
                     setOwned<Food>(0.z)
-                    user.enable(TradingFeature())
+                    user.add(TradingFeature())
                 } When {
                     selectPrompt("trade")
                     selectPrompt("buy 1 🍖")

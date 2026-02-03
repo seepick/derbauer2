@@ -64,7 +64,7 @@ object Mechanics {
 
     // END TURN
     // ========================================================================
-    val citizenTax = 0.5.`%` // multiplied by citizens.amount
+    val citizenTaxRate = 0.5.`%` // multiplied by citizens.amount
     val citizenFoodConsume = 0.3.`%`
     val citizensStarve = 0.01.`%`
     val citizensStarveMinimum = 1.z

@@ -34,7 +34,7 @@ class TransactionTest : DescribeSpec({
         }
 
         it("Given zero gold When remove gold Then fail") {
-            user.enable(Gold())
+            user.add(Gold())
 
             user.execTx(TxOwnable(Gold::class, (-1).zz))
                 .shouldBeInstanceOf<TxResult.Fail>().message.should {
@@ -43,15 +43,15 @@ class TransactionTest : DescribeSpec({
         }
 
         it("Given zero land When build Then fail") {
-            user.enable(Land())
-            user.enable(House())
+            user.add(Land())
+            user.add(House())
 
             user.execTx(TxOwnable(House::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
         it("Given no storage When adding resource Then fail") {
-            user.enable(Land())
-            user.enable(Food())
+            user.add(Land())
+            user.add(Food())
 
             user.execTx(TxOwnable(Food::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail>().message.should {
@@ -61,14 +61,14 @@ class TransactionTest : DescribeSpec({
         it("Given enough storage When adding resource Then succeed") {
             user.enableAndSet(Land(), 50.z)
             user.enableAndSet(Granary(), 1.z)
-            user.enable(Food())
+            user.add(Food())
 
             user.execTx(TxOwnable(Food::class, 1.zz)).shouldBeSuccess()
         }
         it("Given enough storage When adding resource and removing storage Then fail") {
             user.enableAndSet(Land(), 20.z)
             user.enableAndSet(Granary(), 1.z)
-            user.enable(Food())
+            user.add(Food())
 
             user.execTx(
                 TxOwnable(Food::class, 1.zz),

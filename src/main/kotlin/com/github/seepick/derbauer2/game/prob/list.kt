@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.probability
+package com.github.seepick.derbauer2.game.prob
 
 interface ListShuffler {
     fun <T> shuffle(items: List<T>): List<T>

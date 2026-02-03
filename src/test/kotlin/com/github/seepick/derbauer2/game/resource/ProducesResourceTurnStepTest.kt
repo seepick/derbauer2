@@ -23,7 +23,7 @@ private fun `user with 0 🍖, 1 granary, 1 farm`(
     test: SetupContext.() -> Unit,
 ) {
     val user = User()
-    val food = user.enable(Food())
+    val food = user.add(Food())
     val farm = user.enableAndSet(Farm(), 1.z)
     val granary = user.enableAndSet(Granary(), 1.z)
 
@@ -78,7 +78,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         it("When modifier 2x Then produce 2x") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val multiplier = 2
-                user.enable(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
+                user.add(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
 
                 calcStepChanges().shouldContainChange(food, farm.producingResourceAmount * multiplier)
             }
@@ -87,7 +87,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
             `user with 0 🍖, 1 granary, 1 farm` {
                 val diff = 1.z
                 food.ownedForTest = granary.totalStorageAmount - diff
-                user.enable(ResourceProductionMultiplierStub(Food::class, 2.0))
+                user.add(ResourceProductionMultiplierStub(Food::class, 2.0))
 
                 calcStepChanges().shouldContainChange(food, diff)
             }
@@ -97,7 +97,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 farm.ownedForTest = 1.z
                 val ownedFood = 1.z
                 food.ownedForTest = ownedFood
-                user.enable(ResourceProductionMultiplierStub(Food::class, -2.0))
+                user.add(ResourceProductionMultiplierStub(Food::class, -2.0))
 
                 calcStepChanges().shouldContainChange(food, -ownedFood)
             }
@@ -106,8 +106,8 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         it("When multiple modifiers fold sequentially Then apply both") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val baseProduction = farm.totalProducingResourceAmount
-                user.enable(ResourceProductionMultiplierStub1(Food::class, 2.0))
-                user.enable(ResourceProductionMultiplierStub2(Food::class, 0.5))
+                user.add(ResourceProductionMultiplierStub1(Food::class, 2.0))
+                user.add(ResourceProductionMultiplierStub2(Food::class, 0.5))
 
                 calcStepChanges().shouldContainChange(food, (baseProduction.toDouble() * 2.0 * 0.5).zz)
             }

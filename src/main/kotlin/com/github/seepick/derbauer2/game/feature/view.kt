@@ -34,6 +34,6 @@ class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
     }
 
     override fun execute(user: User) {
-        user.enable(feature)
+        user.add(feature)
     }
 }

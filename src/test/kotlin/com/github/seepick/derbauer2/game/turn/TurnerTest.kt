@@ -8,7 +8,7 @@ import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.DefaultHappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.probability.ProbabilitiesImpl
+import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.enableAndSet
@@ -19,12 +19,12 @@ import io.kotest.matchers.equals.shouldBeEqual
 class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var turner: Turner
-    lateinit var probabilities: ProbabilitiesImpl
+    lateinit var probabilities: ProbsImpl
     beforeTest {
         user = User()
-        probabilities = ProbabilitiesImpl()
+        probabilities = ProbsImpl()
         val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo)
-        happeningTurner.registerProbabilities()
+        happeningTurner.initProb()
         turner = Turner(
             user = user,
             turnSteps = emptyList(),

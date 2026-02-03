@@ -21,7 +21,7 @@ data class TxOwnable(
     constructor(ownableClass: KClass<out Ownable>, amount: Zz) : this(
         ownableClass = ownableClass,
         operation = if (amount >= 0) TxOperation.INCREASE else TxOperation.DECREASE,
-        amount = amount.toZ()
+        amount = amount.toZAbs()
     )
 
     override fun toString() = "TxOwned(${ownableClass.simpleName} ${operation.symbol}[$amount])"

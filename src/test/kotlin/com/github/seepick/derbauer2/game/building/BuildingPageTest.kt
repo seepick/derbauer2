@@ -15,8 +15,8 @@ class BuildingPageTest : PageTest, StringSpec({
 
     "Given some Then check whole screen" {
         renderGamePage({ ctx ->
-            ctx.user.enable(House())
-            ctx.user.enable(Farm())
+            ctx.user.add(House())
+            ctx.user.add(Farm())
             ctx.buildBuildingsPage()
         }) {
             fullPage shouldBeEqual """

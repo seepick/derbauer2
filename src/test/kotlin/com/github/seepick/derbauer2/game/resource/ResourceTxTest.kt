@@ -19,20 +19,20 @@ class ResourceTxTest : DescribeSpec({
     }
     describe("simple non-storageable") {
         it("When add Then added") {
-            val resource = user.enable(Gold())
+            val resource = user.add(Gold())
             user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeSuccess()
             resource.owned shouldBeEqual 1.z
         }
     }
     describe("storageable") {
         it("Given no storage When add Then fail") {
-            val resource = user.enable(Food())
+            val resource = user.add(Food())
 
             user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeFail("Not enough storage")
         }
         it("Given enough storage When add Then succeed") {
             user.enableAndSet(Granary(), 1.z)
-            val resource = user.enable(Food())
+            val resource = user.add(Food())
 
             user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeSuccess()
         }
