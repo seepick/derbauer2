@@ -29,47 +29,43 @@ class Turner(
         resourceChanges = resourceChangesOf(
             TurnPhase.entries.map {
                 steps.execStepsAndMap(it)
-            }
-        ),
+            }),
         happenings = happeningTurner.buildHappeningMultiPages(),
         newFeatures = featureTurner.buildFeaturMultiPages(),
     )
 
-    private fun List<TurnStep>.execStepsAndMap(phase: TurnPhase): ResourceChanges =
-        filter {
-            it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) }
-        }.flatMap { step ->
-            val stepChanges = step.calcResourceChanges()
-            stepChanges.changes
-        }.toResourceChanges().let { mergedStepChanges ->
-            buildResourceChanges {
-                mergedStepChanges.changes.forEach { change ->
-                    val resource = user.findResource(change.resourceClass)
-                    val limitedAmount = limitAmount(resource, change.changeAmount)
-                    add(resource, limitedAmount)
-                }
+    private fun List<TurnStep>.execStepsAndMap(phase: TurnPhase): ResourceChanges = filter {
+        it.phase == phase && it.requiresEntities.all { required -> user.hasEntity(required) }
+    }.flatMap { step ->
+        val stepChanges = step.calcResourceChanges()
+        stepChanges.changes
+    }.toResourceChanges().let { mergedStepChanges ->
+        buildResourceChanges {
+            mergedStepChanges.changes.forEach { change ->
+                val resource = user.findResource(change.resourceClass)
+                val limitedAmount = limitAmount(resource, change.changeAmount)
+                add(resource, limitedAmount)
             }
-        }.also {
-            user.execTx(it).errorOnFail()
         }
+    }.also {
+        user.execTx(it).errorOnFail()
+    }
 
     private fun limitAmount(resource: Resource, change: Zz): Zz =
         if (change > 0) { // is positive
             val positiveChange = change.toZAbs()
-            if (resource is StorableResource) { // limit to max
+            if (resource is StorableResource) { // limit to maximum storage capacity
                 positiveChange.coerceAtMost(user.freeStorageFor(resource)).zz
-            } else { // as much as you want
+            } else { // get as much as you want
                 positiveChange.zz
             }
         } else { // is negative
-            if (resource is StorableResource) {
-                if (resource.owned.zz + change < 0.zz) { // can't lose more than owned
-                    -resource.owned.zz
-                } else {
-                    change
-                }
+            if (resource.owned.zz + change < 0.zz) { // can't lose more than owned
+                -resource.owned.zz
             } else {
-                change // ok to be negative if not storable ;) TODO or is it? citizens?!
+                change
             }
         }
+
+    companion object // for extension functions
 }

@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.addAndSet
-import com.github.seepick.derbauer2.game.resource.givenStorage
+import com.github.seepick.derbauer2.game.resource.givenFakeStorage
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
 
@@ -18,7 +18,7 @@ class CitizenReproduceTurnStepTest : DescribeSpec({
 
     describe("When reproduce") {
         it("Given no citizens Then stay zero") {
-            user.givenStorage<Citizen>(100.z)
+            user.givenFakeStorage<Citizen>(100.z)
             val citizen = user.addAndSet(Citizen(), 0.z)
 
             val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
@@ -26,7 +26,7 @@ class CitizenReproduceTurnStepTest : DescribeSpec({
             changes.shouldContainChange(citizen, 0.zz)
         }
         it("Given 1 citizen Then get minimum of 1") {
-            user.givenStorage<Citizen>(100.z)
+            user.givenFakeStorage<Citizen>(100.z)
             val citizen = user.addAndSet(Citizen(), 1.z)
 
             val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
@@ -34,7 +34,7 @@ class CitizenReproduceTurnStepTest : DescribeSpec({
             changes.shouldContainChange(citizen, Mechanics.citizenReproductionMinimum.zz)
         }
         it("Given 100 citizen Then increase by reproduction rate") {
-            user.givenStorage<Citizen>(200.z)
+            user.givenFakeStorage<Citizen>(200.z)
             val citizen = user.addAndSet(Citizen(), 100.z)
 
             val changes = CitizenReproduceTurnStep(user).calcResourceChanges()

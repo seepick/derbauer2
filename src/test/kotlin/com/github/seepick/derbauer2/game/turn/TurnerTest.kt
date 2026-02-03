@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addAndSet
+import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
@@ -10,14 +11,17 @@ import com.github.seepick.derbauer2.game.happening.DefaultHappeningDescriptorRep
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Resource
+import com.github.seepick.derbauer2.game.resource.addAndSet
+import com.github.seepick.derbauer2.game.resource.givenFakeStorage
+import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
-import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeEmpty
 
-class TurnerTest : StringSpec({
+class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var probabilities: ProbsImpl
     beforeTest {
@@ -25,84 +29,95 @@ class TurnerTest : StringSpec({
         probabilities = ProbsImpl()
     }
 
-    fun turner(steps: List<TurnStep> = emptyList()) = Turner(
+    fun Turner.Companion.build(vararg steps: TurnStep) = Turner(
         user = user,
-        steps = steps,
+        steps = steps.toList(),
         happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo).apply { initProb() },
         featureTurner = FeatureTurner(user),
     )
 
-    "User's reports stay untouched" {
-        turner().executeAndGenerateReport()
-
-        user.reports.all.shouldBeEmpty()
+    fun Turner.execShouldContainChange(resource: Resource, expectedAmount: Zz) {
+        executeAndGenerateReport().resourceChanges.shouldContainChange(resource, expectedAmount)
     }
 
-    // TODO fix test cases
-//    it("Given some 🙎🏻‍♂️ and too little 🍖 Then all available food 🍖 consumed") {
-//        val food = user.addAndSet(Food(), 1.z)
-//        user.addAndSet(Citizen(), 10.z)
-//
-//        expectResourceChange(food, -food.owned)
-//    }
-//    it("Given 100 citizen and almost full Then increase capped") {
-//        user.givenStorage<Citizen>(102.z)
-//        val citizen = user.addAndSet(Citizen(), 100.z)
-//
-//        val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
-//
-//        changes.shouldContainChange(citizen, 2.zz)
-//    }
+    describe("Special Cases") {
+        it("Given nothing Then empty changes And user's reports stay untouched") {
+            val report = Turner.build().executeAndGenerateReport()
 
-//    it("Given almost full storage Then produce diff") {
-//        `user with 0 🍖, 1 granary, 1 farm` {
-//            val diff = 1.z
-//            food.ownedForTest = granary.totalStorageAmount - diff
-//
-//            calcStepChanges().shouldContainChange(food, diff)
-//        }
-//    }
-//    it("Given full storage Then produce zero") {
-//        `user with 0 🍖, 1 granary, 1 farm` {
-//            food.ownedForTest = granary.totalStorageAmount
-//
-//            calcStepChanges().shouldContainChange(food, 0.z)
-//        }
-//    }
-//    it("When 2x but storage limited Then produce up to free storage") {
-//        `user with 0 🍖, 1 granary, 1 farm` {
-//            val diff = 1.z
-//            food.ownedForTest = granary.totalStorageAmount - diff
-//            user.add(ResourceProductionMultiplierStub(Food::class, 2.0))
-//
-//            calcStepChanges().shouldContainChange(food, diff)
-//        }
-//    }
-//    it("When modifier makes negative beyond owned Then clamp to -owned") {
-//        `user with 0 🍖, 1 granary, 1 farm` {
-//            farm.ownedForTest = 1.z
-//            val ownedFood = 1.z
-//            food.ownedForTest = ownedFood
-//            user.add(ResourceProductionMultiplierStub(Food::class, -2.0))
-//
-//            calcStepChanges().shouldContainChange(food, -ownedFood)
-//        }
-//    }
+            report.resourceChanges.shouldBeEmpty()
+            user.reports.all.shouldBeEmpty()
+        }
+    }
+    describe("Resource") {
+        fun test(given: Int, changeBy: Int, shouldChange: Int) {
+            // use Gold, as it is not of type StorableResource
+            val gold = user.addAndSet(Gold(), given.z)
+            val turner = Turner.build(TurnStep.build(gold, changeBy.zz))
 
-    "Given storage 9/10 and steps +5, -1 Then food changes by +1 and not 0 (because of wrong cap order application)" {
-        val foodStorageAvailable = 1.z
-        val granary = user.addAndSet(Granary(), 1.z)
-        val land = user.add(Land())
-        land.ownedForTest = user.totalLandUse
-        val food = user.add(Food())
-        food.ownedForTest = granary.totalStorageAmount - foodStorageAvailable // almost full
-        val turner = turner(
-            steps = listOf(
+            turner.execShouldContainChange(gold, shouldChange.zz)
+        }
+        it("Given 0 When change -1 Then change nothing") {
+            test(given = 0, changeBy = -1, shouldChange = 0)
+        }
+        it("Given 1 When change -1 Then change by -1") {
+            test(given = 1, changeBy = -1, shouldChange = -1)
+        }
+        it("Given 0 When change +100 Then change by +100") {
+            test(given = 0, changeBy = 100, shouldChange = 100)
+        }
+    }
+    describe("StorableResource") {
+        it("Given 0 resource and change -1 Then change nothing") {
+            val food = user.add(Food())
+            val turner = Turner.build(TurnStep.build(food, (-1).zz))
+
+            turner.execShouldContainChange(food, 0.zz)
+        }
+        it("Given 0 resource and change +1 Then change nothing") {
+            val food = user.add(Food())
+            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+
+            turner.execShouldContainChange(food, 0.zz)
+        }
+        it("Given 1 resource When change -2 Then changed by max possible -1") {
+            val food = user.addAndSet(Food(), 1.z)
+            val turner = Turner.build(TurnStep.build(food, (-2).zz))
+
+            turner.execShouldContainChange(food, (-1).zz)
+        }
+        it("Given 0/1 resource When change +1 Then changed successfully +1") {
+            val food = user.add(Food())
+            user.givenFakeStorage<Food>(1.z)
+            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+
+            turner.execShouldContainChange(food, (+1).zz)
+        }
+        it("Given 1/1 resource When change +1 Then change nothing") {
+            val food = user.addAndSet(Food(), 1.z)
+            user.givenFakeStorage<Food>(1.z)
+            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+
+            turner.execShouldContainChange(food, 0.zz)
+        }
+        it("Given 1/2 resources When change +2 Then changed by max possible +1") {
+            val food = user.addAndSet(Food(), 1.z)
+            user.givenFakeStorage<Food>(2.z)
+            val turner = Turner.build(TurnStep.build(food, (+2).zz))
+
+            turner.execShouldContainChange(food, 1.zz)
+        }
+        it("Given 9/10 in storage When change +5 And change -1 Then changed by +1") {
+            // execute together not sequentially
+            val foodStorageAvailable = 1.z
+            val granary = user.addAndSet(Granary(), 1.z)
+            val food = user.add(Food())
+            food.ownedForTest = granary.totalStorageAmount - foodStorageAvailable // almost full
+            val turner = Turner.build(
                 TurnStep.build(food, 5.zz), // first over-increase but not be capped yet!
                 TurnStep.build(food, (-1).zz), // then decrease
             )
-        )
 
-        turner.executeAndGenerateReport().resourceChanges.shouldContainChange(food, foodStorageAvailable)
+            turner.execShouldContainChange(food, foodStorageAvailable.zz)
+        }
     }
 })

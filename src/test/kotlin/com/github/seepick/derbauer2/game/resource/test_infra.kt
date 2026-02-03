@@ -54,7 +54,7 @@ data class FakeStorage<SR : StorableResource>(
     override fun deepCopy() = copy()
 }
 
-inline fun <reified SR : StorableResource> User.givenStorage(amount: Z) =
+inline fun <reified SR : StorableResource> User.givenFakeStorage(amount: Z) =
     FakeStorage(
         storableResourceClass = SR::class,
         storageAmount = amount

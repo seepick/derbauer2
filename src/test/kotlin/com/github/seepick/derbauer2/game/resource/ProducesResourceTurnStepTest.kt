@@ -9,11 +9,13 @@ import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.testInfra.zz
 import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.collections.shouldBeSingleton
+import io.kotest.matchers.comparables.shouldBeGreaterThan
 
 private data class SetupContext(
     val step: ProducesResourceTurnStep,
     val user: User,
-    val food: Resource,
+    val food: Food,
     val farm: Farm,
     val granary: Granary,
 ) {
@@ -59,19 +61,23 @@ class ProducesResourceTurnStepTest : DescribeSpec({
 
             actualChanges.shouldBeEmpty()
         }
-        // TODO test for going over storage limit
+        it("Producing above the storage capacity As limit caps are done in Turner") {
+            `user with 0 🍖, 1 granary, 1 farm` {
+                food.ownedForTest = granary.totalStorageAmount - 1.z
+                calcStepChanges().shouldBeSingleton().first().changeAmount.value shouldBeGreaterThan 1
+            }
+        }
     }
 
     describe("modifier interactions") {
-        it("When modifier 2x Then produce 2x") {
+        it("When modifier 100x Then produce 100x") {
             `user with 0 🍖, 1 granary, 1 farm` {
-                val multiplier = 2
+                val multiplier = 100
                 user.add(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
 
                 calcStepChanges().shouldContainChange(food, farm.producingResourceAmount * multiplier)
             }
         }
-        // TODO test for going over limits (above and below)
         it("When multiple modifiers fold sequentially Then apply both") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val baseProduction = farm.totalProducingResourceAmount
