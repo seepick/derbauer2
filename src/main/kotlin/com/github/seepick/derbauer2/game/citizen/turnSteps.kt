@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -53,7 +52,7 @@ val ProbDiffuserKey.Companion.eatKey get() = probEatKey
 class CitizenFoodEatenTurnStep(user: User, private val probs: Probs) : ProbInitializer,
     DefaultTurnStep(user, TurnPhase.First, listOf(Citizen::class, Food::class)) {
 
-    private val diffuser = GrowthDiffuser(variation = 20.`%`)
+    private val diffuser = GrowthDiffuser(variation = Mechanics.citizenEatGrowthVariation)
 
     override fun initProb() {
         probs.setDiffuser(ProbDiffuserKey.eatKey, diffuser)
@@ -71,7 +70,7 @@ class CitizenFoodEatenTurnStep(user: User, private val probs: Probs) : ProbIniti
                     val adjustedStarving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
                     ResourceChange(citizen, -adjustedStarving)
                 } else {
-                    val rawConsumed = citizen.owned * Mechanics.citizenFoodConsume
+                    val rawConsumed = citizen.owned * Mechanics.citizenEatAmount
                     val diffusedConsumed = diffuser.diffuse(rawConsumed.zz).toZLimitMinZero()
                     val adjustedConsumed = diffusedConsumed orMaxOf 1.z
                     ResourceChange(food, -adjustedConsumed)
@@ -87,7 +86,7 @@ val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 class CitizenTaxesTurnStep(user: User, private val probs: Probs) : ProbInitializer,
     DefaultTurnStep(user, TurnPhase.Last, listOf(Citizen::class, Gold::class)) {
 
-    private val diffuser = GrowthDiffuser(variation = 20.`%`)
+    private val diffuser = GrowthDiffuser(variation = Mechanics.citizenTaxGrowthVariation)
 
     override fun initProb() {
         probs.setDiffuser(ProbDiffuserKey.taxKey, diffuser)

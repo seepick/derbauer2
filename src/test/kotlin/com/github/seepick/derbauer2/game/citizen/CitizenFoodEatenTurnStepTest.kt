@@ -55,7 +55,7 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
             val food = user.addResource(Food(), 10.z)
             val citizen = user.addResource(Citizen(), 10.z)
 
-            expectResourceChange(food, -(citizen.owned * Mechanics.citizenFoodConsume))
+            expectResourceChange(food, -(citizen.owned * Mechanics.citizenEatAmount))
         }
         // TODO test for going over storage limit
     }

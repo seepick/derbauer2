@@ -53,25 +53,26 @@ object Mechanics {
     // TECHNOLOGY
     // ========================================================================
     val techAgricultureCostsGold = if (DEV) 10.z else 300.z
-    val techAgricultureFoodProductionMultiplier = if (DEV) 2.0.`%` else 1.1.`%`
+    val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 110.`%`
     val techIrrigationCostsGold = 450.z
-    val techIrrigationFoodProductionMultiplier = if (DEV) 2.0.`%` else 1.15.`%`
+    val techIrrigationFoodProductionMultiplier = if (DEV) 200.`%` else 115.`%`
     val techJunkFoodCostsGold = 100.z
-
     val techCapitalismCostsGold = if (DEV) 20.z else 800.z
-
     val techWarfareCostsGold = 100.z
 
     // END TURN
     // ========================================================================
-    val citizenTaxRate = 0.5.`%` // multiplied by citizens.amount
-    val citizenFoodConsume = 0.3.`%`
-    val citizensStarve = 0.01.`%`
+    val citizenTaxRate = 5.`%` // multiplied by citizens.amount
+    val citizenTaxGrowthVariation = 20.`%`
+    val citizenEatAmount = 3.`%`
+    val citizenEatGrowthVariation = 20.`%`
+    val citizensStarve = 1.`%`
     val citizensStarveMinimum = 1.z
-    val citizenReproductionRate = 0.1.`%`
+    val citizenReproductionRate = 10.`%`
     val citizenReproductionMinimum = 1.z
 
-    val happeningInitialProb = 0.0.`%`
-    val happeningGrowthRate = 0.02.`%`
-    val happeningIsNegativeChance = 0.1.`%`
+    // HAPPENINGS
+    val happeningInitialProb = 0.`%`
+    val happeningGrowthRate = 2.`%`
+    val happeningIsNegativeChance = 1.`%`
 }
