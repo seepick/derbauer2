@@ -37,7 +37,6 @@ class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopy
                 "Cannot add anonymous class (entity=$entity / entity.label='${entity.labelSingular}')"
             )
         }
-        log.debug { "Trying to add '$entity' (disableCheck=$disableCheck)" }
         if (!disableCheck && entity is Ownable && entity.owned != 0.z) {
             throw UserEnableException(
                 "Adding ownable ${entity.labelSingular} must be 0 but was: ${entity.owned}; " +

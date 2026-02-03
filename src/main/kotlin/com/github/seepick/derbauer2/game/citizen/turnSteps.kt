@@ -50,7 +50,7 @@ class CitizenFoodEatenTurnStep(user: User) :
                     ResourceChange(citizen, -adjustedStarving)
                 } else {
                     val rawConsumed = citizen.owned * Mechanics.citizenFoodConsume
-                    val adjustedConsumed = rawConsumed orMaxOf 1.z orMinOf food.owned
+                    val adjustedConsumed = rawConsumed.coerceIn(1.z, food.owned)
                     ResourceChange(food, -adjustedConsumed)
                 }
             }

@@ -6,7 +6,6 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Current
 
-* BUG: when 9/10 food, and produce way more, then should be +1 but was 0!!!
 * BUG: leftover food not eaten at the end; citizens should start to starve
 
 #### Window Refactoring

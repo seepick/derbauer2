@@ -48,6 +48,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 )
             }
         }
+        // TEST two distinct entities both producing same resource taken into account
     }
     describe("edge cases") {
         it("Given nothing Then do nothing") {

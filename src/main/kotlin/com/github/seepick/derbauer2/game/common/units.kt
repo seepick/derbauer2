@@ -61,6 +61,7 @@ data class Z(
     val zz get() = value.zz
     fun toDouble() = value.toDouble()
 
+    fun coerceIn(min: Z, max: Z) = Z(value.coerceIn(min.value, max.value))
     infix fun orMaxOf(other: Z) = if (this > other) this else other
     infix fun orMinOf(other: Z) = if (this < other) this else other
 
