@@ -22,6 +22,9 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: ad CitizenTaxesTurnStep: update deviation, adjust relative "roughly" to ... diffuser.deviation = ...
 * BZ: tech: finish techs (warfare, junkfood, etc. implement actual effects)
 * BZ: ad prob: need a "growth spreader", using gaussian underneath; only positive values; percentage of deviation
+* UI: events/interactions make sounds (happening, etc...) for better feedback
+    * first introduce ActionBus (for history later; skills/XP)
+* UI: redesign turn report: make it more outstanding
 
 ## Backlog
 
@@ -108,4 +111,3 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
     * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
 
 - UI: bright/dark mode support
-- UI: certain events make a sound (happening, etc...)

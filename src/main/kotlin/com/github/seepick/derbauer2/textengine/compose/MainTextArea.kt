@@ -24,7 +24,7 @@ fun MainTextArea(textmap: Textmap, tick: Int) {
             .testTag(TestTags.mainTextArea)
             .semantics { text = AnnotatedString(fullText) }
     ) {
-        val grid = textmap.getGrid()
+        val grid = textmap.toGrid()
 
         grid.forEachIndexed { rowIndex, row ->
             row.forEachIndexed { colIndex, cell ->
