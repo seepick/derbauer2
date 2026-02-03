@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.resource.AgricultureTech
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -15,13 +16,19 @@ class TechTreeTest : DescribeSpec({
     fun filteredTree(vararg items: TechItem) =
         tree(*items).filterResearchableItems()
 
-    describe("init") {
-        it("self reference fail") {
+    describe("invalid construction") {
+        it("require self fails") {
             shouldThrow<IllegalArgumentException> {
-                tree(SelfItem)
+                tree(SelfReferenceItem)
             }
         }
-        it("cycle references fail") {
+        it("require unknown fails") {
+            shouldThrow<IllegalArgumentException> {
+                val item = newTechItem(requirements = setOf(AgricultureTech.Data))
+                tree(item)
+            }
+        }
+        it("cycle reference fails") {
             shouldThrow<IllegalArgumentException> {
                 tree(Cycle1Item, Cycle2Item)
             }
@@ -34,7 +41,7 @@ class TechTreeTest : DescribeSpec({
             filteredTree(item).shouldContainOnly(item)
         }
         it("Given researched tech Then is empty") {
-            val item = newTechItem().updateResearchedState()
+            val item = newTechItem().buildTechAndUpdateState().first
 
             filteredTree(item).shouldBeEmpty()
         }
@@ -45,20 +52,28 @@ class TechTreeTest : DescribeSpec({
             filteredTree(item1a, item1b).shouldContainOnly(item1a)
         }
         it("Given 1 researched and dependent not Then return only second") {
-            val item1a = newTechItem(label = "tech1a").updateResearchedState()
+            val item1a = newTechItem(label = "tech1a").buildTechAndUpdateState().first
             val item1b = newTechItem(label = "tech1b", requirements = setOf(item1a))
             filteredTree(item1a, item1b).shouldContainOnly(item1b)
         }
     }
-    describe("toPrettyString") { // WIP let AI implement this (once tree enum is refactored)
-        it("tree with").config(enabled = false) {
-            val item1 = newTechItem(label = "item1")
+    describe("toPrettyString") {
+        val techTreeHeader = "<🤓TECH🔬TREE🤓>"
+        it("single item") {
+            val item = newTechItem()
+            tree(item).toPrettyString() shouldBeEqual """
+                $techTreeHeader
+                └── ${item.label}
+                """.trimIndent()
+        }
+        it("complex tree") {
+            val item1 = newTechItem(label = "item1").buildTechAndUpdateState().first
             val item2 = newTechItem(label = "item2")
             val item2a = newTechItem(label = "item2a", requirements = setOf(item2))
             val item2b = newTechItem(label = "item2b", requirements = setOf(item2))
             val item3 = newTechItem(label = "item3")
             tree(item1, item2, item2a, item2b, item3).toPrettyString() shouldBeEqual """
-                <🤓TECH🔬TREE🤓>
+                $techTreeHeader
                 ├── ${item1.label} ✅
                 ├── ${item2.label}
                 │   ├── ${item2a.label}
@@ -69,48 +84,47 @@ class TechTreeTest : DescribeSpec({
     }
 })
 
-private object SelfData : TechStaticData {
-    override val label = "Cycle1"
-    override val requirements = setOf<TechStaticData>(SelfData)
+private object SelfData : TechData {
+    override val label = "SelfData"
+    override val requirements = setOf<TechData>(SelfData)
     override val costs = ResourceChanges.empty
 }
 
-private object SelfItem : TechItem, TechStaticData by SelfData {
+private object SelfReferenceItem : TechItem, TechData by SelfData {
     override var state: TechState = TechState.Unresearched
     override fun buildTech() = SelfTech()
 }
 
-private class SelfTech : Tech, TechStaticData by SelfData {
+private class SelfTech : Tech, TechData by SelfData {
     override fun deepCopy() = this
 }
 
-private object Cycle1Data : TechStaticData {
+private object Cycle1Data : TechData {
     override val label = "Cycle1"
-    override val requirements = setOf<TechStaticData>(Cycle2Data)
+    override val requirements = setOf<TechData>(Cycle2Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle1Item : TechItem, TechStaticData by Cycle1Data {
+private object Cycle1Item : TechItem, TechData by Cycle1Data {
     override var state: TechState = TechState.Unresearched
     override fun buildTech() = Cycle1Tech()
 }
 
-private class Cycle1Tech : Tech, TechStaticData by Cycle1Data {
+private class Cycle1Tech : Tech, TechData by Cycle1Data {
     override fun deepCopy() = this
 }
 
-private object Cycle2Data : TechStaticData {
+private object Cycle2Data : TechData {
     override val label = "Cycle2"
-    override val requirements = setOf<TechStaticData>(Cycle1Data)
+    override val requirements = setOf<TechData>(Cycle1Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle2Item : TechItem, TechStaticData by Cycle2Data {
+private object Cycle2Item : TechItem, TechData by Cycle2Data {
     override var state: TechState = TechState.Unresearched
     override fun buildTech() = Cycle2Tech()
 }
 
-private class Cycle2Tech : Tech, TechStaticData by Cycle2Data {
+private class Cycle2Tech : Tech, TechData by Cycle2Data {
     override fun deepCopy() = this
 }
-

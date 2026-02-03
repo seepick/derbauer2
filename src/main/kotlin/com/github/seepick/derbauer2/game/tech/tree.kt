@@ -1,90 +1,55 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.common.TreePrinter
+import com.github.seepick.derbauer2.game.common.validCycleFree
 import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 
 class TechTree(
     val all: List<TechItem>,
 ) {
-    private val byLabel = all.associateBy { it.label } // nice hack ;)
-    private val finder: (TechStaticData) -> TechItem = { data ->
-        byLabel[data.label] ?: error("woops, no tech tree item for tech label: $data")
+    private val byId = all.associateBy { it.id }
+    private val dataToItemFinder: (TechData) -> TechItem = { data ->
+        byId[data.id] ?: error("Woops, no tech tree item for tech data ID: $data")
     }
 
     init {
         all.flatMap { it.costs.changes }.requireAllZeroOrPositive()
-        validateRequirements(finder, all)
+        val unknownReq = all.flatMap { it.requirements.filter { !byId.containsKey(it.id) } }
+        require(unknownReq.isEmpty()) {
+            "Some tech items have requirements not present in the tech tree: $unknownReq"
+        }
+        validCycleFree(all, all.associateWith { item ->
+            item.requirements.map { dataToItemFinder(it) }
+        })
     }
 
     fun filterResearchableItems(): List<TechItem> =
-        all.filter {
-            it.state is TechState.Unresearched &&
-                    hasResearchedAll(it.requirements)
+        all.filter { it.isUnresearched && hasResearchedAll(it.requirements) }
+
+    private fun hasResearchedAll(requirements: Set<TechData>): Boolean =
+        requirements.all { reqData ->
+            val reqItem = dataToItemFinder(reqData)
+            reqItem.isResearched && hasResearchedAll(reqItem.requirements)
         }
 
-    private fun hasResearchedAll(requirements: Set<TechStaticData>): Boolean =
-        requirements.all { requirementData ->
-            val requirementItem = finder(requirementData)
-            requirementItem.state is TechState.Researched && hasResearchedAll(requirementItem.requirements)
-        }
-
-    companion object {
-        private fun validateRequirements(finder: (TechStaticData) -> TechItem, all: List<TechItem>) {
-            val adjacency = all.associateWith { item ->
-                item.requirements.map { finder(it) }
+    private fun rootsAndChildren(): Pair<List<TechItem>, Map<TechItem, MutableList<TechItem>>> {
+        val children = all.associateWith { mutableListOf<TechItem>() }
+        all.forEach { item ->
+            item.requirements.forEach { reqData ->
+                val parentItem = dataToItemFinder(reqData)
+                children[parentItem]?.add(item) ?: error("Impossible inconsistency occured!")
             }
-            val visiting = mutableSetOf<TechItem>()
-            val visited = mutableSetOf<TechItem>()
-            fun dfs(node: TechItem) {
-                if (node in visited) {
-                    return
-                }
-                if (node in visiting) {
-                    throw IllegalArgumentException("cycle detected in tech requirements at: ${node.label}")
-                }
-                visiting += node
-                adjacency[node]?.forEach { dfs(it) }
-                visiting -= node
-                visited += node
-            }
-            all.forEach { dfs(it) }
         }
+        val roots = all.filter { it.requirements.isEmpty() }
+        return roots to children
     }
-}
 
-interface TechItem : TechStaticData {
-    var state: TechState
-
-    fun buildTech(): Tech
-
-    fun updateResearchedState() = apply {
-        require(state is TechState.Unresearched)
-        state = TechState.Researched(buildTech())
+    fun toPrettyString(): String {
+        val (roots, children) = rootsAndChildren()
+        return TreePrinter.print(
+            "<🤓TECH🔬TREE🤓>", roots, children,
+            isChecked = { state is TechState.Researched },
+            label = { label },
+        )
     }
-}
-
-abstract class AbstractTechItem(
-    data: TechStaticData,
-    private val techBuilder: () -> Tech,
-) : TechItem, TechStaticData by data {
-
-    override var state: TechState = TechState.Unresearched
-
-    override fun buildTech(): Tech {
-        val tech = techBuilder()
-        state = TechState.Researched(tech)
-        return tech
-    }
-}
-
-sealed interface TechState {
-    object Unresearched : TechState
-    class Researched(val tech: Tech) : TechState
-}
-
-fun TechTree.toPrettyString(): String {
-    this.all.forEach {
-        it.requirements
-    }
-    // FIXME let AI implement this
-    return ""
 }

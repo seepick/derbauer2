@@ -16,7 +16,7 @@ fun User.researchTech(item: TechItem): TxResult {
     if (txResult.isFail) {
         return txResult
     }
-    val tech = item.buildTech()
+    val tech = item.buildTechAndUpdateState().second
     enable(tech)
     return TxResult.Success
 }
