@@ -1,7 +1,10 @@
 package com.github.seepick.derbauer2.game.prob
 
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
+import java.util.Random
+import kotlin.math.roundToLong
 
 @JvmInline
 value class ProbDiffuserKey(val name: String) {
@@ -14,10 +17,20 @@ interface ProbDiffuser {
     fun diffuse(baseValue: Zz): Zz
 }
 
-class GaussianDiffuser() : ProbDiffuser {
-    override fun diffuse(baseValue: Zz): Zz {
-        return (baseValue.toDouble() + Math.random() * 10).toLong().zz // FIXME implement me
+class GaussianDiffuser(var deviation: Z) : ProbDiffuser {
+    private val random = Random()
+    override fun diffuse(baseValue: Zz): Zz =
+        random.nextGaussianInRange(baseValue.toDouble(), deviation.toDouble()).roundToLong().zz
+}
+
+fun Random.nextGaussianInRange(mean: Double, sd: Double, maxAttempts: Int = 10000): Double {
+    val min = mean - sd
+    val max = mean + sd
+    repeat(maxAttempts) {
+        val v = nextGaussian() * sd + mean
+        if (v in min..max) return v
     }
+    return mean.coerceIn(min, max) // fallback; unlikely though
 }
 
 object PassThroughDiffuser : ProbDiffuser {

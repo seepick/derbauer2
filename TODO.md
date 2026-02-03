@@ -6,6 +6,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Current
 
+* limitter: use coerceIn(min, max)
 * !! BZ: finish Technology concept
     * tech tree; let AI generate print tree statement
     * tech can enable Features
