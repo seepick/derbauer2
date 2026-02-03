@@ -13,7 +13,7 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 @Suppress("LongParameterList")
 class Turner(
     private val user: User,
-    private val turnSteps: List<TurnStep>,
+    private val steps: List<TurnStep>,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
 ) {
@@ -21,7 +21,7 @@ class Turner(
         turn = user.turn,
         resourceChanges = resourceChangesOf(
             TurnPhase.entries.map {
-                turnSteps.execStepsAndMap(it)
+                steps.execStepsAndMap(it)
             }
         ),
         happenings = happeningTurner.buildHappeningMultiPages(),

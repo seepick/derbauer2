@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.enableAndSet
+import com.github.seepick.derbauer2.game.building.addAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
@@ -24,8 +24,8 @@ private fun `user with 0 🍖, 1 granary, 1 farm`(
 ) {
     val user = User()
     val food = user.add(Food())
-    val farm = user.enableAndSet(Farm(), 1.z)
-    val granary = user.enableAndSet(Granary(), 1.z)
+    val farm = user.addAndSet(Farm(), 1.z)
+    val granary = user.addAndSet(Granary(), 1.z)
 
     test(SetupContext(ProducesResourceTurnStep(user), user, food, farm, granary))
 }
@@ -58,6 +58,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
 
             actualChanges.shouldBeEmpty()
         }
+        // FIXME should not regard storage limits (done in turner)
         it("Given almost full storage Then produce diff") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val diff = 1.z

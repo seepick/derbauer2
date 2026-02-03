@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.building.BuildingTxValidator
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.ResourceTxValidator
 
+// TODO remove enum and make _REGISTRY hack again ;)
 enum class TxValidatorType(val validator: TxValidator) {
     Building(BuildingTxValidator),
     Resource(ResourceTxValidator);

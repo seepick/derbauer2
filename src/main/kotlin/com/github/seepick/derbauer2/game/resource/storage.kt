@@ -26,8 +26,14 @@ fun User.totalStorageFor(resource: StorableResource) =
 context(user: User)
 val StorableResource.totalStorage: Z get() = user.totalStorageFor(this)
 
-fun User.freeStorageFor(resource: StorableResource) =
-    totalStorageFor(resource::class) - resource.owned
+inline fun <reified SR : StorableResource> User.freeStorageFor(resource: SR) =
+    freeStorageFor(resource::class)
+
+inline fun <reified SR : StorableResource> User.freeStorageFor() =
+    freeStorageFor(SR::class)
+
+inline fun <reified SR : StorableResource> User.freeStorageFor(resoureClass: KClass<out SR>) =
+    totalStorageFor(resoureClass) - findResource<SR>().owned
 
 context(user: User)
 val StorableResource.freeStorage: Z get() = user.freeStorageFor(this)

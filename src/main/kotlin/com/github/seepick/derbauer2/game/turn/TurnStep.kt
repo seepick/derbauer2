@@ -10,6 +10,7 @@ interface TurnStep {
     val requiresEntities: List<KClass<out Entity>> get() = emptyList()
     fun calcResourceChanges(): ResourceChanges
     // more to come ...
+    companion object // for extension functions
 }
 
 enum class TurnPhase {

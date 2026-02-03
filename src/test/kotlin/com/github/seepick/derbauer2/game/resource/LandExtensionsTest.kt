@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.House
-import com.github.seepick.derbauer2.game.building.enableAndSet
+import com.github.seepick.derbauer2.game.building.addAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import io.kotest.core.spec.style.DescribeSpec
@@ -18,8 +18,8 @@ class LandExtensionsTest : DescribeSpec({
     describe("land use") {
         it("Given a house and enough land Then house occupies all") {
             val house = House()
-            user.enableAndSet(Land(), house.landUse)
-            user.enableAndSet(house, 1.z)
+            user.addAndSet(Land(), house.landUse)
+            user.addAndSet(house, 1.z)
 
             user.totalLandUse shouldBe house.landUse
             user.landAvailable shouldBeEqual 0.z
@@ -27,9 +27,9 @@ class LandExtensionsTest : DescribeSpec({
         it("Given two buildings and enough land Then both occupy all") {
             val house = House()
             val farm = Farm()
-            user.enableAndSet(Land(), house.landUse + farm.landUse)
-            user.enableAndSet(house, 1.z)
-            user.enableAndSet(farm, 1.z)
+            user.addAndSet(Land(), house.landUse + farm.landUse)
+            user.addAndSet(house, 1.z)
+            user.addAndSet(farm, 1.z)
 
             user.totalLandUse shouldBe house.landUse + farm.landUse
             user.landAvailable shouldBeEqual 0.z

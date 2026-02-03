@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.trading
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.enableAndSet
+import com.github.seepick.derbauer2.game.building.addAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
-import com.github.seepick.derbauer2.game.resource.enableAndSet
+import com.github.seepick.derbauer2.game.resource.addAndSet
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.transaction.TxResult
@@ -32,7 +32,7 @@ class TraderTest : DescribeSpec({
             }
             it("Given enough storage When buy storable Then succeed") {
                 user.add(Food())
-                user.enableAndSet(Granary(), 1.z)
+                user.addAndSet(Granary(), 1.z)
 
                 user.trade(
                     TradeRequest(Food::class, Buy, 1.z),
@@ -66,7 +66,7 @@ class TraderTest : DescribeSpec({
                 ).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
             }
             it("Given some gold When selling Then succeed") {
-                user.enableAndSet(Gold(), 1.z)
+                user.addAndSet(Gold(), 1.z)
 
                 user.trade(
                     TradeRequest(Gold::class, Sell, 1.z),
@@ -80,7 +80,7 @@ class TraderTest : DescribeSpec({
                 user.gold shouldBe 0.z
             }
             it("Given some gold When selling Then gold changed") {
-                user.enableAndSet(Gold(), 1.z)
+                user.addAndSet(Gold(), 1.z)
                 user.trade(TradeRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }

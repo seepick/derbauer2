@@ -1,8 +1,11 @@
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.resource.Citizen
+import com.github.seepick.derbauer2.game.resource.addAndSet
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.string.shouldContain
 import io.kotest.matchers.string.shouldContainIgnoringCase
@@ -32,6 +35,21 @@ class UserTest : DescribeSpec({
                     override fun deepCopy() = this
                 })
             }.message.shouldContainInAnyOrder("fail in lambda", "anonymous class")
+        }
+    }
+    describe("game over") {
+        it("Given no 🙎🏻‍♂️ Then game cant be over") {
+            user.isGameOver() shouldBeEqual false
+        }
+        it("Given 1 🙎🏻‍♂️ When take turn Then game is not over") {
+            user.addAndSet(Citizen(), 1.z)
+
+            user.isGameOver() shouldBeEqual false
+        }
+        it("Given 0 🙎🏻‍♂️ Then game is over ☠️") {
+            user.addAndSet(Citizen(), 0.z)
+
+            user.isGameOver() shouldBeEqual true
         }
     }
 })

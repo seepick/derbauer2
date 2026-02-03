@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.enableAndSet
+import com.github.seepick.derbauer2.game.building.addAndSet
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.TxOwnable
@@ -31,7 +31,7 @@ class ResourceTxTest : DescribeSpec({
             user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeFail("Not enough storage")
         }
         it("Given enough storage When add Then succeed") {
-            user.enableAndSet(Granary(), 1.z)
+            user.addAndSet(Granary(), 1.z)
             val resource = user.add(Food())
 
             user.execTx(TxOwnable(resource::class, 1.zz)).shouldBeSuccess()
