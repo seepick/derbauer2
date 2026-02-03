@@ -10,6 +10,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.addAndSet
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
+import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
@@ -19,7 +20,7 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 class TraderTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = User()
+        user = User(DefaultTxValidatorRepo.validators)
     }
 
     context("Buy") {

@@ -21,7 +21,7 @@ fun <R : Resource> User.findResourceOrNull(resourceClass: KClass<R>): R? =
 context(user: User)
 val ResourceReference.resource get() = user.findResource(resourceClass)
 
-fun User.isAbleToStore(resource: StorableResource, amount: Z) =
+inline fun <reified SR : StorableResource> User.isAbleToStore(resource: SR, amount: Z) =
     amount <= freeStorageFor(resource)
 
 fun User.hasAtLeast(resourceClass: KClass<out Resource>, amount: Z) =

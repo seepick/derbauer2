@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
+import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
@@ -14,9 +15,9 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class BuildTxTest : DescribeSpec({
-    var user = User()
+    lateinit var user: User
     beforeTest {
-        user = User()
+        user = User(DefaultTxValidatorRepo.validators)
     }
 
     describe("general") {

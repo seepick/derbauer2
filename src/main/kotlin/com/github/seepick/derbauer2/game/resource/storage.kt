@@ -11,10 +11,10 @@ import kotlin.reflect.KClass
 fun User.storageUsage(resource: StorableResource): Percent =
     (resource.totalStorage.value.toDouble() / resource.owned.value.toDouble() / 100.0).`%`
 
-//fun User.storageUsage(resourceClass: KClass<out StorableResource>) =
-//    storageUsage(resource(resourceClass))
+fun User.storageUsage(resourceClass: KClass<out StorableResource>) =
+    storageUsage(findResource(resourceClass))
 
-inline fun <reified SR : StorableResource> User.storageUsage(): Percent =
+inline fun <reified SR : StorableResource> User.storageUsage() =
     storageUsage(findResource(SR::class))
 
 context(user: User)
@@ -33,7 +33,7 @@ inline fun <reified SR : StorableResource> User.freeStorageFor() =
     freeStorageFor(SR::class)
 
 inline fun <reified SR : StorableResource> User.freeStorageFor(resoureClass: KClass<out SR>) =
-    totalStorageFor(resoureClass) - findResource<SR>().owned
+    totalStorageFor(resoureClass) - findResource(resoureClass).owned
 
 context(user: User)
 val StorableResource.freeStorage: Z get() = user.freeStorageFor(this)

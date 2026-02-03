@@ -10,7 +10,6 @@ import com.github.seepick.derbauer2.game.resource.landOwned
 import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.TxValidator
-import com.github.seepick.derbauer2.game.transaction.TxValidatorType
 import com.github.seepick.derbauer2.game.transaction.execTx
 import kotlin.reflect.KClass
 
@@ -21,8 +20,6 @@ fun User.buildBuilding(buildingClass: KClass<out Building>): TxResult =
     )
 
 object BuildingTxValidator : TxValidator {
-    override val type = TxValidatorType.Building
-
     override fun validateTx(user: User) =
         with(user) {
             if (hasEntity(Land::class) && totalLandUse > landOwned) {

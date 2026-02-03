@@ -8,14 +8,13 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.TxValidator
-import com.github.seepick.derbauer2.game.transaction.TxValidatorType
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.turn.ReportsWritable
 import com.github.seepick.derbauer2.game.turn.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
-class User(val txValidators: List<TxValidator> = TxValidatorType.all) : DeepCopyable<User> {
+class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     private val log = logger {}
 

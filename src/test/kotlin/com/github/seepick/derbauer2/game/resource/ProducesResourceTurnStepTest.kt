@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.testInfra.zz
+import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
 import io.kotest.core.spec.style.DescribeSpec
 
 private data class SetupContext(
@@ -22,7 +23,7 @@ private data class SetupContext(
 private fun `user with 0 🍖, 1 granary, 1 farm`(
     test: SetupContext.() -> Unit,
 ) {
-    val user = User()
+    val user = User(DefaultTxValidatorRepo.validators)
     val food = user.add(Food())
     val farm = user.addAndSet(Farm(), 1.z)
     val granary = user.addAndSet(Granary(), 1.z)
