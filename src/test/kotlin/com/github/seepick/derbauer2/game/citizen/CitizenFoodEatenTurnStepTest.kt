@@ -47,12 +47,7 @@ class CitizenFoodEatenTurnStepTest : DescribeSpec({
 
             expectResourceChange(food, -(citizen.owned * Mechanics.citizenFoodConsume))
         }
-        it("Given some 🙎🏻‍♂️ and too little 🍖 Then all available food 🍖 consumed") {
-            val food = user.addAndSet(Food(), 1.z)
-            user.addAndSet(Citizen(), 10.z)
-
-            expectResourceChange(food, -food.owned)
-        }
+        // TODO test for going over storage limit
     }
 
     describe("Given no 🍖") {

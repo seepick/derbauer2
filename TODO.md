@@ -25,6 +25,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Backlog
 
+* BZ: rat happenign: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
 * !! BZ: finish Technology concept: can enable Features; can have description (for when displaying in turn report)
 * limitter: use coerceIn(min, max)
 * BZ: general variability end turn (production, taxes, consumption); already for taxes; now do for others too (AI)

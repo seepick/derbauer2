@@ -37,16 +37,65 @@ class TurnerTest : StringSpec({
 
         user.reports.all.shouldBeEmpty()
     }
-    // FIXME implement this; shift limitting/capping functionality into turner (out of single steps)
-    // first merge ResourceChanges, then compute limit :)
-    "Given almost full storage and 2 steps opposite change Then both merged and limitted".config(enabled = false) {
+
+    // TODO fix test cases
+//    it("Given some 🙎🏻‍♂️ and too little 🍖 Then all available food 🍖 consumed") {
+//        val food = user.addAndSet(Food(), 1.z)
+//        user.addAndSet(Citizen(), 10.z)
+//
+//        expectResourceChange(food, -food.owned)
+//    }
+//    it("Given 100 citizen and almost full Then increase capped") {
+//        user.givenStorage<Citizen>(102.z)
+//        val citizen = user.addAndSet(Citizen(), 100.z)
+//
+//        val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
+//
+//        changes.shouldContainChange(citizen, 2.zz)
+//    }
+
+//    it("Given almost full storage Then produce diff") {
+//        `user with 0 🍖, 1 granary, 1 farm` {
+//            val diff = 1.z
+//            food.ownedForTest = granary.totalStorageAmount - diff
+//
+//            calcStepChanges().shouldContainChange(food, diff)
+//        }
+//    }
+//    it("Given full storage Then produce zero") {
+//        `user with 0 🍖, 1 granary, 1 farm` {
+//            food.ownedForTest = granary.totalStorageAmount
+//
+//            calcStepChanges().shouldContainChange(food, 0.z)
+//        }
+//    }
+//    it("When 2x but storage limited Then produce up to free storage") {
+//        `user with 0 🍖, 1 granary, 1 farm` {
+//            val diff = 1.z
+//            food.ownedForTest = granary.totalStorageAmount - diff
+//            user.add(ResourceProductionMultiplierStub(Food::class, 2.0))
+//
+//            calcStepChanges().shouldContainChange(food, diff)
+//        }
+//    }
+//    it("When modifier makes negative beyond owned Then clamp to -owned") {
+//        `user with 0 🍖, 1 granary, 1 farm` {
+//            farm.ownedForTest = 1.z
+//            val ownedFood = 1.z
+//            food.ownedForTest = ownedFood
+//            user.add(ResourceProductionMultiplierStub(Food::class, -2.0))
+//
+//            calcStepChanges().shouldContainChange(food, -ownedFood)
+//        }
+//    }
+
+    "Given storage 9/10 and steps +5, -1 Then food changes by +1 and not 0 (because of wrong cap order application)" {
         val foodStorageAvailable = 1.z
         val granary = user.addAndSet(Granary(), 1.z)
         val land = user.add(Land())
         land.ownedForTest = user.totalLandUse
         val food = user.add(Food())
         food.ownedForTest = granary.totalStorageAmount - foodStorageAvailable // almost full
-
         val turner = turner(
             steps = listOf(
                 TurnStep.build(food, 5.zz), // first over-increase but not be capped yet!

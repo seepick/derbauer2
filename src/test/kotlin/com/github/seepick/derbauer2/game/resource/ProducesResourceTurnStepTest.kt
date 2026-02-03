@@ -59,22 +59,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
 
             actualChanges.shouldBeEmpty()
         }
-        // FIXME should not regard storage limits (done in turner)
-        it("Given almost full storage Then produce diff") {
-            `user with 0 🍖, 1 granary, 1 farm` {
-                val diff = 1.z
-                food.ownedForTest = granary.totalStorageAmount - diff
-
-                calcStepChanges().shouldContainChange(food, diff)
-            }
-        }
-        it("Given full storage Then produce zero") {
-            `user with 0 🍖, 1 granary, 1 farm` {
-                food.ownedForTest = granary.totalStorageAmount
-
-                calcStepChanges().shouldContainChange(food, 0.z)
-            }
-        }
+        // TODO test for going over storage limit
     }
 
     describe("modifier interactions") {
@@ -86,26 +71,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 calcStepChanges().shouldContainChange(food, farm.producingResourceAmount * multiplier)
             }
         }
-        it("When 2x but storage limited Then produce up to free storage") {
-            `user with 0 🍖, 1 granary, 1 farm` {
-                val diff = 1.z
-                food.ownedForTest = granary.totalStorageAmount - diff
-                user.add(ResourceProductionMultiplierStub(Food::class, 2.0))
-
-                calcStepChanges().shouldContainChange(food, diff)
-            }
-        }
-        it("When modifier makes negative beyond owned Then clamp to -owned") {
-            `user with 0 🍖, 1 granary, 1 farm` {
-                farm.ownedForTest = 1.z
-                val ownedFood = 1.z
-                food.ownedForTest = ownedFood
-                user.add(ResourceProductionMultiplierStub(Food::class, -2.0))
-
-                calcStepChanges().shouldContainChange(food, -ownedFood)
-            }
-        }
-
+        // TODO test for going over limits (above and below)
         it("When multiple modifiers fold sequentially Then apply both") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val baseProduction = farm.totalProducingResourceAmount

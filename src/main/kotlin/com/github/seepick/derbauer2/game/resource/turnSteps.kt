@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 import com.github.seepick.derbauer2.game.turn.TurnStep
@@ -20,8 +19,7 @@ class ProducesResourceTurnStep(val user: User) : TurnStep {
             val modifiedAmount = modifiers.fold(change.changeAmount) { acc, modifier ->
                 modifier.modifyAmount(user, acc)
             }
-            val resource = user.findResource(change.resourceClass)
-            add(ResourceChange(resource, limitAmount(resource, modifiedAmount)))
+            add(ResourceChange(change.resourceClass, modifiedAmount))
         }
     }
 
@@ -37,25 +35,6 @@ class ProducesResourceTurnStep(val user: User) : TurnStep {
             )
         })
 
-    private fun limitAmount(resource: Resource, modifiedAmount: Zz): Zz =
-        if (modifiedAmount > 0) { // is positive
-            val positiveChange = modifiedAmount.toZAbs()
-            if (resource is StorableResource) { // limit to max
-                positiveChange.value.coerceAtMost(user.freeStorageFor(resource).value).zz
-            } else { // as much as you want
-                positiveChange.zz
-            }
-        } else { // is negative
-            if (resource is StorableResource) {
-                if (resource.owned.zz + modifiedAmount < 0.zz) { // can't lose more than owned
-                    -resource.owned.zz
-                } else {
-                    modifiedAmount
-                }
-            } else {
-                modifiedAmount // ok to be negative
-            }
-        }
 }
 
 interface ResourceProductionModifier {

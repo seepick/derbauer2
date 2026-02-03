@@ -13,7 +13,6 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
-import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
 import com.github.seepick.derbauer2.game.turn.TurnPhase
 
@@ -28,7 +27,7 @@ class CitizenReproduceTurnStep(user: User) :
                     0.z
                 } else {
                     val raw = citizen.owned * Mechanics.citizenReproductionRate
-                    raw orMaxOf Mechanics.citizenReproductionMinimum orMinOf user.freeStorageFor(citizen)
+                    raw orMaxOf Mechanics.citizenReproductionMinimum
                 }
             )
         )
@@ -50,7 +49,7 @@ class CitizenFoodEatenTurnStep(user: User) :
                     ResourceChange(citizen, -adjustedStarving)
                 } else {
                     val rawConsumed = citizen.owned * Mechanics.citizenFoodConsume
-                    val adjustedConsumed = rawConsumed.coerceIn(1.z, food.owned)
+                    val adjustedConsumed = rawConsumed orMaxOf 1.z
                     ResourceChange(food, -adjustedConsumed)
                 }
             }
@@ -78,7 +77,7 @@ class CitizenTaxesTurnStep(
         val citizen = user.findResource<Citizen>()
         val rawTax = citizen.owned * Mechanics.citizenTaxRate
         val rawDiffusedTax = probs.getDiffused(taxProb, rawTax.zz)
-        val limittedTax = rawDiffusedTax.toZLimitMinZero()
-        add(Gold::class, limittedTax)
+        val positiveTax = rawDiffusedTax.toZLimitMinZero()
+        add(Gold::class, positiveTax)
     }
 }

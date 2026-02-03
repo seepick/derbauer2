@@ -42,13 +42,6 @@ class CitizenReproduceTurnStepTest : DescribeSpec({
             val expected = citizen.owned * Mechanics.citizenReproductionRate
             changes.shouldContainChange(citizen, expected.zz)
         }
-        it("Given 100 citizen and almost full Then increase capped") {
-            user.givenStorage<Citizen>(102.z)
-            val citizen = user.addAndSet(Citizen(), 100.z)
-
-            val changes = CitizenReproduceTurnStep(user).calcResourceChanges()
-
-            changes.shouldContainChange(citizen, 2.zz)
-        }
+        // TODO test for going over storage limit
     }
 })
