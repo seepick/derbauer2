@@ -6,6 +6,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Current
 
+* BUG!!! eat + birth clash; both try to adjust population/food; need to sequence properly
+* BZ: growth diffuser for: birth, starvation (already for taxes, eat)
 * Window Refactoring
     * first break up MainWindow() god function into smaller pieces
     * make the whole window bigger
@@ -24,8 +26,6 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * BZ: rat happenign: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
 * !! BZ: finish Technology concept: can enable Features; can have description (for when displaying in turn report)
-* limitter: use coerceIn(min, max)
-* BZ: general variability end turn (production, taxes, consumption); already for taxes; now do for others too (AI)
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
 * game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * let AI generate doc, based on code (before that, align documents with package structure)
@@ -66,8 +66,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Tech
 
-* refactor ProducesResourceTurnStep#calcResourceChanges (too big/complex)
-* refactor MainWindow (too big/complex)
+* :) object Fun { val `🍖` = Food::class }
 * -- use AOP to log methods with annotation
 * maybe Percent can be any Double (not limited to 0..1)?!
 * could provide a UserReadOnly sub-interface

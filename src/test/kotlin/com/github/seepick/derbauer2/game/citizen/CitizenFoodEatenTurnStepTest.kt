@@ -6,6 +6,9 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.prob.PassThroughDiffuser
+import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
+import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Resource
@@ -17,13 +20,20 @@ import io.kotest.core.spec.style.DescribeSpec
 
 class CitizenFoodEatenTurnStepTest : DescribeSpec({
     lateinit var user: User
+    lateinit var probs: ProbsImpl
+    lateinit var turner: CitizenFoodEatenTurnStep
+
     beforeTest {
         user = User()
+        probs = ProbsImpl()
+        probs.setDiffuser(ProbDiffuserKey.eatKey, PassThroughDiffuser)
+        turner = CitizenFoodEatenTurnStep(user, probs)
     }
-    fun calc() = CitizenFoodEatenTurnStep(user).calcResourceChanges()
+    fun calc() = turner.calcResourceChanges()
     fun expectResourceChange(resource: Resource, changeAmount: Zz) {
         calc().shouldContainChange(resource, changeAmount)
     }
+
     describe("Edgecase") {
         it("Given nothing Then fail") {
             shouldThrow<NotFoundEntityException> { calc() }
