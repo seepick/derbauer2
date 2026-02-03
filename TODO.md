@@ -44,6 +44,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Misc
 
+* UI: in toolbar, select which resources to be displayed in info bar (limit to N due to width)
 * cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
 * BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
