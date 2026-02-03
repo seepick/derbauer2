@@ -20,16 +20,6 @@ import com.github.seepick.derbauer2.game.turn.TurnStepOrder
 private val probEatKey = ProbDiffuserKey("eat")
 val ProbDiffuserKey.Companion.eatKey get() = probEatKey
 
-//class CitizenReproduceTurnStep(user: User) :
-//    DefaultTurnStep(user, TurnStepOrder.citizenBirth, listOf(Citizen::class)) {
-//
-//    override fun calcResourceChanges() = buildResourceChanges {
-//        val citizen = user.findResource<Citizen>()
-//    }
-//
-//}
-
-
 class CitizenTurnStep(user: User, private val probs: Probs) : ProbInitializer,
     DefaultTurnStep(user, TurnStepOrder.citizen, listOf(Citizen::class)) {
 
@@ -74,10 +64,8 @@ val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 class TaxesTurnStep(user: User, private val probs: Probs) : ProbInitializer,
     DefaultTurnStep(user, TurnStepOrder.taxes, listOf(Citizen::class, Gold::class)) {
 
-    private val diffuser = GrowthDiffuser(variation = Mechanics.taxGrowthVariation)
-
     override fun initProb() {
-        probs.setDiffuser(ProbDiffuserKey.taxKey, diffuser)
+        probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))
     }
 
     override fun calcResourceChanges() = buildResourceChanges {

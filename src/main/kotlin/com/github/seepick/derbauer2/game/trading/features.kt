@@ -3,15 +3,15 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
-import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.Feature
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
+import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 // ================= Trading Feature =================
@@ -27,7 +27,8 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
     ) {
         override val enumIdentifier = FeatureDescriptorType.Trading
         override fun check(user: User) =
-            user.hasEntity<Gold>() && user.gold <= Mechanics.featureTradingThresholdGoldLesser
+            user.hasEntity<Food>() &&
+                    user.storageUsage<Food>() >= Mechanics.featureTradingThresholdFoodStorageUsedBigger
 
         override fun build() = TradingFeature()
     }

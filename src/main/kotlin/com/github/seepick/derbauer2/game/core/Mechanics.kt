@@ -15,13 +15,13 @@ object Mechanics {
     // INITIAL VALUES
     // ========================================================================
     // resources
-    val startingLand = 15.z
-    val startingGold = 500.z
-    val startingCitizens = 4.z
+    val startingLand = 20.z
+    val startingGold = 400.z
+    val startingCitizens = 10.z
     val startingFood = 50.z
     // buildings
     val startingGranaries = 1.z
-    val startingHouses = 1.z
+    val startingHouses = 4.z
     val startingFarms = 1.z
 
     // BUILDINGS
@@ -46,7 +46,7 @@ object Mechanics {
 
     // FEATURE
     // ========================================================================
-    val featureTradingThresholdGoldLesser = if (DEV) 400.z else 100.z
+    val featureTradingThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
     val featureTradeLandThresholdLandAvailableLesser = 2.z
     val featureTechGoldThresholdGreater = if (DEV) 0.z else (startingGold.value * 1.5).toLong().z
 
@@ -62,8 +62,8 @@ object Mechanics {
 
     // END TURN
     // ========================================================================
-    val taxRate = 5.`%` // multiplied by citizens.amount
-    val taxGrowthVariation = 20.`%`
+    val taxRate = 10.`%`
+    val taxGrowthVariation = 30.`%`
     val citizenEatAmount = 10.`%`
     val citizenEatGrowthVariation = 20.`%`
     val citizensStarve = 1.`%`

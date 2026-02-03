@@ -9,7 +9,7 @@ import kotlin.reflect.KClass
 
 @Suppress("MagicNumber")
 fun User.storageUsage(resource: StorableResource): Percent =
-    (resource.totalStorage.value.toDouble() / resource.owned.value.toDouble() / 100.0).`%`
+    (resource.owned.value.toDouble() / resource.totalStorage.value.toDouble()).`%`
 
 fun User.storageUsage(resourceClass: KClass<out StorableResource>) =
     storageUsage(findResource(resourceClass))

@@ -28,8 +28,9 @@ class StorageExtensionsTest : DescribeSpec({
         it("happy path") {
             val food = user.addResource(Food(), 1.z)
             val granary = user.addBuilding(Granary(), 1.z)
-            val expected = (granary.totalStorageAmount.value.toDouble() / food.owned.value / 100.0).`%`
+            val expected = (food.owned.value / granary.totalStorageAmount.value.toDouble()).`%`
 
+            user.storageUsage(food) shouldBeEqual expected
             with(user) {
                 food.storageUsage shouldBeEqual expected
             }
