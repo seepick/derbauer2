@@ -20,3 +20,4 @@
     - military (build units/weapons)
     - luxury (people happyness)
     - some resources used in several areas, e.g. iron for building big buildings and forging weapons
+* IDEA: material resources (wood, stone, iron, ...), regard when build buildings

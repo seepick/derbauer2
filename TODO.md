@@ -13,46 +13,56 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Next
 
-* BZ: ad CitizenTaxesTurnStep: update deviation, adjust relative "roughly" to ... diffuser.deviation = ...
-* BZ: tech: finish techs (warfare, junkfood, etc. implement actual effects)
-* BZ: ad prob: need a "growth spreader", using gaussian underneath; only positive values; percentage of deviation
+* !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
+    * can enable Features; have description (for when displaying in turn report)
 * UI: events/interactions make sounds (happening, etc...) for better feedback
     * first introduce ActionBus (for history later; skills/XP)
 * UI: redesign turn report: make it more outstanding
 
 ## Backlog
 
-* BZ: rat happenign: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
-* !! BZ: finish Technology concept: can enable Features; can have description (for when displaying in turn report)
-* IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
-* game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
-* let AI generate doc, based on code (before that, align documents with package structure)
-* BZ: once stats are implemented, then let junkfood-tech also increase happiness
-* IT: could make TechState a proper state pattern implementation
-* BZ: FeatureTurner
-    * TX-exec one, could later allow another to check==true
-    * thus: do rounds of applying, until no feature returns check==true anymore
-    * e.g.: TradingFeature enables TradeLandFeature; should BOTH appear in turn screens
 * IT: runUiTest needs proper implementation
     * disabled by default; enableable via CI
     * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)
-* BZ: ad TradingFeature check logic: look for turns played (and/or money owned?)
-* BZ: reverse engineer DerBauer1
+
+### Finish Existing Game Concepts
+
+* BZ: rat happening: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
+* BZ: happening amount with probability range
+
+### New Game Concepts
+
+* BZ: game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * BZ: increase designators (title, city) based on "some criteria"
+    * can be upped and lowered again! different than feature, which is a one-way unlock
 * BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
+* BZ: immigration happening
+
+### Misc
+
+* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
+* BZ: probability (happening) cool-down mechanism to avoid same thing too often
+* IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
 * UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
-* BZ: change (user/city) titles/designators based on criteria
-    * can be upped and lowered again! different than feature, which is a one-way unlock
-* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
-* BZ: immigration happening
-* BZ: decisions impact story, influence
-* BZ: probability (happening) cool-down mechanism to avoid same thing too often
-* BZ: happening amount with probability range
-* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
-* UI: make magnituded number from "1k" to "1.2k"
-* BZ: material resources (wood, stone, iron, ...), regard when build buildings
-* BZ: extend probability provider
+* BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
+
+* -- BZ: FeatureTurner
+    * TX-exec one, could later allow another to check==true
+    * thus: do rounds of applying, until no feature returns check==true anymore
+    * e.g.: TradingFeature enables TradeLandFeature; should BOTH appear in turn screens
+*
+    - BZ: once stats are implemented, then let junkfood-tech also increase happiness
+*
+    - val User.`🍖` get(): Food = findResource(Food::class)
+*
+    - let AI generate doc, based on code (before that, align documents with package structure)
+*
+    - BZ: ad TradingFeature check logic: look for turns played (and/or money owned?)
+*
+    - BZ: reverse engineer DerBauer1
+*
+    - BZ: decisions impact story, influence
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
 * IT: jar file for linux&co
 * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve
@@ -60,39 +70,37 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 - BZ: attack barbarians, or NPCs
 
-* BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
+*
+    - UI: make magnituded number from "1k" to "1.2k"
 
 ### Tech
 
-* :) object Fun { val `🍖` = Food::class }
-* -- use AOP to log methods with annotation
-* maybe Percent can be any Double (not limited to 0..1)?!
-* could provide a UserReadOnly sub-interface
 * macos app signing
-* ad github workflow: check-quality-gates also does jacoco verify/enforce threshold
-* ad github workflow: check-quality-gates valid doc runs independent from previous step, so both can fail
-* GitHub REFACTOR necessary (deprecated functionality used)
-    * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
-* REFACTOR ProbabilityInitializer (need to get all instances of a certain type; but in proper order...!)
-* register HappeningDescriptors as koin beans, get-all via interface lookup; replacing HappeningDescriptorRepo :)
 * Use @OptIn annotation for "secret API"
 * use ULong within Z
-* could each turn calculation be an external/plugged-in feature instead?
-* text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
 * REFACTOR turner: unify happenings + features share both common type; just a sequence of pages (maintain order though)
-* REFACTOR ProbabilityProvider: introduce interface for testability
-* --- introduce buildSrc (try again ;)
+* UI text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
 * TEST for transaction logic
 * TEST ad GamePageParser: private val widthHack ==> scan from right to left, until find "   "
 * TEST allow for "global config"; set initAssets/custom ones by default applied to all tests within
 * TEST beeper uses some event WarningBus; then catch in itests fail-cases as well
 * TEST itest for build and (not) enough land
 * TEST GameRenderPage ... make reusable also for plain pages (happenings, etc.)
-* Later: Windows build :)
-* Later: Auto-update feature
+* ? maybe Percent can be any Double (not limited to 0..1)?!
+*
+    - GitHub REFACTOR necessary (deprecated functionality used)
+        * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+*
+    - Auto-update feature
+*
+    - could provide a UserReadOnly sub-interface
+* -- use AOP to log methods with annotation
 * TEST: ResourceTurnerTest
     * two distinct buildings producing food Then sum
     * resource producing entity, which is not ownable/count; eg not a building but a feature or anything
+*
+    - `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+* --- introduce buildSrc (try again ;) version toml buildSrc shizzle...
 * -- provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 
 ### UI
