@@ -11,7 +11,6 @@ import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Resource
-import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
@@ -28,10 +27,10 @@ class CitizenTurnStepTest : DescribeSpec({
         turner = CitizenTurnStep(user, probs)
     }
 
-    fun CitizenTurnStep.calc(foodChange: ResourceChange? = null) =
+    fun CitizenTurnStep.calc(foodChange: Zz? = null) =
         calcTurnChanges(foodChange)
 
-    fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz, foodChange: ResourceChange? = null) {
+    fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz, foodChange: Zz? = null) {
         calcTurnChanges(foodChange).shouldContainChange(resource, expected)
     }
 
