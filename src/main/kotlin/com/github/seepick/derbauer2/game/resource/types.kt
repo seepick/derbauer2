@@ -6,17 +6,12 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabels
-import kotlin.reflect.KClass
 
 interface Resource : Asset {
     val emojiAndOwned: String get() = "${emojiSpaceOrEmpty}${owned}"
 }
 
 interface StorableResource : Resource
-
-interface ResourceReference {
-    val resourceClass: KClass<out Resource>
-}
 
 class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data {
     object Data : HasLabels, HasEmoji {

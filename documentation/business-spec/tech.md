@@ -5,9 +5,13 @@
     * costs: (mostly) knowledge; maybe other resources too (?)
     * prerequisites: other technology, buildings (military strength, resources?), ...
         * type: singular | leveled (reserchable multiple times, increasing costs; maybe infinitely like factorio?)
-* Knowledge, a.k.a. science/research points
-    * produced in tech-buildings; improveable via tech itself
 * PS: no need for concept of "upgrades", tech-tree will do it together with Features concept
+
+## Knowledge
+
+* Knowledge, a.k.a. tech/science/research points
+    * produced in tech-buildings (school, university, laboratory); improveable via tech itself
+    * to acquire tech, spent costs (like gold for buildings)
 
 ## Effects
 

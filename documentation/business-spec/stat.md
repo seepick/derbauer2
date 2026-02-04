@@ -62,6 +62,7 @@
 
 * kind of "overall luck" based on how morally good/bad your decisions were
     * "damage" done to others will decrease; being selfless and avoid violence will increase it
+    * or distinct Luck stat?
 * strongly correlates with other stats, esp. happyness
 * Affected by:
     * happening choices, e.g. send people away when ask for help (throne room)

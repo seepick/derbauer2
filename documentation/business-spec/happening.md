@@ -12,6 +12,7 @@
     * to provide diversity during probability calcuation:
         * impact: { negative, positive, neutral, complex }
         * category: { economical, social, planetary, military, other }
+    * happenings are dependent on ... existence of feature (or more?)
 * Affected by:
     * intensity adjusted (mechanics) by attraction for/resistence to
         * buildings: e.g. defense structure for bandits

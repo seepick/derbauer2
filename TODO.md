@@ -4,16 +4,22 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Versions
 
-### Current
+### 1.1.0
 
-* make only farm availabe at start; later unlock house/granary
-* BUG!!! eat + birth clash; both try to adjust population/food; need to sequence properly
+* BUG!!! resource-production + eatBirthStarve together in composite
+    * make those two composable steps NOT implement TurnStep interface (not picked up by turner)
+    * take resource-production, filter for Food, merge with food eaten; use total "intensity" for birth/starve
+      calculation
 * BZ: growth diffuser for: birth, starvation (already for taxes, eat)
 * break up MainWindow() god function into smaller pieces
 * make the whole window bigger
+* only farm availabe at start; only if citizens/food full: unlock house/granary
 * fine adjust mechanics; play a lot yourself; gain experience; sketch out on paper first with what's there
+* IT: runUiTest needs proper implementation
+    * disabled by default; enableable via CI
+    * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)
 
-### Next
+### 1.2.0
 
 * BZ: have some sort of SeasonModifier
 * !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
@@ -21,39 +27,30 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * UI: events/interactions make sounds (happening, etc...) for better feedback
     * first introduce ActionBus (for history later; skills/XP)
 * UI: redesign turn report: make it more outstanding
-* UI: choose color theme (circular button in toolbar, dropdown with a few common presets)
+* BZ: (rat&gold) happening amount with probability range { lil=5%, med=10%, big=20% } + diffuser; limitted
+* BZ: ad happening: rat only if has food; when military feature then attacks; when certain buildings exist, etc.
 
 ## Backlog
 
-* IT: runUiTest needs proper implementation
-    * disabled by default; enableable via CI
-    * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)
-
-### Finish Existing Game Concepts
-
-* BZ: rat happening: either { lil=5%, med=10%, big=20% } of food loss; with min/max caps
-* BZ: happening amount with probability range
-* BZ: happenings are dependent on feature
-    * rat only if has food; when military feature then attacks; when certain buildings exist, etc.
-
 ### New Game Concepts
 
-* BZ: game renderer, resource info bar, add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * BZ: increase designators (title, city) based on "some criteria"
     * can be upped and lowered again! different than feature, which is a one-way unlock
-* BZ: new chronos: instead of "turn", do it "Week 13 Year 1052"
 * BZ: immigration happening
+* BZ: introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
+* BZ: introduce [stat](documentation/business-spec/stat.md) concept
 
 ### Misc
 
-* UI: in toolbar, select which resources to be displayed in info bar (limit to N due to width)
+* UI: choose color theme (circular button in toolbar, dropdown with a few common presets)
+* UI: configure in toolbar which resources to be displayed in info bar (limit to N due to width)
 * cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
 * BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
 * UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
-
+* BZ: add stats.happy + game renderer/resource info bar: add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * -- BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true
     * thus: do rounds of applying, until no feature returns check==true anymore
