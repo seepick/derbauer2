@@ -55,6 +55,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: add stats.happy + game renderer/resource info bar: add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * IT: use compose viewmodel, proper state management (audio player); but more to come in the future
     * marry together with koin, thus core logic and UI can interact properly
+* if Reports would be outside of User, then could take deepCopies of user and store them
 
 Low:
 

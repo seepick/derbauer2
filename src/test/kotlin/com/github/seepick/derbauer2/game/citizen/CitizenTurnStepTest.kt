@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.citizen
 
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
@@ -14,7 +15,9 @@ import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.comparables.shouldBeLessThan
 
 class CitizenTurnStepTest : DescribeSpec({
     lateinit var user: User
@@ -97,23 +100,37 @@ class CitizenTurnStepTest : DescribeSpec({
         }
     }
 
-    context("starvation") {
-        describe("Given no 🍖") {
-            beforeTest {
-                user.addResource(Food(), 0.z)
-            }
-            it("Given many 🙎🏻‍♂️ Then proportional starvation ☠️") {
-                val expectedStarve = 2
-                val citizenAmount = Mechanics.citizensStarve.neededToGetTo(expectedStarve)
-                val citizen = user.addResource(Citizen(), citizenAmount)
+    describe("Starvation") {
+        it("Given no 🍖 and many 🙎🏻‍♂️ Then proportional starvation ☠️") {
+            user.addResource(Food(), 0.z)
+            val expectedStarve = 2
+            val citizenAmount = Mechanics.citizensStarve.neededToGetTo(expectedStarve)
+            val citizen = user.addResource(Citizen(), citizenAmount)
 
-                turner.calcShouldContain(citizen, -expectedStarve.z)
-            }
-            it("Given few 🙎🏻‍♂️ Then minimum starvation ☠️") {
-                val citizen = user.addResource(Citizen(), 2.z)
+            turner.calcShouldContain(citizen, -expectedStarve.z)
+        }
+        it("Given no 🍖 and few 🙎🏻‍♂️ Then minimum starvation ☠️") {
+            user.addResource(Food(), 0.z)
+            val citizen = user.addResource(Citizen(), 2.z)
 
-                turner.calcShouldContain(citizen, -Mechanics.citizensStarveMinimum)
+            turner.calcShouldContain(citizen, -Mechanics.citizensStarveMinimum)
+        }
+        it("Given A) almost enough 🍖 and B) no 🍖 and When compare them Then A) starves less than B)") {
+            val citizensSoStarvingIsPossible = Mechanics.citizensStarve.neededToGetTo(10)
+            val almostEnoughFood = citizensSoStarvingIsPossible * Mechanics.citizenEatAmount - 1.z
+            val citizen = user.add(Citizen())
+            val food = user.add(Food())
+            fun turnAndGetCitizenChangeWith(givenFood: Z): Zz {
+                citizen.ownedForTest = citizensSoStarvingIsPossible
+                food.ownedForTest = givenFood
+                return turner.calc().changes.single { it.resourceClass == Citizen::class }.changeAmount
             }
+
+            val starvedA = turnAndGetCitizenChangeWith(almostEnoughFood)
+            val starvedB = turnAndGetCitizenChangeWith(0.z)
+
+            starvedA shouldBeLessThan starvedB
+
         }
     }
 })
