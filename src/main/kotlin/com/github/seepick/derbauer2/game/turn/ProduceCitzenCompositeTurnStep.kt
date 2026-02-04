@@ -27,7 +27,7 @@ class ProduceCitzenCompositeTurnStep(
     override fun calcTurnChanges(): ResourceChanges {
         val productionChanges = produceResourceStep.calcResourceChanges()
         val foodChange = productionChanges.changeFor(Food::class)
-        val citizenChanges = citizenStep.calcTurnChanges(foodChange)
+        val citizenChanges = citizenStep.calcTurnChanges(foodChange?.changeAmount)
 
         return productionChanges.merge(citizenChanges)
     }

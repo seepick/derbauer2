@@ -11,6 +11,7 @@ import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Resource
+import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
@@ -27,14 +28,17 @@ class CitizenTurnStepTest : DescribeSpec({
         turner = CitizenTurnStep(user, probs)
     }
 
-    fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz) {
+    fun CitizenTurnStep.calc(foodChange: ResourceChange? = null) =
+        calcTurnChanges(foodChange)
+
+    fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz, foodChange: ResourceChange? = null) {
         calcTurnChanges(foodChange).shouldContainChange(resource, expected)
     }
 
     context("misc") {
         describe("Edgecase") {
             it("Given nothing Then empty") {
-                val changes = turner.calcTurnChanges(foodChange)
+                val changes = turner.calc()
 
                 changes.shouldBeEmpty()
             }
@@ -87,7 +91,7 @@ class CitizenTurnStepTest : DescribeSpec({
                 val citizen = user.addResource(Citizen(), Mechanics.citizensStarve.neededToGetTo(2))
                 val food = user.addResource(Food(), 1.z)
 
-                val changes = turner.calcTurnChanges(foodChange)
+                val changes = turner.calc()
                 changes.shouldContainChange(food, -(citizen.owned * Mechanics.citizenEatAmount).zz)
                 changes.shouldContainChange(citizen, (-2).zz) // in the future will be starving...
             }

@@ -29,13 +29,13 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         probs.setDiffuser(ProbDiffuserKey.eatKey, GrowthDiffuser(variation = Mechanics.citizenEatGrowthVariation))
     }
 
-    fun calcTurnChanges(foodChange: ResourceChange?) = buildResourceChanges {
+    fun calcTurnChanges(foodProduction: Zz?) = buildResourceChanges {
         val citizen = user.findResourceOrNull<Citizen>() ?: return@buildResourceChanges
         if (citizen.owned == 0.z) {
             add(ResourceChange(citizen, 0.z))
             return@buildResourceChanges
         }
-        val (changes, isStarving) = eatingAndStarving(citizen, foodChange?.changeAmount ?: 0.zz)
+        val (changes, isStarving) = eatingAndStarving(citizen, foodProduction ?: 0.zz)
         addChanges(changes)
         if (!isStarving) {
             add(birthChange(citizen))
@@ -44,7 +44,9 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun eatingAndStarving(citizen: Citizen, foodChangingBy: Zz): EatingStarvingResult {
         val food = user.findResourceOrNull<Food>() ?: return EatingStarvingResult(ResourceChanges.empty, false)
-        val eatChange = calcEatChange(citizen, food)
+        val updatedFood = (food.owned.value.zz + foodChangingBy.value)
+        println("food.owed=${food.owned} + foodChangingBy=$foodChangingBy ===> updatedFood=$updatedFood") // TODO use produce adjusted food
+        val eatChange = calcEatChange(citizen)
         if (eatChange.changeAmount.toZAbs() <= food.owned) { // enough food, not starving
             return EatingStarvingResult(ResourceChanges(listOf(eatChange)), false)
         }
@@ -52,11 +54,11 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         return EatingStarvingResult(ResourceChanges(listOf(eatChange, starveChange)), true)
     }
 
-    private fun calcEatChange(citizen: Citizen, food: Food): ResourceChange {
+    private fun calcEatChange(citizen: Citizen): ResourceChange {
         val rawConsumed = citizen.owned * Mechanics.citizenEatAmount
         val diffusedConsumed = probs.getDiffused(ProbDiffuserKey.eatKey, rawConsumed.zz).toZLimitMinZero()
         val adjustedConsumed = diffusedConsumed orMaxOf 1.z
-        return ResourceChange(food, -adjustedConsumed)
+        return ResourceChange(Food::class, -adjustedConsumed)
     }
 
     private fun calcStarveChange(citizen: Citizen): ResourceChange {
