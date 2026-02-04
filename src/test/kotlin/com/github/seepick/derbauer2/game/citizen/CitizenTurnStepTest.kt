@@ -116,6 +116,7 @@ class CitizenTurnStepTest : DescribeSpec({
             turner.calcShouldContain(citizen, -Mechanics.citizensStarveMinimum)
         }
         it("Given A) almost enough 🍖 and B) no 🍖 and When compare them Then A) starves less than B)") {
+            // TODO this test fails for now; requires implementation
             val citizensSoStarvingIsPossible = Mechanics.citizensStarve.neededToGetTo(10)
             val almostEnoughFood = citizensSoStarvingIsPossible * Mechanics.citizenEatAmount - 1.z
             val citizen = user.add(Citizen())

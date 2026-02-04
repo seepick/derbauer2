@@ -17,6 +17,7 @@ class ProduceCitzenCompositeTurnStep(
 
     private val citizenStep = CitizenTurnStep(user, probs)
     private val produceResourceStep = ProducesResourceTurnStep(user)
+
     override val requiresEntities = emptyList<KClass<out Entity>>()
     override val order = TurnStepOrder.producesResourcesAndCitizen
 

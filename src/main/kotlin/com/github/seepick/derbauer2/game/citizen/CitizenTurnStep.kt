@@ -11,18 +11,18 @@ import com.github.seepick.derbauer2.game.prob.ProbInitializer
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
-import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
-import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
-import com.github.seepick.derbauer2.game.turn.TurnStepOrder
 
 private val probEatKey = ProbDiffuserKey("eat")
 val ProbDiffuserKey.Companion.eatKey get() = probEatKey
 
+/**
+ * Not implementing the [com.github.seepick.derbauer2.game.turn.TurnStep] interface, as used as a composition element.
+ * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeTurnStep]
+ */
 class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbInitializer {
 
     override fun initProb() {
@@ -44,16 +44,17 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun eatingAndStarving(citizen: Citizen, foodChangingBy: Zz): EatingStarvingResult {
         val food = user.findResourceOrNull<Food>() ?: return EatingStarvingResult(ResourceChanges.empty, false)
-        val updatedFood = (food.owned.value.zz + foodChangingBy.value)
-        println("food.owed=${food.owned} + foodChangingBy=$foodChangingBy ===> updatedFood=$updatedFood") // TODO use produce adjusted food
         val eatChange = calcEatChange(citizen)
-        if (eatChange.changeAmount.toZAbs() <= food.owned) { // enough food, not starving
+        val futureFoodOwned = food.owned.zz + eatChange.changeAmount // TODO make use of foodChangingBy
+        if (futureFoodOwned >= 0.zz) { // not enough food => starving
             return EatingStarvingResult(ResourceChanges(listOf(eatChange)), false)
         }
-        val starveChange = calcStarveChange(citizen)
+        // negative food eaten amount => starve
+        val starveChange = calcStarveChange(citizen, eatChange.changeAmount)
         return EatingStarvingResult(ResourceChanges(listOf(eatChange, starveChange)), true)
     }
 
+    /** @return negative numbered change */
     private fun calcEatChange(citizen: Citizen): ResourceChange {
         val rawConsumed = citizen.owned * Mechanics.citizenEatAmount
         val diffusedConsumed = probs.getDiffused(ProbDiffuserKey.eatKey, rawConsumed.zz).toZLimitMinZero()
@@ -61,8 +62,8 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         return ResourceChange(Food::class, -adjustedConsumed)
     }
 
-    private fun calcStarveChange(citizen: Citizen): ResourceChange {
-        // TODO adjust starvation intensity depending how much is in negative
+    private fun calcStarveChange(citizen: Citizen, changeAmount: Zz): ResourceChange {
+        // TODO adjust starvation intensity depending how much `changeAmount` is in negative
         val rawStarving = citizen.owned * Mechanics.citizensStarve
         val adjustedStarving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
         return ResourceChange(citizen, -adjustedStarving)
@@ -76,21 +77,3 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 }
 
 private data class EatingStarvingResult(val changes: ResourceChanges, val isStarving: Boolean)
-
-private val probTaxKey = ProbDiffuserKey("tax")
-val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
-
-class TaxesTurnStep(user: User, private val probs: Probs) : ProbInitializer,
-    DefaultTurnStep(user, TurnStepOrder.taxes, listOf(Citizen::class, Gold::class)) {
-
-    override fun initProb() {
-        probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))
-    }
-
-    override fun calcTurnChanges() = buildResourceChanges {
-        val citizen = user.findResource<Citizen>()
-        val rawTax = citizen.owned * Mechanics.taxRate
-        val diffusedTax = probs.getDiffused(ProbDiffuserKey.taxKey, rawTax.zz).toZLimitMinZero()
-        add(Gold::class, diffusedTax)
-    }
-}

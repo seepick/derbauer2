@@ -2,12 +2,13 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.turn.TurnStep
 import kotlin.reflect.KClass
 
 /**
  * Mostly about buildings.
- * Does NOT implement [TurnStep] interface, as used as a composite.
+ *
+ * Not implementing the [com.github.seepick.derbauer2.game.turn.TurnStep] interface, as used as a composition element.
+ * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeTurnStep]
  */
 class ProducesResourceTurnStep(val user: User) {
 
