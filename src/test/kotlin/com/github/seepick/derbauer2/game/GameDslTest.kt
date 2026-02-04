@@ -2,7 +2,11 @@ package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.citizen.eatKey
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.prob.PassThroughDiffuser
+import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
+import com.github.seepick.derbauer2.game.prob.prob
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
@@ -20,7 +24,9 @@ class GameDslTest : DslTest, StringSpec() {
         "Starve when no food despite farm" {
             Given(initAssets = true) {
                 turnOff(TurnOff.happenings)
-                // TODO maybe global switch to turn off randomness?
+                prob {
+                    updateDiffuser(ProbDiffuserKey.eatKey, PassThroughDiffuser)
+                }
                 setOwned<Land>(100.z)
                 setOwned<Food>(0.z)
                 setOwned<Farm>(1.z)

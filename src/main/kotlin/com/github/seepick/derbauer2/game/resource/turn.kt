@@ -34,7 +34,6 @@ class ProducesResourceTurnStep(val user: User) {
                 }
             )
         })
-
 }
 
 interface ResourceProductionModifier {

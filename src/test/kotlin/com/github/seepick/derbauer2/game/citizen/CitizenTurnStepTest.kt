@@ -28,13 +28,13 @@ class CitizenTurnStepTest : DescribeSpec({
     }
 
     fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz) {
-        calcTurnChanges().shouldContainChange(resource, expected)
+        calcTurnChanges(foodChange).shouldContainChange(resource, expected)
     }
 
     context("misc") {
         describe("Edgecase") {
             it("Given nothing Then empty") {
-                val changes = turner.calcTurnChanges()
+                val changes = turner.calcTurnChanges(foodChange)
 
                 changes.shouldBeEmpty()
             }
@@ -87,7 +87,7 @@ class CitizenTurnStepTest : DescribeSpec({
                 val citizen = user.addResource(Citizen(), Mechanics.citizensStarve.neededToGetTo(2))
                 val food = user.addResource(Food(), 1.z)
 
-                val changes = turner.calcTurnChanges()
+                val changes = turner.calcTurnChanges(foodChange)
                 changes.shouldContainChange(food, -(citizen.owned * Mechanics.citizenEatAmount).zz)
                 changes.shouldContainChange(citizen, (-2).zz) // in the future will be starving...
             }

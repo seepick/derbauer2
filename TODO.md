@@ -58,6 +58,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 Low:
 
+* BZ: maybe Land is of type "OccupiableResource"; more generic; reusable for other potential future resources
 * BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true
     * thus: do rounds of applying, until no feature returns check==true anymore
@@ -69,7 +70,6 @@ Low:
 * BZ: reverse engineer DerBauer1
 * BZ: decisions impact story, influence
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
-* IT: jar file for linux&co
 * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve
     * currently only starve if 0 food
 * BZ: attack barbarians, or NPCs
@@ -88,22 +88,21 @@ Low:
 * TEST beeper uses some event WarningBus; then catch in itests fail-cases as well
 * TEST itest for build and (not) enough land
 * TEST GameRenderPage ... make reusable also for plain pages (happenings, etc.)
+
+Low:
+
 * ? maybe Percent can be any Double (not limited to 0..1)?!
-*
-    - GitHub REFACTOR necessary (deprecated functionality used)
-        * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
-*
-    - Auto-update feature
-*
-    - could provide a UserReadOnly sub-interface
-* -- use AOP to log methods with annotation
+* GitHub REFACTOR necessary (deprecated functionality used)
+    * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/
+* Auto-update feature
+* could provide a UserReadOnly sub-interface
+* use AOP to log methods with annotation
 * TEST: ResourceTurnerTest
     * two distinct buildings producing food Then sum
     * resource producing entity, which is not ownable/count; eg not a building but a feature or anything
-*
-    - `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
-* --- introduce buildSrc (try again ;) version toml buildSrc shizzle...
-* -- provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
+* `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
+* introduce buildSrc (try again ;) version toml buildSrc shizzle...
+* provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 
 ### UI
 

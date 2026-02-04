@@ -66,6 +66,9 @@ data class ResourceChanges private constructor(
         changes.forEach { add(it.resourceClass, -it.changeAmount) }
     }
 
+    fun changeFor(resourceClass: KClass<out Resource>): ResourceChange? =
+        changes.firstOrNull { it.resourceClass == resourceClass }
+
     companion object {
         val empty = buildResourceChanges { }
         operator fun invoke(changes: List<ResourceChange>) = buildResourceChanges {
@@ -85,6 +88,10 @@ data class ResourceChanges private constructor(
                 )
             }
             changesByResourceClass[newChange.resourceClass] = oldChange + newChange
+        }
+
+        fun addChanges(changes: ResourceChanges) {
+            addAll(changes.changes)
         }
 
         fun addAll(newChanges: Iterable<ResourceChange>) {
