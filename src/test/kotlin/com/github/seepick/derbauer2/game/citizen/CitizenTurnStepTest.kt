@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.common.NotFoundEntityException
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
@@ -13,9 +12,8 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.addResource
+import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
-import com.github.seepick.derbauer2.game.turn.calcShouldContain
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 
 class CitizenTurnStepTest : DescribeSpec({
@@ -29,20 +27,21 @@ class CitizenTurnStepTest : DescribeSpec({
         turner = CitizenTurnStep(user, probs)
     }
 
-    fun turn() = turner.calcResourceChanges()
-    fun turnShoudContainChange(resource: Resource, changeAmount: Zz) {
-        turn().shouldContainChange(resource, changeAmount)
+    fun CitizenTurnStep.calcShouldContain(resource: Resource, expected: Zz) {
+        calcTurnChanges().shouldContainChange(resource, expected)
     }
 
     context("misc") {
         describe("Edgecase") {
-            it("Given nothing Then fail") {
-                shouldThrow<NotFoundEntityException> { turn() }
+            it("Given nothing Then empty") {
+                val changes = turner.calcTurnChanges()
+
+                changes.shouldBeEmpty()
             }
             it("Given 0 citizens Then 0 citizens change") {
                 val citizen = user.addResource(Citizen(), 0.z)
 
-                turnShoudContainChange(citizen, 0.zz)
+                turner.calcShouldContain(citizen, 0.zz)
             }
         }
     }
@@ -52,14 +51,14 @@ class CitizenTurnStepTest : DescribeSpec({
                 val food = user.addResource(Food(), 10.z)
                 user.addResource(Citizen(), 1.z)
 
-                turnShoudContainChange(food, (-1).zz)
+                turner.calcShouldContain(food, (-1).zz)
             }
             it("Given some 🙎🏻‍♂️and exactly enough 🍖 Then all 🍖 eaten") {
                 val citizen = user.addResource(Citizen(), 100.z)
                 val expectEaten = citizen.owned * Mechanics.citizenEatAmount
                 val food = user.addResource(Food(), expectEaten)
 
-                turnShoudContainChange(food, -expectEaten)
+                turner.calcShouldContain(food, -expectEaten)
             }
         }
 
@@ -88,7 +87,7 @@ class CitizenTurnStepTest : DescribeSpec({
                 val citizen = user.addResource(Citizen(), Mechanics.citizensStarve.neededToGetTo(2))
                 val food = user.addResource(Food(), 1.z)
 
-                val changes = turner.calcResourceChanges()
+                val changes = turner.calcTurnChanges()
                 changes.shouldContainChange(food, -(citizen.owned * Mechanics.citizenEatAmount).zz)
                 changes.shouldContainChange(citizen, (-2).zz) // in the future will be starving...
             }
@@ -105,14 +104,14 @@ class CitizenTurnStepTest : DescribeSpec({
                 val citizenAmount = Mechanics.citizensStarve.neededToGetTo(expectedStarve)
                 val citizen = user.addResource(Citizen(), citizenAmount)
 
-                turnShoudContainChange(citizen, -expectedStarve.z)
+                turner.calcShouldContain(citizen, -expectedStarve.z)
             }
             it("Given few 🙎🏻‍♂️ Then minimum starvation ☠️") {
                 val citizen = user.addResource(Citizen(), 2.z)
 
-                turnShoudContainChange(citizen, -Mechanics.citizensStarveMinimum)
+                turner.calcShouldContain(citizen, -Mechanics.citizensStarveMinimum)
             }
         }
     }
-
 })
+

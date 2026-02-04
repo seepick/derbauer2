@@ -35,7 +35,7 @@ object Mechanics {
     val farmLandUse = 4.z
 
     val granaryCostsGold = 80
-    val granaryCapacity = 100
+    val granaryCapacity = 100.z
     val granaryLanduse = 2
 
     // TRADE

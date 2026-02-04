@@ -28,7 +28,6 @@ class GameRenderer(
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-
         textmap.aligned(renderInfoBar(), user.turn.prettyString)
         textmap.hr()
         content(textmap)

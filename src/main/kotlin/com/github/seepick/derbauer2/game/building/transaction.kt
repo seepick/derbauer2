@@ -19,6 +19,7 @@ fun User.buildBuilding(buildingClass: KClass<out Building>): TxResult =
         TxOwnable(Gold::class, -findBuilding(buildingClass).costsGold),
     )
 
+/** Do NOT make this a functional implementation as we need a concrete class reference. */
 object BuildingTxValidator : TxValidator {
     override fun validateTx(user: User) =
         with(user) {

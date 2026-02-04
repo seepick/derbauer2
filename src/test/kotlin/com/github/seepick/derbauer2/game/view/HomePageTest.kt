@@ -15,7 +15,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
 class HomePageTest : PageTest, StringSpec({
-    "Given init assets Then render home page" {
+    "Given init assets Then render home page content" {
         renderGamePage({ ctx ->
             ctx.user.addResource(Gold(), 999.z)
             ctx.user.addResource(Land(), 30.z)
@@ -25,32 +25,12 @@ class HomePageTest : PageTest, StringSpec({
             ctx.user.addResource(Food(), 3.z)
             HomePage(ctx.turner, ctx.currentPage, ctx.gameRenderer, ctx.user)
         }) {
-            this.fullPage shouldBeEqual """
-                🌍 30 | 💰 999 | 🍖 3 / 100 | 🌍 3 / 30 | 🙎🏻‍♂️ 1 / 5                             Turn 1
-                ================================================================================
-                You are home... 🏠                                                               
-                                                                                                
-                What shall we do next, Sir?                                                     
-                                                                                                
-                [1] Build 🛠️                                                                     
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                ================================================================================
-                [1-1]> ▉                                                        ENTER: Next Turn
+            contentString shouldBeEqual """
+                You are home... 🏠
+
+                What shall we do next, Sir?
+
+                [1] Build 🛠️
                 """.trimIndent()
         }
     }

@@ -16,6 +16,7 @@ fun User.execTx(changes: ResourceChanges) =
         )
     })
 
+/** Do NOT make this a functional implementation as we need a concrete class reference. */
 object ResourceTxValidator : TxValidator {
     override fun validateTx(user: User) =
         with(user) {

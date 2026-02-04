@@ -27,7 +27,7 @@ class TaxesTurnStepTest : DescribeSpec({
         step.initProb()
     }
 
-    fun calcChanges() = step.calcResourceChanges()
+    fun calcChanges() = step.calcTurnChanges()
 
     context("Given 💰 and 🙎🏻‍♂️") {
         lateinit var gold: Gold

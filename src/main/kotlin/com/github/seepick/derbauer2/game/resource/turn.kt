@@ -3,15 +3,15 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.TurnStep
-import com.github.seepick.derbauer2.game.turn.TurnStepOrder
 import kotlin.reflect.KClass
 
-/** This includes obviously mostly buildings. */
-class ProducesResourceTurnStep(val user: User) : TurnStep {
-    override val order = TurnStepOrder.producesResources
+/**
+ * Mostly about buildings.
+ * Does NOT implement [TurnStep] interface, as used as a composite.
+ */
+class ProducesResourceTurnStep(val user: User) {
 
-    @Suppress("CognitiveComplexMethod")
-    override fun calcResourceChanges() = buildResourceChanges {
+    fun calcResourceChanges() = buildResourceChanges {
         val modifiersByResource = user.all
             .filterIsInstance<ResourceProductionModifier>().groupBy { it.handlingResource }
         plainProduction().changes.forEach { change ->

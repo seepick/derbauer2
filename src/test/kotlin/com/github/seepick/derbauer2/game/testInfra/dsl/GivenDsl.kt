@@ -56,12 +56,6 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         return asset
     }
 
-    inline fun <reified A : Asset> changeOwned(amount: Z): A {
-        val asset = user.all.findOrSet<A>()
-        asset.ownedForTest += amount
-        return asset
-    }
-
     inline fun <reified A : Asset> ListX<in A>.findOrSet(): A = findOrNull<A>() ?: createAssetInstance()
 
     inline fun <reified A : Asset> createAssetInstance(): A {

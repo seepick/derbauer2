@@ -38,7 +38,7 @@ class Turner(
     )
 
     private fun execStepToRCs(step: TurnStep): ResourceChanges =
-        step.calcResourceChanges().toLimitedAmounts().also {
+        step.calcTurnChanges().toLimitedAmounts().also {
             user.execTx(it).errorOnFail()
         }
 

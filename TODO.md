@@ -42,6 +42,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### Misc
 
+* UI: avoid copyrighted bg music; let AI generate it (and enter greyzone of copyright ;)
+    * think of epic medieval games such as: stronghold, age of empires, settlers, ...
 * UI: choose color theme (circular button in toolbar, dropdown with a few common presets)
 * UI: configure in toolbar which resources to be displayed in info bar (limit to N due to width)
 * cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
@@ -51,31 +53,27 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * UI: align building list items (like a table, underneath each other; otherwise restless chaos)
 * BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 * BZ: add stats.happy + game renderer/resource info bar: add happy indicator: "12/20 🙎🏻‍♂️☹️"
-* -- BZ: FeatureTurner
+* IT: use compose viewmodel, proper state management (audio player); but more to come in the future
+    * marry together with koin, thus core logic and UI can interact properly
+
+Low:
+
+* BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true
     * thus: do rounds of applying, until no feature returns check==true anymore
     * e.g.: TradingFeature enables TradeLandFeature; should BOTH appear in turn screens
-*
-    - BZ: once stats are implemented, then let junkfood-tech also increase happiness
-*
-    - val User.`🍖` get(): Food = findResource(Food::class)
-*
-    - let AI generate doc, based on code (before that, align documents with package structure)
-*
-    - BZ: ad TradingFeature check logic: look for turns played (and/or money owned?)
-*
-    - BZ: reverse engineer DerBauer1
-*
-    - BZ: decisions impact story, influence
+* BZ: once stats are implemented, then let junkfood-tech also increase happiness
+* val User.`🍖` get(): Food = findResource(Food::class)
+* let AI generate doc, based on code (before that, align documents with package structure)
+* BZ: ad TradingFeature check logic: look for turns played (and/or money owned?)
+* BZ: reverse engineer DerBauer1
+* BZ: decisions impact story, influence
 * BZ: improve found-gold-happening: consider history, gold amount (max, current, avg over last x-turns), etc.
 * IT: jar file for linux&co
 * BZ: AD turn citizen: if too little food (not 0 though) for >1 round, slowly starve
     * currently only starve if 0 food
-
-- BZ: attack barbarians, or NPCs
-
-*
-    - UI: make magnituded number from "1k" to "1.2k"
+* BZ: attack barbarians, or NPCs
+* UI: make magnituded number from "1k" to "1.2k"
 
 ### Tech
 

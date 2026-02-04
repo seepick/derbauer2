@@ -23,6 +23,9 @@ val StorableResource.storageUsage: Percent get() = user.storageUsage(this)
 fun User.totalStorageFor(resource: StorableResource) =
     totalStorageFor(resource::class)
 
+inline fun <reified SR : StorableResource> User.totalStorageFor() =
+    totalStorageFor(SR::class)
+
 context(user: User)
 val StorableResource.totalStorage: Z get() = user.totalStorageFor(this)
 
