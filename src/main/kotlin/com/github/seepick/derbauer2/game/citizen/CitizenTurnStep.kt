@@ -50,7 +50,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
             return EatingStarvingResult(ResourceChanges(listOf(eatChange)), false)
         }
         // negative food eaten amount => starve
-        val starveChange = calcStarveChange(citizen, eatChange.changeAmount)
+        val starveChange = calcStarveChange(citizen, futureFoodOwned)
         return EatingStarvingResult(ResourceChanges(listOf(eatChange, starveChange)), true)
     }
 
@@ -62,8 +62,8 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         return ResourceChange(Food::class, -adjustedConsumed)
     }
 
-    private fun calcStarveChange(citizen: Citizen, changeAmount: Zz): ResourceChange {
-        // TODO adjust starvation intensity depending how much `changeAmount` is in negative
+    private fun calcStarveChange(citizen: Citizen, futureFoodOwned: Zz): ResourceChange {
+        // TODO adjust starvation intensity depending how much `futureFoodOwned` is in negative
         val rawStarving = citizen.owned * Mechanics.citizensStarve
         val adjustedStarving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
         return ResourceChange(citizen, -adjustedStarving)
