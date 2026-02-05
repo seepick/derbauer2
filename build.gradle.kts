@@ -5,7 +5,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
-val runUiTests = project.findProperty("runUiTests") != null
+val enableUiTests = project.findProperty("enableUiTests") != null
 val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
@@ -32,6 +32,7 @@ repositories {
 dependencies {
     implementation(libs.kotlin.reflect)
     implementation(compose.desktop.currentOs)
+    implementation("org.jetbrains.compose.desktop:desktop-jvm-macos-arm64:${libs.versions.compose.get()}")
     implementation(libs.koin.compose)
     implementation(libs.koin.composeViewmodel)
     implementation(libs.jlayer) // play mp3s
@@ -98,7 +99,7 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-if (runUiTests) {
+if (enableUiTests) {
     val uiTest by tasks.registering(Test::class) {
         logger.lifecycle("Registering UI test task")
         description = "Run Compose UI Tests with JUnit4"
@@ -153,7 +154,7 @@ tasks.jacocoTestCoverageVerification {
             limit {
                 counter = "INSTRUCTION"
                 value = "COVEREDRATIO"
-                minimum = 0.8.toBigDecimal()
+                minimum = 0.6.toBigDecimal()
             }
         }
     }

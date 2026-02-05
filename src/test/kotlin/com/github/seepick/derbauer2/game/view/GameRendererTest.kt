@@ -18,6 +18,7 @@ import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
+@Suppress("MaxLineLength")
 class GameRendererTest : PageTest, StringSpec({
     "Given some assets and page data Then render full page" {
         renderGamePage({ ctx ->
@@ -35,31 +36,36 @@ class GameRendererTest : PageTest, StringSpec({
             )
         }) {
             fullPage shouldBeEqual """
-                🌍 3 / 30 | 💰 999 | 🍖 3 / 100 | 🌍 3 / 30 | 🙎🏻‍♂️ 1 / 5                       🌸  W1 Y1
-                ================================================================================
-                pageContent                                                                     
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                                                                                                
-                ================================================================================
-                [promptIndicator]> ▉                                           ESCAPE: metaLabel
+                🌍 3 / 30 | 💰 999 | 🍖 3 / 50 | 🌍 3 / 30 | 🙎🏻‍♂️ 1 / 10                                                     🌸  W1 Y1
+                ==============================================================================================================
+                pageContent                                                                                                   
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                                                                                                                              
+                ==============================================================================================================
+                [promptIndicator]> ▉                                                                         ESCAPE: metaLabel
                 """.trimIndent()
         }
     }

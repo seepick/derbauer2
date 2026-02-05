@@ -21,6 +21,7 @@ class WhenDslImpl(override val koin: KoinTest) : WhenDsl, KoinTest by koin, DslC
     }
 
     override fun selectPrompt(searchLabel: String) {
+        printPage()
         val optionIndex = pageAs<PromptGamePage>().prompt.indexOfOption(searchLabel)
         input(KeyInput.byNr(optionIndex))
     }

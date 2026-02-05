@@ -6,6 +6,9 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### 1.2.0
 
+* refactor: this MUST not be var here, as children are static singleton objects
+    * basically global mutable state persisted across test runs... :-/
+    * see: `fun Given() ... state = TechState.Unresearched ...`
 * IT: introduce ActionBus (for history later; skills/XP)
 * UI: align building list items (like a table, underneath each other; reusable for build/research esp turn report)
 * BZ: have some sort of SeasonModifier

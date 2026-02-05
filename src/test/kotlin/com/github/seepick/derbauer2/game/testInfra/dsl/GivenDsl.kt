@@ -9,6 +9,8 @@ import com.github.seepick.derbauer2.game.happening.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.initAssets
 import com.github.seepick.derbauer2.game.prob.ProbRegistrator
 import com.github.seepick.derbauer2.game.prob.disableAllProbs
+import com.github.seepick.derbauer2.game.tech.DefaultTechItemRepo
+import com.github.seepick.derbauer2.game.tech.TechState
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.Beeper
@@ -28,6 +30,9 @@ fun Given(
     disableAllProbs: Boolean = true,
     code: GivenDsl.() -> Unit,
 ): GivenDsl {
+    DefaultTechItemRepo.items.forEach { // HACK! remove
+        it.state = TechState.Unresearched
+    }
     koin.declareMock<Beeper> {
         every { beep(any()) } answers {
             log.debug { "TEST beep for reason=[${arg<String>(0)}]" }

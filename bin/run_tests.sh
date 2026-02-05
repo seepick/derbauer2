@@ -7,5 +7,5 @@ cd "${ROOT}" || exit 1
 source "./bin/_includes.sh"
 
 echoH1 "🚦  Running all tests"
-./gradlew detekt test uiTest -PrunUiTests || exit 1
+./gradlew detekt test uiTest -PenableUiTests || exit 1
 echoSuccess "Running all tests"

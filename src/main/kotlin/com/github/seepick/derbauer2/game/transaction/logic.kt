@@ -9,24 +9,21 @@ private val log = logger {}
 
 fun User.execTx(first: Tx, vararg other: Tx) = execTx(listOf(first, *other))
 
-fun User.execTx(txs: List<Tx>): TxResult {
-    if (txs.isEmpty()) {
-        return TxResult.Success
+fun User.execTx(txs: List<Tx>): TxResult = if (txs.isEmpty()) {
+    TxResult.Success
+} else {
+    when (val maybeSnapshot = copyAndApply(txs)) {
+        is TxCopyResult.Ok -> validateAndExec(txs, maybeSnapshot.value)
+        is TxCopyResult.Fail -> handleFail(maybeSnapshot)
     }
-    log.debug { "Executing transactions: $txs" }
-    return when (val maybeSnapshot = copyAndApply(txs)) {
-        is TxCopyResult.Ok -> {
-            validateAndExec(txs, maybeSnapshot.value)
-        }
+}
 
-        is TxCopyResult.Fail -> {
-            when (maybeSnapshot) {
-                is TxCopyResult.Fail.NegativeAmount -> {
-                    log.debug(maybeSnapshot.e) { "Negative value during snapshot creation and TX application." }
-                    TxResult.Fail.InsufficientResources("Transactions blocked due to negative value.${maybeSnapshot.failDetails?.let { " ($it)" } ?: ""}")
-                }
-            }
-        }
+private fun handleFail(maybeSnapshot: TxCopyResult.Fail<User>) = when (maybeSnapshot) {
+    is TxCopyResult.Fail.NegativeAmount -> {
+        log.debug(maybeSnapshot.e) { "Negative value during snapshot creation and TX application." }
+        TxResult.Fail.InsufficientResources(
+            "Transactions blocked due to negative value.${maybeSnapshot.failDetails?.let { " ($it)" } ?: ""}"
+        )
     }
 }
 

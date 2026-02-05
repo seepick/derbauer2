@@ -67,8 +67,7 @@ fun showMainWindow(
     }
 }
 
-
-@Suppress("FunctionName")
+@Suppress("FunctionName", "DestructuringDeclarationWithTooManyEntries")
 @Composable
 fun MainWindow(
     title: String,
@@ -119,6 +118,7 @@ fun MainWindow(
 }
 
 @Composable
+@Suppress("FunctionName")
 private fun RunOnceWithKoin(
     initState: (Koin) -> Unit,
 ) {
@@ -133,6 +133,7 @@ private fun RunOnceWithKoin(
 private const val TOOLBAR_ANIMATION_DURATION = 200
 
 @Composable
+@Suppress("CognitiveComplexMethod")
 private fun rememberMainWindowState(
     page: Page,
     onTick: () -> Unit,
