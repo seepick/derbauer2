@@ -6,6 +6,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
 val runUiTests = project.findProperty("runUiTests") != null
+val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
 val mainClassFqn = "com.github.seepick.derbauer2.game.DerBauer2"
@@ -145,12 +146,25 @@ tasks.jacocoTestReport {
     }
 }
 
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.test)
+    violationRules {
+        rule {
+            limit {
+                counter = "INSTRUCTION"
+                value = "COVEREDRATIO"
+                minimum = 0.8.toBigDecimal()
+            }
+        }
+    }
+}
+
 detekt {
     toolVersion = libs.versions.detekt.get()
     source.setFrom("src/main/kotlin", "src/test/kotlin")
     config.setFrom(project.rootDir.absolutePath + "/config/detekt.yml")
     parallel = true
-    ignoreFailures = true // don't fail build, pass results to sonarqube which acts as quality gate enforcing 0 findings
+    ignoreFailures = !failOnDetektIssue // ignore by default, only fail if explicitly set
 }
 
 sonar {
