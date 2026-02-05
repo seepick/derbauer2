@@ -82,6 +82,8 @@ Low:
 * UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
     * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
 * UI: bright/dark mode support
+* improve GitHub action: first verify, then build assets (win/mac/linux) with new version already
+    * then mutate state: verify assets exist; GIT tag+push; create GitHub release and upload assets (no build anymore)
 
 Low:
 
