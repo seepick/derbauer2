@@ -32,6 +32,7 @@ data class Zz(
     operator fun plus(other: Long) = Zz(value + other)
     operator fun plus(other: Int) = Zz(value + other)
     operator fun minus(other: Zz) = Zz(value - other.value)
+    operator fun minus(other: Z) = Zz(value - other.value)
     operator fun minus(other: Long) = Zz(value - other)
     operator fun minus(other: Int) = Zz(value - other)
     operator fun times(other: Zz) = Zz(value * other.value)
@@ -74,6 +75,7 @@ data class Z(
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Z) = Z(value + other.value)
+    operator fun plus(other: Zz) = Zz(value + other.value)
     operator fun plus(other: Long) = Z(value + other)
     operator fun plus(other: Int) = Z(value + other)
     operator fun minus(other: Z) = Z(value - other.value)

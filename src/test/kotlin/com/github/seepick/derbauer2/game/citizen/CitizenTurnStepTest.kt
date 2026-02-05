@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
@@ -19,8 +18,6 @@ import com.github.seepick.derbauer2.game.resource.shouldContainChange
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.comparables.shouldBeLessThan
-import io.kotest.matchers.equals.shouldBeEqual
-import kotlin.math.ceil
 
 class CitizenTurnStepTest : DescribeSpec({
     lateinit var user: User
@@ -131,36 +128,37 @@ class CitizenTurnStepTest : DescribeSpec({
             starvedA shouldBeLessThan starvedB
         }
     }
-})
+    context("food producing") {
+        describe("eat") {
+            it("Given no 🍖 and few 🙎🏻‍♂️ and produce some 🍖 Then eat 0 🍖") {
+                user.addResource(Citizen(), 1.z)
+                val food = user.addResource(Food(), 0.z)
+                val producedFood = 10.zz
 
-class StarveComputeTest : DescribeSpec({
-    describe("howManyStarve") {
-        listOf(
-            Triple(0, 0, 0),
-            Triple(1, 0, 1),
-            Triple(5, 0, 5),
-            Triple(11, 0, 11),
-            Triple(1, 1, 0),
-            Triple(10, 1, 0),
-            Triple(11, 1, 1),
-            Triple(19, 1, 9),
-            Triple(20, 1, 10),
-            Triple(21, 1, 11),
-        ).forEach { (citizen, food, expectedCitizenUnfed) ->
-            it("Given 10% eat and $citizen 🙎🏻‍♂️ and $food 🍖 Then $expectedCitizenUnfed unfed") {
-                val eatRatio = 10.`%`
-                val eaten = ceil(citizen * eatRatio.value).toLong().z
-                StarveCompute.howManyUnfed(citizen.z, food.z, eaten, eatRatio) shouldBeEqual expectedCitizenUnfed.z
+                turner.calc(producedFood).shouldContainChange(food, (-1).zz)
+            }
+            it("Given few 🍖 and few 🙎🏻‍♂️ and produce some negative 🍖 Then nothing left to eat") {
+                user.addResource(Citizen(), 1.z)
+                val food = user.addResource(Food(), 1.z)
+                val producedFood = (-10).zz
+
+                turner.calc(producedFood).shouldContainChange(food, 0.zz)
             }
         }
-        listOf(
-            Triple(5, 2, 1), // eat: 2.5 -> ceil up: 3 -> left food: 2 -> 1 starve
-            Triple(5, 3, 0),
-        ).forEach { (citizen, food, expectedCitizenUnfed) ->
-            it("Given 50% eat and $citizen 🙎🏻‍♂️ and $food 🍖 Then $expectedCitizenUnfed unfed") {
-                val eatRatio = 50.`%`
-                val eaten = ceil(citizen * eatRatio.value).toLong().z
-                StarveCompute.howManyUnfed(citizen.z, food.z, eaten, eatRatio) shouldBeEqual expectedCitizenUnfed.z
+        describe("starve ☠️") {
+            it("Given no 🍖 and few 🙎🏻‍♂️ Then no starvation but birth") {
+                val citizen = user.addResource(Citizen(), 1.z)
+                user.addResource(Food(), 0.z)
+                val producedFood = 10.zz
+
+                turner.calc(producedFood).shouldContainChange(citizen, 1.zz)
+            }
+            it("Given few 🍖 and few 🙎🏻‍♂️ and produce some negative 🍖 Then starve ☠️") {
+                val citizen = user.addResource(Citizen(), 1.z)
+                user.addResource(Food(), 1.z)
+                val producedFood = (-10).zz
+
+                turner.calc(producedFood).shouldContainChange(citizen, (-1).zz)
             }
         }
     }

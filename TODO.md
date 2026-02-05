@@ -6,6 +6,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### 1.1.0
 
+* rename DslTest to ITest
+* add ITest.autoPrintPage dev feature
 * BUG!!! resource-production + eatBirthStarve together in composite
     * make those two composable steps NOT implement TurnStep interface (not picked up by turner)
     * take resource-production, filter for Food, merge with food eaten; use total "intensity" for birth/starve

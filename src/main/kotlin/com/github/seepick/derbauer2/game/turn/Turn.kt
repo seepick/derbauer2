@@ -16,7 +16,7 @@ data class Turn(val number: Int = 1) {
         in (WEEKS_PER_SEASON * 2 + 1)..(WEEKS_PER_SEASON * 3) -> Season.Autumn
         else -> Season.Winter
     }
-    val prettyString = "${season.emoji} W$week Y$year"
+    val prettyString = "${season.emoji}  W$week Y$year"
     fun increment() = Turn(number + 1)
 
     companion object {

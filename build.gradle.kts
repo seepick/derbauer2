@@ -97,19 +97,19 @@ tasks.withType<Test>().configureEach {
     }
 }
 
-//if (runUiTests) {
-val uiTest by tasks.registering(Test::class) {
+if (runUiTests) {
+    val uiTest by tasks.registering(Test::class) {
 //    logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
-    description = "Use JUnit4 to run Compose UI tests."
-    group = "verification"
-    testClassesDirs = sourceSets["test"].output.classesDirs
-    classpath = sourceSets["test"].runtimeClasspath
-    useJUnit()
-    if (debugTests) {
-        enableTestLogging()
+        description = "Use JUnit4 to run Compose UI tests."
+        group = "verification"
+        testClassesDirs = sourceSets["test"].output.classesDirs
+        classpath = sourceSets["test"].runtimeClasspath
+        useJUnit()
+        if (debugTests) {
+            enableTestLogging()
+        }
     }
 }
-//}
 
 fun AbstractTestTask.enableTestLogging() {
     testLogging {

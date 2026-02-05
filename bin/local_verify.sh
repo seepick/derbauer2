@@ -14,5 +14,5 @@ echoH1 "🏁  Verifying local state"
 
 echoH1 "👷🏻‍♂️  Run Gradle and Tests"
 ./gradlew detekt test uiTest check jacocoTestReport -PrunUiTests || exit 1
-
+# TODO jacoco test verify
 echoSuccess "Verifying local state"

@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.CollectingWarningListener
 import com.github.seepick.derbauer2.game.core.WarningType
+import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.equals.shouldBeEqual
 import org.koin.test.KoinTest
@@ -14,7 +15,9 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
     inline fun <reified A : Asset> shouldOwn(expectedAmount: Z) {
         val asset = user.all.find<A>()
-        asset.owned shouldBeEqual expectedAmount
+        withClue({ "Expected $expectedAmount ${asset.emojiSpaceOrEmpty}${asset.labelSingular} but was: ${asset.owned}" }) {
+            asset.owned shouldBeEqual expectedAmount
+        }
     }
 
     fun shouldHaveRaisedWarning(type: WarningType) {
