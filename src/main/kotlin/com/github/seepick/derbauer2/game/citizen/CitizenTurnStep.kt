@@ -65,7 +65,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
     private fun calcStarveChange(citizen: Citizen, futureFoodOwned: Zz): ResourceChange {
         // TODO adjust starvation intensity depending how much `futureFoodOwned` is in negative
         val rawStarving = citizen.owned * Mechanics.citizensStarve
-        val adjustedStarving = rawStarving orMaxOf Mechanics.citizensStarveMinimum
+        val adjustedStarving = rawStarving.coerceAtMost(Mechanics.citizensStarveMinimum)
         return ResourceChange(citizen, -adjustedStarving)
     }
 

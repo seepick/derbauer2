@@ -62,9 +62,11 @@ data class Z(
     val zz get() = value.zz
     fun toDouble() = value.toDouble()
 
-    fun coerceAtMost(max: Z) = value.coerceAtMost(max.value).z
+    @Deprecated("user coerce fun")
     fun coerceIn(min: Z, max: Z) = value.coerceIn(min.value, max.value).z
+    @Deprecated("user coerce fun")
     infix fun orMaxOf(other: Z) = if (this > other) this else other
+    @Deprecated("user coerce fun")
     infix fun orMinOf(other: Z) = if (this < other) this else other
 
     fun toPlusString() = if (value > 0) "+$this" else toString()
@@ -78,6 +80,7 @@ data class Z(
     operator fun minus(other: Long) = Z(value - other)
     operator fun minus(other: Int) = Z(value - other)
     operator fun times(other: Z) = Z(value * other.value)
+    operator fun times(other: Zz) = Zz(value * other.value)
     operator fun times(other: Long) = Z(value * other)
     operator fun times(other: Int) = Z(value * other)
     operator fun times(other: Percent) = Z((value * other.value).toLong())
