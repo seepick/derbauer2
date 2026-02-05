@@ -52,44 +52,54 @@ class Textmap(
             return@apply
         }
 
-        // Validate that all rows have the same number of columns
+        validateTableRows(rows)
+        val colWidths = calculateColumnWidths(rows)
+
+        rows.forEach { row ->
+            val cells = renderTableRow(row, cols, colWidths)
+            val lineText = cells.joinToString(CELL_SEPARATOR)
+            line(lineText)
+        }
+    }
+
+    private fun validateTableRows(rows: List<List<String>>) {
         val numCols = rows.first().size
         rows.forEach { row ->
             require(row.size == numCols) {
-                "All rows must have the same number of columns"
+                "All rows must have the same number of columns (expected=$numCols, actual=${row.size})"
             }
         }
+    }
 
-        // Calculate the maximum width for each column
-        val colWidths = IntArray(numCols) { colIndex ->
+    private fun calculateColumnWidths(rows: List<List<String>>): IntArray {
+        val numCols = rows.first().size
+        return IntArray(numCols) { colIndex ->
             rows.maxOf { row -> row[colIndex].countCells() }
         }
+    }
 
-        // Render each row
-        rows.forEach { row ->
-            val cells = row.mapIndexed { colIndex, cell ->
-                val cellWidth = cell.countCells()
-                val colWidth = colWidths[colIndex]
-                val padding = colWidth - cellWidth
-                val align = cols.getOrNull(colIndex)?.align ?: TableAlign.DEFAULT
+    private fun renderTableRow(
+        row: List<String>,
+        cols: List<TableCol>,
+        colWidths: IntArray
+    ): List<String> = row.mapIndexed { colIndex, cell ->
+        val cellWidth = cell.countCells()
+        val colWidth = colWidths[colIndex]
+        val padding = colWidth - cellWidth
+        val align = cols.getOrNull(colIndex)?.align ?: TableAlign.DEFAULT
 
-                when (align) {
-                    TableAlign.Left -> {
-                        cell + " ".repeat(padding)
-                    }
-                    TableAlign.Right -> {
-                        " ".repeat(padding) + cell
-                    }
-                    TableAlign.Center -> {
-                        val leftPad = padding / 2
-                        val rightPad = padding - leftPad
-                        " ".repeat(leftPad) + cell + " ".repeat(rightPad)
-                    }
-                }
+        when (align) {
+            TableAlign.Left -> {
+                cell + CELL_SEPARATOR.repeat(padding)
             }
-            
-            val lineText = cells.joinToString(" ")
-            line(lineText)
+            TableAlign.Right -> {
+                CELL_SEPARATOR.repeat(padding) + cell
+            }
+            TableAlign.Center -> {
+                val leftPad = padding / 2
+                val rightPad = padding - leftPad
+                CELL_SEPARATOR.repeat(leftPad) + cell + CELL_SEPARATOR.repeat(rightPad)
+            }
         }
     }
 
@@ -104,6 +114,7 @@ class Textmap(
 
     companion object {
         private const val HR_SYMBOL = "="
+        private const val CELL_SEPARATOR = " "
         private fun String.countCells(): Int = extractGraphemes().size
     }
 }
