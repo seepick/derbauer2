@@ -4,10 +4,9 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ## Versions
 
-### 1.1.0
-
 ### 1.2.0
 
+* IT: introduce ActionBus (for history later; skills/XP)
 * UI: align building list items (like a table, underneath each other; reusable for build/research esp turn report)
 * BZ: have some sort of SeasonModifier
     * increased rats probability in winter
@@ -15,8 +14,6 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
     * can enable Features; have description (for when displaying in turn report)
 * UI: redesign turn report: make it more outstanding
-* BZ: (rat&gold) happening amount with probability range { lil=5%, med=10%, big=20% } + diffuser; limitted
-* BZ: ad happening: rat only if has food concept
 
 ## Backlog
 
@@ -26,7 +23,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: introduce [stat](documentation/business-spec/stat.md) concept
     * happiness: begin with only season dependent: spring/autumn 0, spring +1, winter -1; affects birth rate
 * BZ: immigration happening (only if citizen usage < 80%); if karma high
-* IT: introduce ActionBus (for history later; skills/XP)
+* BZ: (rat&gold) happening amount with probability range { lil=5%, med=10%, big=20% } + diffuser; limitted
+    * base value = 10% of all time max resource; round to 10s/100s/...
 * UI: replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
     * UI: events/interactions make sounds (happening, etc...) for better feedback
 * UI: choose color theme (circular button in toolbar, dropdown with a few common presets)

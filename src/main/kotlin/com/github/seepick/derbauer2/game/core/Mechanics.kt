@@ -73,5 +73,4 @@ object Mechanics {
     // HAPPENINGS
     val happeningGrowthRate = 1.`%`
     val happeningIsNegativeChance = 5.`%`
-    val happeningGoldFoundBase = 100.z
 }

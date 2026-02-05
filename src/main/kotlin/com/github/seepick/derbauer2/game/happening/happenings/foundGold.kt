@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
 import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
@@ -24,8 +24,7 @@ object FoundGoldDescriptor : HappeningDescriptor(HappeningNature.Positive) {
         user.hasEntity(Gold::class)
 
     override fun buildHappening(user: User): FoundGoldHappening {
-        // TODO variability found gold amount
-        return FoundGoldHappening(goldFound = Mechanics.happeningGoldFoundBase, this)
+        return FoundGoldHappening(goldFound = 100.z, this)
     }
 }
 
