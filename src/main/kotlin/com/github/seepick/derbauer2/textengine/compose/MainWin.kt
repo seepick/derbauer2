@@ -14,8 +14,7 @@ import com.github.seepick.derbauer2.textengine.textmap.MatrixSize
 
 @Suppress("MagicNumber")
 object MainWin {
-
-    val matrixSize = MatrixSize(rows = 25, cols = 80)
+    val matrixSize = MatrixSize(rows = 30, cols = 110)
     val dpSize: DpSize
 
     val outerBorder = 10.dp

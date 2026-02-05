@@ -7,7 +7,6 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 ### 1.1.0
 
 * break up MainWindow() god function into smaller pieces
-* make the whole window bigger
 * only farm availabe at start; only if citizens/food full: unlock house/granary
 * fine adjust mechanics; play a lot yourself; gain experience; sketch out on paper first with what's there
 
@@ -79,6 +78,11 @@ Low:
 * TEST beeper uses some event WarningBus; then catch in itests fail-cases as well
 * TEST itest for build and (not) enough land
 * TEST GameRenderPage ... make reusable also for plain pages (happenings, etc.)
+* UI: change size of mainwindow with presets (small/med/big) in toolbar (would be an achievement to support resizable ;)
+* UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
+* UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
+    * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
+* UI: bright/dark mode support
 
 Low:
 
@@ -95,10 +99,3 @@ Low:
 * introduce buildSrc (try again ;) version toml buildSrc shizzle...
 * provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 
-### UI
-
-* UI: global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
-* UI: maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
-    * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
-
-- UI: bright/dark mode support
