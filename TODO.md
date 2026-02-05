@@ -15,3 +15,9 @@
 * UI: redesign turn report: make it more outstanding
 
 ## 1.3.0
+
+## Backlog
+
+* introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
+* introduce [stat](documentation/business-spec/stat.md) concept
+    * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate

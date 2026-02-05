@@ -1,5 +1,8 @@
 # Action
 
+* about: keep track how user interacts with the game
+    * like a message queue/event store
+* e.g. traded x-times, build y-times, attacked z-times, ... did mini games, ... past decisions.
 * certain "special activities" which can can be executed by user
 * available only in certain conditions
     * feature, building, resources, ...
