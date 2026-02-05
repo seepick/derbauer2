@@ -14,8 +14,6 @@ import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
-// ================= Trading Feature =================
-
 class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.Trading(this)
     override fun deepCopy() = this // immutable
@@ -33,8 +31,6 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
         override fun build() = TradingFeature()
     }
 }
-
-// ================= Trade Land Feature =================
 
 object TradeLandFeatureDescriptor : FeatureDescriptor(
     label = "Trade Land",

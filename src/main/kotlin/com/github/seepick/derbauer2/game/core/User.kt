@@ -86,9 +86,9 @@ inline fun <reified E : Entity> User.hasEntity() = hasEntity(E::class)
 
 val User.gold get() = findResource(Gold::class).owned
 val User.food get() = findResource(Food::class).owned
-val User.citizens get() = findResource(Citizen::class).owned
+val User.citizen get() = findResource(Citizen::class).owned
 val User.land get() = findResource(Land::class).owned
 
-fun User.isGameOver() = hasEntity<Citizen>() && citizens == 0.z
+fun User.isGameOver() = hasEntity<Citizen>() && citizen == 0.z
 
 class UserEnableException(message: String) : Exception(message)

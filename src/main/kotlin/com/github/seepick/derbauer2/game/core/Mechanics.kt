@@ -18,7 +18,7 @@ object Mechanics {
     val startingLand = 20.z
     val startingGold = 400.z
     val startingCitizens = 10.z
-    val startingFood = 50.z
+    val startingFood = 30.z
     // buildings
     val startingGranaries = 1.z
     val startingHouses = 4.z
@@ -28,14 +28,14 @@ object Mechanics {
     // ========================================================================
     val houseCostsGold = 40.z
     val houseLandUse = 1.z
-    val houseStoreCitizen = 5
+    val houseStoreCitizen = 10
 
     val farmCostsGold = 120.z
     val farmProduceFood = 3.z
     val farmLandUse = 4.z
 
     val granaryCostsGold = 80
-    val granaryCapacity = 100.z
+    val granaryCapacity = 50.z
     val granaryLanduse = 2
 
     // TRADE
@@ -47,31 +47,31 @@ object Mechanics {
     // FEATURE
     // ========================================================================
     val featureTradingThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
-    val featureTradeLandThresholdLandAvailableLesser = 2.z
-    val featureTechGoldThresholdGreater = if (DEV) 0.z else (startingGold.value * 1.5).toLong().z
+    val featureTradeLandThresholdLandAvailableLesser = 3.z
+    val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 4.z
 
     // TECHNOLOGY
     // ========================================================================
     val techAgricultureCostsGold = if (DEV) 10.z else 300.z
-    val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 110.`%`
-    val techIrrigationCostsGold = 450.z
-    val techIrrigationFoodProductionMultiplier = if (DEV) 200.`%` else 115.`%`
-    val techJunkFoodCostsGold = 100.z
-    val techCapitalismCostsGold = if (DEV) 20.z else 800.z
-    val techWarfareCostsGold = 100.z
+    val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
+    val techIrrigationCostsGold = 400.z
+    val techIrrigationFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
+    val techJunkFoodCostsGold = 200.z
+    val techCapitalismCostsGold = if (DEV) 20.z else 300.z
+    val techWarfareCostsGold = 300.z
 
     // END TURN
     // ========================================================================
-    val taxRate = 10.`%`
-    val taxGrowthVariation = 30.`%`
+    val taxRate = 20.`%`
+    val taxGrowthVariation = 40.`%`
     val citizenEatAmount = 10.`%`
     val citizenEatVariation = 30.`%`
     val citizenBirthVariation = 20.`%`
-    val citizensStarvePerUnfedCitizen = 30.`%`
     val citizenBirthRate = 10.`%`
+    val citizensStarvePerUnfedCitizen = 30.`%`
 
     // HAPPENINGS
-    val happeningInitialProb = 0.`%`
-    val happeningGrowthRate = 2.`%`
-    val happeningIsNegativeChance = 1.`%`
+    val happeningGrowthRate = 1.`%`
+    val happeningIsNegativeChance = 5.`%`
+    val happeningGoldFoundBase = 100.z
 }

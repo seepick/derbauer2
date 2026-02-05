@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.happening
 
+import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.prob.GrowthProbCalculator
@@ -29,7 +30,7 @@ class HappeningTurner(
         probs.setProvider(
             ProbProviderKey.happeningTurner,
             GrowthProbCalculator(
-                startValue = Mechanics.happeningInitialProb,
+                startValue = 0.`%`,
                 growthRate = Mechanics.happeningGrowthRate,
             )
         ) {

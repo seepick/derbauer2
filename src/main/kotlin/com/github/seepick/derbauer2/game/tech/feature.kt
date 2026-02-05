@@ -2,12 +2,12 @@ package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.gold
+import com.github.seepick.derbauer2.game.core.citizen
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.Feature
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
-import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 object TechnologyFeatureDescriptor : FeatureDescriptor(
@@ -19,8 +19,8 @@ object TechnologyFeatureDescriptor : FeatureDescriptor(
     override val enumIdentifier = FeatureDescriptorType.Technology
 
     override fun check(user: User) =
-        user.hasEntity(Gold::class) &&
-                user.gold >= Mechanics.featureTechGoldThresholdGreater
+        user.hasEntity(Citizen::class) &&
+                user.citizen >= Mechanics.featureTechCitizenThresholdGreater
 
     override fun build() = TechnologyFeature(this)
 }

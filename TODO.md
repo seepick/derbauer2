@@ -6,12 +6,12 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### 1.1.0
 
-* only farm availabe at start; only if citizens/food full: unlock house/granary
-* fine adjust mechanics; play a lot yourself; gain experience; sketch out on paper first with what's there
-
 ### 1.2.0
 
-* BZ: have some sort of SeasonModifier (more rats in winter, more food production in summer, etc.)
+* UI: align building list items (like a table, underneath each other; reusable for build/research esp turn report)
+* BZ: have some sort of SeasonModifier
+    * increased rats probability in winter
+    * more food production in summer (dynamic resource modifier)
 * !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
     * can enable Features; have description (for when displaying in turn report)
 * UI: redesign turn report: make it more outstanding
@@ -22,29 +22,27 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 * BZ: increase designators (title, city) based on "some criteria"
     * can be upped and lowered again! different than feature, which is a one-way unlock
-* BZ: immigration happening
 * BZ: introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
 * BZ: introduce [stat](documentation/business-spec/stat.md) concept
-* UI: replace beeper with playing proper sound (cache short sound snippets); also use later for user interactions
-* UI: events/interactions make sounds (happening, etc...) for better feedback
-    * first introduce ActionBus (for history later; skills/XP)
-* UI: avoid copyrighted bg music; let AI generate it (and enter greyzone of copyright ;)
-    * think of epic medieval games such as: stronghold, age of empires, settlers, ...
+    * happiness: begin with only season dependent: spring/autumn 0, spring +1, winter -1; affects birth rate
+* BZ: immigration happening (only if citizen usage < 80%); if karma high
+* IT: introduce ActionBus (for history later; skills/XP)
+* UI: replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
+    * UI: events/interactions make sounds (happening, etc...) for better feedback
 * UI: choose color theme (circular button in toolbar, dropdown with a few common presets)
-* UI: configure in toolbar which resources to be displayed in info bar (limit to N due to width)
-* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
-* BZ: probability (happening) cool-down mechanism to avoid same thing too often
 * IT: refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
-* UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
-* UI: align building list items (like a table, underneath each other; otherwise restless chaos)
+* cheat mode (press secret key, adjust resources, add/remove entities; deeper debug insights)
 * BZ: market adjustment: when selling too much, price drops; recovers over time to baseline
 * BZ: add stats.happy + game renderer/resource info bar: add happy indicator: "12/20 🙎🏻‍♂️☹️"
-* IT: use compose viewmodel, proper state management (audio player); but more to come in the future
-    * marry together with koin, thus core logic and UI can interact properly
-* if Reports would be outside of User, then could take deepCopies of user and store them
+* BZ: probability (happening) cool-down mechanism to avoid same thing too often
+* if Reports would be outside of User, then could take deepCopies of user and store them; history
 
 Low:
 
+* UI: let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!
+* UI: configure in toolbar which resources to be displayed in info bar (limit to N due to width)
+* UI: avoid copyrighted bg music; let AI generate it (and enter greyzone of copyright ;)
+    * think of epic medieval games such as: stronghold, age of empires, settlers, ...
 * BZ: maybe Land is of type "OccupiableResource"; more generic; reusable for other potential future resources
 * BZ: FeatureTurner
     * TX-exec one, could later allow another to check==true
@@ -64,6 +62,7 @@ Low:
 
 ### Tech
 
+* refactor HappeningDescriptor; so can&build is enforced by design (not runtime require check)
 * rename DslTest to ITest
 * add ITest.autoPrintPage dev feature
 * macos app signing
@@ -85,6 +84,8 @@ Low:
 
 Low:
 
+* IT: use compose viewmodel, proper state management (audio player); but more to come in the future
+    * marry together with koin, thus core logic and UI can interact properly
 * ? maybe Percent can be any Double (not limited to 0..1)?!
 * GitHub REFACTOR necessary (deprecated functionality used)
     * see: https://github.blog/changelog/2022-10-11-github-actions-deprecating-save-state-and-set-output-commands/

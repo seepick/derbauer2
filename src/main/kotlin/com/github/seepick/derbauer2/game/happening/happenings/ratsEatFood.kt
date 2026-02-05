@@ -25,7 +25,7 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
         require(canHappen(user))
-        return RatsEatFoodHappening(amountFoodEaten = user.findResource<Food>().owned orMinOf 15.z)
+        return RatsEatFoodHappening(amountFoodEaten = user.findResource<Food>().owned.coerceAtMost(15.z))
     }
 }
 
