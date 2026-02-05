@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
 
+@Suppress("MagicNumber")
 data class Turn(val number: Int = 1) {
     init {
         require(number >= 1) { "Turn number must be >= 1 but was: $number" }

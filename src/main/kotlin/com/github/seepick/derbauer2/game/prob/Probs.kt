@@ -49,7 +49,7 @@ class ProbsImpl : Probs {
     override fun <T> getProvision(key: ProbProviderKey<T>): T? {
         val handler = providerHandles[key] ?: error("Provider with key '$key' was not registered!")
         @Suppress("UNCHECKED_CAST")
-        return handler.provide() as T?
+        return handler.provide() as? T?
     }
 
     override fun <T> setSelector(key: ProbSelectorKey, selector: ProbSelector<T>) {

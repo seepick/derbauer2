@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.textengine.keyboard.one
 import com.github.seepick.derbauer2.textengine.keyboard.two
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

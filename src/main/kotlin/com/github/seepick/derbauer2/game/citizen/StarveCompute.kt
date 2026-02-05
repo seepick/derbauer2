@@ -10,6 +10,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 object StarveCompute {
     private val log = logger {}
     fun howManyUnfed(citizens: Z, foodOwned: Zz, eatenFood: Z, eatRatio: Percent): Z {
+        // TODO refactor returns
         log.trace { "citizens: $citizens, foodOwned: $foodOwned, eatenFood: $eatenFood, eatRatio: $eatRatio" }
         if (citizens == 0.z) {
             return 0.z

@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.get
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.koin.test.KoinTest
 import org.koin.test.get

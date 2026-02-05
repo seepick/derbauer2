@@ -13,10 +13,10 @@ fun newTechItem(
     override val costs = costs
     override fun buildTech(): Tech {
         return object : Tech {
-            override fun deepCopy() = this
             override val label = label
             override val requirements = requirements
             override val costs = costs
+            override fun deepCopy() = this
         }
     }
 }

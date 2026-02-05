@@ -7,8 +7,8 @@ import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.compose.MainWin
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.mockk.mockk
 
 fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {

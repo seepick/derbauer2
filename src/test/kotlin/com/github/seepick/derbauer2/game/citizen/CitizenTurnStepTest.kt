@@ -108,7 +108,7 @@ class CitizenTurnStepTest : DescribeSpec({
             user.addResource(Food(), 0.z)
             val citizen = user.addResource(Citizen(), 2.z)
 
-            turner.calcShouldContain(citizen, -(1).z)
+            turner.calcShouldContain(citizen, (-1).zz)
         }
         it("Given A) almost enough 🍖 and B) no 🍖 and When compare them Then A) starves less than B)") {
             val wouldNeedFoodToFullFed = 10

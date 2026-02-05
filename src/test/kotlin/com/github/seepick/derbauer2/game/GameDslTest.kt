@@ -32,7 +32,7 @@ class GameDslTest : DslTest, StringSpec() {
             val expectedCitizen = 30.z
             val expectedFood = 0.z
             Given(initAssets = true) {
-                turnOff(TurnOff.happenings)
+                turnOff(TurnOff.Happenings)
                 prob {
                     updateDiffuser(ProbDiffuserKey.eatKey, PassThroughDiffuser)
                 }

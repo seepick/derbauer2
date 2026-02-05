@@ -712,7 +712,8 @@ style:
   UnnecessaryLet:
     active: true
   UnnecessaryParentheses:
-    active: true
+    # detekt doesn't recognize necessity of `(-1).inc()`, as we expect `-1.inc()` to be 0 and not -2
+    active: false
     allowForUnclearPrecedence: false
   UntilInsteadOfRangeTo:
     active: true

@@ -9,9 +9,10 @@ import androidx.compose.ui.text.platform.Font
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.github.seepick.derbauer2.textengine.MatrixSize
 import com.github.seepick.derbauer2.textengine.fgColor
+import com.github.seepick.derbauer2.textengine.textmap.MatrixSize
 
+@Suppress("MagicNumber")
 object MainWin {
 
     val matrixSize = MatrixSize(rows = 25, cols = 80)

@@ -8,11 +8,11 @@ interface ResourceReference {
     val resourceClass: KClass<out Resource>
 }
 
-private const val separator = GameRenderer.RESOURCE_INFO_OWNED_SEPARATOR
+private const val SEPARATOR = GameRenderer.RESOURCE_INFO_OWNED_SEPARATOR
 
 fun Resource.toInfoBarString(user: User): String =
     when (this) {
-        is StorableResource -> "$emojiAndOwned $separator ${user.totalStorageFor(this)}"
-        is Land -> "$emojiSpaceOrEmpty${user.totalLandUse} $separator $owned"
+        is StorableResource -> "$emojiAndOwned $SEPARATOR ${user.totalStorageFor(this)}"
+        is Land -> "$emojiSpaceOrEmpty${user.totalLandUse} $SEPARATOR $owned"
         else -> emojiAndOwned
     }

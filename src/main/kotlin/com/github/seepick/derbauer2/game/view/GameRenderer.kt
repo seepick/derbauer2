@@ -7,8 +7,8 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.resource.toInfoBarString
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 class GameRenderer(
     private val user: User,

@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.textengine.audio.Beeper
 import com.github.seepick.derbauer2.textengine.audio.BeepingWarningListener
 import com.github.seepick.derbauer2.textengine.audio.RealBeeper
 import com.github.seepick.derbauer2.textengine.compose.MainWin
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module

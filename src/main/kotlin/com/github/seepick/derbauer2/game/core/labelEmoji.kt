@@ -19,8 +19,8 @@ private val emojiMap = mapOf(
     Land::class to Land.Data.emojiOrNull.value,
 )
 
-private const val defaultEmoji = "❌"
-val KClass<out Resource>.maybeEmojiOrSimpleName: String get() = emojiMap[this] ?: simpleName ?: defaultEmoji
+private const val DEFAULT_EMOJI = "❌"
+val KClass<out Resource>.maybeEmojiOrSimpleName: String get() = emojiMap[this] ?: simpleName ?: DEFAULT_EMOJI
 
 interface HasLabels {
     val labelSingular: String

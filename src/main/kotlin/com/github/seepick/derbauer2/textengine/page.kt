@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.textengine
 
 import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 

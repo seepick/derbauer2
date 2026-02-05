@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 class GameOverPage : Page {
     override fun render(textmap: Textmap) {

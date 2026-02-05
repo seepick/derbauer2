@@ -11,7 +11,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import com.github.seepick.derbauer2.textengine.TestTags
-import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 @Suppress("FunctionName")
 @Composable

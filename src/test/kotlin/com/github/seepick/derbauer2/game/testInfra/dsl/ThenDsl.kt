@@ -15,7 +15,9 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
     inline fun <reified A : Asset> shouldOwn(expectedAmount: Z) {
         val asset = user.all.find<A>()
-        withClue({ "Expected $expectedAmount ${asset.emojiSpaceOrEmpty}${asset.labelSingular} but was: ${asset.owned}" }) {
+        withClue({
+            "Expected $expectedAmount ${asset.emojiSpaceOrEmpty}${asset.labelSingular} but was: ${asset.owned}"
+        }) {
             asset.owned shouldBeEqual expectedAmount
         }
     }

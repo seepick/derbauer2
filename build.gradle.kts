@@ -100,8 +100,8 @@ tasks.withType<Test>().configureEach {
 
 if (runUiTests) {
     val uiTest by tasks.registering(Test::class) {
-//    logger.lifecycle("UI tests enabled via `-PrunUiTests`.")
-        description = "Use JUnit4 to run Compose UI tests."
+        logger.lifecycle("Registering UI test task")
+        description = "Run Compose UI Tests with JUnit4"
         group = "verification"
         testClassesDirs = sourceSets["test"].output.classesDirs
         classpath = sourceSets["test"].runtimeClasspath

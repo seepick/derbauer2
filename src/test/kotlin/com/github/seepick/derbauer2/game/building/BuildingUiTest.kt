@@ -39,7 +39,7 @@ class BuildingUiTest : UiTest, ComposeTest {
         gameText.contentString shouldContainIgnoringCase "you are home"
 
         pressKey(gameText.keyForSelectOption("build"))
-        repeat(4) {
+        repeat(3) {
             pressKey(gameText.keyForSelectOption("farm"))
         }
 
@@ -49,6 +49,4 @@ class BuildingUiTest : UiTest, ComposeTest {
 }
 
 // TEST: class NextTurnReportUiTest : UiTest, ComposeTest {
-
 // TEST: class TradeUiTest : UiTest, ComposeTest {
-//    buy/sell/fail

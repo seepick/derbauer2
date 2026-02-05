@@ -35,10 +35,10 @@ import com.github.seepick.derbauer2.game.view.textengineModule
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.TestTags
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.bgColor
 import com.github.seepick.derbauer2.textengine.fgColor
 import com.github.seepick.derbauer2.textengine.keyboard.toKeyPressed
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.compose.getKoin

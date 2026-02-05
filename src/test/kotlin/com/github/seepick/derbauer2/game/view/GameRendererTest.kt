@@ -13,8 +13,8 @@ import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.testInfra.PageTest
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 

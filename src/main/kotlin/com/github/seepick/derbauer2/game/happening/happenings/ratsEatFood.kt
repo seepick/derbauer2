@@ -16,7 +16,7 @@ import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.view.AsciiArt
-import com.github.seepick.derbauer2.textengine.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
     override val type = HappeningType.RatsEatFood

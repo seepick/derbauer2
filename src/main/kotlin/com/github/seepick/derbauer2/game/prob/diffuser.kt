@@ -31,7 +31,7 @@ class GrowthDiffuser(private val variation: Percent) : ProbDiffuser {
         } else {
             random.nextGaussianInRange(
                 mean = baseValue.toDouble(),
-                sd = baseValue.toDouble() * variation.value,
+                deviation = baseValue.toDouble() * variation.value,
             ).roundToLong().zz
         }
 }
@@ -41,16 +41,16 @@ class GaussianDiffuser(private val deviation: Z) : ProbDiffuser {
     override fun diffuse(baseValue: Zz): Zz =
         random.nextGaussianInRange(
             mean = baseValue.toDouble(),
-            sd = deviation.toDouble()
+            deviation = deviation.toDouble()
         ).roundToLong().zz
 }
 
-fun Random.nextGaussianInRange(mean: Double, sd: Double, maxAttempts: Int = 10000): Double {
-    val min = mean - sd
-    val max = mean + sd
+fun Random.nextGaussianInRange(mean: Double, deviation: Double, maxAttempts: Int = 10000): Double {
+    val min = mean - deviation
+    val max = mean + deviation
     repeat(maxAttempts) {
-        val v = nextGaussian() * sd + mean
-        if (v in min..max) return v
+        val tmpValue = nextGaussian() * deviation + mean
+        if (tmpValue in min..max) return tmpValue
     }
     return mean.coerceIn(min, max) // fallback; unlikely though
 }

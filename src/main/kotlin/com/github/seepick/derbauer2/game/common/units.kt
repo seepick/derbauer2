@@ -49,7 +49,7 @@ class NegativeZException(val value: Long) :
     IllegalArgumentException("Negative value for unsigned long: $value")
 
 /** Unsigned long. */
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "MethodOverloading")
 data class Z(
     val value: Long,
 ) : Comparable<Z> {

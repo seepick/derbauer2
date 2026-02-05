@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.textengine.Page
-import com.github.seepick.derbauer2.textengine.Textmap
 import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 abstract class SimpleGamePage(
     private val gameRenderer: GameRenderer,

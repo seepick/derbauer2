@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.common.TreePrinter
+import com.github.seepick.derbauer2.game.common.printTree
 import com.github.seepick.derbauer2.game.common.validCycleFree
 import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 
@@ -32,7 +32,7 @@ class TechTree(
             reqItem.isResearched && hasResearchedAll(reqItem.requirements)
         }
 
-    private fun rootsAndChildren(): Pair<List<TechItem>, Map<TechItem, MutableList<TechItem>>> {
+    private fun rootsAndChildren(): Pair<List<TechItem>, Map<TechItem, List<TechItem>>> {
         val children = all.associateWith { mutableListOf<TechItem>() }
         all.forEach { item ->
             item.requirements.forEach { reqData ->
@@ -46,7 +46,7 @@ class TechTree(
 
     fun toPrettyString(): String {
         val (roots, children) = rootsAndChildren()
-        return TreePrinter.print(
+        return printTree(
             "<🤓TECH🔬TREE🤓>", roots, children,
             isChecked = { state is TechState.Researched },
             label = { label },

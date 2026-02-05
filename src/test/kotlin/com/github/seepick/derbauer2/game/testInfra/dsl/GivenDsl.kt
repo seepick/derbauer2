@@ -66,7 +66,7 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
     fun turnOff(off: TurnOff) {
         when (off) {
-            TurnOff.happenings -> {
+            TurnOff.Happenings -> {
                 val probs = koin.get<Probs>() as ProbsImpl
                 probs.updateProvider(ProbProviderKey.happeningTurner, AlwaysFalseProbCalculator)
             }
@@ -75,7 +75,7 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 }
 
 enum class TurnOff {
-    happenings
+    Happenings
 }
 
 @Suppress("TestFunctionName")

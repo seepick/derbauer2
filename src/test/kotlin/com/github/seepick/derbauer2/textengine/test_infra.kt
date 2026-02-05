@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldBeSingleton
