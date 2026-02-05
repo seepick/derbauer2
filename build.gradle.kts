@@ -32,10 +32,9 @@ repositories {
 dependencies {
     implementation(libs.kotlin.reflect)
     implementation(compose.desktop.currentOs)
-    implementation("org.jetbrains.compose.desktop:desktop-jvm-macos-arm64:${libs.versions.compose.get()}")
     implementation(libs.koin.compose)
     implementation(libs.koin.composeViewmodel)
-    implementation(libs.jlayer) // play mp3s
+    implementation(libs.jlayer) // audio player
     implementation(libs.logging.kotlin)
     implementation(libs.logging.logback)
     detektPlugins(libs.detektFormatting)

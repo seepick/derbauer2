@@ -1,14 +1,14 @@
 # Todo
 
-Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
+Continuous Cleanup: `./bin/local_verify.sh` + Sonar + DepVersions
 
 ## Versions
 
 ### 1.2.0
 
-* refactor: this MUST not be var here, as children are static singleton objects
+* refactor: TechItem.state MUST not be var, as children are static singleton objects
     * basically global mutable state persisted across test runs... :-/
-    * see: `fun Given() ... state = TechState.Unresearched ...`
+    * current workaround see: `fun Given() ... state = TechState.Unresearched ...`
 * IT: introduce ActionBus (for history later; skills/XP)
 * UI: align building list items (like a table, underneath each other; reusable for build/research esp turn report)
 * BZ: have some sort of SeasonModifier
@@ -24,7 +24,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
     * can be upped and lowered again! different than feature, which is a one-way unlock
 * BZ: introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
 * BZ: introduce [stat](documentation/business-spec/stat.md) concept
-    * happiness: begin with only season dependent: spring/autumn 0, spring +1, winter -1; affects birth rate
+    * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate
 * BZ: immigration happening (only if citizen usage < 80%); if karma high
 * BZ: (rat&gold) happening amount with probability range { lil=5%, med=10%, big=20% } + diffuser; limitted
     * base value = 10% of all time max resource; round to 10s/100s/...
