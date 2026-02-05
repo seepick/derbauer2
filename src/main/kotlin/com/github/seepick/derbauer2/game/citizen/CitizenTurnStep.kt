@@ -47,7 +47,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
     private fun eatingAndStarving(citizen: Citizen, foodChangingBy: Zz): EatingStarvingResult {
         val food = user.findResourceOrNull<Food>() ?: return EatingStarvingResult(ResourceChanges.empty, false)
         val eatChange = calcEatChange(citizen)
-        val futureFoodOwned = food.owned.zz + eatChange.changeAmount // TODO make use of foodChangingBy
+        val futureFoodOwned = food.owned.zz + eatChange.changeAmount // TODO make use of foodChangingBy; test first
         if (futureFoodOwned >= 0.zz) { // not enough food -> starving
             return EatingStarvingResult(ResourceChanges(listOf(eatChange)), false)
         }
@@ -73,7 +73,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun birthChange(citizen: Citizen): ResourceChange {
         val raw = citizen.owned * Mechanics.citizenBirthRate
-        val adjusted = raw orMaxOf 1.z // TODO more variability; more rare/less likely
+        val adjusted = raw.coerceAtLeast(1.z)
         return ResourceChange(citizen, adjusted)
     }
 }

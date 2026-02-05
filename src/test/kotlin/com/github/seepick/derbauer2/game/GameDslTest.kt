@@ -22,16 +22,21 @@ class GameDslTest : DslTest, StringSpec() {
     init {
         installDslExtension()
         "Starve when no food despite farm" {
+            val givenCitizen = 20.z
+            val givenFood = 0.z
+            val givenFarm = 1.z
+            val expectedCitizen = 15.z
+            val expectedFood = 3.z
             Given(initAssets = true) {
                 turnOff(TurnOff.happenings)
                 prob {
                     updateDiffuser(ProbDiffuserKey.eatKey, PassThroughDiffuser)
                 }
                 setOwned<Land>(100.z)
-                setOwned<Food>(0.z)
-                setOwned<Farm>(1.z)
+                setOwned<Food>(givenFood)
+                setOwned<Farm>(givenFarm)
                 setOwned<House>(4.z)
-                setOwned<Citizen>(20.z)
+                setOwned<Citizen>(givenCitizen)
             } When {
                 printPage()
                 nextTurnToReport {
@@ -43,9 +48,8 @@ class GameDslTest : DslTest, StringSpec() {
                     nextPage()
                 }
             } Then {
-                // FIXME verify eating/starvation works correctly
-//                shouldOwn<Citizen>(1.z)
-//                shouldOwn<Food>(1.z)
+                shouldOwn<Citizen>(expectedCitizen)
+                shouldOwn<Food>(expectedFood)
             }
         }
     }

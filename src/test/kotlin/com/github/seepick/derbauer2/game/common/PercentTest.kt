@@ -8,6 +8,7 @@ class PercentTest : DescribeSpec({
     describe("neededToGetTo") {
         it("ok") {
             10.`%`.neededToGetTo(1) shouldBe 10.z
+            30.`%`.neededToGetTo(1) shouldBe 4.z // 3.33.. -> 4
             50.`%`.neededToGetTo(1) shouldBe 2.z
             100.`%`.neededToGetTo(1) shouldBe 1.z
         }

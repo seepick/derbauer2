@@ -137,8 +137,10 @@ value class Percent(val value: Double) {
     operator fun compareTo(other: Double) = this.value.compareTo(other)
     operator fun plus(other: Percent) = Percent(this.value + other.value)
 
-    /** How many of this is needed to get 'amount' back after % has been applied. */
-    // TODO test this; maybe need ceil() instead cutoff via toLong()
+    /**
+     * How many of this is needed to get 'amount' back after % has been applied.
+     * e.g. 50.% neededToGetTo(1) == 2
+     */
     fun neededToGetTo(amount: Int): Z {
         require(value != 0.0) { "division by zero" }
         return ceil((1.0 / value) * amount).toLong().z
