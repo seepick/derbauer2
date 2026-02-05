@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.citizen
 
+import com.github.seepick.derbauer2.game.common.Percent
+import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
@@ -46,11 +48,11 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         val food = user.findResourceOrNull<Food>() ?: return EatingStarvingResult(ResourceChanges.empty, false)
         val eatChange = calcEatChange(citizen)
         val futureFoodOwned = food.owned.zz + eatChange.changeAmount // TODO make use of foodChangingBy
-        if (futureFoodOwned >= 0.zz) { // not enough food => starving
+        if (futureFoodOwned >= 0.zz) { // not enough food -> starving
             return EatingStarvingResult(ResourceChanges(listOf(eatChange)), false)
         }
-        // negative food eaten amount => starve
-        val starveChange = calcStarveChange(citizen, futureFoodOwned)
+        // negative food eaten amount -> starve
+        val starveChange = calcStarveChange(citizen, food.owned, eatChange.changeAmount.toZAbs())
         return EatingStarvingResult(ResourceChanges(listOf(eatChange, starveChange)), true)
     }
 
@@ -58,15 +60,15 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
     private fun calcEatChange(citizen: Citizen): ResourceChange {
         val rawConsumed = citizen.owned * Mechanics.citizenEatAmount
         val diffusedConsumed = probs.getDiffused(ProbDiffuserKey.eatKey, rawConsumed.zz).toZLimitMinZero()
-        val adjustedConsumed = diffusedConsumed orMaxOf 1.z
+        val adjustedConsumed = diffusedConsumed.coerceAtLeast(1.z)
         return ResourceChange(Food::class, -adjustedConsumed)
     }
 
-    private fun calcStarveChange(citizen: Citizen, futureFoodOwned: Zz): ResourceChange {
-        // TODO adjust starvation intensity depending how much `futureFoodOwned` is in negative
-        val rawStarving = citizen.owned * Mechanics.citizensStarve
-        val adjustedStarving = rawStarving.coerceAtMost(Mechanics.citizensStarveMinimum)
-        return ResourceChange(citizen, -adjustedStarving)
+    private fun calcStarveChange(citizen: Citizen, foodOwned: Z, eatenFood: Z): ResourceChange {
+        val unfedCitizens =
+            StarveCompute.howManyUnfed(citizen.owned, foodOwned, eatenFood, Mechanics.citizenEatAmount)
+        val starving = (unfedCitizens * Mechanics.citizensStarvePerUnfedCitizen).coerceAtLeast(1.z)
+        return ResourceChange(citizen, -starving)
     }
 
     private fun birthChange(citizen: Citizen): ResourceChange {
@@ -77,3 +79,24 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 }
 
 private data class EatingStarvingResult(val changes: ResourceChanges, val isStarving: Boolean)
+
+object StarveCompute {
+    fun howManyUnfed(citizens: Z, foodOwned: Z, eatenFood: Z, eatRatio: Percent): Z {
+//        println("citizens: $citizens, foodOwned: $foodOwned, eatenFood: $eatenFood, eatRatio: $eatRatio")
+        if (citizens == 0.z) {
+            return 0.z
+        }
+        if (foodOwned <= 0.z) {
+            return citizens
+        }
+        val foodDiff = foodOwned.zz - eatenFood.zz
+//        println("foodDiff: $foodDiff")
+        if (foodDiff >= 0.zz) {
+            return 0.z
+        }
+        val citizensAmountFedByOneFood = eatRatio.neededToGetTo(1)
+        val citizensFed = foodOwned * citizensAmountFedByOneFood
+        return citizens - citizensFed
+    }
+}
+

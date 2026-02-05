@@ -22,6 +22,7 @@
         - happening: get free stuff from other; get requested to donate/help/escort (borrow miliatry units)
 * Management (automation)
     * hire manager delegate, which will for example: auto trade sell food if capacity at 80%
+* text-to-speech :)
 
 # Fixed Ideas
 

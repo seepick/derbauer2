@@ -66,7 +66,9 @@ object Mechanics {
     val taxGrowthVariation = 30.`%`
     val citizenEatAmount = 10.`%`
     val citizenEatGrowthVariation = 20.`%`
-    val citizensStarve = 1.`%`
+    val citizensStarvePerUnfedCitizen = 30.`%`
+
+    @Deprecated("always assume min 1") // TODO delme
     val citizensStarveMinimum = 1.z
     val citizenBirthRate = 10.`%`
 
