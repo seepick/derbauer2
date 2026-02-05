@@ -25,6 +25,8 @@ fun Renderer.renderAndToFullString(textmap: Textmap): String {
     return textmap.toFullString()
 }
 
+operator fun Textmap.Companion.invoke() = Textmap(1, 1)
+
 // @formatter:off
 enum class KeyInput(val asKeyPressed: KeyPressed) {
     Enter(KeyPressed.Command.Enter),

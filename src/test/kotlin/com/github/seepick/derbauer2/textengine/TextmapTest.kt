@@ -1,6 +1,8 @@
 package com.github.seepick.derbauer2.textengine
 
 import com.github.seepick.derbauer2.textengine.textmap.InvalidTextmapException
+import com.github.seepick.derbauer2.textengine.textmap.TableAlign
+import com.github.seepick.derbauer2.textengine.textmap.TableCol
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
@@ -85,6 +87,51 @@ class TextmapTest : DescribeSpec({
         it("Given 1x3 and fill minus 1 and add line Then line is at the bottom") {
             Textmap(1, 3).fillVertical(1).line("x").toFullString() shouldBeEqual " \n \nx"
         }
+    }
+    describe("table") {
+        it("empty") {
+            Textmap(1, 1).table(rows = emptyList()).toFullString() shouldBeEqual " "
+        }
+        it("naiv") {
+            Textmap(1, 1).table(rows = listOf(listOf("x"))) shouldBeEqual "x"
+        }
+        it("simple with default left aligned") {
+            Textmap(5, 2).table(
+                rows = listOf(
+                    listOf("aa", "b"),
+                    listOf("d", "ee"),
+                )
+            ) shouldBeEqual "aa b \nd  ee"
+        }
+        it("custom column alignment right") {
+            Textmap(5, 2).table(
+                cols = listOf(TableCol(align = TableAlign.Right)),
+                rows = listOf(
+                    listOf("aa"),
+                    listOf("b"),
+                ),
+            ) shouldBeEqual "aa\n d ee"
+        }
+        it("custom column alignment right") {
+            Textmap(5, 2).table(
+                cols = listOf(TableCol(align = TableAlign.Center)),
+                rows = listOf(
+                    listOf("aaa"),
+                    listOf("b"),
+                ),
+            ) shouldBeEqual "aaa\n b "
+        }
+        it("invalid") {
+            shouldThrow<IllegalArgumentException> {
+                Textmap().table(
+                    rows = listOf(
+                        listOf("single"),
+                        listOf("one", "two"),
+                    )
+                )
+            }
+        }
+        // TODO write table tests with emojis (simple and extra-wide)
     }
     describe("reset") {
         it("reset clears buffer and cursor") {

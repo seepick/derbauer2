@@ -44,6 +44,13 @@ class Textmap(
 
     override fun toGrid() = grid.toArrayArray()
 
+    override fun table(
+        cols: List<TableCol>,
+        rows: List<List<String>>,
+    ) = apply {
+        TODO("Not yet implemented")
+    }
+
     override fun fillVertical(minus: Int) = apply {
         repeat(rows - (cursor.y + minus)) { cursor.nextLine() }
     }
@@ -56,5 +63,17 @@ class Textmap(
     companion object {
         private const val HR_SYMBOL = "="
         private fun String.countCells(): Int = extractGraphemes().size
+    }
+}
+
+data class TableCol(
+    val align: TableAlign = TableAlign.DEFAULT,
+)
+
+enum class TableAlign {
+    Left, Right, Center;
+
+    companion object {
+        val DEFAULT = Left
     }
 }
