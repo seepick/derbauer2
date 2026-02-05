@@ -19,9 +19,8 @@ private val emojiMap: Map<KClass<out Any>, String> = mapOf(
     // ...
 )
 
-private const val DEFAULT_EMOJI = "❌"
 val KClass<*>.simpleNameEmojied: String
-    get() = (simpleName ?: "!simpleName!") + " " + (emojiMap.getOrDefault(this, DEFAULT_EMOJI))
+    get() = (simpleName ?: "!simpleName!") + (emojiMap[this]?.let { " $it" } ?: "")
 
 interface HasLabels {
     val labelSingular: String
