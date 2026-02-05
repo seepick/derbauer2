@@ -6,7 +6,6 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### 1.1.0
 
-* break up MainWindow() god function into smaller pieces
 * only farm availabe at start; only if citizens/food full: unlock house/granary
 * fine adjust mechanics; play a lot yourself; gain experience; sketch out on paper first with what's there
 
@@ -26,7 +25,7 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: immigration happening
 * BZ: introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
 * BZ: introduce [stat](documentation/business-spec/stat.md) concept
-
+* UI: replace beeper with playing proper sound (cache short sound snippets); also use later for user interactions
 * UI: events/interactions make sounds (happening, etc...) for better feedback
     * first introduce ActionBus (for history later; skills/XP)
 * UI: avoid copyrighted bg music; let AI generate it (and enter greyzone of copyright ;)

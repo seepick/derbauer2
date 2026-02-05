@@ -17,16 +17,14 @@ import com.github.seepick.derbauer2.textengine.textmap.Textmap
 @Composable
 fun MainTextArea(textmap: Textmap, tick: Int) {
     val fullText = textmap.toFullString()
-    tick.toString() // trigger recomposition on tick change
+    tick.toString() // have to access it, to trigger recomposition
     Box(
         modifier = Modifier
             .fillMaxSize()
             .testTag(TestTags.mainTextArea)
             .semantics { text = AnnotatedString(fullText) }
     ) {
-        val grid = textmap.toGrid()
-
-        grid.forEachIndexed { rowIndex, row ->
+        textmap.toGrid().forEachIndexed { rowIndex, row ->
             row.forEachIndexed { colIndex, cell ->
                 if (cell != " ") {
                     Text(

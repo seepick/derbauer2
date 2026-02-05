@@ -26,6 +26,7 @@ import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
@@ -66,9 +67,8 @@ fun showMainWindow(
     }
 }
 
-const val TOOLBAR_ANIMATION_DURATION = 200
 
-@Suppress("FunctionName", "LongMethod", "CognitiveComplexMethod")
+@Suppress("FunctionName")
 @Composable
 fun MainWindow(
     title: String,
@@ -80,33 +80,17 @@ fun MainWindow(
         position = WindowPosition.Aligned(Alignment.Center),
     )
     var tick by remember { mutableIntStateOf(0) }
+    tick.toString()
     val currentPage = koinInject<CurrentPage>()
     val page = getKoin().get<Page>(clazz = currentPage.pageClass)
-    tick.toString() // HACK to trigger recomposition, otherwise tick changes are not observed
-    log.trace { "UI render tick #$tick" }
     val textmap = koinInject<Textmap>()
-
-    val density = LocalDensity.current
-    val toolbarWidth = 40.dp
-    val cursorLeftThreshold = with(density) { toolbarWidth.toPx() }
-    var isCursorNearLeft by remember { mutableStateOf(false) }
-    val toolbarOffset by animateDpAsState(
-        targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
-        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION)
+    log.trace { "UI render tick #$tick" }
+    val (toolbarWidth, toolbarOffset, toolbarAlpha, mainBoxModifier) = rememberMainWindowState(
+        page = page,
+        onTick = { tick++ },
     )
-    val toolbarAlpha by animateFloatAsState(
-        targetValue = if (isCursorNearLeft) 0.8f else 0.4f,
-        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION)
-    )
-
     MaterialTheme {
-        // state hack: ensure initialization runs only once during composition
-        var initialized by remember { mutableIntStateOf(0) }
-        if (initialized == 0) {
-            initialized = 1
-            log.debug { "Compose is going to initialize state (initialized=$initialized)" }
-            initState(getKoin())
-        }
+        RunOnceWithKoin(initState = initState)
         Window(
             title = title,
             onCloseRequest = onClose,
@@ -114,42 +98,16 @@ fun MainWindow(
             state = state,
         ) {
             val focusRequester = remember { FocusRequester() }
-            LaunchedEffect(Unit) {
-                focusRequester.requestFocus()
-            }
+            LaunchedEffect(Unit) { focusRequester.requestFocus() }
             Box(
-                modifier = Modifier.fillMaxSize().testTag(TestTags.mainBox).border(
-                    MainWin.outerBorder, Color.fgColor
-                ).padding(MainWin.outerBorder).background(Color.bgColor).padding(MainWin.innerMargin)
-                    .focusRequester(focusRequester).focusable().onPreviewKeyEvent { e -> // .onKeyEvent {  } ??
-                        val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
-                        page.onKeyPressed(key).also { isHandled ->
-                            if (isHandled) {
-                                log.info { "TickTack, user said: $key" }
-                                tick++ // trigger re-composition
-                            }
-                        }
-                    }.pointerInput(Unit) {
-                        awaitPointerEventScope {
-                            while (true) {
-                                val event = awaitPointerEvent()
-                                val pos = event.changes.firstOrNull()?.position
-                                if (pos == null) {
-                                    continue
-                                }
-                                val near = pos.x <= cursorLeftThreshold
-                                if (near != isCursorNearLeft) {
-                                    log.debug { "Mouse Move: Changing toolbar visibility to: $near" }
-                                    isCursorNearLeft = near
-                                }
-                            }
-                        }
-                    }) {
+                modifier = mainBoxModifier
+                    .focusRequester(focusRequester)
+                    .focusable(),
+            ) {
                 page.invalidate()
                 page.render(textmap)
                 MainTextArea(textmap, tick)
                 textmap.reset()
-
                 Toolbar(
                     width = toolbarWidth,
                     xOffset = toolbarOffset,
@@ -159,3 +117,79 @@ fun MainWindow(
         }
     }
 }
+
+@Composable
+private fun RunOnceWithKoin(
+    initState: (Koin) -> Unit,
+) {
+    var initialized by remember { mutableIntStateOf(0) }
+    if (initialized == 0) {
+        initialized = 1
+        log.debug { "Compose is going to initialize state (initialized=$initialized)" }
+        initState(getKoin())
+    }
+}
+
+private const val TOOLBAR_ANIMATION_DURATION = 200
+
+@Composable
+private fun rememberMainWindowState(
+    page: Page,
+    onTick: () -> Unit,
+): MainWindowState {
+    val density = LocalDensity.current
+    val toolbarWidth = 40.dp
+    val cursorLeftThreshold = with(density) { toolbarWidth.toPx() }
+    var isCursorNearLeft by remember { mutableStateOf(false) }
+    val toolbarOffset by animateDpAsState(
+        targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
+        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION),
+    )
+    val toolbarAlpha by animateFloatAsState(
+        targetValue = if (isCursorNearLeft) 0.8f else 0.4f,
+        animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION),
+    )
+    val modifier = Modifier
+        .fillMaxSize()
+        .testTag(TestTags.mainBox)
+        .border(MainWin.outerBorder, Color.fgColor)
+        .padding(MainWin.outerBorder)
+        .background(Color.bgColor)
+        .padding(MainWin.innerMargin)
+        .onPreviewKeyEvent { e ->
+            val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
+            page.onKeyPressed(key).also { isHandled ->
+                if (isHandled) {
+                    log.info { "TickTack, user said: $key" }
+                    onTick()
+                }
+            }
+        }
+        .pointerInput(Unit) {
+            awaitPointerEventScope {
+                while (true) {
+                    val event = awaitPointerEvent()
+                    val pos = event.changes.firstOrNull()?.position ?: continue
+                    val near = pos.x <= cursorLeftThreshold
+                    if (near != isCursorNearLeft) {
+                        log.debug { "Mouse Move: Changing toolbar visibility to: $near" }
+                        isCursorNearLeft = near
+                    }
+                }
+            }
+        }
+
+    return MainWindowState(
+        toolbarWidth = toolbarWidth,
+        toolbarOffset = toolbarOffset,
+        toolbarAlpha = toolbarAlpha,
+        mainBoxModifier = modifier,
+    )
+}
+
+private data class MainWindowState(
+    val toolbarWidth: Dp,
+    val toolbarOffset: Dp,
+    val toolbarAlpha: Float,
+    val mainBoxModifier: Modifier,
+)
