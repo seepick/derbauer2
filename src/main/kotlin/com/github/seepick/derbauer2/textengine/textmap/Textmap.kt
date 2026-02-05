@@ -48,7 +48,49 @@ class Textmap(
         cols: List<TableCol>,
         rows: List<List<String>>,
     ) = apply {
-        TODO("Not yet implemented")
+        if (rows.isEmpty()) {
+            return@apply
+        }
+
+        // Validate that all rows have the same number of columns
+        val numCols = rows.first().size
+        rows.forEach { row ->
+            require(row.size == numCols) {
+                "All rows must have the same number of columns"
+            }
+        }
+
+        // Calculate the maximum width for each column
+        val colWidths = IntArray(numCols) { colIndex ->
+            rows.maxOf { row -> row[colIndex].countCells() }
+        }
+
+        // Render each row
+        rows.forEach { row ->
+            val cells = row.mapIndexed { colIndex, cell ->
+                val cellWidth = cell.countCells()
+                val colWidth = colWidths[colIndex]
+                val padding = colWidth - cellWidth
+                val align = cols.getOrNull(colIndex)?.align ?: TableAlign.DEFAULT
+
+                when (align) {
+                    TableAlign.Left -> {
+                        cell + " ".repeat(padding)
+                    }
+                    TableAlign.Right -> {
+                        " ".repeat(padding) + cell
+                    }
+                    TableAlign.Center -> {
+                        val leftPad = padding / 2
+                        val rightPad = padding - leftPad
+                        " ".repeat(leftPad) + cell + " ".repeat(rightPad)
+                    }
+                }
+            }
+            
+            val lineText = cells.joinToString(" ")
+            line(lineText)
+        }
     }
 
     override fun fillVertical(minus: Int) = apply {

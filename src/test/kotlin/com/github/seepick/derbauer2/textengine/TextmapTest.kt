@@ -93,7 +93,7 @@ class TextmapTest : DescribeSpec({
             Textmap(1, 1).table(rows = emptyList()).toFullString() shouldBeEqual " "
         }
         it("naiv") {
-            Textmap(1, 1).table(rows = listOf(listOf("x"))) shouldBeEqual "x"
+            Textmap(1, 1).table(rows = listOf(listOf("x"))).toFullString() shouldBeEqual "x"
         }
         it("simple with default left aligned") {
             Textmap(5, 2).table(
@@ -101,7 +101,7 @@ class TextmapTest : DescribeSpec({
                     listOf("aa", "b"),
                     listOf("d", "ee"),
                 )
-            ) shouldBeEqual "aa b \nd  ee"
+            ).toFullString() shouldBeEqual "aa b \nd  ee"
         }
         it("custom column alignment right") {
             Textmap(5, 2).table(
@@ -110,16 +110,16 @@ class TextmapTest : DescribeSpec({
                     listOf("aa"),
                     listOf("b"),
                 ),
-            ) shouldBeEqual "aa\n d ee"
+            ).toFullString() shouldBeEqual "aa   \n b   "
         }
-        it("custom column alignment right") {
+        it("custom column alignment center") {
             Textmap(5, 2).table(
                 cols = listOf(TableCol(align = TableAlign.Center)),
                 rows = listOf(
                     listOf("aaa"),
                     listOf("b"),
                 ),
-            ) shouldBeEqual "aaa\n b "
+            ).toFullString() shouldBeEqual "aaa  \n b   "
         }
         it("invalid") {
             shouldThrow<IllegalArgumentException> {
