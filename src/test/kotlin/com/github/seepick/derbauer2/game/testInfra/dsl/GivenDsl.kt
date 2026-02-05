@@ -6,14 +6,9 @@ import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptorRepo
-import com.github.seepick.derbauer2.game.happening.happeningTurner
 import com.github.seepick.derbauer2.game.initAssets
-import com.github.seepick.derbauer2.game.prob.AlwaysFalseProbCalculator
-import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbRegistrator
-import com.github.seepick.derbauer2.game.prob.Probs
-import com.github.seepick.derbauer2.game.prob.ProbsImpl
-import com.github.seepick.derbauer2.game.prob.updateProvider
+import com.github.seepick.derbauer2.game.prob.disableAllProbs
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.Beeper
@@ -28,7 +23,11 @@ private val log = logger {}
 
 @Suppress("TestFunctionName")
 context(koin: KoinTest)
-fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
+fun Given(
+    initAssets: Boolean = false,
+    disableAllProbs: Boolean = true,
+    code: GivenDsl.() -> Unit,
+): GivenDsl {
     koin.declareMock<Beeper> {
         every { beep(any()) } answers {
             log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
@@ -38,7 +37,12 @@ fun Given(initAssets: Boolean = false, code: GivenDsl.() -> Unit): GivenDsl {
     if (initAssets) {
         koin.get<User>().initAssets()
     }
-    return GivenDsl(koin).apply(code)
+
+    val givenDsl = GivenDsl(koin)
+    if (disableAllProbs) {
+        givenDsl.disableAllProbs()
+    }
+    return givenDsl.apply(code)
 }
 
 @TestDsl
@@ -63,19 +67,6 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         user.add(asset)
         return asset
     }
-
-    fun turnOff(off: TurnOff) {
-        when (off) {
-            TurnOff.Happenings -> {
-                val probs = koin.get<Probs>() as ProbsImpl
-                probs.updateProvider(ProbProviderKey.happeningTurner, AlwaysFalseProbCalculator)
-            }
-        }
-    }
-}
-
-enum class TurnOff {
-    Happenings
 }
 
 @Suppress("TestFunctionName")

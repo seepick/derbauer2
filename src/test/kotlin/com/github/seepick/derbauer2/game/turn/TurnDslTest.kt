@@ -3,12 +3,8 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.House
-import com.github.seepick.derbauer2.game.citizen.eatKey
-import com.github.seepick.derbauer2.game.citizen.taxKey
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
-import com.github.seepick.derbauer2.game.prob.prob
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -41,9 +37,6 @@ class TurnDslTest : DslTest, FunSpec() {
                 setOwned<Land>(user.totalLandUse)
                 setOwned<Citizen>(citizenCount)
                 setOwned<Food>(user.totalStorageFor(food) - 1.z) // leave 1 food free storage to test storage limit
-                prob {
-                    updateDiffuserPassthrough(ProbDiffuserKey.eatKey)
-                }
             } When {
                 nextTurnToReport()
             } Then {
@@ -62,9 +55,6 @@ class TurnDslTest : DslTest, FunSpec() {
                 setOwned<Land>(landCount.z)
                 setOwned<House>(houseCount.z)
                 setOwned<Citizen>(citizenCount)
-                prob {
-                    updateDiffuserPassthrough(ProbDiffuserKey.taxKey)
-                }
             } When {
                 nextTurnToReport()
             } Then {

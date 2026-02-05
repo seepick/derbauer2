@@ -29,9 +29,16 @@ class ProbDsl(private val koin: KoinTest) {
     }
 
     private fun probsImpl() = koin.get<Probs>() as ProbsImpl
-
 }
 
 fun GivenDsl.prob(code: ProbDsl.() -> Unit) {
     ProbDsl(koin).code()
+}
+
+fun GivenDsl.disableAllProbs() {
+    prob {
+        ProbDiffuserKey.all.forEach { key ->
+            updateDiffuserPassthrough(key)
+        }
+    }
 }

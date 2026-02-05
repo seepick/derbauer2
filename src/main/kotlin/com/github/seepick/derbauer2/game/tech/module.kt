@@ -10,9 +10,5 @@ private val log = logger {}
 fun techModule() = module {
     singleOf(::TechPage)
     single { DefaultTechItemRepo } bind TechItemRepo::class
-    single {
-        TechTree(all = get<TechItemRepo>().items).also {
-            log.info { it.toPrettyString() }
-        }
-    }
+    single { TechTree(all = get<TechItemRepo>().items) }
 }

@@ -65,7 +65,8 @@ object Mechanics {
     val taxRate = 10.`%`
     val taxGrowthVariation = 30.`%`
     val citizenEatAmount = 10.`%`
-    val citizenEatGrowthVariation = 20.`%`
+    val citizenEatVariation = 30.`%`
+    val citizenBirthVariation = 20.`%`
     val citizensStarvePerUnfedCitizen = 30.`%`
     val citizenBirthRate = 10.`%`
 

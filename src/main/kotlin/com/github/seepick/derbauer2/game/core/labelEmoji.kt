@@ -9,18 +9,19 @@ import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.Resource
 import kotlin.reflect.KClass
 
-private val emojiMap = mapOf(
+private val emojiMap: Map<KClass<out Any>, String> = mapOf(
     Food::class to Food.Data.emojiOrNull.value,
     Gold::class to Gold.Data.emojiOrNull.value,
     Citizen::class to Citizen.Data.emojiOrNull.value,
     Land::class to Land.Data.emojiOrNull.value,
+    // ...
 )
 
 private const val DEFAULT_EMOJI = "❌"
-val KClass<out Resource>.maybeEmojiOrSimpleName: String get() = emojiMap[this] ?: simpleName ?: DEFAULT_EMOJI
+val KClass<*>.simpleNameEmojied: String
+    get() = (simpleName ?: "!simpleName!") + " " + (emojiMap.getOrDefault(this, DEFAULT_EMOJI))
 
 interface HasLabels {
     val labelSingular: String

@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.requireUniqueBy
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.maybeEmojiOrSimpleName
+import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import kotlin.reflect.KClass
 
 fun buildResourceChanges(code: ResourceChanges.Builder.() -> Unit): ResourceChanges {
@@ -39,7 +39,7 @@ data class ResourceChange(
     }
 
     override fun toString() =
-        "${this::class.simpleName}(${changeAmount.toSymboledString()} ${resourceClass.maybeEmojiOrSimpleName})"
+        "${this::class.simpleName}(${changeAmount.toSymboledString()} ${resourceClass.simpleNameEmojied})"
 }
 
 

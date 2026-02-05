@@ -20,10 +20,15 @@
             * stats: karma/luck, wealth, happyness
             * previous behavior (use Business Intelligence / History data)
 * Effects:
-    * gain/lose resources
-    * can provide a temporary effect/modifier
-        * e.g. on different stats like health (plague)
-        * productivity of buildings (workers joined for some turns)
+    * +/- resource/building/army
+    * +/- resource prod
+        * can provide a temporary effect/modifier
+            * e.g. on different stats like health (plague)
+            * productivity of buildings (workers joined for some turns)
+* requirements: only able to be happening under certain conditions...
+    * rats only when food concept exists
+    * when military: getting attacked by foreign armies
+    * when certain buildings exist ...
 
 ## Examples
 
@@ -33,9 +38,15 @@ Economical:
     * +gold
 * rats eaten
     * -food
+        * eaten amount depends on amount of stored food/capacity?
+    * IDEA: change likelyhood if ...
+        * more in winter season
+        * lots of food/capacity
+        * no buildings/features/tech which protect from it
 * heritage
     * +gold (+building/land)
     * a one-time event!
+* bandits/theft
 
 Social:
 
@@ -72,16 +83,8 @@ Planetary:
 * disease/sickness (plague)
     * -people!!!
 
-## Effects
-
-* +/- resource/building/army
-* +/- resource prod
-
 ## Ideas
 
-* increase likelyhood of rats if: lots of food, no buildings/features/tech which protect from it + eaten amount depends
-  on
-  amount of stored food
 * ? happenings mit selber viel choices (wie action game)
     - happenings auch waehrend dem turn (evtl durch action triggered)
     - oder einfach random wenn im menue rumklicken

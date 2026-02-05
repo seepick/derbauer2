@@ -38,7 +38,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                         build<House>()
                     }
                 } Then {
-                    shouldHaveRaisedWarning(WarningType.INSUFFICIENT_RESOURCES)
+                    shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
                     shouldOwn<House>(0.z) // untouched
                     shouldOwn<Gold>(1.z) // untouched
                 }
@@ -55,7 +55,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                         build<Farm>()
                     }
                 } Then {
-                    shouldHaveRaisedWarning(WarningType.LAND_OVERUSE)
+                    shouldHaveRaisedWarningOfType(WarningType.LAND_OVERUSE)
                     shouldOwn<Gold>(sufficientGold) // untouched
                     shouldOwn<Land>(insufficientLand) // untouched
                     shouldOwn<Farm>(0.z) // untouched

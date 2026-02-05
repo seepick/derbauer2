@@ -6,35 +6,21 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 
 ### 1.1.0
 
-* rename DslTest to ITest
-* add ITest.autoPrintPage dev feature
-* BUG!!! resource-production + eatBirthStarve together in composite
-    * make those two composable steps NOT implement TurnStep interface (not picked up by turner)
-    * take resource-production, filter for Food, merge with food eaten; use total "intensity" for birth/starve
-      calculation
-* BZ: growth diffuser for: birth, starvation (already for taxes, eat)
 * break up MainWindow() god function into smaller pieces
 * make the whole window bigger
 * only farm availabe at start; only if citizens/food full: unlock house/granary
 * fine adjust mechanics; play a lot yourself; gain experience; sketch out on paper first with what's there
-* IT: runUiTest needs proper implementation
-    * disabled by default; enableable via CI
-    * locally: can run easily (selectively); no interference with IDE test execution though (2x test execution mode)
 
 ### 1.2.0
 
-* BZ: have some sort of SeasonModifier
+* BZ: have some sort of SeasonModifier (more rats in winter, more food production in summer, etc.)
 * !! BZ: finish tech concept (warfare, junkfood, etc. implement actual effects)
     * can enable Features; have description (for when displaying in turn report)
-* UI: events/interactions make sounds (happening, etc...) for better feedback
-    * first introduce ActionBus (for history later; skills/XP)
 * UI: redesign turn report: make it more outstanding
 * BZ: (rat&gold) happening amount with probability range { lil=5%, med=10%, big=20% } + diffuser; limitted
-* BZ: ad happening: rat only if has food; when military feature then attacks; when certain buildings exist, etc.
+* BZ: ad happening: rat only if has food concept
 
 ## Backlog
-
-### New Game Concepts
 
 * BZ: increase designators (title, city) based on "some criteria"
     * can be upped and lowered again! different than feature, which is a one-way unlock
@@ -42,8 +28,8 @@ Continuous Cleanup: 1) TODOs 2) Detekt+Sonar 3) DepVersions
 * BZ: introduce [knowledge](documentation/business-spec/tech.md#knowledge) asset
 * BZ: introduce [stat](documentation/business-spec/stat.md) concept
 
-### Misc
-
+* UI: events/interactions make sounds (happening, etc...) for better feedback
+    * first introduce ActionBus (for history later; skills/XP)
 * UI: avoid copyrighted bg music; let AI generate it (and enter greyzone of copyright ;)
     * think of epic medieval games such as: stronghold, age of empires, settlers, ...
 * UI: choose color theme (circular button in toolbar, dropdown with a few common presets)
@@ -80,6 +66,8 @@ Low:
 
 ### Tech
 
+* rename DslTest to ITest
+* add ITest.autoPrintPage dev feature
 * macos app signing
 * Use @OptIn annotation for "secret API"
 * use ULong within Z

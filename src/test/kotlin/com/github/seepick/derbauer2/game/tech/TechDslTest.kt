@@ -1,8 +1,13 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.WarningType
+import com.github.seepick.derbauer2.game.core.shouldHaveEntity
+import com.github.seepick.derbauer2.game.core.shouldNotHaveEntity
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.feature.enableFeature
+import com.github.seepick.derbauer2.game.resource.AgricultureTech
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
 import com.github.seepick.derbauer2.game.testInfra.dsl.Given
@@ -17,7 +22,7 @@ import io.kotest.core.spec.style.StringSpec
 class TechDslTest : DslTest, StringSpec() {
     init {
         installDslExtension()
-        "Given tech feature enabled When re-render page Then prompt contains research option" {
+        "Given tech enabled When re-render page Then prompt contains research option" {
             Given {
                 user.enableFeature(FeatureDescriptorType.Technology)
             } When {
@@ -26,7 +31,7 @@ class TechDslTest : DslTest, StringSpec() {
                 pageAs<HomePage>().prompt.shouldHaveSelectOption("research")
             }
         }
-        "Given tech When research Then it is enabled" {
+        "Given tech enabled and sufficient gold When research agriculture Then it is enabled" {
             Given {
                 setOwned<Gold>(1000.z)
                 user.enableFeature(FeatureDescriptorType.Technology)
@@ -35,7 +40,22 @@ class TechDslTest : DslTest, StringSpec() {
                 selectPrompt("research")
                 selectPrompt("agriculture")
             } Then {
-//                    shouldRaiseWarning("insufficient resources")
+                user shouldHaveEntity AgricultureTech::class
+            }
+        }
+        "Given tech enabled and insufficient gold When research agriculture Then fail" {
+            Given {
+                setOwned<Gold>(0.z)
+                user.enableFeature(FeatureDescriptorType.Technology)
+                page.invalidate()
+            } When {
+                selectPrompt("research")
+                selectPrompt("agriculture")
+            } Then {
+                user shouldNotHaveEntity AgricultureTech::class
+                shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
+                shouldHaveRaisedWarningWithMessage("💰")
+                shouldHaveRaisedWarningWithMessage(Mechanics.techAgricultureCostsGold.toString())
             }
         }
     }

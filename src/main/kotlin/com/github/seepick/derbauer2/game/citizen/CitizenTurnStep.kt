@@ -20,6 +20,8 @@ import kotlin.math.ceil
 
 private val probEatKey = ProbDiffuserKey("eat")
 val ProbDiffuserKey.Companion.eatKey get() = probEatKey
+private val probBirthKey = ProbDiffuserKey("birth")
+val ProbDiffuserKey.Companion.birthKey get() = probBirthKey
 
 /**
  * Not implementing the [com.github.seepick.derbauer2.game.turn.TurnStep] interface, as used as a composition element.
@@ -28,7 +30,8 @@ val ProbDiffuserKey.Companion.eatKey get() = probEatKey
 class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbInitializer {
 
     override fun initProb() {
-        probs.setDiffuser(ProbDiffuserKey.eatKey, GrowthDiffuser(variation = Mechanics.citizenEatGrowthVariation))
+        probs.setDiffuser(ProbDiffuserKey.eatKey, GrowthDiffuser(variation = Mechanics.citizenEatVariation))
+        probs.setDiffuser(ProbDiffuserKey.birthKey, GrowthDiffuser(variation = Mechanics.citizenBirthVariation))
     }
 
     fun calcTurnChanges(producedFood: Zz?) = buildResourceChanges {
@@ -74,8 +77,9 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun birthChange(citizen: Citizen): ResourceChange {
         val raw = citizen.owned * Mechanics.citizenBirthRate
-        val adjusted = raw.coerceAtLeast(1.z)
-        return ResourceChange(citizen, adjusted)
+        val diffused = probs.getDiffused(ProbDiffuserKey.birthKey, raw.zz).toZLimitMinZero()
+        val capped = diffused.coerceAtLeast(1.z)
+        return ResourceChange(citizen, capped)
     }
 }
 

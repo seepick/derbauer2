@@ -24,7 +24,7 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     selectPrompt("trade")
                     selectPrompt("buy 1 🍖")
                 } Then {
-                    shouldHaveRaisedWarning(WarningType.INSUFFICIENT_RESOURCES)
+                    shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
                 }
             }
         }

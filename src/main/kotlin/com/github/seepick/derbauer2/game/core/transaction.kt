@@ -24,7 +24,8 @@ data class TxOwnable(
         amount = amount.toZAbs()
     )
 
-    override fun toString() = "TxOwned(${ownableClass.simpleName} ${operation.symbol}[$amount])"
+    override fun toString() =
+        "${this::class.simpleName}(${ownableClass.simpleNameEmojied} ${operation.symbol}$amount)"
 }
 
 @Suppress("FunctionName", "kotlin:S100")
@@ -37,7 +38,7 @@ fun User._applyOwnableTx(tx: TxOwnable) {
         }
 
         TxOperation.DECREASE -> {
-            ownableEntity._setOwnedInternal -= tx.amount
+            ownableEntity._setOwnedInternal -= tx.amount // during TX, will throw NegativeZException if negative
         }
     }
 }

@@ -27,6 +27,7 @@ class CitizenTurnStepTest : DescribeSpec({
         user = User()
         probs = ProbsImpl()
         probs.setDiffuser(ProbDiffuserKey.eatKey, PassThroughDiffuser)
+        probs.setDiffuser(ProbDiffuserKey.birthKey, PassThroughDiffuser)
         turner = CitizenTurnStep(user, probs)
     }
 

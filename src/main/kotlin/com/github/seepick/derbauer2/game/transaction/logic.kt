@@ -7,10 +7,12 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-fun User.execTx(first: Tx, vararg other: Tx) =
-    execTx(listOf(first, *other))
+fun User.execTx(first: Tx, vararg other: Tx) = execTx(listOf(first, *other))
 
 fun User.execTx(txs: List<Tx>): TxResult {
+    if (txs.isEmpty()) {
+        return TxResult.Success
+    }
     log.debug { "Executing transactions: $txs" }
     return when (val maybeSnapshot = copyAndApply(txs)) {
         is TxCopyResult.Ok -> {
@@ -21,7 +23,7 @@ fun User.execTx(txs: List<Tx>): TxResult {
             when (maybeSnapshot) {
                 is TxCopyResult.Fail.NegativeAmount -> {
                     log.debug(maybeSnapshot.e) { "Negative value during snapshot creation and TX application." }
-                    TxResult.Fail.InsufficientResources("Transactions blocked due to negative value.")
+                    TxResult.Fail.InsufficientResources("Transactions blocked due to negative value.${maybeSnapshot.failDetails?.let { " ($it)" } ?: ""}")
                 }
             }
         }
@@ -30,13 +32,20 @@ fun User.execTx(txs: List<Tx>): TxResult {
 
 private fun User.copyAndApply(txs: List<Tx>): TxCopyResult<User> {
     val snapshot = deepCopy()
+    var lastTx = txs.first()
     try {
-        txs.forEach { snapshot._applyTx(it) }
+        txs.forEach { tx ->
+            lastTx = tx
+            snapshot._applyTx(tx)
+        }
     } catch (e: NegativeZException) {
-        return TxCopyResult.Fail.NegativeAmount(e)
+        return TxCopyResult.Fail.NegativeAmount(e, lastTx)
     }
     return TxCopyResult.Ok(snapshot)
 }
+
+private operator fun TxCopyResult.Fail.NegativeAmount.Companion.invoke(exception: NegativeZException, failingTx: Tx) =
+    TxCopyResult.Fail.NegativeAmount<User>(exception, failingTx.toString())
 
 /** @param snapshot got the TXs already applied to it. */
 private fun User.validateAndExec(txs: List<Tx>, snapshot: User): TxResult {
@@ -56,8 +65,19 @@ private fun User._applyTx(tx: Tx) {
 }
 
 private sealed interface TxCopyResult<T> {
-    data class Ok<T>(val value: T) : TxCopyResult<T>
-    sealed interface Fail<T> : TxCopyResult<T> {
-        class NegativeAmount<T>(val e: NegativeZException) : Fail<T>
+    data class Ok<T>(
+        val value: T,
+    ) : TxCopyResult<T>
+
+    sealed class Fail<T>(
+        val failDetails: String?,
+    ) : TxCopyResult<T> {
+
+        class NegativeAmount<T>(
+            val e: NegativeZException,
+            failDetails: String? = null,
+        ) : Fail<T>(failDetails) {
+            companion object
+        }
     }
 }

@@ -22,14 +22,14 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         }
     }
 
-    fun shouldHaveRaisedWarning(type: WarningType) {
+    fun shouldHaveRaisedWarningOfType(type: WarningType) {
         koin.get<CollectingWarningListener>().warnings.map { it.type }.shouldContain(type)
     }
 
-//    fun shouldHaveRaisedWarning(containsMessage: String) {
-//        val warnings = koin.get<CollectingWarningListener>().warnings
-//        withClue({ "Expected warnings to contain [$containsMessage] but was:\n${warnings.map { it.message }}" }) {
-//            warnings.any { it.message.contains(containsMessage, ignoreCase = true) } shouldBeEqual true
-//        }
-//    }
+    fun shouldHaveRaisedWarningWithMessage(containsMessage: String) {
+        val warnings = koin.get<CollectingWarningListener>().warnings
+        withClue({ "Expected warnings to contain [$containsMessage] but was:\n${warnings.map { it.message }}" }) {
+            warnings.any { it.message.contains(containsMessage, ignoreCase = true) } shouldBeEqual true
+        }
+    }
 }
