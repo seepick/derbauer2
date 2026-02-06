@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.core.hasEntity
+import com.github.seepick.derbauer2.game.core.ratsEatFoodProbability
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
@@ -17,14 +18,21 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
+import kotlin.random.Random
 
 object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
     override val type = HappeningType.RatsEatFood
 
-    override fun canHappen(user: User) = user.hasEntity(Food::class) && user.findResource<Food>().owned > 0
+    override fun canHappen(user: User): Boolean {
+        if (!user.hasEntity(Food::class) || user.findResource<Food>().owned <= 0) {
+            return false
+        }
+        val probability = user.turn.season.ratsEatFoodProbability
+        return Random.nextDouble(0.0, 1.0) < probability.value
+    }
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
-        require(canHappen(user))
+        require(user.hasEntity(Food::class) && user.findResource<Food>().owned > 0)
         return RatsEatFoodHappening(amountFoodEaten = user.findResource<Food>().owned.coerceAtMost(15.z))
     }
 }

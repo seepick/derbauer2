@@ -1,8 +1,10 @@
 package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
+import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.turn.Season
 
 /**
  * All game mechanics constants; a magic constant provider.
@@ -73,3 +75,11 @@ object Mechanics {
     val happeningGrowthRate = 1.`%`
     val happeningIsNegativeChance = 5.`%`
 }
+
+val Season.ratsEatFoodProbability: Percent
+    get() = when (this) {
+        Season.Winter -> 100.`%`
+        Season.Autumn -> 75.`%`
+        Season.Spring -> 50.`%`
+        Season.Summer -> 25.`%`
+    }
