@@ -106,7 +106,7 @@ fun MainWindow(
                 page.invalidate()
                 page.render(textmap)
                 MainTextArea(textmap, tick)
-                textmap.reset()
+                textmap.clear()
                 Toolbar(
                     width = toolbarWidth,
                     xOffset = toolbarOffset,

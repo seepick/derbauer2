@@ -35,11 +35,11 @@ class ReportPage(
 
         textmap.tableByTransform(
             cols = listOf(
-                TransformingTableCol(align = TableAlign.Left) {
+                TransformingTableCol(align = TableAlign.Left) { _, _, it ->
                     val res = user.findResource(it.resourceClass)
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
-                TransformingTableCol(align = TableAlign.Right) {
+                TransformingTableCol(align = TableAlign.Right) { _, _, it ->
                     it.changeAmount.toSymboledString()
                 },
             ),

@@ -21,9 +21,9 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
         rowItems: List<T>,
     ): List<String> = table(
         cols = cols.map { TableCol(align = it.align) },
-        rows = rowItems.map { row ->
-            cols.map { col ->
-                col.transformRow(row)
+        rows = rowItems.mapIndexed { rowIdx, row ->
+            cols.mapIndexed { colIdx, col ->
+                col.transformRow(rowIdx, colIdx, row)
             }
         }
     )
@@ -100,9 +100,12 @@ data class TableCol(
     val align: TableAlign = TableAlign.DEFAULT,
 )
 
+typealias RowIndex = Int
+typealias ColumnIndex = Int
+
 data class TransformingTableCol<T>(
     val align: TableAlign = TableAlign.DEFAULT,
-    val transformRow: (T) -> String,
+    val transformRow: (RowIndex, ColumnIndex, T) -> String,
 )
 
 enum class TableAlign {

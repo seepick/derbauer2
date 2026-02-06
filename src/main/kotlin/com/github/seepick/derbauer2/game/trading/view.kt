@@ -18,8 +18,10 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import kotlin.reflect.KClass
 
@@ -44,14 +46,14 @@ class TradePromptBuilder(
 ) : PromptProvider {
     override fun buildPrompt() = SelectPrompt(
         title = "What is it your greed desires?",
-        options = buildList {
+        options = Options.Singled(buildList {
             // or Gold(Mechanics.buyFoodCostGold.z)?
             add(buildTradeOption(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))
             add(buildTradeOption(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.z))
             if (user.hasFeature(TradeLandFeature::class)) {
                 add(buildTradeOption(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.z))
             }
-        }
+        })
     )
 
     @Suppress("SpreadOperator")
@@ -60,7 +62,7 @@ class TradePromptBuilder(
         targetResourceClass: KClass<out Resource>,
         vararg counters: Pair<KClass<out Resource>, Z>
     ) = SelectOption(
-        label = {
+        label = SelectOptionLabel.Single.Dynamic {
             val targetResource = user.findResource(targetResourceClass)
             "${operation.label} 1 ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->

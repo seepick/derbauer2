@@ -11,15 +11,6 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 - **Text-Rendering**: Jetpack Compose Desktop simulating a CLI.
 - **Entry**: `com.github.seepick.derbauer2.game.DerBauer2.main()`
 
-## Build Commands (ALWAYS use in this order)
-
-```bash
-# Complete CI sequence (mirrors .github/workflows/continuous.yml)
-./gradlew detekt jacocoTestReport check --console=plain
-./gradlew sonar --console=plain  # CI only, requires SONAR_TOKEN
-./bin/validate_documentation.sh
-```
-
 ## Project Structure
 
 ```
@@ -32,20 +23,22 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 │   ├── business-spec/            # Feature specifications; business requirements.
 │   └── tech-spec/                # Technical description; architecture, patterns, etc.
 └── src/                          # Contains the source code for the game, following typical convention.
-
-src/test/kotlin/.../game/
-├── */                          # Unit tests (mirror main structure)
-├── test_assertions.kt          # Custom Kotest matchers
-└── test_domain_utils.kt        # Test builders
 ```
 
-## Important Files for Agents
+### Important Files for Agents
 
 * [Coding Standards](/documentation/tech-spec/coding-standards.md)` - When writing any code, adhere to those.
 * [Software Architecture](/documentation/tech-spec/project-architecture.md) - High level architecture overview.
 * [Gradle Dependencies](/gradle/libs.versions.toml) - Change dependencies if needed.
 
 ## Critical Patterns & Constraints
+
+## AI Specific Coding Rules
+
+* Write **short functions**, ideally 2-5 lines. If longer, split into smaller functions and give them descriptive names.
+* Do NOT write any **inline comments**; the code should be self-explanatory. If you need to explain something, write a
+  separate function with a descriptive name.
+* Make use of **trailing commas** in multiline function calls and declarations for better readability and easier diffs.
 
 ### Known Issues/Hacks
 
@@ -55,8 +48,12 @@ src/test/kotlin/.../game/
 
 ## CI Validation (Run before submitting)
 
-```bash
-./gradlew detekt jacocoTestReport check --console=plain && ./bin/validate_documentation.sh
-```
+Run the following checks to verify your work is done and ready for submission:
 
-**Documentation rule**: Max 100 lines per .md file in `/documentation/` (enforced by `/bin/validate_documentation.sh`).
+* Run all tests including UI headless tests:
+  `xvfb-run -a -s "-screen 0 1280x1024x24" ./gradlew test uiTest -PenableUiTests --console=plain`
+* Validate code quality `./gradlew detekt -PfailOnDetektIssue --console=plain`
+* In case you modified files in the `/documentation/` folder, also run: `/bin/validate_documentation.sh`. This will
+  ensure that no markdown file is longer than 100 lines.
+
+Ignore any already existing issues which were not caused by you.

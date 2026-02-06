@@ -28,7 +28,7 @@ object DerBauer2 {
 }
 
 private val appEmoji = "🏰".emoji
-val Emoji.Companion.derbauer2 get() = appEmoji
+val Emoji.Companion.`derbauer2 🏰` get() = appEmoji
 
 fun startApp(
     isDevMode: Boolean,
@@ -36,7 +36,7 @@ fun startApp(
     prefStatePath: KClass<*>,
     postInit: (Koin) -> Unit = {},
 ) {
-    val appTitle = "DerBauer2 ${Emoji.derbauer2}"
+    val appTitle = "DerBauer2 ${Emoji.`derbauer2 🏰`}"
     val devModeSuffix = if (isDevMode) " ⛑️ Dev Mode ⛑️" else ""
 
     showMainWindow(

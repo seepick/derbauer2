@@ -1,16 +1,21 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.BuildingPage
+import com.github.seepick.derbauer2.game.building.`building 🛠️`
+import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature
+import com.github.seepick.derbauer2.game.resource.`gold 💰`
 import com.github.seepick.derbauer2.game.tech.TechPage
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
+import com.github.seepick.derbauer2.game.tech.`research 🔬`
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
@@ -30,21 +35,22 @@ class HomePage(
     gameRenderer = gameRenderer,
     promptBuilder = {
         SelectPrompt(
-            title = "What shall we do next, ${user.userTitle.label}?", buildList {
+            title = "What shall we do next, ${user.userTitle.label}?",
+            options = Options.Singled(buildList {
                 if (user.hasFeature<TradingFeature>()) {
-                    add(SelectOption("Trade 💰") {
+                    add(SelectOption("Trade ${Emoji.`gold 💰`}") {
                         currentPage.pageClass = TradingPage::class
                     })
                 }
-                add(SelectOption("Build 🛠️") {
+                add(SelectOption("Build ${Emoji.`building 🛠️`}") {
                     currentPage.pageClass = BuildingPage::class
                 })
                 if (user.hasFeature<TechnologyFeature>()) {
-                    add(SelectOption("Research 🔬") {
+                    add(SelectOption("Research ${Emoji.`research 🔬`}") {
                         currentPage.pageClass = TechPage::class
                     })
                 }
-            }
+            })
         )
     }, contentRenderer = { textmap ->
         textmap.line("You are home... 🏠")

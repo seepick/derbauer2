@@ -59,7 +59,7 @@ class Textmap(
         tableGenerator.table(cols, rows)
     }
 
-    fun reset() = apply {
+    fun clear() = apply {
         grid.reset()
         cursor.reset()
     }

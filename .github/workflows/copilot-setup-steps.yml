@@ -10,3 +10,8 @@ jobs:
       - uses: actions/checkout@v6
       - uses: ./.github/actions/setup-env
       - run: ./gradlew build --console=plain
+      - name: Install UI-Test prerequisites
+        shell: bash
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y xvfb

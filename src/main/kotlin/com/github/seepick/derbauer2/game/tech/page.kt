@@ -9,7 +9,9 @@ import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
+import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
 @Suppress("LongParameterList") // it's ok ;)
@@ -28,10 +30,10 @@ class TechPage(
         } else {
             SelectPrompt(
                 title = "What do you want to research?",
-                options = items.map { item ->
+                options = Options.Singled(items.map { item ->
                     // TODO simple-flexible-dynamic table: no columns; just rows of different column size :)
                     SelectOption(
-                        label = {
+                        label = SelectOptionLabel.Single.Dynamic {
                             with(user) {
                                 "Research ${item.label} - ${item.costs.toTextmapRendering()}"
                             }
@@ -39,7 +41,7 @@ class TechPage(
                         onSelected = {
                             resultHandler.handle(user.researchTech(item))
                         })
-                }
+                })
             )
         }
     },

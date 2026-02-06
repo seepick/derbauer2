@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import kotlin.reflect.KClass
@@ -16,3 +18,6 @@ fun Resource.toInfoBarString(user: User): String =
         is Land -> "$emojiSpaceOrEmpty${user.totalLandUse} $SEPARATOR $owned"
         else -> emojiAndOwned
     }
+
+private val goldEmoji = "💰️".emoji
+val Emoji.Companion.`gold 💰` get() = goldEmoji

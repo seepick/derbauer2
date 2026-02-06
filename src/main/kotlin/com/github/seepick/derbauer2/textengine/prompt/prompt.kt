@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 interface Prompt : KeyListener, Renderer {
@@ -24,15 +25,14 @@ class EmptyPagePromptProvider(private val emptyMultiLineMessage: String) : Promp
     override fun onKeyPressed(key: KeyPressed) = false
 }
 
-class SelectPrompt(
-    val title: String,
-    val options: List<SelectOption>,
+class SelectPrompt<LABEL : SelectOptionLabel, OPTIONS : Options<LABEL>>(
+    val title: String, // TODO remove title; respect SRP
+    val options: OPTIONS,
 ) : Prompt {
     private val log = logger {}
 
     init {
-        @Suppress("MagicNumber")
-        require(options.size in 1..9) {
+        @Suppress("MagicNumber") require(options.size in 1..9) {
             "Select prompt must have between 1 and 9 options, but has ${options.size}: $options"
         }
     }
@@ -40,12 +40,10 @@ class SelectPrompt(
     override val inputIndicator = "1-${options.size}"
 
     override fun onKeyPressed(key: KeyPressed) =
-        if (
-            key is KeyPressed.Symbol &&
-            key.char is PrintChar.Numeric &&
-            key.char.char in '1'..options.size.toString().first()
+        if (key is KeyPressed.Symbol && key.char is PrintChar.Numeric && key.char.char in '1'..options.size.toString()
+                .first()
         ) {
-            val option = options[key.char.int - 1]
+            val option = options.items[key.char.int - 1]
             log.debug { "Selected: $option" }
             option.onSelected()
             true
@@ -56,17 +54,80 @@ class SelectPrompt(
     override fun render(textmap: Textmap) {
         textmap.line(title)
         textmap.emptyLine()
-        options.mapIndexed { idx, opt ->
-            textmap.line("[${idx + 1}] ${opt.label()}")
+        when (options) {
+            is Options.Singled<out SelectOptionLabel.Single> -> {
+                options.items.mapIndexed { idx, opt ->
+                    opt.label as SelectOptionLabel.Single
+                    textmap.line("[${idx + 1}] ${opt.label.value}")
+                }
+            }
+
+            is Options.Tabled -> {
+                textmap.tableByTransform(
+                    cols = buildList {
+                        add(TransformingTableCol { rowIdx, _, opt ->
+                            "[${rowIdx + 1}]"
+                        })
+                        addAll(
+                            // TODO implicit contract that all columns are same length
+                            (0..<(options.items.first().label.columns.size)).map {
+                                TransformingTableCol { _, colIdx, opt ->
+                                    opt.label.columns[colIdx - 1]
+                                }
+                            })
+                    },
+                    rowItems = options.items,
+                )
+            }
         }
+    }
+
+    companion object {
+        operator fun <S : SelectOptionLabel.Single> invoke(title: String, items: List<SelectOption<S>>) =
+            SelectPrompt(title, Options.Singled(items))
     }
 }
 
-data class SelectOption(
-    val label: () -> String,
+sealed class Options<LABEL : SelectOptionLabel>(val items: List<SelectOption<out LABEL>>) {
+
+    val size = items.size
+
+    class Singled<SIMPLE : SelectOptionLabel.Single>(
+        items: List<SelectOption<out SIMPLE>>,
+    ) : Options<SIMPLE>(items)
+
+    class Tabled(
+        items: List<SelectOption<SelectOptionLabel.Table>>,
+    ) : Options<SelectOptionLabel.Table>(items)
+
+    companion object {
+        operator fun <S : SelectOptionLabel.Single> invoke(items: List<SelectOption<S>>) = Singled(items)
+    }
+}
+
+data class SelectOption<LABEL : SelectOptionLabel>(
+    val label: LABEL,
     val onSelected: () -> Unit,
 ) {
-    constructor(label: String, onSelected: () -> Unit) : this({ label }, onSelected)
+    override fun toString() = "SelectOption(label=${label})"
 
-    override fun toString() = "SelectOption(label=${label()})"
+    companion object {
+        operator fun invoke(label: String, onSelected: () -> Unit): SelectOption<SelectOptionLabel.Single.Static> =
+            SelectOption(SelectOptionLabel.Single.Static(label), onSelected)
+    }
+}
+
+sealed interface SelectOptionLabel {
+    sealed interface Single : SelectOptionLabel {
+        val value
+            get(): String = when (this) {
+                is Static -> staticLabel
+                is Dynamic -> labelProvider()
+            }
+
+        data class Static(val staticLabel: String) : Single
+        data class Dynamic(val labelProvider: () -> String) : Single
+    }
+
+    class Table(val columns: List<String>) : SelectOptionLabel
 }

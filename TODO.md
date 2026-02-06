@@ -15,6 +15,7 @@
 
 ## Next
 
+* UI: ensure order of tech (deterministic, logical); right now "irrigation" puts itself on top (weird)
 * BZ: have some sort of SeasonModifier
     * increased rats probability in winter
     * more food production in summer (dynamic resource modifier)

@@ -16,7 +16,7 @@ interface DslContext {
 
     fun printPage() {
         val textmap = koin.get<Textmap>()
-        textmap.reset()
+        textmap.clear()
         page.invalidate()
         page.render(textmap)
         println(textmap.toFullString())

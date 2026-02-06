@@ -136,7 +136,7 @@ class TextmapTest : DescribeSpec({
     }
     describe("reset") {
         it("reset clears buffer and cursor") {
-            Textmap(1, 1).line("a").reset().toFullString() shouldBeEqual " "
+            Textmap(1, 1).line("a").clear().toFullString() shouldBeEqual " "
         }
     }
 })
