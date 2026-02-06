@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.textengine.textmap
 
-import com.github.seepick.derbauer2.game.common.countCells
+import com.github.seepick.derbauer2.game.common.countGraphemes
 import com.github.seepick.derbauer2.game.common.extractGraphemes
 
 class Textmap(
@@ -30,8 +30,8 @@ class Textmap(
     }
 
     override fun aligned(left: String, right: String) = apply {
-        val leftCells = left.countCells()
-        val rightCells = right.countCells()
+        val leftCells = left.countGraphemes()
+        val rightCells = right.countGraphemes()
         if (leftCells + rightCells > cols) {
             throw InvalidTextmapException("Cannot align left='$left' and right='$right' in width $cols")
         }

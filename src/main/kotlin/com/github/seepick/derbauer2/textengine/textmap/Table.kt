@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.textengine.textmap
 
-import com.github.seepick.derbauer2.game.common.countCells
+import com.github.seepick.derbauer2.game.common.countGraphemes
 
 interface TableGenerator {
     fun <T> tableByTransform(
@@ -59,7 +59,7 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
     private fun calculateColumnWidths(rows: List<List<String>>): IntArray {
         val numCols = rows.first().size
         return IntArray(numCols) { colIndex ->
-            rows.maxOf { row -> row[colIndex].countCells() }
+            rows.maxOf { row -> row[colIndex].countGraphemes() }
         }
     }
 
@@ -68,7 +68,7 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
         cols: List<TableCol>,
         colWidths: IntArray
     ): List<String> = row.mapIndexed { colIndex, cell ->
-        val cellWidth = cell.countCells()
+        val cellWidth = cell.countGraphemes()
         val colWidth = colWidths[colIndex]
         val padding = colWidth - cellWidth
         val colOrNull = cols.getOrNull(colIndex)
