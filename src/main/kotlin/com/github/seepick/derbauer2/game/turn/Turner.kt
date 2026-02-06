@@ -3,7 +3,6 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.Resource
@@ -25,7 +24,6 @@ class Turner(
     fun executeAndGenerateReport() = TurnReport(
         turn = user.turn,
         resourceChanges = steps
-            .filter { it.requiresEntities.all { required -> user.hasEntity(required) } }
             .sortedBy { it.order }
             .map { execStepToRCs(it) }
             .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,

@@ -25,13 +25,15 @@ class TaxesTurnStep(user: User, private val probs: Probs) : ProbInitializer,
         probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))
     }
 
-    override fun calcTurnChanges() = buildResourceChanges {
+    override fun calcTurnChangesChecked() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         val rawTax = citizen.owned * Mechanics.taxRate
         val diffusedTax = probs.getDiffused(ProbDiffuserKey.taxKey, rawTax.zz).toZLimitMinZero()
         val techAdjustedTax = if (user.hasTech(CapitalismTech::class)) {
             diffusedTax * Mechanics.techCapitalismTaxMultiplier
-        } else diffusedTax
+        } else {
+            diffusedTax
+        }
         add(Gold::class, techAdjustedTax)
     }
 }
