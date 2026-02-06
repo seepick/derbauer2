@@ -39,6 +39,7 @@ class HappeningTurner(
             val descriptors = repo.getAllDescriptors().filter {
                 (!isNegative || it.nature == HappeningNature.Negative) && it.canHappen(user)
             }
+            require(descriptors.isNotEmpty()) { "Not enough happenings to proceed :(" }
             val descriptor = probs.getSelection(ProbSelectorKey.happeningChoice, descriptors)
             descriptor.buildHappening(user)
         }

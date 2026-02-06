@@ -25,7 +25,9 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
         require(canHappen(user))
-        return RatsEatFoodHappening(amountFoodEaten = user.findResource<Food>().owned.coerceAtMost(15.z))
+//        user.turn.season.ratsEatFoodProbability // FIXME wire-in Probs here somehow...
+        val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)
+        return RatsEatFoodHappening(amountFoodEaten = foodEaten)
     }
 }
 
