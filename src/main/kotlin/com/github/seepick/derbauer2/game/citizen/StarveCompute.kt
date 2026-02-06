@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 
 object StarveCompute {
+
     fun howManyUnfed(citizens: Z, foodOwned: Zz, eatenFood: Z, eatRatio: Percent): Z = when {
         citizens == 0.z -> 0.z
         foodOwned <= 0.zz -> citizens
@@ -16,7 +17,11 @@ object StarveCompute {
 
     private fun calculateUnfedCitizens(citizens: Z, foodOwned: Zz, eatRatio: Percent): Z {
         val citizensAmountFedByOneFood = eatRatio.neededToGetTo(1)
-        val citizensFed = foodOwned.toZAbs() * citizensAmountFedByOneFood
-        return citizens - citizensFed
+        val citizensMaxPossibleFed = foodOwned.toZAbs() * citizensAmountFedByOneFood
+        return if (citizensMaxPossibleFed > citizens) {
+            0.z
+        } else {
+            citizens - citizensMaxPossibleFed
+        }
     }
 }

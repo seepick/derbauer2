@@ -38,4 +38,15 @@ class StarveComputeTest : DescribeSpec({
             }
         }
     }
+    describe("manual cases") {
+        it("Given 1 citizen 🙎🏻‍♂️and much 🍖 and all eaten up Then all fed") {
+            val foodOwned = 10.z
+            StarveCompute.howManyUnfed(
+                citizens = 1.z,
+                foodOwned = foodOwned.zz,
+                eatenFood = foodOwned + 1,
+                eatRatio = 10.`%`
+            ) shouldBeEqual 0.z
+        }
+    }
 })
