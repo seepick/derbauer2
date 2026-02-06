@@ -7,11 +7,12 @@ import kotlin.reflect.full.createInstance
 
 interface TechData {
     val label: String
+    val description: String
     val requirements: Set<TechData>
     val costs: ResourceChanges
 }
 
-interface TechItem : TechData {
+interface TechRef : TechData {
     val techClass: KClass<out Tech>
     fun buildTech(): Tech
 }
@@ -20,8 +21,8 @@ interface Tech : Entity, TechData {
     override val labelSingular get() = label
 }
 
-abstract class AbstractTechItem(
+abstract class AbstractTechRef(
     data: TechData,
-) : TechItem, TechData by data {
+) : TechRef, TechData by data {
     override fun buildTech() = techClass.createInstance()
 }

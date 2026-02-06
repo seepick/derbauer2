@@ -20,10 +20,11 @@ class SelectPromptTest : DescribeSpec({
     val title = "test title"
     val anyOption = Arb.selectOption().next()
     val doNothingOnSelected = {}
+
     describe("render text") {
-        val textmap = Textmap(30, 3)
+        lateinit var textmap: Textmap
         beforeTest {
-            textmap.clear()
+            textmap = Textmap(30, 3)
         }
         infix fun <LABEL : OptionLabel, OPTIONS : Options<LABEL>> SelectPrompt<LABEL, OPTIONS>.renderShouldBe(
             expected: String
@@ -32,27 +33,55 @@ class SelectPromptTest : DescribeSpec({
         }
 
         it("singled") {
-            val option = SelectOption(OptionLabel.Single.Static("option"), doNothingOnSelected)
-            val prompt = SelectPrompt(title, Options.Singled(listOf(option)))
+            val prompt = SelectPrompt(
+                title, Options.Singled(
+                    listOf(
+                        SelectOption(OptionLabel.Single.Static("foo"), doNothingOnSelected)
+                    )
+                )
+            )
 
             prompt renderShouldBe """
                 $title
                 
-                [1] ${option.label.value}
+                [1] foo
                 """.trimIndent()
         }
-        it("tabled") {
-            val option = SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
-            val prompt = SelectPrompt(title, Options.Tabled(listOf(option)))
+        it("tabled standard") {
+            val prompt = SelectPrompt(
+                title, Options.Tabled(
+                    listOf(
+                        SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
+                    )
+                )
+            )
 
             prompt renderShouldBe """
                 $title
                 
                 [1] a b
                 """.trimIndent()
+        }
+        it("tabled variable column count") {
+            val prompt = SelectPrompt(
+                title, Options.Tabled(
+                    listOf(
+                        SelectOption(OptionLabel.Table(listOf("x")), doNothingOnSelected),
+                        SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
+                    )
+                )
+            )
+            textmap = Textmap(30, 4)
 
+            prompt renderShouldBe """
+                $title
+                
+                [1] x
+                [2] a b
+                """.trimIndent()
         }
     }
+
     describe("ctor") {
         it("empty fails") {
             shouldThrow<IllegalArgumentException> {
@@ -60,11 +89,13 @@ class SelectPromptTest : DescribeSpec({
             }
         }
     }
+
     describe("indicator") {
         it("single option") {
             SelectPrompt(anyTitle, listOf(anyOption)).inputIndicator shouldBeEqual "1-1"
         }
     }
+
     describe("onKeyPressed") {
         it("Given option When press its key Then return true and invoke selection callback") {
             var optSelected = false

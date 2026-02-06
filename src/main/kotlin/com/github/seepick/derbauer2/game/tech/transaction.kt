@@ -7,7 +7,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-fun User.researchTech(item: TechItem): TxResult {
+fun User.researchTech(item: TechRef): TxResult {
     log.info { "User.researchTech($item)" }
     item.costs.requireAllZeroOrPositive() // sanity check
     val txResult = execTx(item.costs.invertSig())

@@ -28,6 +28,7 @@ class TechPage(
         if (techs.isEmpty()) {
             EmptyPagePromptProvider("Your mind is empty...\nGo ahead and read some books first.")
         } else {
+            val maxColCount = techs.maxOf { it.costs.size }
             SelectPrompt(
                 title = "What do you want to research?",
                 options = Options.Tabled(
@@ -39,6 +40,8 @@ class TechPage(
                                     with(user) {
                                         addAll(tech.costs.toFormattedList())
                                     }
+                                    addAll(List(maxColCount - tech.costs.size) { "" })
+                                    add("... ${tech.description}")
                                 }
                             ),
                             onSelected = { resultHandler.handle(user.researchTech(tech)) }

@@ -29,12 +29,8 @@ class Turner(
             .sortedBy { it.order }
             .map { execStepToRCs(it) }
             .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
-//            .flatMap { it.calcResourceChanges().changes }
-//            .toResourceChanges()
-//            .toLimitedAmounts()
-//            .also { user.execTx(it).errorOnFail() },
         happenings = happeningTurner.buildHappeningMultiPages(),
-        newFeatures = featureTurner.buildFeaturMultiPages(),
+        newFeatures = featureTurner.buildFeatureMultiPages(),
     )
 
     private fun execStepToRCs(step: TurnStep): ResourceChanges =

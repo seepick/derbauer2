@@ -67,15 +67,17 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
             is Options.Tabled -> {
                 textmap.customTable(
                     cols = buildList {
+                        val rowsBefore = 1
                         add(TransformingTableCol { rowIdx, _, opt ->
                             "[${rowIdx + 1}]"
                         })
-                        addAll(
-                            (0..<(options.items.first().label.columns.size)).map {
-                                TransformingTableCol { _, colIdx, opt ->
-                                    opt.label.columns[colIdx - 1]
-                                }
-                            })
+                        addAll((0..<(options.items.maxOf { it.label.columns.size })).map {
+                            TransformingTableCol { _, colIdx, opt ->
+                                val colIdxAdjusted = colIdx - rowsBefore
+                                if (colIdxAdjusted > (opt.label.columns.size - 1)) ""
+                                else opt.label.columns[colIdxAdjusted]
+                            }
+                        })
                     },
                     rowItems = options.items,
                 )

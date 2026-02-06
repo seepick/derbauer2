@@ -1,16 +1,18 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.tech.AbstractTechItem
+import com.github.seepick.derbauer2.game.tech.AbstractTechRef
 import com.github.seepick.derbauer2.game.tech.Tech
 import com.github.seepick.derbauer2.game.tech.TechData
 
 /**
  * CAVE: Register in [com.github.seepick.derbauer2.game.tech.DefaultTechItemRepo]
  */
-object AgricultureTechItem : AbstractTechItem(data = AgricultureTech.Data) {
+object AgricultureTechRef : AbstractTechRef(data = AgricultureTech.Data) {
     override val techClass = AgricultureTech::class
 }
 
@@ -23,14 +25,16 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier
 
     object Data : TechData {
         override val label = "Agriculture"
+        override val description = Texts.techAgriculture
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techAgricultureCostsGold)
+            add(Food::class, 1.z) // FIXME remove
         }
     }
 }
 
-object IrrigationTechItem : AbstractTechItem(data = IrrigationTech.Data) {
+object IrrigationTechRef : AbstractTechRef(data = IrrigationTech.Data) {
     override val techClass = IrrigationTech::class
 }
 
@@ -43,6 +47,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier 
 
     object Data : TechData {
         override val label = "Irrigation"
+        override val description = Texts.techIrrigation
         override val requirements = setOf(AgricultureTech.Data)
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techIrrigationCostsGold)
@@ -50,7 +55,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier 
     }
 }
 
-object CapitalismTechItem : AbstractTechItem(data = CapitalismTech.Data) {
+object CapitalismTechRef : AbstractTechRef(data = CapitalismTech.Data) {
     override val techClass = CapitalismTech::class
 }
 
@@ -59,6 +64,7 @@ class CapitalismTech : Tech, TechData by Data {
 
     object Data : TechData {
         override val label = "Capitalism"
+        override val description = Texts.techCapitalism
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techCapitalismCostsGold)

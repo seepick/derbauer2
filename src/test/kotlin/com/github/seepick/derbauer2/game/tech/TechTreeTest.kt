@@ -14,16 +14,16 @@ class TechTreeTest : DescribeSpec({
     beforeTest {
         user = User()
     }
-    fun tree(vararg items: TechItem) =
+    fun tree(vararg items: TechRef) =
         TechTree(items.toList(), user)
 
-    fun treeResearchableItems(vararg items: TechItem) =
+    fun treeResearchableItems(vararg items: TechRef) =
         tree(*items).filterResearchableItems()
 
     describe("invalid construction") {
         it("require self fails") {
             shouldThrow<IllegalArgumentException> {
-                tree(SelfReferenceItem)
+                tree(SelfReferenceRef)
             }
         }
         it("require unknown fails") {
@@ -34,7 +34,7 @@ class TechTreeTest : DescribeSpec({
         }
         it("cycle reference fails") {
             shouldThrow<IllegalArgumentException> {
-                tree(Cycle1Item, Cycle2Item)
+                tree(Cycle1Ref, Cycle2Ref)
             }
         }
     }
@@ -93,11 +93,12 @@ class TechTreeTest : DescribeSpec({
 
 private object SelfData : TechData {
     override val label = "SelfData"
+    override val description = ""
     override val requirements = setOf<TechData>(SelfData)
     override val costs = ResourceChanges.empty
 }
 
-private object SelfReferenceItem : TechItem, TechData by SelfData {
+private object SelfReferenceRef : TechRef, TechData by SelfData {
     override val techClass = TestTech::class
     override fun buildTech() = SelfTech()
 }
@@ -108,11 +109,12 @@ private class SelfTech : Tech, TechData by SelfData {
 
 private object Cycle1Data : TechData {
     override val label = "Cycle1"
+    override val description = ""
     override val requirements = setOf<TechData>(Cycle2Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle1Item : TechItem, TechData by Cycle1Data {
+private object Cycle1Ref : TechRef, TechData by Cycle1Data {
     override val techClass = TestTech1::class
     override fun buildTech() = Cycle1Tech()
 }
@@ -123,11 +125,12 @@ private class Cycle1Tech : Tech, TechData by Cycle1Data {
 
 private object Cycle2Data : TechData {
     override val label = "Cycle2"
+    override val description = ""
     override val requirements = setOf<TechData>(Cycle1Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle2Item : TechItem, TechData by Cycle2Data {
+private object Cycle2Ref : TechRef, TechData by Cycle2Data {
     override val techClass = TestTech2::class
     override fun buildTech() = Cycle2Tech()
 }

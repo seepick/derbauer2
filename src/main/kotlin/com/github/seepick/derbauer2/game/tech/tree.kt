@@ -6,11 +6,11 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 
 class TechTree(
-    val items: List<TechItem>,
+    val items: List<TechRef>,
     val user: User,
 ) {
     private val itemsByLabel = items.associateBy { it.label }
-    private val dataToItemByLabel: (TechData) -> TechItem = { data ->
+    private val dataToItemByLabel: (TechData) -> TechRef = { data ->
         itemsByLabel[data.label] ?: error("Woops, no tech tree item for tech data ID: $data")
     }
 
@@ -25,7 +25,7 @@ class TechTree(
         })
     }
 
-    fun filterResearchableItems(): List<TechItem> =
+    fun filterResearchableItems(): List<TechRef> =
         items.filter { !user.hasTech(it.techClass) && hasResearchedAll(it.requirements) }
 
     private fun hasResearchedAll(requirements: Set<TechData>): Boolean =
@@ -34,8 +34,8 @@ class TechTree(
             user.hasTech(reqItem.techClass) && hasResearchedAll(reqItem.requirements)
         }
 
-    private fun rootsAndChildren(): Pair<List<TechItem>, Map<TechItem, List<TechItem>>> {
-        val children = items.associateWith { mutableListOf<TechItem>() }
+    private fun rootsAndChildren(): Pair<List<TechRef>, Map<TechRef, List<TechRef>>> {
+        val children = items.associateWith { mutableListOf<TechRef>() }
         items.forEach { item ->
             item.requirements.forEach { reqData ->
                 val parentItem = dataToItemByLabel(reqData)

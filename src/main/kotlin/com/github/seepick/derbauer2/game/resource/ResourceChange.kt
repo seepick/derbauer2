@@ -47,6 +47,8 @@ data class ResourceChange(
 data class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
 ) {
+    val size = changes.size
+
     init {
         changes.requireUniqueBy("Must not contain multiple changes for the same resource!") {
             it.resourceClass

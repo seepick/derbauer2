@@ -2,8 +2,7 @@
 
 ## 1.2.0
 
-* tech description
-* tech enables Feature
+* tech enables Feature; refactor feature (remove enum construct)
 * UI: redesign turn report: make it more outstanding
 * IT: improve logging: remove unnecessary; add relevant; at least on next turn; short user entities overview
 * two open copilot PRs ;)
@@ -22,6 +21,7 @@
 * IT: introduce ActionBus (for history later; skills/XP)
 * introduce [stat](documentation/business-spec/stat.md) concept
     * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate
+    * also decrease a bit if capitalism researched
 
 ## Later
 
