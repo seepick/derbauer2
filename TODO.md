@@ -10,6 +10,7 @@
     * can enable Features; have description (for when displaying in turn report)
 * UI: redesign turn report: make it more outstanding
 * IT: improve logging: remove unnecessary; add relevant; at least on next turn; short user entities overview
+* two open copilot PRs ;)
 
 ## Next
 

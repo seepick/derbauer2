@@ -9,14 +9,13 @@ private val log = logger {}
 
 fun User.researchTech(item: TechItem): TxResult {
     log.info { "User.researchTech($item)" }
-    require(item.state is TechState.Unresearched)
-    item.costs.requireAllZeroOrPositive()
+    item.costs.requireAllZeroOrPositive() // sanity check
     val txResult = execTx(item.costs.invertSig())
     // no custom validators needed (to be able to be researched == valid)
     if (txResult.isFail) {
         return txResult
     }
-    val tech = item.buildTechAndUpdateState().second
+    val tech = item.buildTech()
     add(tech)
     return TxResult.Success
 }

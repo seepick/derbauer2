@@ -23,7 +23,7 @@ fun <T> printTree(
     header: String,
     roots: List<T>,
     children: Map<T, List<T>>,
-    isChecked: T.() -> Boolean,
+    isChecked: (T) -> Boolean,
     label: T.() -> String,
 ): String {
     val sb = StringBuilder()
@@ -32,7 +32,7 @@ fun <T> printTree(
         sb.append(prefix)
         sb.append(if (isLast) "└── " else "├── ")
         sb.append(node.label())
-        if (node.isChecked()) {
+        if (isChecked(node)) {
             sb.append(" ✅")
         }
         sb.append("\n")

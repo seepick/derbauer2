@@ -10,10 +10,9 @@ import com.github.seepick.derbauer2.game.tech.TechData
 /**
  * CAVE: Register in [com.github.seepick.derbauer2.game.tech.DefaultTechItemRepo]
  */
-object AgricultureTechItem : AbstractTechItem(
-    data = AgricultureTech.Data,
-    techBuilder = ::AgricultureTech,
-)
+object AgricultureTechItem : AbstractTechItem(data = AgricultureTech.Data) {
+    override val techClass = AgricultureTech::class
+}
 
 class AgricultureTech : Tech, TechData by Data, ResourceProductionModifier {
     override val handlingResource = Food::class
@@ -31,10 +30,9 @@ class AgricultureTech : Tech, TechData by Data, ResourceProductionModifier {
     }
 }
 
-object IrrigationTechItem : AbstractTechItem(
-    data = IrrigationTech.Data,
-    techBuilder = ::IrrigationTech,
-)
+object IrrigationTechItem : AbstractTechItem(data = IrrigationTech.Data) {
+    override val techClass = IrrigationTech::class
+}
 
 class IrrigationTech : Tech, TechData by Data, ResourceProductionModifier {
     override val handlingResource = Food::class
@@ -52,10 +50,9 @@ class IrrigationTech : Tech, TechData by Data, ResourceProductionModifier {
     }
 }
 
-object CapitalismTechItem : AbstractTechItem(
-    data = CapitalismTech.Data,
-    techBuilder = ::CapitalismTech,
-)
+object CapitalismTechItem : AbstractTechItem(data = CapitalismTech.Data) {
+    override val techClass = CapitalismTech::class
+}
 
 class CapitalismTech : Tech, TechData by Data {
     override fun deepCopy() = this
@@ -69,10 +66,9 @@ class CapitalismTech : Tech, TechData by Data {
     }
 }
 
-object JunkFoodTechItem : AbstractTechItem(
-    data = JunkFoodTech.Data,
-    techBuilder = ::JunkFoodTech,
-)
+object JunkFoodTechItem : AbstractTechItem(data = JunkFoodTech.Data) {
+    override val techClass = JunkFoodTech::class
+}
 
 class JunkFoodTech : Tech, TechData by Data {
     override fun deepCopy() = this
@@ -86,10 +82,9 @@ class JunkFoodTech : Tech, TechData by Data {
     }
 }
 
-object WarfareTechItem : AbstractTechItem(
-    data = WarfareTech.Data,
-    techBuilder = ::WarfareTech,
-)
+object WarfareTechItem : AbstractTechItem(data = WarfareTech.Data) {
+    override val techClass = WarfareTech::class
+}
 
 class WarfareTech : Tech, TechData by Data {
     override fun deepCopy() = this

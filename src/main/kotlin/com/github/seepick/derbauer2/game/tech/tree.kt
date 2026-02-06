@@ -2,45 +2,47 @@ package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.common.printTree
 import com.github.seepick.derbauer2.game.common.validCycleFree
+import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 
 class TechTree(
-    val all: List<TechItem>,
+    val items: List<TechItem>,
+    val user: User,
 ) {
-    private val byId = all.associateBy { it.id }
-    private val dataToItemFinder: (TechData) -> TechItem = { data ->
-        byId[data.id] ?: error("Woops, no tech tree item for tech data ID: $data")
+    private val itemsByLabel = items.associateBy { it.label }
+    private val dataToItemByLabel: (TechData) -> TechItem = { data ->
+        itemsByLabel[data.label] ?: error("Woops, no tech tree item for tech data ID: $data")
     }
 
     init {
-        all.flatMap { it.costs.changes }.requireAllZeroOrPositive()
-        val unknownReq = all.flatMap { it.requirements.filter { !byId.containsKey(it.id) } }
+        items.flatMap { it.costs.changes }.requireAllZeroOrPositive()
+        val unknownReq = items.flatMap { it.requirements.filter { !itemsByLabel.containsKey(it.label) } }
         require(unknownReq.isEmpty()) {
             "Some tech items have requirements not present in the tech tree: $unknownReq"
         }
-        validCycleFree(all, all.associateWith { item ->
-            item.requirements.map { dataToItemFinder(it) }
+        validCycleFree(items, items.associateWith { item ->
+            item.requirements.map { dataToItemByLabel(it) }
         })
     }
 
     fun filterResearchableItems(): List<TechItem> =
-        all.filter { it.isUnresearched && hasResearchedAll(it.requirements) }
+        items.filter { !user.hasTech(it.techClass) && hasResearchedAll(it.requirements) }
 
     private fun hasResearchedAll(requirements: Set<TechData>): Boolean =
         requirements.all { reqData ->
-            val reqItem = dataToItemFinder(reqData)
-            reqItem.isResearched && hasResearchedAll(reqItem.requirements)
+            val reqItem = dataToItemByLabel(reqData)
+            user.hasTech(reqItem.techClass) && hasResearchedAll(reqItem.requirements)
         }
 
     private fun rootsAndChildren(): Pair<List<TechItem>, Map<TechItem, List<TechItem>>> {
-        val children = all.associateWith { mutableListOf<TechItem>() }
-        all.forEach { item ->
+        val children = items.associateWith { mutableListOf<TechItem>() }
+        items.forEach { item ->
             item.requirements.forEach { reqData ->
-                val parentItem = dataToItemFinder(reqData)
+                val parentItem = dataToItemByLabel(reqData)
                 children[parentItem]?.add(item) ?: error("Impossible inconsistency occured!")
             }
         }
-        val roots = all.filter { it.requirements.isEmpty() }
+        val roots = items.filter { it.requirements.isEmpty() }
         return roots to children
     }
 
@@ -48,7 +50,7 @@ class TechTree(
         val (roots, children) = rootsAndChildren()
         return printTree(
             "<🤓TECH🔬TREE🤓>", roots, children,
-            isChecked = { state is TechState.Researched },
+            isChecked = { user.hasTech(it.techClass) },
             label = { label },
         )
     }

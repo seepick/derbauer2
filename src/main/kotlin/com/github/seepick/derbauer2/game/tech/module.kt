@@ -7,5 +7,5 @@ import org.koin.dsl.module
 fun techModule() = module {
     singleOf(::TechPage)
     single { DefaultTechItemRepo } bind TechItemRepo::class
-    single { TechTree(all = get<TechItemRepo>().items) }
+    single { TechTree(items = get<TechItemRepo>().items, user = get()) }
 }

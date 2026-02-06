@@ -41,7 +41,7 @@ object Mechanics {
     // TRADE
     // ========================================================================
     val buyFoodCostGold = 5
-    val sellFoodGainGold = 3
+    val sellFoodGainGold = if (DEV) 20 else 2
     val buyLandCostGold = 50
 
     // FEATURE
