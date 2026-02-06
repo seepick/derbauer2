@@ -121,15 +121,13 @@ class TextmapTest : DescribeSpec({
                 ),
             ).toFullString() shouldBeEqual "aaa  \n b   "
         }
-        it("invalid") {
-            shouldThrow<IllegalArgumentException> {
-                Textmap().table(
-                    rows = listOf(
-                        listOf("single"),
-                        listOf("one", "two"),
-                    )
+        it("variable row lengths allowed") {
+            Textmap().table(
+                rows = listOf(
+                    listOf("a"),
+                    listOf("1", "2"),
                 )
-            }
+            ).toFullString() shouldBeEqual "a  \n1 2"
         }
         // TODO write singe simple table test with row extractor
         // TODO write table tests with emojis (simple and extra-wide)
