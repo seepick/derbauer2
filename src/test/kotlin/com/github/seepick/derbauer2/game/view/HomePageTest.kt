@@ -27,7 +27,6 @@ class HomePageTest : PageTest, StringSpec({
         }) {
             contentString shouldBeEqual """
                 You are home... 🏠
-
                 What shall we do next, Sir?
 
                 [1] Build 🛠️

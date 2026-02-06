@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
@@ -25,11 +24,10 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier
 
     object Data : TechData {
         override val label = "Agriculture"
-        override val description = Texts.techAgriculture
+        override val description = Texts.techItemAgriculture
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techAgricultureCostsGold)
-            add(Food::class, 1.z) // FIXME remove
         }
     }
 }
@@ -47,7 +45,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier 
 
     object Data : TechData {
         override val label = "Irrigation"
-        override val description = Texts.techIrrigation
+        override val description = Texts.techItemIrrigation
         override val requirements = setOf(AgricultureTech.Data)
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techIrrigationCostsGold)
@@ -64,7 +62,7 @@ class CapitalismTech : Tech, TechData by Data {
 
     object Data : TechData {
         override val label = "Capitalism"
-        override val description = Texts.techCapitalism
+        override val description = Texts.techItemCapitalism
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techCapitalismCostsGold)

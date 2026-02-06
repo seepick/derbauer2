@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
@@ -26,7 +26,7 @@ class BuildingPage(
         EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
     } else {
         SelectPrompt(
-            title = "What shall we build next, Sire?", options = Options.Tabled(user.buildings.map { building ->
+            options = Options.Tabled(user.buildings.map { building ->
                 SelectOption(
                     label = OptionLabel.Table(
                         listOf(
@@ -46,5 +46,5 @@ class BuildingPage(
 }, buttons = listOf(BackButton {
     currentPage.pageClass = HomePage::class
 }), contentRenderer = { textmap ->
-    textmap.line("Your builders are ready for work ${Emoji.`building 🛠️`}")
+    textmap.line(Texts.buildingPage)
 })

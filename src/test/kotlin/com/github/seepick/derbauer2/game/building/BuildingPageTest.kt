@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
+import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.testInfra.PageTest
 import com.github.seepick.derbauer2.game.testInfra.pageParser.SetupGamePageContext
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
@@ -13,16 +14,14 @@ class BuildingPageTest : PageTest, StringSpec({
     fun SetupGamePageContext.buildBuildingsPage() =
         BuildingPage(user, currentPage, gameRenderer, resultHandler)
 
-    "Given some Then check whole screen" {
+    "Given some Then check content" {
         renderGamePage({ ctx ->
             ctx.user.add(House())
             ctx.user.add(Farm())
             ctx.buildBuildingsPage()
         }) {
             contentString shouldBeEqual """
-                Your builders are ready for work 🛠️
-                
-                What shall we build next, Sire?
+                ${Texts.buildingPage}
                 
                 [1] Build House 💰 40  🌍 1 (0)
                 [2] Build Farm  💰 120 🌍 4 (0)

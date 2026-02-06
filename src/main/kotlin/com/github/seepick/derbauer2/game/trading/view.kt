@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.trading
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
+import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Food
@@ -36,7 +37,7 @@ class TradingPage(
     gameRenderer = gameRenderer,
     promptBuilder = tradePromptBuilder,
     contentRenderer = { textmap ->
-        textmap.line("The merchant is here to do business with you, my lord.")
+        textmap.line(Texts.tradingPage)
     }
 )
 
@@ -45,7 +46,6 @@ class TradePromptBuilder(
     private val resultHandler: InteractionResultHandler,
 ) : PromptProvider {
     override fun buildPrompt() = SelectPrompt(
-        title = "What is it your greed desires?",
         options = Options.Singled(buildList {
             // or Gold(Mechanics.buyFoodCostGold.z)?
             add(buildTradeOption(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))

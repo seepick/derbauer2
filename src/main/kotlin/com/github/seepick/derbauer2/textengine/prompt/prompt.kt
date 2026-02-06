@@ -6,7 +6,6 @@ import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
-import com.github.seepick.derbauer2.textengine.textmap.emptyLine
 import com.github.seepick.derbauer2.textengine.textmap.multiLine
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -28,7 +27,6 @@ class EmptyPagePromptProvider(private val emptyMultiLineMessage: String) : Promp
 }
 
 class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
-    val title: String,
     val options: OPTIONS,
 ) : Prompt {
     private val log = logger {}
@@ -54,8 +52,6 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
         }
 
     override fun render(textmap: Textmap) {
-        textmap.line(title)
-        textmap.emptyLine()
         when (options) {
             is Options.Singled<out OptionLabel.Single> -> {
                 options.items.mapIndexed { idx, opt ->
@@ -86,8 +82,8 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
     }
 
     companion object {
-        operator fun <S : OptionLabel.Single> invoke(title: String, items: List<SelectOption<S>>) =
-            SelectPrompt(title, Options.Singled(items))
+        operator fun <S : OptionLabel.Single> invoke(items: List<SelectOption<S>>) =
+            SelectPrompt(Options.Singled(items))
     }
 }
 

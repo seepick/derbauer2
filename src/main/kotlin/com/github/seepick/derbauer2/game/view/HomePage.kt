@@ -35,7 +35,6 @@ class HomePage(
     gameRenderer = gameRenderer,
     promptBuilder = {
         SelectPrompt(
-            title = "What shall we do next, ${user.userTitle.label}?",
             options = Options.Singled(buildList {
                 if (user.hasFeature<TradingFeature>()) {
                     add(SelectOption("Trade ${Emoji.`gold 💰`}") {
@@ -54,4 +53,5 @@ class HomePage(
         )
     }, contentRenderer = { textmap ->
         textmap.line("You are home... 🏠")
+        textmap.line("What shall we do next, ${user.userTitle.label}?")
     })

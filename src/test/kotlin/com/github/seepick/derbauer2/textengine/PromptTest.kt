@@ -13,28 +13,26 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.property.Arb
 import io.kotest.property.arbitrary.next
-import io.kotest.property.arbitrary.string
 
 class SelectPromptTest : DescribeSpec({
-    val anyTitle = Arb.string().next()
-    val title = "test title"
     val anyOption = Arb.selectOption().next()
     val doNothingOnSelected = {}
 
     describe("render text") {
         lateinit var textmap: Textmap
         beforeTest {
-            textmap = Textmap(30, 3)
+            textmap = Textmap(30, 10)
         }
         infix fun <LABEL : OptionLabel, OPTIONS : Options<LABEL>> SelectPrompt<LABEL, OPTIONS>.renderShouldBe(
             expected: String
         ) {
-            renderTrimmedFullString(textmap) shouldBeEqual expected
+            renderTrimmedFullString(textmap).lines().dropLastWhile { it.isBlank() }
+                .joinToString("\n") shouldBeEqual expected
         }
 
         it("singled") {
             val prompt = SelectPrompt(
-                title, Options.Singled(
+                Options.Singled(
                     listOf(
                         SelectOption(OptionLabel.Single.Static("foo"), doNothingOnSelected)
                     )
@@ -42,14 +40,12 @@ class SelectPromptTest : DescribeSpec({
             )
 
             prompt renderShouldBe """
-                $title
-                
                 [1] foo
                 """.trimIndent()
         }
         it("tabled standard") {
             val prompt = SelectPrompt(
-                title, Options.Tabled(
+                Options.Tabled(
                     listOf(
                         SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
                     )
@@ -57,25 +53,20 @@ class SelectPromptTest : DescribeSpec({
             )
 
             prompt renderShouldBe """
-                $title
-                
                 [1] a b
                 """.trimIndent()
         }
         it("tabled variable column count") {
             val prompt = SelectPrompt(
-                title, Options.Tabled(
+                Options.Tabled(
                     listOf(
                         SelectOption(OptionLabel.Table(listOf("x")), doNothingOnSelected),
                         SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
                     )
                 )
             )
-            textmap = Textmap(30, 4)
 
             prompt renderShouldBe """
-                $title
-                
                 [1] x
                 [2] a b
                 """.trimIndent()
@@ -85,14 +76,14 @@ class SelectPromptTest : DescribeSpec({
     describe("ctor") {
         it("empty fails") {
             shouldThrow<IllegalArgumentException> {
-                SelectPrompt(anyTitle, emptyList<SelectOption<OptionLabel.Single.Static>>())
+                SelectPrompt(emptyList<SelectOption<OptionLabel.Single.Static>>())
             }
         }
     }
 
     describe("indicator") {
         it("single option") {
-            SelectPrompt(anyTitle, listOf(anyOption)).inputIndicator shouldBeEqual "1-1"
+            SelectPrompt(listOf(anyOption)).inputIndicator shouldBeEqual "1-1"
         }
     }
 
@@ -100,7 +91,7 @@ class SelectPromptTest : DescribeSpec({
         it("Given option When press its key Then return true and invoke selection callback") {
             var optSelected = false
             val opt = SelectOption("any") { optSelected = true }
-            val prompt = SelectPrompt(anyTitle, listOf(opt))
+            val prompt = SelectPrompt(listOf(opt))
 
             val pressedResult = prompt.onKeyPressed(KeyPressed.one)
 
@@ -110,7 +101,7 @@ class SelectPromptTest : DescribeSpec({
         it("Given option When press invalid key Then return false and not invoke selection callback") {
             var optSelected = false
             val opt = SelectOption("any") { optSelected = true }
-            val prompt = SelectPrompt(anyTitle, listOf(opt))
+            val prompt = SelectPrompt(listOf(opt))
 
             val pressedResult = prompt.onKeyPressed(KeyPressed.two)
 

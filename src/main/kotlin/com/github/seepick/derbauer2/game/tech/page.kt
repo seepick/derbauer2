@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.toFormattedList
 import com.github.seepick.derbauer2.game.view.BackButton
@@ -30,7 +31,6 @@ class TechPage(
         } else {
             val maxColCount = techs.maxOf { it.costs.size }
             SelectPrompt(
-                title = "What do you want to research?",
                 options = Options.Tabled(
                     items = techs.map { tech ->
                         SelectOption(
@@ -55,6 +55,6 @@ class TechPage(
         currentPage.pageClass = HomePage::class
     }),
     contentRenderer = { textmap ->
-        textmap.line("Be smart - be a nerd.")
+        textmap.line(Texts.techPage)
     }
 )
