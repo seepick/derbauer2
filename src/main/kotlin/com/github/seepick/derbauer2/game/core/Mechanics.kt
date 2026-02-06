@@ -19,6 +19,7 @@ object Mechanics {
     val startingGold = 400.z
     val startingCitizens = 10.z
     val startingFood = 30.z
+    val startingKnowledge = 0.z
     // buildings
     val startingGranaries = 1.z
     val startingHouses = 4.z

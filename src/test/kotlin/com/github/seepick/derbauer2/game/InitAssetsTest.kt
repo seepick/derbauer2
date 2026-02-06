@@ -13,14 +13,14 @@ class InitAssetsTest : StringSpec({
         val user = User()
         user.initAssets()
 
-        user.all shouldHaveSize 7
+        user.all shouldHaveSize 8
         user.gold.value shouldBeGreaterThan 0
         user.food.value shouldBeGreaterThan 0
     }
     "When initiating two users Then they are equal but independent" {
         val user1 = User()
         user1.initAssets()
-        user1.all shouldHaveSize 7
+        user1.all shouldHaveSize 8
         val initialGold = user1.gold
 
         val user2 = User()

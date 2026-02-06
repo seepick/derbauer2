@@ -13,6 +13,7 @@ import com.github.seepick.derbauer2.game.prob.ProbRegistrator
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
@@ -49,5 +50,6 @@ private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
     Pair(Citizen(), Mechanics.startingCitizens.zz),
     Pair(Granary(), Mechanics.startingGranaries.zz),
     Pair(Farm(), Mechanics.startingFarms.zz),
-    Pair(Food(), Mechanics.startingFood.zz)
+    Pair(Food(), Mechanics.startingFood.zz),
+    Pair(Knowledge(), Mechanics.startingKnowledge.zz),
 )

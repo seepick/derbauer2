@@ -59,3 +59,15 @@ class Land : Resource, HasLabels by Data, HasEmoji by Data {
     override fun deepCopy() = Land().also { it._setOwnedInternal = owned }
     override fun toString() = "Land(owned=$owned)"
 }
+
+class Knowledge : Resource, HasLabels by Data, HasEmoji by Data {
+    object Data : HasLabels, HasEmoji {
+        override val labelSingular = "Knowledge"
+        override val labelPlural = labelSingular
+        override val emojiOrNull = "🧪".emoji
+    }
+
+    override var _setOwnedInternal: Z = 0.z
+    override fun deepCopy() = Knowledge().also { it._setOwnedInternal = owned }
+    override fun toString() = "Knowledge(owned=$owned)"
+}
