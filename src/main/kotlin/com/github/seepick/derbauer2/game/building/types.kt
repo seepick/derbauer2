@@ -64,14 +64,11 @@ class Granary : Building, StoresResource, HasLabels by Data, HasEmoji by Data {
     }
 
     override var _setOwnedInternal: Z = 0.z
-    override val costsGold = Mechanics.granaryCostsGold.z
-    override val landUse = Mechanics.granaryLanduse.z
+    override val costsGold = Mechanics.granaryCostsGold
+    override val landUse = Mechanics.granaryLanduse
     override val storableResourceClass = Food::class
     override val storageAmount = Mechanics.granaryCapacity
 
     override fun deepCopy() = Granary().also { it._setOwnedInternal = owned }
     override fun toString() = "Granary(owned=$owned)"
 }
-
-// technology buildings
-// military buildings

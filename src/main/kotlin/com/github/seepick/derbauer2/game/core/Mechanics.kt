@@ -3,8 +3,10 @@ package com.github.seepick.derbauer2.game.core
 import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Percent
+import com.github.seepick.derbauer2.game.common.k
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.turn.Season
+
 
 /**
  * All game mechanics constants; a magic constant provider.
@@ -16,18 +18,20 @@ object Mechanics {
 
     // INITIAL VALUES
     // ========================================================================
+
     // resources
+    val startingGold = if (DEV) 1.k else 400.z
     val startingLand = 20.z
-    val startingGold = 400.z
-    val startingCitizens = 10.z
     val startingFood = 30.z
+    val startingCitizens = 10.z
     // buildings
-    val startingGranaries = 1.z
     val startingHouses = 4.z
+    val startingGranaries = 1.z
     val startingFarms = 1.z
 
     // BUILDINGS
     // ========================================================================
+
     val houseCostsGold = 40.z
     val houseLandUse = 1.z
     val houseStoreCitizen = 10
@@ -36,24 +40,32 @@ object Mechanics {
     val farmProduceFood = 3.z
     val farmLandUse = 4.z
 
-    val granaryCostsGold = 60
+    val granaryCostsGold = 60.z
     val granaryCapacity = 80.z
-    val granaryLanduse = 2
+    val granaryLanduse = 2.z
+
+    // TECH BUILDINGS
+    val schoolLanduse = 2.z
+    val schoolCostsGold = 200.z
+    val schoolProduceKnowledge = 1.z
 
     // TRADE
     // ========================================================================
-    val buyFoodCostGold = 5
-    val sellFoodGainGold = if (DEV) 20 else 2
-    val buyLandCostGold = 50
+
+    val buyFoodCostGold = 5.z
+    val sellFoodGainGold = if (DEV) 20.z else 2.z
+    val buyLandCostGold = 50.z
 
     // FEATURE
     // ========================================================================
+
     val featureTradingThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
     val featureTradeLandThresholdLandAvailableLesser = 3.z
     val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 4.z
 
     // TECHNOLOGY
     // ========================================================================
+
     val techAgricultureCostsKnowledge = 40.z
     val techAgricultureCostsGold = if (DEV) 10.z else 300.z
     val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
@@ -66,8 +78,10 @@ object Mechanics {
     val techCapitalismCostsGold = if (DEV) 20.z else 400.z
     val techCapitalismTaxMultiplier = 120.`%`
 
+
     // END TURN
     // ========================================================================
+
     val taxRate = 20.`%`
     val taxGrowthVariation = 40.`%`
     val citizenEatAmount = 10.`%`

@@ -47,10 +47,10 @@ class TradePromptBuilder(
 ) : PromptProvider {
     override fun buildPrompt() = SelectPrompt(
         options = Options.Singled(buildList {
-            add(buildTradeOption(Buy, Food::class to 1.z, Gold::class to Mechanics.buyFoodCostGold.z))
-            add(buildTradeOption(Sell, Food::class to 1.z, Gold::class to Mechanics.sellFoodGainGold.z))
+            add(buildTradeOption(Buy, Food::class to 1.z, Gold::class to Mechanics.buyFoodCostGold))
+            add(buildTradeOption(Sell, Food::class to 1.z, Gold::class to Mechanics.sellFoodGainGold))
             if (user.hasFeature(TradeLandFeature::class)) {
-                add(buildTradeOption(Buy, Land::class to 1.z, Gold::class to Mechanics.buyLandCostGold.z))
+                add(buildTradeOption(Buy, Land::class to 1.z, Gold::class to Mechanics.buyLandCostGold))
             }
         })
     )

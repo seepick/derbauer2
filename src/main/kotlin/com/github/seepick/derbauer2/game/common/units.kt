@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
+import com.github.seepick.derbauer2.game.core.GeneratedByAI
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -9,6 +10,10 @@ val Long.z get() = Z(this)
 val Int.zz get() = Zz(toLong())
 @Suppress("VariableMinLength")
 val Int.z get() = Z(toLong())
+
+val Long.k get() = Magnitude.Kilo.multiply(this).z
+val Int.k get() = toLong().k
+
 
 /** Signed long. */
 @Suppress("TooManyFunctions")
@@ -94,9 +99,9 @@ data class Z(
 
 // operator fun Long.plus(other: Z) = Z(this + other.value) .........
 
+@GeneratedByAI
 @Suppress("MagicNumber")
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {
-    // AI generated code ;)
     val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else abs(single)
     val mag = Magnitude.entries.reversed().firstOrNull {
         absSingle >= 1L shl 10 * it.thousands
@@ -116,7 +121,9 @@ enum class Magnitude(
     Giga(3, "g"),
     Tera(4, "t"),
     Peta(5, "p"),
-    Exa(6, "x"),
+    Exa(6, "x");
+
+    fun multiply(single: Long) = single * (1L shl 10 * thousands)
 }
 
 data class MagnitutedNumber(
