@@ -8,10 +8,14 @@ import com.github.seepick.derbauer2.game.core.food
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.addResource
+import com.github.seepick.derbauer2.game.turn.Season
+import com.github.seepick.derbauer2.game.turn.Turn
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.comparables.shouldBeGreaterThan
+import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.equals.shouldBeEqual
 
 class RatsEatFoodTest : StringSpec({
@@ -28,10 +32,10 @@ class RatsEatFoodTest : StringSpec({
             user.addResource(Food(), 0.z)
             RatsEatFoodDescriptor.canHappen(user).shouldBeFalse()
         }
-        "Given non-zero food Then yes" {
-            val user = User()
+        "Given non-zero food Then probabilistic based on season" {
             user.addResource(Food(), 1.z)
-            RatsEatFoodDescriptor.canHappen(user).shouldBeTrue()
+            val canHappen = RatsEatFoodDescriptor.canHappen(user)
+            // Result is probabilistic, so we can't assert true or false deterministically
         }
     }
     context("build") {
@@ -66,4 +70,49 @@ class RatsEatFoodTest : StringSpec({
             user.food shouldBeEqual origAmount - happening.amountFoodEaten
         }
     }
+    context("seasonal probability") {
+        "Given winter season Then canHappen should be more likely than summer" {
+            val winterUser = userWithSeasonAndFood(Season.Winter)
+            val summerUser = userWithSeasonAndFood(Season.Summer)
+            val trials = 1000
+
+            val winterSuccesses = (0 until trials).count { RatsEatFoodDescriptor.canHappen(winterUser) }
+            val summerSuccesses = (0 until trials).count { RatsEatFoodDescriptor.canHappen(summerUser) }
+
+            winterSuccesses shouldBeGreaterThan summerSuccesses
+        }
+        "Given winter season Then canHappen should succeed most of the time" {
+            val winterUser = userWithSeasonAndFood(Season.Winter)
+            val trials = 100
+
+            val successes = (0 until trials).count { RatsEatFoodDescriptor.canHappen(winterUser) }
+
+            successes shouldBeGreaterThan 80
+        }
+        "Given summer season Then canHappen should succeed less often" {
+            val summerUser = userWithSeasonAndFood(Season.Summer)
+            val trials = 100
+
+            val successes = (0 until trials).count { RatsEatFoodDescriptor.canHappen(summerUser) }
+
+            successes shouldBeLessThan 50
+        }
+    }
 })
+
+private fun userWithSeasonAndFood(season: Season): User {
+    val user = User()
+    user.addResource(Food(), 10.z)
+    val turnNumber = turnNumberForSeason(season)
+    val turnField = User::class.java.getDeclaredField("turn")
+    turnField.isAccessible = true
+    turnField.set(user, Turn(turnNumber))
+    return user
+}
+
+private fun turnNumberForSeason(season: Season): Int = when (season) {
+    Season.Spring -> 1
+    Season.Summer -> 14
+    Season.Autumn -> 27
+    Season.Winter -> 40
+}
