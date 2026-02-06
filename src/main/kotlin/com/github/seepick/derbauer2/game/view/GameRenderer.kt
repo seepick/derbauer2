@@ -20,7 +20,9 @@ class GameRenderer(
     private fun renderInfoBar(): String =
         infoResources
             .mapNotNull { user.findResourceOrNull(it) }
-            .joinToString(" $RESOURCE_INFO_SEPARATOR ") { it.toInfoBarString(user) }
+            .joinToString(" $RESOURCE_INFO_SEPARATOR ") { it.toInfoBarString(user) }.also {
+                println("FOOOO: $it")
+            }
 
     fun render(
         textmap: Textmap,

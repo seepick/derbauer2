@@ -41,13 +41,13 @@ class ReportPage(
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    user.findResource(change.resourceClass).owned.toString()
+                    (user.findResource(change.resourceClass).owned.zz - change.changeAmount).toString()
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
                     change.changeAmount.toSymboledString() + " ="
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    (user.findResource(change.resourceClass).owned + change.changeAmount).toString()
+                    user.findResource(change.resourceClass).owned.toString()
                 },
             ),
             rowItems = user.reports.last().resourceChanges.changes,
