@@ -70,8 +70,11 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
                         addAll((0..<(options.items.maxOf { it.label.columns.size })).map {
                             TransformingTableCol { _, colIdx, opt ->
                                 val colIdxAdjusted = colIdx - rowsBefore
-                                if (colIdxAdjusted > (opt.label.columns.size - 1)) ""
-                                else opt.label.columns[colIdxAdjusted]
+                                if (colIdxAdjusted > (opt.label.columns.size - 1)) {
+                                    ""
+                                } else {
+                                    opt.label.columns[colIdxAdjusted]
+                                }
                             }
                         })
                     },
