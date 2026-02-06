@@ -28,7 +28,7 @@ class SelectPromptTest : DescribeSpec({
         infix fun <LABEL : SelectOptionLabel, OPTIONS : Options<LABEL>> SelectPrompt<LABEL, OPTIONS>.renderShouldBe(
             expected: String
         ) {
-            renderAndToFullString(textmap) shouldBeEqual expected
+            renderTrimmedFullString(textmap) shouldBeEqual expected
         }
 
         it("singled") {
@@ -36,22 +36,23 @@ class SelectPromptTest : DescribeSpec({
             val prompt = SelectPrompt(title, Options.Singled(listOf(option)))
 
             prompt renderShouldBe """
-                $title                         
-                                              
-                [1] ${option.label.value}                    
+                $title
+                
+                [1] ${option.label.value}
                 """.trimIndent()
         }
         it("tabled") {
-            val option = SelectOption(SelectOptionLabel.Table(), doNothingOnSelected)
-            val prompt = SelectPrompt(anyTitle, Options.Tabled(listOf(option)))
+            val option = SelectOption(SelectOptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
+            val prompt = SelectPrompt(title, Options.Tabled(listOf(option)))
 
             prompt renderShouldBe """
-                $title                         
-                                              
-                [1] ${option.label.value}                    
+                $title
+                
+                [1] a b
                 """.trimIndent()
 
         }
+        // TODO invalid test with different table columns
     }
     describe("ctor") {
         it("empty fails") {

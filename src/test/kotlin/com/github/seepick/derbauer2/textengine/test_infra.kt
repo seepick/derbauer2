@@ -4,7 +4,9 @@ import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
+import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import com.github.seepick.derbauer2.textengine.prompt.SingleSelectPrompt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.assertions.withClue
@@ -20,9 +22,10 @@ fun Arb.Companion.selectOption() = arbitrary {
     SelectOption(label = string(1..5).bind(), onSelected = {})
 }
 
-fun Renderer.renderAndToFullString(textmap: Textmap): String {
+fun Renderer.renderTrimmedFullString(textmap: Textmap): String {
     render(textmap)
-    return textmap.toFullString()
+    val full = textmap.toFullString()
+    return full.lines().joinToString("\n") { it.trimEnd() }
 }
 
 operator fun Textmap.Companion.invoke() = Textmap(1, 1)
@@ -41,7 +44,6 @@ enum class KeyInput(val asKeyPressed: KeyPressed) {
     Nr7(KeyPressed.Symbol(PrintChar.Numeric.Seven)),
     Nr8(KeyPressed.Symbol(PrintChar.Numeric.Eight)),
     Nr9(KeyPressed.Symbol(PrintChar.Numeric.Nine));
-
     companion object {
         fun byNr(nr: Int): KeyInput = when (nr) {
             1 -> Nr1
@@ -60,7 +62,7 @@ enum class KeyInput(val asKeyPressed: KeyPressed) {
 // @formatter:on
 
 fun Prompt.shouldHaveSelectOption(label: String) {
-    shouldBeInstanceOf<SelectPrompt>().options.map { it.label() }
+    this.shouldBeInstanceOf<SingleSelectPrompt>().options.items.map { it.label.value }
         .shouldContainSingleIgnoringCase(label)
 }
 
@@ -73,9 +75,9 @@ fun Prompt.indexOfOption(searchLabel: String) =
     indexOfOptionOrNull(searchLabel) ?: error("No option found for label: '$searchLabel'")
 
 fun Prompt.indexOfOptionOrNull(searchLabel: String): Int? {
-    val select = this.shouldBeInstanceOf<SelectPrompt>()
-    val matching = select.options.mapIndexedNotNull { index, option ->
-        if (option.label().lowercase().contains(searchLabel.lowercase())) {
+    val select = this.shouldBeInstanceOf<SelectPrompt<*, *>>()
+    val matching = select.options.items.mapIndexedNotNull { index, option ->
+        if (option.label.evaluate().lowercase().contains(searchLabel.lowercase())) {
             log.debug { "Selected option for '$searchLabel' at index ${index}: $option" }
             index + 1 to option
         } else {
@@ -90,3 +92,9 @@ fun Prompt.indexOfOptionOrNull(searchLabel: String): Int? {
         }
     }
 }
+
+fun SelectOptionLabel.evaluate(): String = when (this) {
+    is SelectOptionLabel.Single -> value
+    is SelectOptionLabel.Table -> columns.joinToString(" ")
+}
+

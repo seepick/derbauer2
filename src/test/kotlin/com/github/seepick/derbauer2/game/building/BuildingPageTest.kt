@@ -20,12 +20,12 @@ class BuildingPageTest : PageTest, StringSpec({
             ctx.buildBuildingsPage()
         }) {
             contentString shouldBeEqual """
-                Your builders are ready for work.
+                Your builders are ready for work 🛠️
                 
                 What shall we build next, Sire?
                 
-                [1] Build House (0) - 💰 40 | 🌍 1
-                [2] Build Farm (0) - 💰 120 | 🌍 4
+                [1] Build House 💰 40  🌍 1 (0)
+                [2] Build Farm  💰 120 🌍 4 (0)
                 """.trimIndent()
         }
     }

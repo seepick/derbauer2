@@ -122,12 +122,16 @@ sealed interface SelectOptionLabel {
         val value
             get(): String = when (this) {
                 is Static -> staticLabel
-                is Dynamic -> labelProvider()
+                is Dynamic -> provide()
             }
 
         data class Static(val staticLabel: String) : Single
-        data class Dynamic(val labelProvider: () -> String) : Single
+        data class Dynamic(val provide: () -> String) : Single
     }
 
     class Table(val columns: List<String>) : SelectOptionLabel
 }
+
+typealias SingleSelectPrompt = SelectPrompt<SelectOptionLabel.Single, Options<SelectOptionLabel.Single>>
+typealias StaticSelectPrompt = SelectPrompt<SelectOptionLabel.Single.Static, Options<SelectOptionLabel.Single.Static>>
+typealias DynamicSelectPrompt = SelectPrompt<SelectOptionLabel.Single.Dynamic, Options<SelectOptionLabel.Single.Dynamic>>

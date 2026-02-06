@@ -3,7 +3,7 @@
 ## 1.2.0
 
 * UI: use Textmap.table also for build/research (extend a bit; see todos)
-
+* !!! BUG StarveCompute#calculateUnfedCitizens (last line) threw NegativeZException! when close to hitting citizens cap
 * refactor: TechItem.state MUST not be var, as children are static singleton objects
     * basically global mutable state persisted across test runs... :-/
     * current workaround see: `fun Given() ... state = TechState.Unresearched ...`

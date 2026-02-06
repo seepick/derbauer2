@@ -8,7 +8,7 @@ class GamePageParser(val fullPage: String) {
 
     private val hrSymbol = "="
 
-    val lines = fullPage.split("\n").map { it.trim() }
+    val lines = fullPage.split("\n").map { it.trimEnd() }
     /** e.g. "🌍 10 | 💰 500 | 🍖 50 / 100 | 🌍 3 / 10 | 🙎🏻‍♂️ 4 / 5                  Turn 1" */
     val lineInfo = lines.first()
     val linePrompt = lines.last()
