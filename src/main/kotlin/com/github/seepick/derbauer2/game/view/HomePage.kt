@@ -6,12 +6,12 @@ import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature
-import com.github.seepick.derbauer2.game.resource.`gold 💰`
 import com.github.seepick.derbauer2.game.tech.TechPage
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
-import com.github.seepick.derbauer2.game.tech.`research 🔬`
+import com.github.seepick.derbauer2.game.tech.`tech 🔬`
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.trading.TradingPage
+import com.github.seepick.derbauer2.game.trading.`trade 💸`
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.CurrentPage
@@ -37,7 +37,7 @@ class HomePage(
         SelectPrompt(
             options = Options.Singled(buildList {
                 if (user.hasFeature<TradingFeature>()) {
-                    add(SelectOption("Trade ${Emoji.`gold 💰`}") {
+                    add(SelectOption("Trade ${Emoji.`trade 💸`}") {
                         currentPage.pageClass = TradingPage::class
                     })
                 }
@@ -45,7 +45,7 @@ class HomePage(
                     currentPage.pageClass = BuildingPage::class
                 })
                 if (user.hasFeature<TechnologyFeature>()) {
-                    add(SelectOption("Research ${Emoji.`research 🔬`}") {
+                    add(SelectOption("Research ${Emoji.`tech 🔬`}") {
                         currentPage.pageClass = TechPage::class
                     })
                 }

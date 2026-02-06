@@ -20,4 +20,5 @@ fun Resource.toInfoBarString(user: User): String =
     }
 
 private val goldEmoji = "💰️".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
 val Emoji.Companion.`gold 💰` get() = goldEmoji

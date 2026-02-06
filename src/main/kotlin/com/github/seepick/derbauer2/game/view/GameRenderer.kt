@@ -9,12 +9,13 @@ import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.resource.toInfoBarString
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.emptyLine
 
 class GameRenderer(
     private val user: User,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
-    private val infoResources = listOf(Land::class, Gold::class, Food::class, Land::class, Citizen::class)
+    private val infoResources = listOf(Gold::class, Food::class, Land::class, Citizen::class)
 
     private fun renderInfoBar(): String =
         infoResources
@@ -29,6 +30,7 @@ class GameRenderer(
     ) {
         textmap.aligned(renderInfoBar(), user.turn.prettyString)
         textmap.hr()
+        textmap.emptyLine()
         content(textmap)
         textmap.fillVertical(minus = 2)
         textmap.hr()

@@ -13,7 +13,7 @@ class GamePageParser(val fullPage: String) {
     val lineInfo = lines.first()
     val linePrompt = lines.last()
 
-    val contentLines = lines.subList(2, lines.size - 2).dropLastWhile { it.isBlank() }
+    val contentLines = lines.subList(2, lines.size - 2).dropWhile { it.isBlank() }.dropLastWhile { it.isBlank() }
     val contentString = contentLines.joinToString("\n")
 
     private val widthHack = MainWin.matrixSize.cols

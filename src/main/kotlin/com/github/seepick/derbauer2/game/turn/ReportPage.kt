@@ -30,10 +30,10 @@ class ReportPage(
         }
     },
     contentRenderer = { textmap ->
-        textmap.line("🗞️ Turn Report 🗞")
+        textmap.line("---------------------------")
+        textmap.line("🗞️  T U R N   R E P O R T 🗞")
+        textmap.line("---------------------------")
         textmap.emptyLine()
-        val report = user.reports.last()
-
         textmap.customTable(
             cols = listOf(
                 TransformingTableCol(align = TableAlign.Left) { _, _, change ->
@@ -41,10 +41,16 @@ class ReportPage(
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    change.changeAmount.toSymboledString()
+                    user.findResource(change.resourceClass).owned.toString()
+                },
+                TransformingTableCol(align = TableAlign.Right) { _, _, change ->
+                    change.changeAmount.toSymboledString() + " ="
+                },
+                TransformingTableCol(align = TableAlign.Right) { _, _, change ->
+                    (user.findResource(change.resourceClass).owned + change.changeAmount).toString()
                 },
             ),
-            rowItems = report.resourceChanges.changes,
+            rowItems = user.reports.last().resourceChanges.changes,
         )
     },
 )
