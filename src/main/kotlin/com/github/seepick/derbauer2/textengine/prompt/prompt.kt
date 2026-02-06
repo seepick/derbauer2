@@ -26,7 +26,7 @@ class EmptyPagePromptProvider(private val emptyMultiLineMessage: String) : Promp
 }
 
 class SelectPrompt<LABEL : SelectOptionLabel, OPTIONS : Options<LABEL>>(
-    val title: String, // TODO remove title; respect SRP
+    val title: String,
     val options: OPTIONS,
 ) : Prompt {
     private val log = logger {}
@@ -63,13 +63,12 @@ class SelectPrompt<LABEL : SelectOptionLabel, OPTIONS : Options<LABEL>>(
             }
 
             is Options.Tabled -> {
-                textmap.tableByTransform(
+                textmap.customTable(
                     cols = buildList {
                         add(TransformingTableCol { rowIdx, _, opt ->
                             "[${rowIdx + 1}]"
                         })
                         addAll(
-                            // TODO implicit contract that all columns are same length
                             (0..<(options.items.first().label.columns.size)).map {
                                 TransformingTableCol { _, colIdx, opt ->
                                     opt.label.columns[colIdx - 1]

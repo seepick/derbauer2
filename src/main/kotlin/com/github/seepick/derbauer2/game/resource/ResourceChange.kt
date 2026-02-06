@@ -130,7 +130,11 @@ fun List<ResourceChange>.toResourceChanges() = buildResourceChanges {
 }
 
 context(user: User)
-fun ResourceChanges.toTextmapRendering() =
-    changes.joinToString(", ") { change ->
+fun ResourceChanges.toFormatted(): String =
+    toFormattedList().joinToString(", ")
+
+context(user: User)
+fun ResourceChanges.toFormattedList(): List<String> =
+    changes.map { change ->
         "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.changeAmount}"
     }

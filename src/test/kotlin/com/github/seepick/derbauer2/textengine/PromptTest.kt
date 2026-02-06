@@ -52,7 +52,6 @@ class SelectPromptTest : DescribeSpec({
                 """.trimIndent()
 
         }
-        // TODO invalid test with different table columns
     }
     describe("ctor") {
         it("empty fails") {

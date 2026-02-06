@@ -13,8 +13,8 @@ interface TextmapWriter {
     fun toFullString(): String
     fun toGrid(): Array<Array<String>>
 
-    fun table(cols: List<TableCol> = emptyList(), rows: List<List<String>>): TextmapWriter
-    fun <T> tableByTransform(cols: List<TransformingTableCol<T>>, rowItems: List<T>): TextmapWriter
+    fun simpleTable(cols: List<TableCol> = emptyList(), rows: List<List<String>>): TextmapWriter
+    fun <T> customTable(cols: List<TransformingTableCol<T>>, rowItems: List<T>): TextmapWriter
 }
 
 data class MatrixSize(val cols: Int, val rows: Int)

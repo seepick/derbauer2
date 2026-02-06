@@ -21,14 +21,14 @@ class ResourceChangeTest : DescribeSpec({
     }
     describe("toTextmapRendering") {
         test("Given nothing Then empty") {
-            buildResourceChanges {}.toTextmapRendering().shouldBeEmpty()
+            buildResourceChanges {}.toFormatted().shouldBeEmpty()
         }
         test("Given single resource Then rendered") {
             add(Gold())
 
             buildResourceChanges {
                 add(Gold::class, 2.z)
-            }.toTextmapRendering() shouldBeEqual "${Gold.Data.emojiOrNull} 2"
+            }.toFormatted() shouldBeEqual "${Gold.Data.emojiOrNull} 2"
         }
         test("Given two resources Then both rendered") {
             add(Gold())
@@ -37,7 +37,7 @@ class ResourceChangeTest : DescribeSpec({
             buildResourceChanges {
                 add(Gold::class, 2.z)
                 add(Food::class, 3.z)
-            }.toTextmapRendering() shouldBeEqual "${Gold.Data.emojiOrNull} 2, ${Food.Data.emojiOrNull} 3"
+            }.toFormatted() shouldBeEqual "${Gold.Data.emojiOrNull} 2, ${Food.Data.emojiOrNull} 3"
         }
     }
 })

@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.textengine.textmap
 import com.github.seepick.derbauer2.game.common.countGraphemes
 
 interface TableGenerator {
-    fun <T> tableByTransform(
+    fun <T> transformingTable(
         cols: List<TransformingTableCol<T>>,
         rowItems: List<T>,
     ): List<String>
@@ -16,17 +16,18 @@ interface TableGenerator {
 
 class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : TableGenerator {
 
-    override fun <T> tableByTransform(
+    override fun <T> transformingTable(
         cols: List<TransformingTableCol<T>>,
         rowItems: List<T>,
-    ): List<String> = table(
-        cols = cols.map { TableCol(align = it.align) },
-        rows = rowItems.mapIndexed { rowIdx, row ->
-            cols.mapIndexed { colIdx, col ->
-                col.transformRow(rowIdx, colIdx, row)
+    ): List<String> =
+        table(
+            cols = cols.map { TableCol(align = it.align) },
+            rows = rowItems.mapIndexed { rowIdx, row ->
+                cols.mapIndexed { colIdx, col ->
+                    col.transformRow(rowIdx, colIdx, row)
+                }
             }
-        }
-    )
+        )
 
     override fun table(
         cols: List<TableCol>,
@@ -35,7 +36,6 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
         if (rows.isEmpty()) {
             return emptyList()
         }
-        validateTableRows(rows) // TODO no! support dynamic cols; fill up missing rows with spaces
         val colWidths = calculateColumnWidths(rows)
         return rows.map { row ->
             val cells = renderTableRow(row, cols, colWidths)
@@ -47,19 +47,10 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
         }
     }
 
-    private fun validateTableRows(rows: List<List<String>>) {
-        val numCols = rows.first().size
-        rows.forEach { row ->
-            require(row.size == numCols) {
-                "All rows must have the same number of columns (expected=$numCols, actual=${row.size})"
-            }
-        }
-    }
-
     private fun calculateColumnWidths(rows: List<List<String>>): IntArray {
-        val numCols = rows.first().size
+        val numCols = rows.maxOf { it.size }
         return IntArray(numCols) { colIndex ->
-            rows.maxOf { row -> row[colIndex].countGraphemes() }
+            rows.maxOf { row -> row.getOrNull(colIndex)?.countGraphemes() ?: 0 }
         }
     }
 
@@ -67,7 +58,8 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
         row: List<String>,
         cols: List<TableCol>,
         colWidths: IntArray
-    ): List<String> = row.mapIndexed { colIndex, cell ->
+    ): List<String> = colWidths.indices.map { colIndex ->
+        val cell = row.getOrNull(colIndex) ?: ""
         val cellWidth = cell.countGraphemes()
         val colWidth = colWidths[colIndex]
         val padding = colWidth - cellWidth
@@ -96,7 +88,6 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
 }
 
 data class TableCol(
-    // TODO support header titles
     val align: TableAlign = TableAlign.DEFAULT,
 )
 

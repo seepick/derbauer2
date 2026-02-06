@@ -51,11 +51,11 @@ class Textmap(
         repeat(rows - (cursor.y + minus)) { cursor.nextLine() }
     }
 
-    override fun <T> tableByTransform(cols: List<TransformingTableCol<T>>, rowItems: List<T>) = apply {
-        tableGenerator.tableByTransform(cols, rowItems)
+    override fun <T> customTable(cols: List<TransformingTableCol<T>>, rowItems: List<T>) = apply {
+        tableGenerator.transformingTable(cols, rowItems)
     }
 
-    override fun table(cols: List<TableCol>, rows: List<List<String>>) = apply {
+    override fun simpleTable(cols: List<TableCol>, rows: List<List<String>>) = apply {
         tableGenerator.table(cols, rows)
     }
 

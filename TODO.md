@@ -25,3 +25,9 @@
 
 * introduce [stat](documentation/business-spec/stat.md) concept
     * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate
+
+## Later
+
+* IT/UI: remove SelectPrompt.title; respect single responsibility! (prompt is about prompt; not more!)
+* IT/UI: ad Tabled-SelectPrompt: implicit contract that all columns are same length... support variable column count
+    * maybe determine max column count, and for the rest do an implicit fill with blank

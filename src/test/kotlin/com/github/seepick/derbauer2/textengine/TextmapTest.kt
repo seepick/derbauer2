@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.textengine.textmap.InvalidTextmapException
 import com.github.seepick.derbauer2.textengine.textmap.TableAlign
 import com.github.seepick.derbauer2.textengine.textmap.TableCol
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
@@ -72,12 +73,10 @@ class TextmapTest : DescribeSpec({
             }
         }
         it("emoji") {
-            Textmap(5, 2)
-                .aligned("😀", "🚗").toFullString() shouldBeEqual "😀   🚗\n     "
+            Textmap(5, 2).aligned("😀", "🚗").toFullString() shouldBeEqual "😀   🚗\n     "
         }
         it("emoji extra-wide") {
-            Textmap(5, 2)
-                .aligned("🙎🏻‍♂️", "🚗").toFullString() shouldBeEqual "🙎🏻‍♂️   🚗\n     "
+            Textmap(5, 2).aligned("🙎🏻‍♂️", "🚗").toFullString() shouldBeEqual "🙎🏻‍♂️   🚗\n     "
         }
     }
     describe("fillVertical") {
@@ -88,15 +87,15 @@ class TextmapTest : DescribeSpec({
             Textmap(1, 3).fillVertical(1).line("x").toFullString() shouldBeEqual " \n \nx"
         }
     }
-    describe("table") {
+    describe("simpleTable") {
         it("empty") {
-            Textmap(1, 1).table(rows = emptyList()).toFullString() shouldBeEqual " "
+            Textmap(1, 1).simpleTable(rows = emptyList()).toFullString() shouldBeEqual " "
         }
         it("naiv") {
-            Textmap(1, 1).table(rows = listOf(listOf("x"))).toFullString() shouldBeEqual "x"
+            Textmap(1, 1).simpleTable(rows = listOf(listOf("x"))).toFullString() shouldBeEqual "x"
         }
         it("simple with default left aligned") {
-            Textmap(5, 2).table(
+            Textmap(5, 2).simpleTable(
                 rows = listOf(
                     listOf("aa", "b"),
                     listOf("d", "ee"),
@@ -104,7 +103,7 @@ class TextmapTest : DescribeSpec({
             ).toFullString() shouldBeEqual "aa b \nd  ee"
         }
         it("custom column alignment right") {
-            Textmap(5, 2).table(
+            Textmap(5, 2).simpleTable(
                 cols = listOf(TableCol(align = TableAlign.Right)),
                 rows = listOf(
                     listOf("aa"),
@@ -113,7 +112,7 @@ class TextmapTest : DescribeSpec({
             ).toFullString() shouldBeEqual "aa   \n b   "
         }
         it("custom column alignment center") {
-            Textmap(5, 2).table(
+            Textmap(5, 2).simpleTable(
                 cols = listOf(TableCol(align = TableAlign.Center)),
                 rows = listOf(
                     listOf("aaa"),
@@ -122,18 +121,48 @@ class TextmapTest : DescribeSpec({
             ).toFullString() shouldBeEqual "aaa  \n b   "
         }
         it("variable row lengths allowed") {
-            Textmap().table(
+            Textmap(3, 2).simpleTable(
                 rows = listOf(
                     listOf("a"),
                     listOf("1", "2"),
                 )
             ).toFullString() shouldBeEqual "a  \n1 2"
         }
-        // TODO write singe simple table test with row extractor
-        // TODO write table tests with emojis (simple and extra-wide)
+        it("table with simple emojis") {
+            Textmap(3, 2).simpleTable(
+                rows = listOf(
+                    listOf("😀", "b"),
+                    listOf("d", "🚗"),
+                ),
+            ).toFullString() shouldBeEqual "😀 b\nd 🚗"
+        }
+        it("table with extra-wide emojis") {
+            Textmap(3, 2).simpleTable(
+                rows = listOf(
+                    listOf("🙎🏻‍♂️", "b"),
+                    listOf("d", "🚗"),
+                ),
+            ).toFullString() shouldBeEqual "🙎🏻‍♂️ b\nd 🚗"
+        }
     }
-    describe("reset") {
-        it("reset clears buffer and cursor") {
+
+    describe("customTable") {
+        it("empty") {
+            Textmap(1, 1).customTable<String>(
+                cols = emptyList(),
+                rowItems = emptyList(),
+            ).toFullString() shouldBeEqual " "
+        }
+        it("naiv") {
+            data class Item(val value: String)
+            Textmap(1, 1).customTable(
+                cols = listOf(TransformingTableCol { _, _, item -> item.value }),
+                rowItems = listOf(Item(value = "x")),
+            ).toFullString() shouldBeEqual "x"
+        }
+    }
+    describe("When clear") {
+        it("Then is empty (clears buffer and resets cursor)") {
             Textmap(1, 1).line("a").clear().toFullString() shouldBeEqual " "
         }
     }

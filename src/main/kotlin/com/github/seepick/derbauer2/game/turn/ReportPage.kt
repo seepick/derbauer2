@@ -33,7 +33,7 @@ class ReportPage(
         textmap.emptyLine()
         val report = user.reports.last()
 
-        textmap.tableByTransform(
+        textmap.customTable(
             cols = listOf(
                 TransformingTableCol(align = TableAlign.Left) { _, _, it ->
                     val res = user.findResource(it.resourceClass)

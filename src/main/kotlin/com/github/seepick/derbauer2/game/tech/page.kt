@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.toTextmapRendering
+import com.github.seepick.derbauer2.game.resource.toFormattedList
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -24,24 +24,27 @@ class TechPage(
 ) : PromptGamePage(
     gameRenderer = gameRenderer,
     promptBuilder = {
-        val items = techTree.filterResearchableItems()
-        if (items.isEmpty()) {
+        val techs = techTree.filterResearchableItems()
+        if (techs.isEmpty()) {
             EmptyPagePromptProvider("Your mind is empty...\nGo ahead and read some books first.")
         } else {
             SelectPrompt(
                 title = "What do you want to research?",
-                options = Options.Singled(items.map { item ->
-                    // TODO simple-flexible-dynamic table: no columns; just rows of different column size :)
-                    SelectOption(
-                        label = SelectOptionLabel.Single.Dynamic {
-                            with(user) {
-                                "Research ${item.label} - ${item.costs.toTextmapRendering()}"
-                            }
-                        },
-                        onSelected = {
-                            resultHandler.handle(user.researchTech(item))
-                        })
-                })
+                options = Options.Tabled(
+                    items = techs.map { tech ->
+                        SelectOption(
+                            label = SelectOptionLabel.Table(
+                                buildList {
+                                    add("Research ${tech.label}")
+                                    with(user) {
+                                        addAll(tech.costs.toFormattedList())
+                                    }
+                                }
+                            ),
+                            onSelected = { resultHandler.handle(user.researchTech(tech)) }
+                        )
+                    }
+                )
             )
         }
     },
