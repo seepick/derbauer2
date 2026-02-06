@@ -47,11 +47,10 @@ class TradePromptBuilder(
 ) : PromptProvider {
     override fun buildPrompt() = SelectPrompt(
         options = Options.Singled(buildList {
-            // or Gold(Mechanics.buyFoodCostGold.z)?
-            add(buildTradeOption(Buy, Food::class, Gold::class to Mechanics.buyFoodCostGold.z))
-            add(buildTradeOption(Sell, Food::class, Gold::class to Mechanics.sellFoodGainGold.z))
+            add(buildTradeOption(Buy, Food::class to 1.z, Gold::class to Mechanics.buyFoodCostGold.z))
+            add(buildTradeOption(Sell, Food::class to 1.z, Gold::class to Mechanics.sellFoodGainGold.z))
             if (user.hasFeature(TradeLandFeature::class)) {
-                add(buildTradeOption(Buy, Land::class, Gold::class to Mechanics.buyLandCostGold.z))
+                add(buildTradeOption(Buy, Land::class to 1.z, Gold::class to Mechanics.buyLandCostGold.z))
             }
         })
     )
@@ -59,12 +58,12 @@ class TradePromptBuilder(
     @Suppress("SpreadOperator")
     private fun buildTradeOption(
         operation: TradeOperation,
-        targetResourceClass: KClass<out Resource>,
+        target: Pair<KClass<out Resource>, Z>,
         vararg counters: Pair<KClass<out Resource>, Z>
     ) = SelectOption(
         label = OptionLabel.Single.Dynamic {
-            val targetResource = user.findResource(targetResourceClass)
-            "${operation.label} 1 ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
+            val targetResource = user.findResource(target.first)
+            "${operation.label} ${target.second} ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
                         val counterResource = user.findResource(counterResource)
                         "$counterAmount ${counterResource.emojiSpaceOrEmpty}${
@@ -75,7 +74,7 @@ class TradePromptBuilder(
         onSelected = {
             resultHandler.handle(
                 user.trade(
-                    TradeRequest(targetResourceClass, operation, 1.z),
+                    TradeRequest(target.first, operation, target.second),
                     *counters.map { (costResource, costAmount) ->
                         TradeRequest(costResource, operation.inverse, costAmount)
                     }.toTypedArray()
