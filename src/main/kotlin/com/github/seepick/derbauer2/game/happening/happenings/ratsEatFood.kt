@@ -1,13 +1,12 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
-import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.core.hasEntity
+import com.github.seepick.derbauer2.game.core.ratsEatFoodProbability
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
@@ -17,7 +16,6 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
-import com.github.seepick.derbauer2.game.turn.Season
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import kotlin.random.Random
@@ -29,25 +27,14 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
         if (!user.hasEntity(Food::class) || user.findResource<Food>().owned <= 0) {
             return false
         }
-        return passesSeasonalProbability(user.turn.season)
+        val probability = user.turn.season.ratsEatFoodProbability
+        return Random.nextDouble(0.0, 1.0) < probability.value
     }
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
         require(user.hasEntity(Food::class) && user.findResource<Food>().owned > 0)
         return RatsEatFoodHappening(amountFoodEaten = user.findResource<Food>().owned.coerceAtMost(15.z))
     }
-}
-
-private fun passesSeasonalProbability(season: Season): Boolean {
-    val probability = seasonalProbability(season)
-    return Random.nextDouble(0.0, 1.0) < probability.value
-}
-
-private fun seasonalProbability(season: Season): Percent = when (season) {
-    Season.Winter -> Mechanics.ratsEatFoodProbabilityWinter
-    Season.Autumn -> Mechanics.ratsEatFoodProbabilityAutumn
-    Season.Spring -> Mechanics.ratsEatFoodProbabilitySpring
-    Season.Summer -> Mechanics.ratsEatFoodProbabilitySummer
 }
 
 class RatsEatFoodHappening(
