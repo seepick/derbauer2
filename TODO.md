@@ -7,6 +7,7 @@
 
 ## Backlog
 
+* BZ: rotten food; independent of season; thus at least 1 negative besides rats eat food
 * introduce [stat](documentation/business-spec/stat.md) concept
     * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate
     * also decrease a bit if capitalism researched

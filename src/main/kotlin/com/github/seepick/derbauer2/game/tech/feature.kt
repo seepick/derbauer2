@@ -32,6 +32,6 @@ class TechnologyFeature(descriptor: TechnologyFeatureDescriptor) : Feature(descr
     override fun toString() = "${javaClass.simpleName}[label=$label]"
     override fun execute(user: User) {
         user.add(Knowledge())
-//       TODO user.add(School()) generate knowledge
+        user.add(School())
     }
 }
