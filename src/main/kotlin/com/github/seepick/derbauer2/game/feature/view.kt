@@ -37,5 +37,6 @@ data class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
 
     override fun execute(user: User) {
         user.add(feature)
+        feature.execute(user)
     }
 }

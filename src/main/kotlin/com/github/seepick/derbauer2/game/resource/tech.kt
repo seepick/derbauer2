@@ -27,6 +27,7 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier
         override val description = Texts.techItemAgriculture
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
+            add(Knowledge::class, Mechanics.techAgricultureCostsKnowledge)
             add(Gold::class, Mechanics.techAgricultureCostsGold)
         }
     }
@@ -48,6 +49,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier 
         override val description = Texts.techItemIrrigation
         override val requirements = setOf(AgricultureTech.Data)
         override val costs = buildResourceChanges {
+            add(Knowledge::class, Mechanics.techIrrigationCostsKnowledge)
             add(Gold::class, Mechanics.techIrrigationCostsGold)
         }
     }
@@ -65,6 +67,7 @@ class CapitalismTech : Tech, TechData by Data {
         override val description = Texts.techItemCapitalism
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
+            add(Knowledge::class, Mechanics.techCapitalismCostsKnowledge)
             add(Gold::class, Mechanics.techCapitalismCostsGold)
         }
     }

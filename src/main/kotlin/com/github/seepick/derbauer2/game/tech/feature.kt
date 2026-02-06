@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.feature.Feature
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.resource.Citizen
+import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 object TechnologyFeatureDescriptor : FeatureDescriptor(
@@ -29,4 +30,7 @@ class TechnologyFeature(descriptor: TechnologyFeatureDescriptor) : Feature(descr
     override val discriminator = Discriminator.Technology(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
+    override fun execute(user: User) {
+        user.add(Knowledge())
+    }
 }

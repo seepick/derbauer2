@@ -2,6 +2,8 @@ package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.resource.Knowledge
+import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.toFormattedList
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
@@ -14,6 +16,7 @@ import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import com.github.seepick.derbauer2.textengine.textmap.emptyLine
 
 @Suppress("LongParameterList") // it's ok ;)
 class TechPage(
@@ -36,6 +39,8 @@ class TechPage(
     currentPage.pageClass = HomePage::class
 }), contentRenderer = { textmap ->
     textmap.line(Texts.techPage)
+    textmap.emptyLine()
+    textmap.line("Your genius wisdom expands ${user.findResource<Knowledge>().emojiAndOwned} units of knowledge.")
 })
 
 private fun TechRef.toSelectOption(

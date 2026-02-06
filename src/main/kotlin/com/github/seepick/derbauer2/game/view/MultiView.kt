@@ -40,7 +40,7 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
             log.debug { "Done processing sub-pages 📄." }
             onFinishedProcessing()
         } else {
-            log.debug { "Showing next sub-page 📄." }
+            log.debug { "Showing next sub-page 📄: ${current()}" }
             current().execute(user)
         }
     }
