@@ -29,13 +29,16 @@ class TechPage(
             SelectPrompt(
                 title = "What do you want to research?",
                 options = items.map { item ->
-                    SelectOption({
-                        with(user) {
-                            "Research ${item.label} - ${item.costs.toTextmapRendering()}"
-                        }
-                    }) {
-                        resultHandler.handle(user.researchTech(item))
-                    }
+                    // TODO simple-flexible-dynamic table: no columns; just rows of different column size :)
+                    SelectOption(
+                        label = {
+                            with(user) {
+                                "Research ${item.label} - ${item.costs.toTextmapRendering()}"
+                            }
+                        },
+                        onSelected = {
+                            resultHandler.handle(user.researchTech(item))
+                        })
                 }
             )
         }

@@ -131,6 +131,7 @@ class TextmapTest : DescribeSpec({
                 )
             }
         }
+        // TODO write singe simple table test with row extractor
         // TODO write table tests with emojis (simple and extra-wide)
     }
     describe("reset") {

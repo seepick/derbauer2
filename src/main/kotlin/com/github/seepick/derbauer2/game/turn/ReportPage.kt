@@ -3,13 +3,14 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureMultiView
 import com.github.seepick.derbauer2.game.happening.HappeningMultiView
-import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.view.ContinueButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.SimpleGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.textmap.TableAlign
+import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
 
 @Suppress("LongParameterList")
 class ReportPage(
@@ -28,20 +29,21 @@ class ReportPage(
         }
     },
     contentRenderer = { textmap ->
-        textmap.line("Turn Report")
+        textmap.line("🗞️ Turn Report 🗞")
         textmap.emptyLine()
-        textmap.line("Resource production:")
         val report = user.reports.last()
-        report.resourceChanges.changes.forEach { change ->
-            with(user) {
-                textmap.line(change.toLine())
-            }
-        }
+
+        textmap.tableByTransform(
+            cols = listOf(
+                TransformingTableCol(align = TableAlign.Left) {
+                    val res = user.findResource(it.resourceClass)
+                    "${res.emojiSpaceOrEmpty}${res.labelPlural}"
+                },
+                TransformingTableCol(align = TableAlign.Right) {
+                    it.changeAmount.toSymboledString()
+                },
+            ),
+            rowItems = report.resourceChanges.changes,
+        )
     },
 )
-
-context(user: User)
-fun ResourceChange.toLine(): String {
-    val res = user.findResource(this.resourceClass)
-    return "${res.emojiSpaceOrEmpty}${res.labelPlural} ${this.changeAmount.toSymboledString()}"
-}

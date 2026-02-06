@@ -14,7 +14,6 @@ class GameRenderer(
     private val user: User,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
-    // IDEA in the future configurable via UI
     private val infoResources = listOf(Land::class, Gold::class, Food::class, Land::class, Citizen::class)
 
     private fun renderInfoBar(): String =

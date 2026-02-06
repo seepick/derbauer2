@@ -17,6 +17,6 @@ object StarveCompute {
     private fun calculateUnfedCitizens(citizens: Z, foodOwned: Zz, eatRatio: Percent): Z {
         val citizensAmountFedByOneFood = eatRatio.neededToGetTo(1)
         val citizensFed = foodOwned.toZAbs() * citizensAmountFedByOneFood
-        return citizens - citizensFed
+        return citizens - citizensFed // FIXME BUG this threw NegativeZException! when close to hitting citizens cap
     }
 }
