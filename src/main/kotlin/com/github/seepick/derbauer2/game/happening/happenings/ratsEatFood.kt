@@ -10,7 +10,6 @@ import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
-import com.github.seepick.derbauer2.game.happening.HappeningType
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
@@ -19,13 +18,12 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
-    override val type = HappeningType.RatsEatFood
 
     override fun canHappen(user: User) = user.hasEntity(Food::class) && user.findResource<Food>().owned > 0
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
         require(canHappen(user))
-//        user.turn.season.ratsEatFoodProbability // FIXME wire-in Probs here somehow...
+//        user.turn.season.ratsEatFoodProbability // TODO wire-in Probs here somehow...
         val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)
         return RatsEatFoodHappening(amountFoodEaten = foodEaten)
     }

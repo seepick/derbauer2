@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.happening
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.prob.GrowthProbCalculator
 import com.github.seepick.derbauer2.game.prob.PercentageProbCalculator
 import com.github.seepick.derbauer2.game.prob.ProbInitializer

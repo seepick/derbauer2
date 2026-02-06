@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.initAssets
 import com.github.seepick.derbauer2.game.prob.ProbRegistrator
 import com.github.seepick.derbauer2.game.prob.disableAllProbs
