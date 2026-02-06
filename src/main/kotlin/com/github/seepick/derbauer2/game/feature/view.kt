@@ -7,6 +7,8 @@ import com.github.seepick.derbauer2.game.view.MultiViewSubPage
 import com.github.seepick.derbauer2.game.view.NotificationPage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
+import com.github.seepick.derbauer2.textengine.textmap.emptyLine
+import com.github.seepick.derbauer2.textengine.textmap.multiLine
 
 class FeatureMultiView(user: User, currentPage: CurrentPage) : MultiView<FeatureInfo>(
     user = user,

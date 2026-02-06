@@ -11,9 +11,9 @@ import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
+import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
-import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
 class BuildingPage(
@@ -28,7 +28,7 @@ class BuildingPage(
         SelectPrompt(
             title = "What shall we build next, Sire?", options = Options.Tabled(user.buildings.map { building ->
                 SelectOption(
-                    label = SelectOptionLabel.Table(
+                    label = OptionLabel.Table(
                         listOf(
                             "Build ${building.labelSingular}",
                             "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold}",

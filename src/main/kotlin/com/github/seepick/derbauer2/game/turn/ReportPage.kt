@@ -11,6 +11,7 @@ import com.github.seepick.derbauer2.game.view.SimpleGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.textmap.TableAlign
 import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
+import com.github.seepick.derbauer2.textengine.textmap.emptyLine
 
 @Suppress("LongParameterList")
 class ReportPage(
@@ -35,12 +36,12 @@ class ReportPage(
 
         textmap.customTable(
             cols = listOf(
-                TransformingTableCol(align = TableAlign.Left) { _, _, it ->
-                    val res = user.findResource(it.resourceClass)
+                TransformingTableCol(align = TableAlign.Left) { _, _, change ->
+                    val res = user.findResource(change.resourceClass)
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
-                TransformingTableCol(align = TableAlign.Right) { _, _, it ->
-                    it.changeAmount.toSymboledString()
+                TransformingTableCol(align = TableAlign.Right) { _, _, change ->
+                    change.changeAmount.toSymboledString()
                 },
             ),
             rowItems = report.resourceChanges.changes,

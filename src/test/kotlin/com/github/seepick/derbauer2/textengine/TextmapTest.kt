@@ -5,6 +5,8 @@ import com.github.seepick.derbauer2.textengine.textmap.TableAlign
 import com.github.seepick.derbauer2.textengine.textmap.TableCol
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
+import com.github.seepick.derbauer2.textengine.textmap.emptyLine
+import com.github.seepick.derbauer2.textengine.textmap.multiLine
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

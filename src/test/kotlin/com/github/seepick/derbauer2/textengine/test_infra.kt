@@ -2,9 +2,9 @@ package com.github.seepick.derbauer2.textengine
 
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
+import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Prompt
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
-import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import com.github.seepick.derbauer2.textengine.prompt.SingleSelectPrompt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
@@ -93,8 +93,8 @@ fun Prompt.indexOfOptionOrNull(searchLabel: String): Int? {
     }
 }
 
-fun SelectOptionLabel.evaluate(): String = when (this) {
-    is SelectOptionLabel.Single -> value
-    is SelectOptionLabel.Table -> columns.joinToString(" ")
+fun OptionLabel.evaluate(): String = when (this) {
+    is OptionLabel.Single -> value
+    is OptionLabel.Table -> columns.joinToString(" ")
 }
 

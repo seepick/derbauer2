@@ -9,9 +9,9 @@ import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
+import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
-import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
 @Suppress("LongParameterList") // it's ok ;)
@@ -33,7 +33,7 @@ class TechPage(
                 options = Options.Tabled(
                     items = techs.map { tech ->
                         SelectOption(
-                            label = SelectOptionLabel.Table(
+                            label = OptionLabel.Table(
                                 buildList {
                                     add("Research ${tech.label}")
                                     with(user) {

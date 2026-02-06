@@ -3,9 +3,9 @@ package com.github.seepick.derbauer2.textengine
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.keyboard.one
 import com.github.seepick.derbauer2.textengine.keyboard.two
+import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
-import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.kotest.assertions.throwables.shouldThrow
@@ -25,14 +25,14 @@ class SelectPromptTest : DescribeSpec({
         beforeTest {
             textmap.clear()
         }
-        infix fun <LABEL : SelectOptionLabel, OPTIONS : Options<LABEL>> SelectPrompt<LABEL, OPTIONS>.renderShouldBe(
+        infix fun <LABEL : OptionLabel, OPTIONS : Options<LABEL>> SelectPrompt<LABEL, OPTIONS>.renderShouldBe(
             expected: String
         ) {
             renderTrimmedFullString(textmap) shouldBeEqual expected
         }
 
         it("singled") {
-            val option = SelectOption(SelectOptionLabel.Single.Static("option"), doNothingOnSelected)
+            val option = SelectOption(OptionLabel.Single.Static("option"), doNothingOnSelected)
             val prompt = SelectPrompt(title, Options.Singled(listOf(option)))
 
             prompt renderShouldBe """
@@ -42,7 +42,7 @@ class SelectPromptTest : DescribeSpec({
                 """.trimIndent()
         }
         it("tabled") {
-            val option = SelectOption(SelectOptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
+            val option = SelectOption(OptionLabel.Table(listOf("a", "b")), doNothingOnSelected)
             val prompt = SelectPrompt(title, Options.Tabled(listOf(option)))
 
             prompt renderShouldBe """
@@ -56,7 +56,7 @@ class SelectPromptTest : DescribeSpec({
     describe("ctor") {
         it("empty fails") {
             shouldThrow<IllegalArgumentException> {
-                SelectPrompt(anyTitle, emptyList<SelectOption<SelectOptionLabel.Single.Static>>())
+                SelectPrompt(anyTitle, emptyList<SelectOption<OptionLabel.Single.Static>>())
             }
         }
     }

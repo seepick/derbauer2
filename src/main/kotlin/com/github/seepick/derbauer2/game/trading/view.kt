@@ -18,10 +18,10 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
-import com.github.seepick.derbauer2.textengine.prompt.SelectOptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import kotlin.reflect.KClass
 
@@ -62,7 +62,7 @@ class TradePromptBuilder(
         targetResourceClass: KClass<out Resource>,
         vararg counters: Pair<KClass<out Resource>, Z>
     ) = SelectOption(
-        label = SelectOptionLabel.Single.Dynamic {
+        label = OptionLabel.Single.Dynamic {
             val targetResource = user.findResource(targetResourceClass)
             "${operation.label} 1 ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
                     counters.joinToString(" and ") { (counterResource, counterAmount) ->
