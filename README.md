@@ -6,18 +6,13 @@
 
 A turn-based retro strategy where you grow a little realm from humble beginnings 🌱🏰
 
-This is the successor of the original [DerBauer](https://github.com/seepick/derbauer).
+Visit the [website](https://seepick.github.io/derbauer2/) to **download** the latest version.
 
 ![screenshot](https://raw.githubusercontent.com/seepick/derbauer2/refs/heads/main/documentation/screenshot.png)
 
-Welcome! This is a small, love-made game about managing resources, trading, and building a tiny thriving community. Play
-at your own pace — one turn at a time.
+- 🕰️ Turn-based gameplay — think, and plan without any rush or stres; take your time.
+- 💰 Growing economy — produce, trade, and increase; maximize your industry.
+- 🏗️ Build and upgrade — manifacture, store, and improve overall state.
+- ... and much, much more.
 
-Highlights
-
-- 🕰️ Turn-based gameplay — think, plan, and watch your plans unfold each round.
-- 💰 Simple economy — gather gold, grow food, and buy or trade to expand.
-- 🏗️ Build and upgrade — add farms, storage, and buildings that shape your village.
-- 🧭 Explore & claim land — find new plots and make them yours.
-- 🤝 Trade & deals — negotiate resources and sign trade agreements.
-- ... and much, much, more you can read on the **[Website](https://seepick.github.io/derbauer2/)**
+PS: This is the successor of the original [DerBauer](https://github.com/seepick/derbauer).

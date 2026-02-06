@@ -8,7 +8,7 @@ import kotlin.reflect.KClass
 
 interface TurnStep {
     val order: Int
-    val requiresEntities: List<KClass<out Entity>>
+    val requiresEntities: List<KClass<out Entity>> // TODO remove this; move inside the calc()
     fun calcTurnChanges(): ResourceChanges
     // more to come ...
     companion object // for extension functions

@@ -14,7 +14,7 @@ object AgricultureTechItem : AbstractTechItem(data = AgricultureTech.Data) {
     override val techClass = AgricultureTech::class
 }
 
-class AgricultureTech : Tech, TechData by Data, ResourceProductionModifier {
+class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier {
     override val handlingResource = Food::class
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techAgricultureFoodProductionMultiplier
@@ -34,7 +34,7 @@ object IrrigationTechItem : AbstractTechItem(data = IrrigationTech.Data) {
     override val techClass = IrrigationTech::class
 }
 
-class IrrigationTech : Tech, TechData by Data, ResourceProductionModifier {
+class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier {
     override val handlingResource = Food::class
     override fun modifyAmount(user: User, source: Zz) =
         source * Mechanics.techIrrigationFoodProductionMultiplier
@@ -62,38 +62,6 @@ class CapitalismTech : Tech, TechData by Data {
         override val requirements = emptySet<TechData>()
         override val costs = buildResourceChanges {
             add(Gold::class, Mechanics.techCapitalismCostsGold)
-        }
-    }
-}
-
-object JunkFoodTechItem : AbstractTechItem(data = JunkFoodTech.Data) {
-    override val techClass = JunkFoodTech::class
-}
-
-class JunkFoodTech : Tech, TechData by Data {
-    override fun deepCopy() = this
-
-    object Data : TechData {
-        override val label = "Junk Food"
-        override val requirements = setOf(AgricultureTech.Data)
-        override val costs = buildResourceChanges {
-            add(Gold::class, Mechanics.techJunkFoodCostsGold)
-        }
-    }
-}
-
-object WarfareTechItem : AbstractTechItem(data = WarfareTech.Data) {
-    override val techClass = WarfareTech::class
-}
-
-class WarfareTech : Tech, TechData by Data {
-    override fun deepCopy() = this
-
-    object Data : TechData {
-        override val label = "Warfare"
-        override val requirements = emptySet<TechData>()
-        override val costs = buildResourceChanges {
-            add(Gold::class, Mechanics.techWarfareCostsGold)
         }
     }
 }

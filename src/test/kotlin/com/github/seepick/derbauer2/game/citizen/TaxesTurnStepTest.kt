@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
 import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.prob.StaticDiffuser
 import com.github.seepick.derbauer2.game.prob.updateDiffuser
+import com.github.seepick.derbauer2.game.resource.CapitalismTech
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
@@ -25,6 +26,7 @@ class TaxesTurnStepTest : DescribeSpec({
         probs = ProbsImpl()
         step = TaxesTurnStep(user, probs)
         step.initProb()
+        probs.updateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
     }
 
     fun calcChanges() = step.calcTurnChanges()
@@ -36,10 +38,7 @@ class TaxesTurnStepTest : DescribeSpec({
             gold = user.add(Gold())
             citizen = user.add(Citizen())
         }
-        describe("Given diffusing disabled") {
-            beforeTest {
-                probs.updateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
-            }
+        describe("Regular case") {
             it("Given some 🙎🏻‍♂️ Then change increases 💰 But user's  💰 stays unchanged") {
                 val goldBefore = gold.owned
                 citizen.ownedForTest = 10.z
@@ -48,11 +47,21 @@ class TaxesTurnStepTest : DescribeSpec({
                 gold.owned shouldBeEqual goldBefore
             }
         }
-        describe("Edgecases") {
+        describe("Diffusion") {
             it("Given negative diffused value Then limit 💰 to 0") {
                 probs.updateDiffuser(ProbDiffuserKey.taxKey, StaticDiffuser(staticValue = (-1).zz))
 
                 calcChanges().shouldContainChange(Gold::class, 0.zz)
+            }
+        }
+        describe("capitalism") {
+            it("Given capitalism Then taxes increased") {
+                citizen.ownedForTest = 100.z
+                user.add(CapitalismTech())
+                val taxWithoutCapitalism = (citizen.owned * Mechanics.taxRate).zz
+                val expectedTax = taxWithoutCapitalism * Mechanics.techCapitalismTaxMultiplier
+
+                calcChanges().shouldContainChange(Gold::class, expectedTax)
             }
         }
     }

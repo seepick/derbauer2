@@ -14,7 +14,7 @@ class ProducesResourceTurnStep(val user: User) {
 
     fun calcResourceChanges() = buildResourceChanges {
         val modifiersByResource = user.all
-            .filterIsInstance<ResourceProductionModifier>().groupBy { it.handlingResource }
+            .filterIsInstance<GlobalResourceProductionModifier>().groupBy { it.handlingResource }
         plainProduction().changes.forEach { change ->
             val modifiers = modifiersByResource[change.resourceClass] ?: emptyList()
             val modifiedAmount = modifiers.fold(change.changeAmount) { acc, modifier ->
@@ -37,7 +37,7 @@ class ProducesResourceTurnStep(val user: User) {
         })
 }
 
-interface ResourceProductionModifier {
+interface GlobalResourceProductionModifier {
     val handlingResource: KClass<out Resource>
     fun modifyAmount(user: User, source: Zz): Zz
 }

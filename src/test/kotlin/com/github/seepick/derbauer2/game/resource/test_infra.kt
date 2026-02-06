@@ -61,7 +61,7 @@ inline fun <reified SR : StorableResource> User.givenFakeStorage(amount: Z) =
     ).also { add(it, disableCheck = true) }
 
 
-interface ResourceProductionModifierEntity : Entity, ResourceProductionModifier
+interface ResourceProductionModifierEntity : Entity, GlobalResourceProductionModifier
 
 // need concrete classes (no abstract/lambda) to identify in User.enable/find
 

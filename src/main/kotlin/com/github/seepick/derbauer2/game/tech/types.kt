@@ -20,11 +20,6 @@ interface Tech : Entity, TechData {
     override val labelSingular get() = label
 }
 
-sealed interface TechState {
-    object Unresearched : TechState
-    class Researched(val tech: Tech) : TechState
-}
-
 abstract class AbstractTechItem(
     data: TechData,
 ) : TechItem, TechData by data {

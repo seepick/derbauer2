@@ -34,8 +34,8 @@ object Mechanics {
     val farmProduceFood = 3.z
     val farmLandUse = 4.z
 
-    val granaryCostsGold = 80
-    val granaryCapacity = 50.z
+    val granaryCostsGold = 60
+    val granaryCapacity = 80.z
     val granaryLanduse = 2
 
     // TRADE
@@ -56,9 +56,8 @@ object Mechanics {
     val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
     val techIrrigationCostsGold = 400.z
     val techIrrigationFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
-    val techJunkFoodCostsGold = 200.z
-    val techCapitalismCostsGold = if (DEV) 20.z else 300.z
-    val techWarfareCostsGold = 300.z
+    val techCapitalismCostsGold = if (DEV) 20.z else 400.z
+    val techCapitalismTaxMultiplier = 120.`%`
 
     // END TURN
     // ========================================================================
