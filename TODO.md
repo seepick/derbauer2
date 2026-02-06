@@ -3,7 +3,6 @@
 ## 1.2.0
 
 * tech enables Feature; refactor feature (remove enum construct)
-* UI: redesign turn report: make it more outstanding
 * IT: improve logging: remove unnecessary; add relevant; at least on next turn; short user entities overview
 * two open copilot PRs ;)
 * trade 5 food at a time

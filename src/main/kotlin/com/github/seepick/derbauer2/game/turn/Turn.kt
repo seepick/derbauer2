@@ -18,7 +18,9 @@ data class Turn(val number: Int = 1) {
         else -> Season.Winter
     }
     val prettyString = "${season.emoji}  W$week Y$year"
+
     fun increment() = Turn(number + 1)
+    override fun toString() = "${this::class.simpleName}($number / $prettyString)"
 
     companion object {
         private const val WEEKS_PER_YEAR = 52

@@ -20,7 +20,6 @@ object RealBeeper : Beeper {
 
     override fun beep(reason: String) {
         Toolkit.getDefaultToolkit().beep()
-        println("\uD83D\uDD14\uD83D\uDD14\uD83D\uDD14")
-        log.debug { "Beep reason: $reason" }
+        log.debug { "🔔🔔🔔 Beep reason: [$reason]" }
     }
 }

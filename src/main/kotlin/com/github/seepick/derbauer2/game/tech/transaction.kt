@@ -7,15 +7,15 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val log = logger {}
 
-fun User.researchTech(item: TechRef): TxResult {
-    log.info { "User.researchTech($item)" }
-    item.costs.requireAllZeroOrPositive() // sanity check
-    val txResult = execTx(item.costs.invertSig())
+fun User.researchTech(techRef: TechRef): TxResult {
+    log.info { "User.researchTech($techRef)" }
+    techRef.costs.requireAllZeroOrPositive() // sanity check
+    val txResult = execTx(techRef.costs.invertSig())
     // no custom validators needed (to be able to be researched == valid)
     if (txResult.isFail) {
         return txResult
     }
-    val tech = item.buildTech()
+    val tech = techRef.buildTech()
     add(tech)
     return TxResult.Success
 }

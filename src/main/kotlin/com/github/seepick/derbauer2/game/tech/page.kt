@@ -22,39 +22,35 @@ class TechPage(
     gameRenderer: GameRenderer,
     private val techTree: TechTree,
     private val resultHandler: InteractionResultHandler,
-) : PromptGamePage(
-    gameRenderer = gameRenderer,
-    promptBuilder = {
-        val techs = techTree.filterResearchableItems()
-        if (techs.isEmpty()) {
-            EmptyPagePromptProvider("Your mind is empty...\nGo ahead and read some books first.")
-        } else {
-            val maxColCount = techs.maxOf { it.costs.size }
-            SelectPrompt(
-                options = Options.Tabled(
-                    items = techs.map { tech ->
-                        SelectOption(
-                            label = OptionLabel.Table(
-                                buildList {
-                                    add("Research ${tech.label}")
-                                    with(user) {
-                                        addAll(tech.costs.toFormattedList())
-                                    }
-                                    addAll(List(maxColCount - tech.costs.size) { "" })
-                                    add("... ${tech.description}")
-                                }
-                            ),
-                            onSelected = { resultHandler.handle(user.researchTech(tech)) }
-                        )
-                    }
-                )
-            )
-        }
-    },
-    buttons = listOf(BackButton {
-        currentPage.pageClass = HomePage::class
-    }),
-    contentRenderer = { textmap ->
-        textmap.line(Texts.techPage)
+) : PromptGamePage(gameRenderer = gameRenderer, promptBuilder = {
+    val techs = techTree.filterResearchableItems()
+    if (techs.isEmpty()) {
+        EmptyPagePromptProvider(Texts.techPageEmpty)
+    } else {
+        val maxColCount = techs.maxOf { it.costs.size }
+        SelectPrompt(Options.Tabled(techs.map {
+            it.toSelectOption(user, maxColCount, resultHandler)
+        }))
     }
-)
+}, buttons = listOf(BackButton {
+    currentPage.pageClass = HomePage::class
+}), contentRenderer = { textmap ->
+    textmap.line(Texts.techPage)
+})
+
+private fun TechRef.toSelectOption(
+    user: User,
+    maxColCount: Int,
+    resultHandler: InteractionResultHandler,
+): SelectOption<OptionLabel.Table> = SelectOption(
+    label = OptionLabel.Table(
+        buildList {
+            add("Research $label")
+            with(user) {
+                addAll(costs.toFormattedList())
+            }
+            addAll(List(maxColCount - costs.size) { "" })
+            add("... $description")
+        }), onSelected = {
+        resultHandler.handle(user.researchTech(this))
+    })

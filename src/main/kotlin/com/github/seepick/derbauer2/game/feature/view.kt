@@ -26,7 +26,7 @@ class FeatureViewPage(
     button = ContinueButton { multiView.continueNextOrFinish() }
 )
 
-class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
+data class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
     override val asciiArt = feature.asciiArt
 
     override fun render(textmap: Textmap) {

@@ -7,6 +7,8 @@ fun interface KeyListener {
 sealed interface KeyPressed {
     data class Symbol(val char: PrintChar) : KeyPressed
     sealed class Command(val label: String) : KeyPressed {
+        override fun toString() = "${this::class.simpleName}"
+
         object Enter : Command("ENTER")
         object Escape : Command("ESCAPE")
         object Space : Command("SPACE")
@@ -18,6 +20,7 @@ sealed interface KeyPressed {
 }
 
 sealed class PrintChar(val char: Char) {
+    override fun toString() = "${this::class.simpleName}($char)"
     @Suppress("MagicNumber")
     sealed class Numeric(val int: Int) : PrintChar(int.toString().first()) {
         object Zero : Numeric(0)

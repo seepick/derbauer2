@@ -28,7 +28,7 @@ object FoundGoldDescriptor : HappeningDescriptor(HappeningNature.Positive) {
     }
 }
 
-class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = FoundGoldDescriptor) :
+data class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = FoundGoldDescriptor) :
     Happening, HappeningData by descriptor {
 
     override val asciiArt = AsciiArt.goldPot

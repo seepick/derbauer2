@@ -161,7 +161,7 @@ private fun rememberMainWindowState(
             val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
             page.onKeyPressed(key).also { isHandled ->
                 if (isHandled) {
-                    log.info { "TickTack, user said: $key" }
+                    log.trace { "User entered: $key" }
                     onTick()
                 }
             }

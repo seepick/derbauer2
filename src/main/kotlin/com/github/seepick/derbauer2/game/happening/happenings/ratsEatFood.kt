@@ -29,8 +29,9 @@ object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
     }
 }
 
-class RatsEatFoodHappening(
-    val amountFoodEaten: Z, private val descriptor: HappeningData = RatsEatFoodDescriptor
+data class RatsEatFoodHappening(
+    val amountFoodEaten: Z,
+    private val descriptor: HappeningData = RatsEatFoodDescriptor,
 ) : Happening, HappeningData by descriptor {
     init {
         require(amountFoodEaten > 0) { "amountFoodEaten must be positive: $amountFoodEaten" }

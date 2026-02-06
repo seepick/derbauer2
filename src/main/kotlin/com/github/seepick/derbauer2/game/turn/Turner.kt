@@ -3,7 +3,9 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.feature.FeatureInfo
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
+import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceChange
@@ -13,6 +15,7 @@ import com.github.seepick.derbauer2.game.resource.execTx
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class Turner(
     private val user: User,
@@ -20,7 +23,8 @@ class Turner(
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
 ) {
-    // assume TXs were already validated
+    private val log = logger {}
+
     fun executeAndGenerateReport() = TurnReport(
         turn = user.turn,
         resourceChanges = steps
@@ -29,11 +33,16 @@ class Turner(
             .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
         happenings = happeningTurner.buildHappeningMultiPages(),
         newFeatures = featureTurner.buildFeatureMultiPages(),
-    )
+    ).also {
+        log.info { "🔁 Changes: $it" }
+        log.debug { "🔁 User.all: ${user.allToString()}" }
+        log.info { "==============================================" }
+    }
 
     private fun execStepToRCs(step: TurnStep): ResourceChanges =
-        step.calcTurnChanges().toLimitedAmounts().also {
-            user.execTx(it).errorOnFail()
+        step.calcTurnChanges().toLimitedAmounts().also { changes ->
+            log.debug { "Executing: ${changes.toShortString()}" }
+            user.execTx(changes).errorOnFail() // assume TXs were already validated
         }
 
     private fun ResourceChanges.toLimitedAmounts() = ResourceChanges(
@@ -62,3 +71,10 @@ class Turner(
 
     companion object // for extension functions
 }
+
+data class TurnReport(
+    val turn: Turn,
+    val resourceChanges: ResourceChanges,
+    val happenings: List<Happening>,
+    val newFeatures: List<FeatureInfo>,
+)

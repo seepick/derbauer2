@@ -29,7 +29,7 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
         }
         currentPage.pageClass = targetPageClass
         this.onFinishedProcessing = onFinishedProcessing
-        log.debug { "Going to process ${toBeProcessed.size} page(s)..." }
+        log.debug { "Going to process ${toBeProcessed.size} sub-page(s) 📄" }
         unseen.addAll(toBeProcessed)
         current().execute(user)
     }
@@ -37,10 +37,10 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
     fun continueNextOrFinish() {
         unseen.removeAt(0)
         if (unseen.isEmpty()) {
-            log.debug { "Done; no more left." }
+            log.debug { "Done processing sub-pages 📄." }
             onFinishedProcessing()
         } else {
-            log.debug { "Showing next." }
+            log.debug { "Showing next sub-page 📄." }
             current().execute(user)
         }
     }

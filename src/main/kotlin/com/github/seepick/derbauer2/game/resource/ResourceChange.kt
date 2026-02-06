@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.requireUniqueBy
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiOrSimpleName
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import kotlin.reflect.KClass
 
@@ -70,6 +71,13 @@ data class ResourceChanges private constructor(
 
     fun changeFor(resourceClass: KClass<out Resource>): ResourceChange? =
         changes.firstOrNull { it.resourceClass == resourceClass }
+
+    fun toShortString() = "${this::class.simpleName}(${
+        changes.joinToString("/") {
+            "${it.changeAmount.toSymboledString()}${it.resourceClass.emojiOrSimpleName}"
+        }
+    })"
+
 
     companion object {
         val empty = buildResourceChanges { }

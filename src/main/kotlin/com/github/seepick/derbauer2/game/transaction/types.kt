@@ -38,19 +38,17 @@ fun List<TxResult>.merge(): TxResult {
 }
 
 sealed interface TxResult {
-    val isSuccess: Boolean
+    val isSuccess get() = this is Success
     val isFail: Boolean get() = !isSuccess
 
-    object Success : TxResult {
-        override val isSuccess = true
-    }
+    object Success : TxResult
 
     sealed class Fail : TxResult {
         abstract val warningType: WarningType
         abstract val message: String
-        override val isSuccess = false
 
-        class LandOveruse(override val message: String = "Using more land than available") : Fail() {
+        override fun toString() = "${this::class.simpleName}($warningType, $message)"
+        data class LandOveruse(override val message: String = "Using more land than available") : Fail() {
             override val warningType = WarningType.LAND_OVERUSE
         }
 
@@ -59,7 +57,7 @@ sealed interface TxResult {
             override val message: String = "Insufficient resources" + (additionalMessage?.let { ": $it" } ?: "")
         }
 
-        class CompoundFail(
+        data class CompoundFail(
             val fails: List<Fail>,
             override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}"
         ) : Fail() {
@@ -83,6 +81,6 @@ sealed interface TxResult {
 fun TxResult.errorOnFail() {
     contract { returns() implies (this@errorOnFail is Success) }
     if (this is Fail) {
-        error("Transaction failed: $message")
+        error("Transaction failed: $message ($this)")
     }
 }

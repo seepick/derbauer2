@@ -47,7 +47,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
             throw UserEnableException("Entity ${entity::class.simpleName} already exists!")
         }
         if (!disableCheck) { // don't log if doing deep copy (for TX simulation)
-            log.info { "Enabling $entity" }
+            log.info { "Enabling (${entity::class.simpleNameEmojied}): $entity" }
         }
         _all += entity
     }
@@ -78,6 +78,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     override fun hashCode(): Int = _all.hashCode()
 
     override fun toString() = "User($_all)"
+    fun allToString() = "User.all(${all.delegate.map { it.toString() }})" // could be more speicfic...
 }
 
 fun User.hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
