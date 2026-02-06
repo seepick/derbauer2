@@ -34,7 +34,6 @@ class RatsEatFoodTest : StringSpec({
         "Given non-zero food Then probabilistic based on season" {
             user.addResource(Food(), 1.z)
             val canHappen = RatsEatFoodDescriptor.canHappen(user)
-            // Result is probabilistic, so we can't assert true or false deterministically
         }
     }
     context("build") {

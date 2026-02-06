@@ -2,8 +2,8 @@ package com.github.seepick.derbauer2.game.happening.happenings
 
 import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
@@ -44,10 +44,10 @@ private fun passesSeasonalProbability(season: Season): Boolean {
 }
 
 private fun seasonalProbability(season: Season): Percent = when (season) {
-    Season.Winter -> 100.`%`
-    Season.Autumn -> 75.`%`
-    Season.Spring -> 50.`%`
-    Season.Summer -> 25.`%`
+    Season.Winter -> Mechanics.ratsEatFoodProbabilityWinter
+    Season.Autumn -> Mechanics.ratsEatFoodProbabilityAutumn
+    Season.Spring -> Mechanics.ratsEatFoodProbabilitySpring
+    Season.Summer -> Mechanics.ratsEatFoodProbabilitySummer
 }
 
 class RatsEatFoodHappening(

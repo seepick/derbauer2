@@ -73,4 +73,8 @@ object Mechanics {
     // HAPPENINGS
     val happeningGrowthRate = 1.`%`
     val happeningIsNegativeChance = 5.`%`
+    val ratsEatFoodProbabilityWinter = 100.`%`
+    val ratsEatFoodProbabilityAutumn = 75.`%`
+    val ratsEatFoodProbabilitySpring = 50.`%`
+    val ratsEatFoodProbabilitySummer = 25.`%`
 }
