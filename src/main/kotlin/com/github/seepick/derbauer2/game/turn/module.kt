@@ -7,9 +7,16 @@ import org.koin.dsl.module
 
 fun turnModule() = module {
     single {
-        Turner(get(), getKoinBeansByType(), get(), get(), get())
+        Turner(
+            genericSteps = getKoinBeansByType(),
+            resSteps = getKoinBeansByType(),
+            user = get(),
+            happeningTurner = get(),
+            featureTurner = get(),
+            actionsCollector = get(),
+        )
     }
-    singleOf(::ProduceCitzenCompositeTurnStep)
-    singleOf(::ProduceCitzenCompositeTurnStep)
+    singleOf(::ProduceCitzenCompositeResourceStep)
+    singleOf(::ProduceCitzenCompositeResourceStep)
     singleOf(::ReportsImpl) bind Reports::class
 }

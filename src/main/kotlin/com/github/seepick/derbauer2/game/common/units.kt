@@ -160,31 +160,34 @@ operator fun Double.compareTo(other: Percent) = this.compareTo(other.number)
 
 val Double.strictAny: DoubleAny get() = DoubleAny(this)
 val Double.strict0To1: Double0To1 get() = Double0To1(this)
-val Double.strictMin1To1: DoubleMin1To1 get() = DoubleMin1To1(this)
-val Double.strictPos: DoublePos get() = DoublePos(this)
+val Double.strictMin1To1: DoubleMin1To1 get() = com.github.seepick.derbauer2.game.common.DoubleMin1To1(this)
+val Double.strictPos: DoublePos get() = com.github.seepick.derbauer2.game.common.DoublePos(this)
 
 typealias DoubleAny = StrictDouble.Anything
 typealias Double0To1 = StrictDouble.ZeroToOne
 typealias DoublePos = StrictDouble.Positive
 typealias DoubleMin1To1 = StrictDouble.MinusOneToOne
 
-sealed interface StrictDouble {
-    val number: Double
+sealed class StrictDouble(val number: Double) {
 
-    data class Anything(override val number: Double) : StrictDouble
-    data class ZeroToOne(override val number: Double) : StrictDouble {
+    override fun toString() = "${this::class.simpleName}(${String.format("%.2f", number)})"
+    override fun equals(other: Any?) = other is StrictDouble && this::class == other::class && number == other.number
+    override fun hashCode() = 31 * this::class.hashCode() + number.hashCode()
+
+    class Anything(number: Double) : StrictDouble(number)
+    class ZeroToOne(number: Double) : StrictDouble(number) {
         init {
             require(number in 0.0..1.0) { "Percentage must be between 0.0 and 1.0 but was: $number" }
         }
     }
 
-    data class Positive(override val number: Double) : StrictDouble {
+    class Positive(number: Double) : StrictDouble(number) {
         init {
             require(number >= 0.0) { "Percentage must be between >= 0.0 but was: $number" }
         }
     }
 
-    data class MinusOneToOne(override val number: Double) : StrictDouble {
+    class MinusOneToOne(number: Double) : StrictDouble(number) {
         init {
             require(number in -1.0..1.0) { "Percentage must be between -1.0 and +1.0 but was: $number" }
         }

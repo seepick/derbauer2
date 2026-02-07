@@ -30,7 +30,7 @@ class HomePage(
 ) : PromptGamePage(
     buttons = listOf(
         ContinueButton("Next Turn") {
-            val report = turner.executeAndGenerateReport()
+            val report = turner.execTurnAndBuildReport()
             user.all.find<TurnStat>().next()
             reports.add(report)
             currentPage.pageClass = if (user.isGameOver()) GameOverPage::class else ReportPage::class

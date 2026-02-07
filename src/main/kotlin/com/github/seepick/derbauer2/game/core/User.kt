@@ -64,6 +64,8 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     override fun toString() = "User(all=${all.delegate.map { it.toString() }})"
 }
 
+fun User.hasEntities(vararg entityClasses: KClass<out Entity>) = entityClasses.all { hasEntity(it) }
+
 fun User.hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null
 inline fun <reified E : Entity> User.hasEntity() = hasEntity(E::class)
 

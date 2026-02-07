@@ -30,21 +30,22 @@ class TurnerTest : DescribeSpec({
         probabilities = ProbsImpl()
     }
 
-    fun Turner.Companion.build(vararg steps: TurnStep) = Turner(
+    fun Turner.Companion.build(vararg steps: ResourceStep) = Turner(
         user = user,
-        steps = steps.toList(),
+        genericSteps = emptyList(),
+        resSteps = steps.toList(),
         happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo).apply { initProb() },
         featureTurner = FeatureTurner(user),
         actionsCollector = ActionsCollector(),
     )
 
     fun Turner.execShouldContainChange(resource: Resource, expectedAmount: Zz) {
-        executeAndGenerateReport().resourceChanges.shouldContainChange(resource, expectedAmount)
+        execTurnAndBuildReport().resourceChanges.shouldContainChange(resource, expectedAmount)
     }
 
     describe("Special Cases") {
         it("Given nothing Then empty changes") {
-            val report = Turner.build().executeAndGenerateReport()
+            val report = Turner.build().execTurnAndBuildReport()
 
             report.resourceChanges.shouldBeEmpty()
         }
@@ -53,7 +54,7 @@ class TurnerTest : DescribeSpec({
         fun test(given: Int, changeBy: Int, shouldChange: Int) {
             // use Gold, as it is not of type StorableResource
             val gold = user.addResource(Gold(), given.z)
-            val turner = Turner.build(TurnStep.build(gold, changeBy.zz))
+            val turner = Turner.build(ResourceStep.build(gold, changeBy.zz))
 
             turner.execShouldContainChange(gold, shouldChange.zz)
         }
@@ -70,40 +71,40 @@ class TurnerTest : DescribeSpec({
     describe("StorableResource") {
         it("Given 0 resource and change -1 Then change nothing") {
             val food = user.add(Food())
-            val turner = Turner.build(TurnStep.build(food, (-1).zz))
+            val turner = Turner.build(ResourceStep.build(food, (-1).zz))
 
             turner.execShouldContainChange(food, 0.zz)
         }
         it("Given 0 resource and change +1 Then change nothing") {
             val food = user.add(Food())
-            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+            val turner = Turner.build(ResourceStep.build(food, (+1).zz))
 
             turner.execShouldContainChange(food, 0.zz)
         }
         it("Given 1 resource When change -2 Then changed by max possible -1") {
             val food = user.addResource(Food(), 1.z)
-            val turner = Turner.build(TurnStep.build(food, (-2).zz))
+            val turner = Turner.build(ResourceStep.build(food, (-2).zz))
 
             turner.execShouldContainChange(food, (-1).zz)
         }
         it("Given 0/1 resource When change +1 Then changed successfully +1") {
             val food = user.add(Food())
             user.givenFakeStorage<Food>(1.z)
-            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+            val turner = Turner.build(ResourceStep.build(food, (+1).zz))
 
             turner.execShouldContainChange(food, (+1).zz)
         }
         it("Given 1/1 resource When change +1 Then change nothing") {
             val food = user.addResource(Food(), 1.z)
             user.givenFakeStorage<Food>(1.z)
-            val turner = Turner.build(TurnStep.build(food, (+1).zz))
+            val turner = Turner.build(ResourceStep.build(food, (+1).zz))
 
             turner.execShouldContainChange(food, 0.zz)
         }
         it("Given 1/2 resources When change +2 Then changed by max possible +1") {
             val food = user.addResource(Food(), 1.z)
             user.givenFakeStorage<Food>(2.z)
-            val turner = Turner.build(TurnStep.build(food, (+2).zz))
+            val turner = Turner.build(ResourceStep.build(food, (+2).zz))
 
             turner.execShouldContainChange(food, 1.zz)
         }
@@ -112,8 +113,8 @@ class TurnerTest : DescribeSpec({
             val granary = user.addBuilding(Granary(), 1.z)
             val food = user.addResource(Food(), granary.totalStorageAmount - foodStorageAvailable) // almost full
             val turner = Turner.build(
-                TurnStep.build(food, 5.zz), // first over-increase but not be capped yet!
-                TurnStep.build(food, (-1).zz), // then decrease
+                ResourceStep.build(food, 5.zz), // first over-increase but not be capped yet!
+                ResourceStep.build(food, (-1).zz), // then decrease
             )
             // would expect foodStorageAvailable.zz (first merge (5-1=4) capped to available 1)
             // but executing sequentially (TX isolated)

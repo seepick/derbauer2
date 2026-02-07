@@ -12,20 +12,20 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.tech.hasTech
-import com.github.seepick.derbauer2.game.turn.DefaultTurnStep
-import com.github.seepick.derbauer2.game.turn.TurnStepOrder
+import com.github.seepick.derbauer2.game.turn.DefaultResourceStep
+import com.github.seepick.derbauer2.game.turn.ResourceStep
 
 private val probTaxKey = ProbDiffuserKey("tax")
 val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 
-class TaxesTurnStep(user: User, private val probs: Probs) : ProbInitializer,
-    DefaultTurnStep(user, TurnStepOrder.taxes, listOf(Citizen::class, Gold::class)) {
+class TaxesResourceStep(user: User, private val probs: Probs) : ProbInitializer,
+    DefaultResourceStep(user, ResourceStep.Order.taxes, listOf(Citizen::class, Gold::class)) {
 
     override fun initProb() {
         probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))
     }
 
-    override fun calcTurnChangesChecked() = buildResourceChanges {
+    override fun calcChangesChecked() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         val rawTax = citizen.owned * Mechanics.taxRate
         val diffusedTax = probs.getDiffused(ProbDiffuserKey.taxKey, rawTax.zz).toZLimitMinZero()

@@ -19,33 +19,44 @@ import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
+interface GenericTurnStep {
+    fun execTurn()
+}
 
 class Turner(
     private val user: User,
-    private val steps: List<TurnStep>,
+    private val genericSteps: List<GenericTurnStep>,
+    private val resSteps: List<ResourceStep>,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
     private val actionsCollector: ActionsCollector,
 ) {
     private val log = logger {}
 
-    fun executeAndGenerateReport() = TurnReport(
-        turn = user.turn,
-        resourceChanges = steps
-            .sortedBy { it.order }
-            .map { execStepToRCs(it) }
-            .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
-        happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
-        newFeatures = featureTurner.buildFeatureMultiPages(),
-        actions = actionsCollector.getAllAndClear(),
-    ).also {
-        log.info { "🔁 Changes: $it" }
+    fun execTurnAndBuildReport(): TurnReport {
+        log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
+        genericSteps.forEach {
+            log.debug { "Executing generic turn step: $it" }
+            it.execTurn()
+        }
+        val report = TurnReport(
+            turn = user.turn,
+            resourceChanges = resSteps
+                .sortedBy { it.order }
+                .map { execResourceStep(it) }
+                .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
+            happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
+            newFeatures = featureTurner.buildFeatureMultiPages(),
+            actions = actionsCollector.getAllAndClear()
+        )
+        log.info { "🔁 Changes: $report" }
         log.debug { "🔁 User.all: $user" }
-        log.info { "==============================================" }
+        log.info { "🔁🔁🔁 =================== ⬆️ TURN ⬆️ =================== 🔁🔁🔁" }
+        return report
     }
 
-    private fun execStepToRCs(step: TurnStep): ResourceChanges =
-        step.calcTurnChanges().toLimitedAmounts().also { changes ->
+    private fun execResourceStep(step: ResourceStep): ResourceChanges =
+        step.calcChanges().toLimitedAmounts().also { changes ->
             log.debug { "Executing: ${changes.toShortString()}" }
             user.execTx(changes).errorOnFail() // assume TXs were already validated
         }

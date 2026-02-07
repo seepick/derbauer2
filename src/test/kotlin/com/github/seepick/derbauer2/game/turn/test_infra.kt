@@ -8,19 +8,19 @@ import java.util.concurrent.atomic.AtomicInteger
 
 private val turnStepCounter = AtomicInteger(0)
 
-fun TurnStep.Companion.build(
+fun ResourceStep.Companion.build(
     resource: Resource,
     change: Zz,
     order: Int = turnStepCounter.getAndIncrement(),
-) = object : TurnStep {
+) = object : ResourceStep {
 
     override val order = order
 
-    override fun calcTurnChanges() = buildResourceChanges {
+    override fun calcChanges() = buildResourceChanges {
         add(resource, change)
     }
 }
 
-fun TurnStep.calcShouldContain(resource: Resource, expected: Zz) {
-    calcTurnChanges().shouldContainChange(resource, expected)
+fun ResourceStep.calcShouldContain(resource: Resource, expected: Zz) {
+    calcChanges().shouldContainChange(resource, expected)
 }

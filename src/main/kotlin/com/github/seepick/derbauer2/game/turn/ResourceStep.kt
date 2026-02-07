@@ -7,30 +7,32 @@ import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KClass
 
-interface TurnStep {
+interface ResourceStep {
     val order: Int
-    fun calcTurnChanges(): ResourceChanges
-    // more to come ...
+    fun calcChanges(): ResourceChanges
+
     companion object // for extension functions
+
+    object Order {
+        private val incrementor = AtomicInteger(0)
+        // declared order is of utmost significance!
+        val stat = incrementor.getAndIncrement()
+        val producesResourcesAndCitizen = incrementor.getAndIncrement()
+        val taxes = incrementor.getAndIncrement()
+    }
 }
 
-object TurnStepOrder {
-    private val incrementor = AtomicInteger(0)
-    val producesResourcesAndCitizen = incrementor.getAndIncrement()
-    val taxes = incrementor.getAndIncrement()
-}
-
-abstract class DefaultTurnStep(
+abstract class DefaultResourceStep(
     val user: User,
     override val order: Int,
     private val requiresEntities: List<KClass<out Entity>>,
-) : TurnStep {
+) : ResourceStep {
 
-    protected abstract fun calcTurnChangesChecked(): ResourceChanges
+    protected abstract fun calcChangesChecked(): ResourceChanges
 
-    final override fun calcTurnChanges(): ResourceChanges =
+    final override fun calcChanges(): ResourceChanges =
         if (requiresEntities.all { user.hasEntity(it) }) {
-            calcTurnChangesChecked()
+            calcChangesChecked()
         } else {
             ResourceChanges.empty
         }

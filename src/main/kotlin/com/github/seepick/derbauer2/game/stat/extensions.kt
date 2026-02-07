@@ -11,3 +11,6 @@ fun User.hasStat(statClass: KClass<out Stat>): Boolean =
 
 @Suppress("UNCHECKED_CAST")
 fun <S : Stat> User.findStat(statClass: KClass<S>): S = stats.find(statClass) as S
+
+@Suppress("UNCHECKED_CAST")
+fun <S : Stat> User.findStatOrNull(statClass: KClass<S>): S? = stats.findOrNull(statClass) as? S?

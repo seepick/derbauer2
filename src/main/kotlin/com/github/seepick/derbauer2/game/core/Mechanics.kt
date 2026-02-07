@@ -84,7 +84,7 @@ object Mechanics {
     // STATS
     // ========================================================================
     val initHappiness = DoubleMin1To1(if (DEV) 1.0 else 0.4)
-
+    val statHappinessConsumedPerCitizen = if (DEV) 0.01/*Double.MIN_VALUE*/ else 0.00001
 
     // END TURN
     // ========================================================================

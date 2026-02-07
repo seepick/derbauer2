@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.feature.featureModule
 import com.github.seepick.derbauer2.game.happening.happeningModule
 import com.github.seepick.derbauer2.game.prob.probModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
+import com.github.seepick.derbauer2.game.stat.statModule
 import com.github.seepick.derbauer2.game.tech.techModule
 import com.github.seepick.derbauer2.game.trading.tradingModule
 import com.github.seepick.derbauer2.game.transaction.transactionModule
@@ -27,6 +28,7 @@ fun gameModule(prefStatePath: KClass<*>) = module {
         turnModule(),
         happeningModule(),
         featureModule(),
+        statModule(),
         techModule(),
         viewModule(),
     )

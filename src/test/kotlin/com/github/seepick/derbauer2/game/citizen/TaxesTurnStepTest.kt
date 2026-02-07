@@ -20,16 +20,16 @@ import io.kotest.matchers.equals.shouldBeEqual
 class TaxesTurnStepTest : DescribeSpec({
     lateinit var user: User
     lateinit var probs: ProbsImpl
-    lateinit var step: TaxesTurnStep
+    lateinit var step: TaxesResourceStep
     beforeTest {
         user = User()
         probs = ProbsImpl()
-        step = TaxesTurnStep(user, probs)
+        step = TaxesResourceStep(user, probs)
         step.initProb()
         probs.updateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
     }
 
-    fun calcChanges() = step.calcTurnChanges()
+    fun calcChanges() = step.calcChanges()
 
     context("Given 💰 and 🙎🏻‍♂️") {
         lateinit var gold: Gold

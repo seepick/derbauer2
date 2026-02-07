@@ -8,20 +8,20 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.ProducesResourceTurnStep
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 
-class ProduceCitzenCompositeTurnStep(
+class ProduceCitzenCompositeResourceStep(
     user: User,
     probs: Probs,
-) : TurnStep, ProbInitializer {
+) : ResourceStep, ProbInitializer {
 
     private val citizenStep = CitizenTurnStep(user, probs)
     private val produceResourceStep = ProducesResourceTurnStep(user)
-    override val order = TurnStepOrder.producesResourcesAndCitizen
+    override val order = ResourceStep.Order.producesResourcesAndCitizen
 
     override fun initProb() {
         citizenStep.initProb()
     }
 
-    override fun calcTurnChanges(): ResourceChanges {
+    override fun calcChanges(): ResourceChanges {
         val productionChanges = produceResourceStep.calcResourceChanges()
         val foodChange = productionChanges.changeFor(Food::class)
         val citizenChanges = citizenStep.calcTurnChanges(foodChange?.changeAmount)

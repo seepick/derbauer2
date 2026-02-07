@@ -1,5 +1,24 @@
 package com.github.seepick.derbauer2.game.common
 
+@Suppress("UNCHECKED_CAST")
+inline fun <reified SD : StrictDouble, T> rangeOf(
+    limits: List<Pair<SD, T>>,
+): Range<SD, T> {
+    require(limits.isNotEmpty())
+    require(limits.isSortedByLimitValue())
+    require(limits.hasNoDuplicateLimitValues())
+    return when (limits.first().first) {
+        is DoubleAny -> Range.Anything(limits as List<Pair<DoubleAny, T>>)
+        is DoubleMin1To1 -> Range.Min1To1(limits as List<Pair<DoubleMin1To1, T>>)
+        is DoublePos -> Range.Positive(limits as List<Pair<DoublePos, T>>)
+        is Double0To1 -> Range.ZeroToOne(limits as List<Pair<Double0To1, T>>)
+    } as Range<SD, T>
+}
+
+inline fun <reified SD : StrictDouble, T> rangeOf(
+    vararg limits: Pair<SD, T>,
+): Range<SD, T> = rangeOf(limits.toList())
+
 fun <T> rangeOfMin1To1(
     limits: List<Pair<Double, T>>,
 ): Range<DoubleMin1To1, T> = rangeOf<DoubleMin1To1, T>(limits.map {
@@ -10,25 +29,14 @@ fun <T> rangeOfMin1To1(
     vararg limits: Pair<Double, T>,
 ): Range<DoubleMin1To1, T> = rangeOfMin1To1(limits.toList())
 
-inline fun <reified SD : StrictDouble, T> rangeOf(
-    vararg limits: Pair<SD, T>,
-): Range<SD, T> = rangeOf(limits.toList())
+sealed class Range<SD : StrictDouble, T>(private val limits: List<Pair<SD, T>>) {
 
-@Suppress("UNCHECKED_CAST")
-inline fun <reified SD : StrictDouble, T> rangeOf(
-    limits: List<Pair<SD, T>>,
-): Range<SD, T> {
-    require(limits.isNotEmpty())
-    require(limits.isSortedByLimitValue())
-    require(limits.hasNoDuplicateLimitValues())
+    fun map(input: SD): T = limits.lastOrNull { it.first.number <= input.number }?.second ?: limits.first().second
 
-    // TODO implement double strict ranging
-    return when (limits.first().first) {
-        is DoubleAny -> TODO()
-        is DoubleMin1To1 -> Range.Min1To1Range(limits as List<Pair<DoubleMin1To1, T>>)
-        is DoublePos -> TODO()
-        is Double0To1 -> TODO()
-    } as Range<SD, T>
+    class Anything<T>(limits: List<Pair<DoubleAny, T>>) : Range<DoubleAny, T>(limits)
+    class Min1To1<T>(limits: List<Pair<DoubleMin1To1, T>>) : Range<DoubleMin1To1, T>(limits)
+    class Positive<T>(limits: List<Pair<DoublePos, T>>) : Range<DoublePos, T>(limits)
+    class ZeroToOne<T>(limits: List<Pair<Double0To1, T>>) : Range<Double0To1, T>(limits)
 }
 
 fun <SD : StrictDouble, T> List<Pair<SD, T>>.isSortedByLimitValue(): Boolean =
@@ -36,15 +44,3 @@ fun <SD : StrictDouble, T> List<Pair<SD, T>>.isSortedByLimitValue(): Boolean =
 
 fun <SD : StrictDouble, T> List<Pair<SD, T>>.hasNoDuplicateLimitValues(): Boolean =
     map { it.first.number }.toSet().size == size
-
-sealed class Range<SD : StrictDouble, T> {
-    abstract fun map(check: SD): T
-
-    class Min1To1Range<T>(private val limits: List<Pair<DoubleMin1To1, T>>) : Range<DoubleMin1To1, T>() {
-        override fun map(check: DoubleMin1To1): T =
-            limits.lastValueFor(check.number)
-
-        private fun List<Pair<DoubleMin1To1, T>>.lastValueFor(check: Double): T =
-            lastOrNull { it.first.number <= check }?.second ?: first().second
-    }
-}

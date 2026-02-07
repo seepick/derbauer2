@@ -2,12 +2,18 @@
 
 ## 1.2.0
 
-* BZ: stat
+* BZ: stat happiness
     * every turn, stat updater decreases happiness by citizen * -0.01
-    * special building increases it again, e.g.: theater
-    * season dependent: spring +1, spring +2, autumn 0, winter -1
-    * affects: birth rate+
-    * if capitalism researched, constant -0.x happiness per turn
+    * theater building increases it again
+        * season dependent: spring +1, spring +2, autumn 0, winter -1
+    * happening nature changes it
+        * affects: birth rate+
+        * if capitalism researched, constant -0.x happiness per turn
+
+    * increase if theater building exists
+    * decrease more when unfed/starving
+    * depend on happening.nature
+
 * IT: delete Feature discriminator shizzle
 
 ## 1.3.0
