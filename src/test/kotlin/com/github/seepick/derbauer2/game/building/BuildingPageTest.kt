@@ -29,9 +29,7 @@ class BuildingPageTest : PageTest, StringSpec({
         }
     }
     "Given nothing Then not a single thing to build" {
-        renderGamePage({ ctx ->
-            ctx.buildBuildingsPage()
-        }) {
+        renderGamePage({ it.buildBuildingsPage() }) {
             contentString shouldContainIgnoringCase "Not a single thing to build"
             promptLeft shouldContain "[ENTER]"
             promptRight shouldContain "ENTER: Back"

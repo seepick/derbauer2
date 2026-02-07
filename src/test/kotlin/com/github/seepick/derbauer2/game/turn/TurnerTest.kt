@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.initCore
 import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -18,13 +19,13 @@ import com.github.seepick.derbauer2.game.resource.givenFakeStorage
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldBeEmpty
 
 class TurnerTest : DescribeSpec({
     lateinit var user: User
     lateinit var probabilities: ProbsImpl
     beforeTest {
         user = User()
+        user.initCore()
         probabilities = ProbsImpl()
     }
 
@@ -40,11 +41,10 @@ class TurnerTest : DescribeSpec({
     }
 
     describe("Special Cases") {
-        it("Given nothing Then empty changes And user's reports stay untouched") {
+        it("Given nothing Then empty changes") {
             val report = Turner.build().executeAndGenerateReport()
 
             report.resourceChanges.shouldBeEmpty()
-            user.reports.all.shouldBeEmpty()
         }
     }
     describe("Resource") {

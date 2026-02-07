@@ -3,11 +3,9 @@ package com.github.seepick.derbauer2.game.testInfra.dsl
 import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Asset
-import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
-import com.github.seepick.derbauer2.game.initAssets
-import com.github.seepick.derbauer2.game.prob.ProbRegistrator
+import com.github.seepick.derbauer2.game.initGame
 import com.github.seepick.derbauer2.game.prob.disableAllProbs
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
@@ -15,7 +13,6 @@ import com.github.seepick.derbauer2.textengine.audio.Beeper
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.mockk.every
 import org.koin.test.KoinTest
-import org.koin.test.get
 import org.koin.test.mock.declareMock
 import kotlin.reflect.full.primaryConstructor
 
@@ -33,10 +30,7 @@ fun Given(
             log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
         }
     }
-    koin.get<ProbRegistrator>().registerAll()
-    if (initAssets) {
-        koin.get<User>().initAssets()
-    }
+    koin.getKoin().initGame(initAssets = initAssets)
 
     val givenDsl = GivenDsl(koin)
     if (disableAllProbs) {

@@ -35,7 +35,7 @@ class Turner(
         newFeatures = featureTurner.buildFeatureMultiPages(),
     ).also {
         log.info { "🔁 Changes: $it" }
-        log.debug { "🔁 User.all: ${user.allToString()}" }
+        log.debug { "🔁 User.all: $user" }
         log.info { "==============================================" }
     }
 

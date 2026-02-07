@@ -2,6 +2,29 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.core.User
+
+val User.turn: Turn get() = all.find<TurnStat>().turn
+
+interface Stat : Entity {
+
+}
+
+class TurnStat : Stat {
+
+    var turn = Turn()
+        private set
+    override val labelSingular = "Turn"
+
+    fun next() {
+        turn = turn.increment()
+    }
+
+    override fun deepCopy() = TurnStat().also {
+        it.turn = this.turn
+    }
+}
 
 @Suppress("MagicNumber")
 data class Turn(val number: Int = 1) {
@@ -17,10 +40,11 @@ data class Turn(val number: Int = 1) {
         in (WEEKS_PER_SEASON * 2 + 1)..(WEEKS_PER_SEASON * 3) -> Season.Autumn
         else -> Season.Winter
     }
-    val prettyString = "${season.emoji}  W$week Y$year"
+
+    fun toPrettyString() = "${season.emoji}  W$week Y$year"
 
     fun increment() = Turn(number + 1)
-    override fun toString() = "${this::class.simpleName}($number / $prettyString)"
+    override fun toString() = "${this::class.simpleName}($number / ${toPrettyString()})"
 
     companion object {
         private const val WEEKS_PER_YEAR = 52

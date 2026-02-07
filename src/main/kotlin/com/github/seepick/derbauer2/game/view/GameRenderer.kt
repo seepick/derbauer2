@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.resource.toInfoBarString
+import com.github.seepick.derbauer2.game.turn.turn
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.emptyLine
@@ -28,7 +29,7 @@ class GameRenderer(
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-        textmap.aligned(renderInfoBar(), user.turn.prettyString)
+        textmap.aligned(renderInfoBar(), user.turn.toPrettyString())
         textmap.hr()
         textmap.emptyLine()
         content(textmap)

@@ -2,14 +2,15 @@
 
 ## 1.2.0
 
-* IT: introduce ActionBus
-* IT: extract Reports from User => centralize History
+* IT: introduce ActionBus + centralize History
 
 ## Backlog
 
+* IT: refactor HasLabels, HasEmoji... see: Entity
 * introduce [stat](documentation/business-spec/stat.md) concept
     * happiness: begin with only season dependent: spring +1, spring +2, autumn 0, winter -1; affects birth rate
     * also decrease a bit if capitalism researched
+    * change city/user titles as (enum) stat
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * BZ: more food production in summer+autumn (dynamic resource modifier)
 * BZ: new feature: trade 5 food at a time; triggered by having traded enough food (tracking interactions)

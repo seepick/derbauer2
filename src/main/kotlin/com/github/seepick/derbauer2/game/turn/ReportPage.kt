@@ -19,12 +19,13 @@ class ReportPage(
     private val user: User,
     private val current: CurrentPage,
     private val happeningMultiView: HappeningMultiView,
-    private val featureMultiView: FeatureMultiView
+    private val featureMultiView: FeatureMultiView,
+    private val reports: Reports,
 ) : SimpleGamePage(
     gameRenderer = gameRenderer,
     button = ContinueButton {
-        happeningMultiView.process(user.reports.last().happenings) {
-            featureMultiView.process(user.reports.last().newFeatures) {
+        happeningMultiView.process(reports.last().happenings) {
+            featureMultiView.process(reports.last().newFeatures) {
                 current.pageClass = HomePage::class
             }
         }
@@ -50,7 +51,7 @@ class ReportPage(
                     user.findResource(change.resourceClass).owned.toString()
                 },
             ),
-            rowItems = user.reports.last().resourceChanges.changes,
+            rowItems = reports.last().resourceChanges.changes,
         )
     },
 )

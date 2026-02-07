@@ -17,14 +17,25 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
+import com.github.seepick.derbauer2.game.turn.TurnStat
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.core.Koin
 
 private val log = logger {}
 
-fun Koin.initGame() {
-    get<User>().initAssets()
+fun Koin.initGame(initAssets: Boolean = true) {
+    get<User>().apply {
+        initCore()
+        if (initAssets) {
+            initAssets()
+        }
+    }
     get<ProbRegistrator>().registerAll()
+}
+
+fun User.initCore() {
+    log.info { "Initializing core." }
+    add(TurnStat())
 }
 
 fun User.initAssets() {
@@ -33,7 +44,7 @@ fun User.initAssets() {
     assets.forEach { add(it.first) }
     execTx(assets.map { (asset, amount) ->
         when (asset) {
-            is Resource, //-> TxResource(asset::class, amount)
+            is Resource,
             is Building -> TxOwnable(asset::class, amount)
 
             else -> error("Unknown asset type: ${asset::class}")

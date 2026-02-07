@@ -8,10 +8,6 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.TxValidator
-import com.github.seepick.derbauer2.game.turn.Reports
-import com.github.seepick.derbauer2.game.turn.ReportsWritable
-import com.github.seepick.derbauer2.game.turn.Turn
-import com.github.seepick.derbauer2.game.turn.TurnReport
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -19,14 +15,8 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     private val log = logger {}
 
-    var turn = Turn()
-        private set
-
     var userTitle = UserTitle.initial
     var cityTitle = CityTitle.initial
-
-    private var _reports = ReportsWritable()
-    val reports: Reports = _reports
 
     private val _all = mutableListOf<Entity>()
     val all = ListX(_all)
@@ -52,17 +42,10 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
         _all += entity
     }
 
-    fun nextTurn(report: TurnReport) {
-        turn = turn.increment()
-        _reports.add(report)
-    }
-
     override fun deepCopy(): User = User(txValidators).also { copy ->
         log.trace { "Creating deep copy." }
-        copy.turn = turn
         copy.userTitle = userTitle
         copy.cityTitle = cityTitle
-        copy._reports = _reports
         all.forEach { entity ->
             // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
             copy.add(entity.deepCopy(), disableCheck = true)
@@ -77,8 +60,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     override fun hashCode(): Int = _all.hashCode()
 
-    override fun toString() = "User($_all)"
-    fun allToString() = "User.all(${all.delegate.map { it.toString() }})" // could be more speicfic...
+    override fun toString() = "User(all=${all.delegate.map { it.toString() }})"
 }
 
 fun User.hasEntity(entityClass: KClass<out Entity>) = all.findOrNull(entityClass) != null

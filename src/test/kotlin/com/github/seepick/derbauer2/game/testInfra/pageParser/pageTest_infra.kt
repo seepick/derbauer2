@@ -2,6 +2,8 @@ package com.github.seepick.derbauer2.game.testInfra.pageParser
 
 import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.initCore
+import com.github.seepick.derbauer2.game.turn.ReportsImpl
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.InteractionResultHandler
@@ -13,6 +15,7 @@ import io.mockk.mockk
 
 fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {
     val ctx = SetupGamePageContext()
+    ctx.user.initCore()
     val page = buildPage(ctx)
     page.render(ctx.textmap)
     val parser = GamePageParser(ctx.textmap.toFullString())
@@ -22,10 +25,8 @@ fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: Game
 class SetupGamePageContext {
     val user = User()
     val currentPage = CurrentPage(BuildingPage::class)
-    val turner = mockk<Turner> {
-        // collectAndExecuteNextTurnReport()
-        // isGameOver
-    }
+    val turner = mockk<Turner> {}
+    val reports = ReportsImpl()
     val gameRenderer = GameRenderer(user)
     val resultHandler = mockk<InteractionResultHandler>()
     val textmap = Textmap(MainWin.matrixSize)
