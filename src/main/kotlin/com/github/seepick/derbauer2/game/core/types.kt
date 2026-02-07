@@ -1,6 +1,9 @@
 package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.common.zz
 import kotlin.reflect.KClass
 
 interface Entity : DeepCopyable<Entity>, HasLabels, HasEmoji
@@ -27,4 +30,11 @@ interface Ownable : Entity {
 
 interface OwnableReference {
     val ownableClass: KClass<out Ownable>
+}
+
+interface HasLabels {
+    val labelSingular: String
+    val labelPlural: String get() = labelSingular + "s"
+    fun labelFor(unsignedAmount: Z) = if (unsignedAmount == 1.z) labelSingular else labelPlural
+    fun labelFor(signedAmount: Zz) = if (signedAmount == 1.zz) labelSingular else labelPlural
 }

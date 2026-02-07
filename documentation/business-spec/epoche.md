@@ -32,7 +32,7 @@
     * first military upgrade
     * push user to attack enemies in order to get land
     * lots of advanced buildings
-    * happyness continuously low => need social buildings (in next age available only)
+    * happiness continuously low => need social buildings (in next age available only)
 1. Military age II
     * many new military tech/buildings
     * new social buildings

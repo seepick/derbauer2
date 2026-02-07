@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.turn
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Action
-import com.github.seepick.derbauer2.game.core.ActionBusListener
+import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureInfo
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
@@ -19,15 +19,6 @@ import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-class ActionsCollector : ActionBusListener {
-    private val actions = mutableListOf<Action>()
-    override fun onAction(action: Action) {
-        actions += action
-    }
-
-    fun getAll(): List<Action> = actions.toList()
-    fun getAllAndClear(): List<Action> = getAll().also { actions.clear() }
-}
 
 class Turner(
     private val user: User,

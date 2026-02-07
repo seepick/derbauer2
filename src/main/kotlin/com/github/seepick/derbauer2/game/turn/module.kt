@@ -12,5 +12,4 @@ fun turnModule() = module {
     singleOf(::ProduceCitzenCompositeTurnStep)
     singleOf(::ProduceCitzenCompositeTurnStep)
     singleOf(::ReportsImpl) bind Reports::class
-    singleOf(::ActionsCollector)
 }

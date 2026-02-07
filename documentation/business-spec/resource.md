@@ -18,6 +18,6 @@
 * resource types can be used in different "areas":
     - building
     - military (build units/weapons)
-    - luxury (people happyness)
-    - some resources used in several areas, e.g. iron for building big buildings and forging weapons
+    - luxury (people happiness)
+        - some resources used in several areas, e.g. iron for building big buildings and forging weapons
 * IDEA: material resources (wood, stone, iron, ...), regard when build buildings

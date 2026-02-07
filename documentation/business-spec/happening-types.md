@@ -34,7 +34,7 @@
         * e.g. tells a secret: get free upgrade
 * migration
     * group of people arrives/flees: +/-people
-    * immigrants: if happyness (and karma) is high, free people move in
+    * immigrants: if happiness (and karma) is high, free people move in
 * marriage / birth
     * if dies (because of age) option to continue by day 1 but with same state
 

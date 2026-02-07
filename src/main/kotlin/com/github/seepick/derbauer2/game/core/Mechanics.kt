@@ -2,9 +2,10 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.`%01`
-import com.github.seepick.derbauer2.game.common.TypedPercent
+import com.github.seepick.derbauer2.game.common.Double0To1
+import com.github.seepick.derbauer2.game.common.DoubleMin1To1
 import com.github.seepick.derbauer2.game.common.k
+import com.github.seepick.derbauer2.game.common.strict0To1
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.turn.Season
 
@@ -62,7 +63,8 @@ object Mechanics {
 
     val featureTradingThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
     val featureTradeLandThresholdLandAvailableLesser = 3.z
-    val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 4.z
+    val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 3.z
+    val featureHappinessCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 6.z
 
     // TECHNOLOGY
     // ========================================================================
@@ -78,6 +80,10 @@ object Mechanics {
     val techCapitalismCostsKnowledge = if (DEV) 8.z else 80.z
     val techCapitalismCostsGold = if (DEV) 20.z else 400.z
     val techCapitalismTaxMultiplier = 120.`%`
+
+    // STATS
+    // ========================================================================
+    val initHappiness = DoubleMin1To1(if (DEV) 1.0 else 0.4)
 
 
     // END TURN
@@ -96,10 +102,10 @@ object Mechanics {
     val happeningIsNegativeChance = if (DEV) 90.`%` else 5.`%`
 }
 
-val Season.ratsWillEatFoodProb: TypedPercent.ZeroToOne
+val Season.ratsWillEatFoodProb: Double0To1
     get() = when (this) {
-        Season.Winter -> 100.`%01`
-        Season.Autumn -> 75.`%01`
-        Season.Spring -> 50.`%01`
-        Season.Summer -> 25.`%01`
+        Season.Winter -> 1.0.strict0To1
+        Season.Autumn -> 0.75.strict0To1
+        Season.Spring -> 0.5.strict0To1
+        Season.Summer -> 0.25.strict0To1
     }

@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.stat.HappinessFeatureDescriptor
 import com.github.seepick.derbauer2.game.tech.TechnologyFeatureDescriptor
 import com.github.seepick.derbauer2.game.trading.TradeLandFeatureDescriptor
 import com.github.seepick.derbauer2.game.trading.TradingFeature
@@ -10,6 +11,7 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 enum class FeatureDescriptorType(val descriptor: FeatureDescriptor) {
     TradeLand(TradeLandFeatureDescriptor),
     Technology(TechnologyFeatureDescriptor),
+    Happiness(HappinessFeatureDescriptor),
     Trading(TradingFeature.Descriptor),
 }
 

@@ -19,7 +19,7 @@
             * e.g. police station for lower crime (stat: safety)
             * e.g. hospital to lower diseases/breakout (stat: health)
         * tech (feature): e.g. better granary for rats
-            * stats: karma/luck, wealth, happyness
+            * stats: karma/luck, wealth, happiness
             * previous behavior (use Business Intelligence / History data)
 * Effects:
     * +/- resource/building/army

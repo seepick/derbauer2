@@ -42,8 +42,8 @@ Low:
     * effects: happiness, production, military, ...
 * Policy: change laws
     - taxes (gambling, banking, land, military)
-    - +gold prod; -happyness/people prod
-    - feature enabled when ... upgrade "politics" + building "tax office"
+    - +gold prod; -happiness/people prod
+        - feature enabled when ... upgrade "politics" + building "tax office"
 * Diplomacy
     * mit verschiedene voelker, relationship metrik
     * actions: buy/sell troops, handeln/schenken/verlangen, buendnis, ...

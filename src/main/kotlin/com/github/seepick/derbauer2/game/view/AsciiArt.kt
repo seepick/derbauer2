@@ -52,7 +52,24 @@ value class AsciiArt(val value: String) {
             YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwY
             """.trimIndent()
         )
-
+        val smiley = AsciiArt(
+            """
+                  .-""${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}-.
+                 /              `\
+                / .--.---.-.-.--.-;.
+               ; { ' . '  .  '  .  '}
+               | {__'_,__.__'__.__'_}
+               |  /    _      _    \
+               | ;    / \    / \    ;
+               | |    |0|    |0|    |
+               \ |    \_/    \_/    |
+             .-'\;  \            /  ;
+            |.  ' \  '.        .'  /
+            \  ` / '.  '-.__.-'  .'
+             '--'    '-._    _.-'
+                         ''''
+            """.trimIndent()
+        )
         val gameOver = AsciiArt(
             """
                   ____

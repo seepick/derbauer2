@@ -2,14 +2,7 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
-import com.github.seepick.derbauer2.game.core.Entity
-import com.github.seepick.derbauer2.game.core.User
-
-val User.turn: Turn get() = all.find<TurnStat>().turn
-
-interface Stat : Entity {
-
-}
+import com.github.seepick.derbauer2.game.stat.Stat
 
 class TurnStat : Stat {
 

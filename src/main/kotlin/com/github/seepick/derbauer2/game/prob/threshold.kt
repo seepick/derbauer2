@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.TypedPercent
+import com.github.seepick.derbauer2.game.common.StrictDouble
 import kotlin.random.Random
 
 @JvmInline
@@ -17,7 +17,7 @@ data class ProbThresholderHandle(
 
 data class FixedProbThresholder(
     /** The higher, the more likely. */
-    private val threshold: () -> TypedPercent.ZeroToOne,
+    private val threshold: () -> StrictDouble.ZeroToOne,
 ) : ProbThresholder {
 
     override fun nextBoolean() =

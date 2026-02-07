@@ -2,20 +2,22 @@
 
 ## 1.2.0
 
-* IT: introduce ActionBus
-* BZ: stat; happyness enabled when citizen >= 50; start with neutral 0.0
+* BZ: stat
     * every turn, stat updater decreases happiness by citizen * -0.01
     * special building increases it again, e.g.: theater
     * season dependent: spring +1, spring +2, autumn 0, winter -1
     * affects: birth rate+
     * if capitalism researched, constant -0.x happiness per turn
+* IT: delete Feature discriminator shizzle
+
+## 1.3.0
+
+* IT: refactor happenings/features (and tech?!) into unified "News" concept
+* IT: refactor HasLabels, HasEmoji... shizzle; see: Entity
 
 ## Backlog
 
-* IT: refactor happenings/features (and tech?!) into unified "News" concept
-* IT: refactor HasLabels, HasEmoji... see: Entity
-* introduce [stat](documentation/business-spec/stat.md) concept
-    * change city/user titles as (enum) stat
+* change city/user titles as (enum) stat?
 * BZ: more food production in summer+autumn (dynamic resource modifier)
 * BZ: new feature: trade 5 food at a time; triggered by having traded enough food (tracking interactions)
 * IT: tech enables Feature; refactor feature (remove enum construct)

@@ -158,37 +158,35 @@ value class Percent(val number: Double) {
 
 operator fun Double.compareTo(other: Percent) = this.compareTo(other.number)
 
-@Suppress("ObjectPropertyName", "DANGEROUS_CHARACTERS", "MagicNumber")
-val Int.`%01`: TypedPercent.ZeroToOne get() = TypedPercent.ZeroToOne(this.toDouble() / 100.0)
+val Double.strictAny: DoubleAny get() = DoubleAny(this)
+val Double.strict0To1: Double0To1 get() = Double0To1(this)
+val Double.strictMin1To1: DoubleMin1To1 get() = DoubleMin1To1(this)
+val Double.strictPos: DoublePos get() = DoublePos(this)
 
-sealed interface TypedPercent {
-    val raw: Percent
+typealias DoubleAny = StrictDouble.Anything
+typealias Double0To1 = StrictDouble.ZeroToOne
+typealias DoublePos = StrictDouble.Positive
+typealias DoubleMin1To1 = StrictDouble.MinusOneToOne
 
-    data class Anything(val number: Double) : TypedPercent {
-        override val raw = Percent(number)
-    }
+sealed interface StrictDouble {
+    val number: Double
 
-    data class ZeroToOne(val number: Double) : TypedPercent {
+    data class Anything(override val number: Double) : StrictDouble
+    data class ZeroToOne(override val number: Double) : StrictDouble {
         init {
             require(number in 0.0..1.0) { "Percentage must be between 0.0 and 1.0 but was: $number" }
         }
-
-        override val raw = Percent(number)
     }
 
-    data class Positive(val number: Double) : TypedPercent {
+    data class Positive(override val number: Double) : StrictDouble {
         init {
             require(number >= 0.0) { "Percentage must be between >= 0.0 but was: $number" }
         }
-
-        override val raw = Percent(number)
     }
 
-    data class MinusOneToOne(val number: Double) : TypedPercent {
+    data class MinusOneToOne(override val number: Double) : StrictDouble {
         init {
             require(number in -1.0..1.0) { "Percentage must be between -1.0 and +1.0 but was: $number" }
         }
-
-        override val raw = Percent(number)
     }
 }

@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.stat.HappinessFeature
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trading.TradeLandFeature
 import com.github.seepick.derbauer2.game.trading.TradingFeature
@@ -49,5 +50,6 @@ abstract class Feature(
         class Trading(feature: TradingFeature) : Discriminator<TradingFeature>(feature)
         class TradeLand(feature: TradeLandFeature) : Discriminator<TradeLandFeature>(feature)
         class Technology(feature: TechnologyFeature) : Discriminator<TechnologyFeature>(feature)
+        class Happiness(feature: HappinessFeature) : Discriminator<HappinessFeature>(feature)
     }
 }

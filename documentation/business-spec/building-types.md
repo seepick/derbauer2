@@ -10,21 +10,21 @@ Areas:
 
 ## Civic
 
-* increase happyness/karma
+* increase happiness/karma
 * the more people, the more social buildings required
 
 Examples:
 
 * Tent -> House -> Villa -> Mansion (nobility quarters)
     * +citizen cap
-    * higher versions provide more "stuff" (states like happyness/karma)
-    * higher levels enabled based on citizens count
-    * higher levels provide more protection from negative happenings
+    * higher versions provide more "stuff" (states like happiness/karma)
+        * higher levels enabled based on citizens count
+        * higher levels provide more protection from negative happenings
 * Church
-    * +happyness/karma
-    * +luck (as praising the lord helps)
+    * +happiness/karma
+        * +luck (as praising the lord helps)
 * Pub
-    * +happyness/karma
+    * +happiness/karma
 * Workshop
 * Town Hall/Center
 

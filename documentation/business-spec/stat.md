@@ -2,7 +2,7 @@
 
 * about:
     * the kingdom/population can be in certain "states", qualities/dimensions applicable globally
-        * e.g. happyness, wealth, health, karma, ...
+        * e.g. happiness, wealth, health, karma, ...
 * indicating how it's doing, good/bad
 * affected by:
     * dynamic computation (which makes it different from features)
@@ -28,7 +28,7 @@
     * IDEA: maybe useful for highscore?
     * as it indicates progress, epoches can rely on it (?)
 
-## Happyness
+## Happiness
 
 * about: people are in good/bad mood; "public opinion"
 * Affected by:
@@ -63,7 +63,7 @@
 * kind of "overall luck" based on how morally good/bad your decisions were
     * "damage" done to others will decrease; being selfless and avoid violence will increase it
     * or distinct Luck stat?
-* strongly correlates with other stats, esp. happyness
+* strongly correlates with other stats, esp. happiness
 * Affected by:
     * happening choices, e.g. send people away when ask for help (throne room)
     * give free stuff to people; organize a feast

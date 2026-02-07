@@ -8,7 +8,7 @@
     * feature, building, resources, ...
 * each turn can only be done X times -> motivate player to do it each turn :)
 * refreshes end of turn
-* amount depends on "certain things", e.g. buildings, happyness (to visit the emperor)
+* amount depends on "certain things", e.g. buildings, happiness (to visit the emperor)
 * some action got maximum count (or max 1 anyway)
 * special one-time actions
     * long lasting effects (see happening as well)
@@ -35,10 +35,10 @@
     * get resources, lower karma, might fail
 * organize a feast
     * "temporary feature" by giving people free stuff
-        * happyness, reproduction rate and karma up
-        * costs money, food
-        * can decide how big the feast should be (enums)
-        * lasts for several rounds
+        * happiness, reproduction rate and karma up
+            * costs money, food
+            * can decide how big the feast should be (enums)
+            * lasts for several rounds
 * scout exploration
     * send troops
     * might get something back delayed
@@ -51,4 +51,4 @@
     * deposit money (earn interest)
     * enhance trade: buy/sell price, enable to trade land/buildings
 * change tax rate
-    * reduce happyness, increase income
+    * reduce happiness, increase income

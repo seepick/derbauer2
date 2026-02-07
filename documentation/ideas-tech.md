@@ -33,7 +33,6 @@ Low:
 
 ## Test
 
-* rename DslTest to ITest
 * add ITest.autoPrintPage dev feature
 * for transaction logic
 * ad GamePageParser: private val widthHack ==> scan from right to left, until find "   "

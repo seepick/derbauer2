@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.TypedPercent
+import com.github.seepick.derbauer2.game.common.StrictDouble
 import com.github.seepick.derbauer2.game.common.Zz
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -28,7 +28,7 @@ interface Probs {
     fun getDiffused(key: ProbDiffuserKey, baseValue: Zz): Zz
 
     /** Range of 0.0-1.0 */
-    fun setThresholder(key: ProbThresholderKey, threshold: () -> TypedPercent.ZeroToOne)
+    fun setThresholder(key: ProbThresholderKey, threshold: () -> StrictDouble.ZeroToOne)
     fun getThresholder(key: ProbThresholderKey): Boolean
 }
 
@@ -82,7 +82,7 @@ class ProbsImpl : Probs {
         return handle.diffuser.diffuse(baseValue)
     }
 
-    override fun setThresholder(key: ProbThresholderKey, threshold: () -> TypedPercent.ZeroToOne) {
+    override fun setThresholder(key: ProbThresholderKey, threshold: () -> StrictDouble.ZeroToOne) {
         require(!thresholderHandles.containsKey(key)) { "Thresholder source $key is already registered!" }
         thresholderHandles[key] = ProbThresholderHandle(key, FixedProbThresholder(threshold))
     }

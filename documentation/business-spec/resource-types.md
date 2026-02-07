@@ -7,23 +7,23 @@
 
 * needs storage (houses), thus have capacity
 * if over limit, then lose gradually
-* affected by state happyness: do something "nice" for people
+* affected by state happiness: do something "nice" for people
 * produce gold via taxes
     * income influenced by features/achievements
 * consume food
-* reproduce themselves via production rate (depends on happyness and food availability)
+* reproduce themselves via production rate (depends on happiness and food availability)
 * spent for armies
 * get via random events (happenings) depending on karma (and amount on wealth)
     * imigrants move in (if happy, enough housing, enough food)
-* might trade via slavery feature (less happyness)
+* might trade via slavery feature (less happiness)
 * ?? are used for buildings, kind of "upcome"??
 
 ## Gold
 
 * mainly via people (tax rate)
-    - modifiers: number of people + happyness
-    - influenced by certain buildings/technologies/features
-    - wealth "somehow" is relevant
+    - modifiers: number of people + happiness
+        - influenced by certain buildings/technologies/features
+        - wealth "somehow" is relevant
 * upcome costs/maintenance (buildings/armies)
 * it's not possible to get negative balance (only if contract exists with bank?)
     * if in minus (without bank contract): in end turn resources/buildings immediately gone until in positive again?

@@ -16,10 +16,10 @@ class GameRenderer(
     private val user: User,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
-    private val infoResources = listOf(Gold::class, Food::class, Land::class, Citizen::class)
+    private val defaultDisplayedResources = listOf(Gold::class, Food::class, Land::class, Citizen::class)
 
     private fun renderInfoBar(): String =
-        infoResources
+        defaultDisplayedResources
             .mapNotNull { user.findResourceOrNull(it) }
             .joinToString(" $RESOURCE_INFO_SEPARATOR ") { it.toInfoBarString(user) }
 
