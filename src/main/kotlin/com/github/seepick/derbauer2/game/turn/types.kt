@@ -2,20 +2,13 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
-import com.github.seepick.derbauer2.game.stat.Stat
 
-class TurnStat : Stat {
-
-    var turn = Turn()
+class CurrentTurn {
+    var current = Turn()
         private set
-    override val labelSingular = "Turn"
 
     fun next() {
-        turn = turn.increment()
-    }
-
-    override fun deepCopy() = TurnStat().also {
-        it.turn = this.turn
+        current = current.increment()
     }
 }
 

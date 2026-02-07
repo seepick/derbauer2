@@ -11,6 +11,7 @@ import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbSelectorKey
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.prob.RandomProbSelector
+import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 val ProbProviderKey.Companion.happeningTurner get() = ProbProviderKey<Happening>("happeningTurner")
@@ -21,6 +22,7 @@ class HappeningTurner(
     private val user: User,
     private val probs: Probs,
     private val repo: HappeningDescriptorRepo,
+    private val currentTurn: CurrentTurn,
 ) : ProbInitializer {
 
     private val log = logger {}
@@ -33,7 +35,7 @@ class HappeningTurner(
     override fun initProb() {
         log.debug { "Registering probabilities." }
         repo.getAllDescriptors().forEach {
-            it.initProb(probs, user)
+            it.initProb(probs, user, currentTurn)
         }
         probs.setProvider(
             ProbProviderKey.happeningTurner,

@@ -50,6 +50,10 @@ object Mechanics {
     val schoolCostsGold = 200.z
     val schoolProduceKnowledge = 1.z
 
+    // STAT BUILDINGS
+    val theaterLanduse = 3.z
+    val theaterCostsGold = 250.z
+
     // TRADE
     // ========================================================================
 
@@ -82,8 +86,9 @@ object Mechanics {
 
     // STATS
     // ========================================================================
-    val initHappiness = DoubleMin1To1(if (DEV) 1.0 else 0.4)
-    val statHappinessConsumedPerCitizen = if (DEV) 0.01/*Double.MIN_VALUE*/ else 0.00001
+    val initHappiness = DoubleMin1To1(if (DEV) 0.0 else 0.4)
+    val statHappinessConsumedPerCitizen = if (DEV) Double.MIN_VALUE else 0.00001
+    val theaterProducesHappiness = if (DEV) 0.1 else 0.01
 
     // END TURN
     // ========================================================================

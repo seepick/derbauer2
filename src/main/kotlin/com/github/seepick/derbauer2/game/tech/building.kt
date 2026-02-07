@@ -13,7 +13,6 @@ import com.github.seepick.derbauer2.game.resource.ProducesResource
 class School : Building, ProducesResource, HasLabels by Data, HasEmoji by Data {
     object Data : HasLabels, HasEmoji {
         override val labelSingular = "School"
-        override val labelPlural = "Schools"
     }
 
     override var _setOwnedInternal: Z = 0.z

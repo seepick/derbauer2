@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
 import com.github.seepick.derbauer2.game.core.GeneratedByAI
-import java.util.Locale
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -173,7 +172,7 @@ typealias DoubleMin1To1 = StrictDouble.MinusOneToOne
 
 sealed class StrictDouble(val number: Double) {
 
-    override fun toString() = "${this::class.simpleName}(${String.format(Locale.ENGLISH, "%.2f", number)})"
+    override fun toString() = "${this::class.simpleName}(${number.toFormatted()})"
     override fun equals(other: Any?) = other is StrictDouble && this::class == other::class && number == other.number
     override fun hashCode() = 31 * this::class.hashCode() + number.hashCode()
 

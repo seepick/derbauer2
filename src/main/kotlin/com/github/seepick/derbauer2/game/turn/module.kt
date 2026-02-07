@@ -14,8 +14,10 @@ fun turnModule() = module {
             happeningTurner = get(),
             featureTurner = get(),
             actionsCollector = get(),
+            turn = get(),
         )
     }
+    singleOf(::CurrentTurn)
     singleOf(::ProduceCitzenCompositeResourceStep)
     singleOf(::ProduceCitzenCompositeResourceStep)
     singleOf(::ReportsImpl) bind Reports::class

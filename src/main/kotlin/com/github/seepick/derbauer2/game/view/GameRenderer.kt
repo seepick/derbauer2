@@ -7,13 +7,14 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.resource.toInfoBarString
-import com.github.seepick.derbauer2.game.turn.turn
+import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.emptyLine
 
 class GameRenderer(
     private val user: User,
+    private val turn: CurrentTurn,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
     private val defaultDisplayedResources = listOf(Gold::class, Food::class, Land::class, Citizen::class)
@@ -29,7 +30,7 @@ class GameRenderer(
         metaOptions: List<MetaOption> = emptyList(),
         content: (Textmap) -> Unit
     ) {
-        textmap.aligned(renderInfoBar(), user.turn.toPrettyString())
+        textmap.aligned(renderInfoBar(), turn.current.toPrettyString())
         textmap.hr()
         textmap.emptyLine()
         content(textmap)

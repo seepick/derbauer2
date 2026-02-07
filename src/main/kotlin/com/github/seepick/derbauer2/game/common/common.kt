@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
+import java.util.Locale
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
@@ -31,3 +32,5 @@ fun <T, R> List<T>.requireUniqueBy(prefixMessage: String? = null, fieldExtractor
         (if (prefixMessage != null) "$prefixMessage\n" else "") + "Found duplicates for field: $duplicates"
     }
 }
+
+fun Double.toFormatted() = String.format(Locale.ENGLISH, "%.2f", this)

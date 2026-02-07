@@ -14,7 +14,6 @@ import com.github.seepick.derbauer2.game.trading.TradingPage
 import com.github.seepick.derbauer2.game.trading.`trade 💸`
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Reports
-import com.github.seepick.derbauer2.game.turn.TurnStat
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.Options
@@ -32,7 +31,6 @@ class HomePage(
     buttons = listOf(
         ContinueButton("Next Turn") {
             val report = turner.execTurnAndBuildReport()
-            user.all.find<TurnStat>().next()
             reports.add(report)
             currentPage.pageClass = if (user.isGameOver()) GameOverPage::class else ReportPage::class
         }

@@ -31,6 +31,7 @@ class Turner(
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
     private val actionsCollector: ActionsCollector,
+    private val turn: CurrentTurn,
 ) {
     private val log = logger {}
 
@@ -41,7 +42,7 @@ class Turner(
             it.execTurn()
         }
         val report = TurnReport(
-            turn = user.turn,
+            turn = turn.current,
             resourceChanges = resSteps
                 .sortedBy { it.order }
                 .map { execResourceStep(it) }

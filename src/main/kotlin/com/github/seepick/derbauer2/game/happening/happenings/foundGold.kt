@@ -14,6 +14,7 @@ import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
+import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
@@ -29,7 +30,7 @@ object FoundGoldDescriptor : HappeningDescriptor {
         return FoundGoldHappening(goldFound = 100.z, this)
     }
 
-    override fun initProb(probs: Probs, user: User) {
+    override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
         // not using probs
     }
 }
