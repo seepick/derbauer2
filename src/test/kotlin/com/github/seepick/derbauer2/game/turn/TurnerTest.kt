@@ -34,6 +34,7 @@ class TurnerTest : DescribeSpec({
         steps = steps.toList(),
         happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo).apply { initProb() },
         featureTurner = FeatureTurner(user),
+        actionsCollector = ActionsCollector(),
     )
 
     fun Turner.execShouldContainChange(resource: Resource, expectedAmount: Zz) {

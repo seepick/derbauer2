@@ -13,4 +13,5 @@ fun coreModule(prefStatePath: KClass<*>) = module {
 
     // textengine requirements
     single { PreferencesStateRepository(prefStatePath) } bind TextengineStateRepository::class
+    single { ActionBusImpl(listeners = getKoinBeansByType<ActionBusListener>()) } bind ActionBus::class
 }

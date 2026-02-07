@@ -6,4 +6,5 @@ import org.koin.dsl.module
 fun tradingModule() = module {
     singleOf(::TradingPage)
     singleOf(::TradePromptBuilder)
+    singleOf(::TradingService)
 }

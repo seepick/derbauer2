@@ -7,8 +7,8 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
+import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
@@ -20,7 +20,8 @@ class BuildingPage(
     private val user: User,
     private val currentPage: CurrentPage,
     gameRenderer: GameRenderer,
-    private val resultHandler: InteractionResultHandler,
+    private val resultHandler: TxResultHandler,
+    private val buildingService: BuildingService,
 ) : PromptGamePage(gameRenderer = gameRenderer, promptBuilder = {
     if (user.buildings.isEmpty()) {
         EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
@@ -37,7 +38,7 @@ class BuildingPage(
                         )
                     ),
                     onSelected = {
-                        resultHandler.handle(user.buildBuilding(building::class))
+                        resultHandler.handle(buildingService.build(building::class))
                     },
                 )
             })

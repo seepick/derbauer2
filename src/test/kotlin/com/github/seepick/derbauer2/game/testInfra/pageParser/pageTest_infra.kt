@@ -1,12 +1,14 @@
 package com.github.seepick.derbauer2.game.testInfra.pageParser
 
 import com.github.seepick.derbauer2.game.building.BuildingPage
+import com.github.seepick.derbauer2.game.building.BuildingService
+import com.github.seepick.derbauer2.game.core.ActionBusImpl
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.initCore
 import com.github.seepick.derbauer2.game.turn.ReportsImpl
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
-import com.github.seepick.derbauer2.game.view.InteractionResultHandler
+import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.compose.MainWin
@@ -28,6 +30,8 @@ class SetupGamePageContext {
     val turner = mockk<Turner> {}
     val reports = ReportsImpl()
     val gameRenderer = GameRenderer(user)
-    val resultHandler = mockk<InteractionResultHandler>()
+    val resultHandler = mockk<TxResultHandler>()
     val textmap = Textmap(MainWin.matrixSize)
+    val actionBus = ActionBusImpl(emptyList())
+    val buildingService = BuildingService(user, actionBus)
 }

@@ -18,3 +18,10 @@ infix fun User.shouldNotHaveEntity(entityClass: KClass<out Entity>) {
         all.findOrNull(entityClass).shouldBeNull()
     }
 }
+
+class ActionBusStub : ActionBus {
+    val dispatched = mutableListOf<Action>()
+    override fun dispatch(action: Action) {
+        dispatched += action
+    }
+}

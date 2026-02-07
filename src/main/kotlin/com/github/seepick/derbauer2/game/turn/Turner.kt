@@ -2,6 +2,8 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.game.core.Action
+import com.github.seepick.derbauer2.game.core.ActionBusListener
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureInfo
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
@@ -17,11 +19,22 @@ import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
+class ActionsCollector : ActionBusListener {
+    private val actions = mutableListOf<Action>()
+    override fun onAction(action: Action) {
+        actions += action
+    }
+
+    fun getAll(): List<Action> = actions.toList()
+    fun getAllAndClear(): List<Action> = getAll().also { actions.clear() }
+}
+
 class Turner(
     private val user: User,
     private val steps: List<TurnStep>,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
+    private val actionsCollector: ActionsCollector,
 ) {
     private val log = logger {}
 
@@ -33,6 +46,7 @@ class Turner(
             .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
         happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
         newFeatures = featureTurner.buildFeatureMultiPages(),
+        actions = actionsCollector.getAllAndClear(),
     ).also {
         log.info { "🔁 Changes: $it" }
         log.debug { "🔁 User.all: $user" }
@@ -77,4 +91,5 @@ data class TurnReport(
     val resourceChanges: ResourceChanges,
     val happenings: List<Happening>,
     val newFeatures: List<FeatureInfo>,
+    val actions: List<Action>,
 )

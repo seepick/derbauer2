@@ -41,6 +41,12 @@ sealed interface TxResult {
     val isSuccess get() = this is Success
     val isFail: Boolean get() = !isSuccess
 
+    fun ifIsSuccess(code: () -> Unit) = apply {
+        if (isSuccess) {
+            code()
+        }
+    }
+
     object Success : TxResult
 
     sealed class Fail : TxResult {

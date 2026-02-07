@@ -9,6 +9,8 @@ class BeepingWarningListener(private val beeper: Beeper) : WarningListener {
     override fun onWarning(warning: Warning) {
         beeper.beep(reason = warning.message)
     }
+
+    override fun toString() = "${this::class.simpleName}(beeper=$beeper)"
 }
 
 fun interface Beeper {

@@ -16,8 +16,8 @@ import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
-import com.github.seepick.derbauer2.game.view.InteractionResultHandler
 import com.github.seepick.derbauer2.game.view.PromptGamePage
+import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
@@ -43,7 +43,8 @@ class TradingPage(
 
 class TradePromptBuilder(
     private val user: User,
-    private val resultHandler: InteractionResultHandler,
+    private val resultHandler: TxResultHandler,
+    private val tradingService: TradingService,
 ) : PromptProvider {
     override fun buildPrompt() = SelectPrompt(
         options = Options.Singled(buildList {
@@ -73,7 +74,7 @@ class TradePromptBuilder(
         },
         onSelected = {
             resultHandler.handle(
-                user.trade(
+                tradingService.trade(
                     TradeRequest(target.first, operation, target.second),
                     *counters.map { (costResource, costAmount) ->
                         TradeRequest(costResource, operation.inverse, costAmount)

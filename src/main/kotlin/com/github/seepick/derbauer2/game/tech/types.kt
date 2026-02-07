@@ -5,6 +5,10 @@ import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
+interface Tech : Entity, TechData {
+    override val labelSingular get() = label
+}
+
 interface TechData {
     val label: String
     val description: String
@@ -15,10 +19,6 @@ interface TechData {
 interface TechRef : TechData {
     val techClass: KClass<out Tech>
     fun buildTech(): Tech
-}
-
-interface Tech : Entity, TechData {
-    override val labelSingular get() = label
 }
 
 abstract class AbstractTechRef(

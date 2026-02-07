@@ -1,10 +1,13 @@
 package com.github.seepick.derbauer2.game.testInfra.dsl
 
 import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.CollectingWarningListener
 import com.github.seepick.derbauer2.game.core.WarningType
+import com.github.seepick.derbauer2.game.turn.ActionsCollector
 import io.kotest.assertions.withClue
+import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.equals.shouldBeEqual
 import org.koin.test.KoinTest
@@ -20,6 +23,14 @@ class ThenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         }) {
             asset.owned shouldBeEqual expectedAmount
         }
+    }
+
+    fun shouldActionDispatched(action: Action) {
+        koin.get<ActionsCollector>().getAll().shouldContain(action)
+    }
+
+    fun shouldRaisedNoWarning() {
+        koin.get<CollectingWarningListener>().warnings.shouldBeEmpty()
     }
 
     fun shouldHaveRaisedWarningOfType(type: WarningType) {

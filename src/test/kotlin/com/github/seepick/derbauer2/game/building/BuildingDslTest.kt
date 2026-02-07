@@ -16,7 +16,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
     init {
         installDslExtension()
         describe("When build simple building") {
-            it("Given sufficient gold Then owned houses increases") {
+            it("Given sufficient gold Then owned houses increases And action dispatched") {
                 Given {
                     setOwned<House>(0.z)
                     setOwned<Gold>(Mechanics.houseCostsGold)
@@ -27,6 +27,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                     }
                 } Then {
                     shouldOwn<House>(1.z)
+                    shouldActionDispatched(BuildingBuiltAction(House::class))
                 }
             }
             it("Given insufficient gold Then building fails") {

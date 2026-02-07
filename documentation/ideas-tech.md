@@ -25,6 +25,7 @@ Low:
 * Auto-update feature
 * could provide a UserReadOnly sub-interface
 * use AOP to log methods with annotation
+* text-to-speech :)
 
 * `/documentation/tech-spec/project-architecture.md` - High level architecture overview.
 * introduce buildSrc (try again ;) version toml buildSrc shizzle...

@@ -1,6 +1,6 @@
 # Misc Business Ideas
 
-* text-to-speech :)
+* new functionality "special actions", like organzing festival (+x happiness)
 * increase designators (title, city) based on "some criteria"
     * can be upped and lowered again! different than feature, which is a one-way unlock
 * immigration happening (only if citizen usage < 80%); if karma high
