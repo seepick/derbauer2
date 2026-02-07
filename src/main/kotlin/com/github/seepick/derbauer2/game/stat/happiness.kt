@@ -73,7 +73,7 @@ class HappinessFeature(descriptor: HappinessFeatureDescriptor) : Feature(descrip
     override val discriminator = Discriminator.Happiness(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
-    override fun execute(user: User) {
+    override fun mutate(user: User) {
         user.add(Happiness(Mechanics.initHappiness))
     }
 }

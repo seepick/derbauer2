@@ -29,7 +29,9 @@ object FoundGoldDescriptor : HappeningDescriptor {
         return FoundGoldHappening(goldFound = 100.z, this)
     }
 
-    override fun initProb(probs: Probs, user: User) {}
+    override fun initProb(probs: Probs, user: User) {
+        // not using probs
+    }
 }
 
 data class FoundGoldHappening(val goldFound: Z, private val descriptor: HappeningData = FoundGoldDescriptor) :

@@ -19,9 +19,9 @@ class School : Building, ProducesResource, HasLabels by Data, HasEmoji by Data {
     override var _setOwnedInternal: Z = 0.z
     override val costsGold = Mechanics.schoolCostsGold
     override val landUse = Mechanics.schoolLanduse
+    override val producingResourceClass = Knowledge::class
+    override val producingResourceAmount = Mechanics.schoolProduceKnowledge
 
     override fun deepCopy() = School().also { it._setOwnedInternal = owned }
     override fun toString() = "${this::class.simpleNameEmojied}(owned=$owned)"
-    override val producingResourceClass = Knowledge::class
-    override val producingResourceAmount = Mechanics.schoolProduceKnowledge
 }

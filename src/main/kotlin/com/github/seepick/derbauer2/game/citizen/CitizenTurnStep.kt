@@ -24,7 +24,7 @@ private val probBirthKey = ProbDiffuserKey("birth")
 val ProbDiffuserKey.Companion.birthKey get() = probBirthKey
 
 /**
- * Not implementing the [com.github.seepick.derbauer2.game.turn.ResourceStep] interface, as used as a composition element.
+ * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceStep] as used as a composition element.
  * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceStep]
  */
 class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbInitializer {

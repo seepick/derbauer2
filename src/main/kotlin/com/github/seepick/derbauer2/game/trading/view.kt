@@ -30,16 +30,11 @@ class TradingPage(
     currentPage: CurrentPage,
     gameRenderer: GameRenderer,
     tradePromptBuilder: TradePromptBuilder,
-) : PromptGamePage(
-    buttons = listOf(BackButton {
-        currentPage.pageClass = HomePage::class
-    }),
-    gameRenderer = gameRenderer,
-    promptBuilder = tradePromptBuilder,
-    contentRenderer = { textmap ->
-        textmap.line(Texts.tradingPage)
-    }
-)
+) : PromptGamePage(buttons = listOf(BackButton {
+    currentPage.pageClass = HomePage::class
+}), gameRenderer = gameRenderer, promptBuilder = tradePromptBuilder, contentRenderer = { textmap ->
+    textmap.line(Texts.tradingPage)
+})
 
 class TradePromptBuilder(
     private val user: User,
@@ -58,29 +53,41 @@ class TradePromptBuilder(
 
     @Suppress("SpreadOperator")
     private fun buildTradeOption(
+        operation: TradeOperation, target: Pair<KClass<out Resource>, Z>, vararg counters: Pair<KClass<out Resource>, Z>
+    ) = SelectOption(
+        label = buildLabel(operation, target, counters), onSelected = {
+            resultHandler.handle(tradingService.trade(buildTradeRequests(operation, target, counters)))
+        })
+
+    private fun buildLabel(
         operation: TradeOperation,
         target: Pair<KClass<out Resource>, Z>,
-        vararg counters: Pair<KClass<out Resource>, Z>
-    ) = SelectOption(
-        label = OptionLabel.Single.Dynamic {
-            val targetResource = user.findResource(target.first)
-            "${operation.label} ${target.second} ${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular} for " +
-                    counters.joinToString(" and ") { (counterResource, counterAmount) ->
-                        val counterResource = user.findResource(counterResource)
-                        "$counterAmount ${counterResource.emojiSpaceOrEmpty}${
-                            counterResource.labelFor(counterAmount)
-                        }"
-                    }
-        },
-        onSelected = {
-            resultHandler.handle(
-                tradingService.trade(
-                    TradeRequest(target.first, operation, target.second),
-                    *counters.map { (costResource, costAmount) ->
-                        TradeRequest(costResource, operation.inverse, costAmount)
-                    }.toTypedArray()
-                )
-            )
+        counters: Array<out Pair<KClass<out Resource>, Z>>
+    ) = OptionLabel.Single.Dynamic {
+        val targetResource = user.findResource(target.first)
+        val operationLabel = "${operation.label} ${target.second} " +
+                "${targetResource.emojiSpaceOrEmpty}${targetResource.labelSingular}"
+        operationLabel + " for " + buildCounterLabel(counters)
+    }
+
+    private fun buildCounterLabel(counters: Array<out Pair<KClass<out Resource>, Z>>) =
+        counters.joinToString(" and ") { (counterResource, counterAmount) ->
+            val counterResource = user.findResource(counterResource)
+            "$counterAmount ${counterResource.emojiSpaceOrEmpty}${
+                counterResource.labelFor(counterAmount)
+            }"
         }
-    )
+
+    companion object {
+        private fun buildTradeRequests(
+            operation: TradeOperation,
+            target: Pair<KClass<out Resource>, Z>,
+            counters: Array<out Pair<KClass<out Resource>, Z>>
+        ): List<TradeRequest> = buildList {
+            add(TradeRequest(target.first, operation, target.second))
+            addAll(counters.map { (costResource, costAmount) ->
+                TradeRequest(costResource, operation.inverse, costAmount)
+            })
+        }
+    }
 }

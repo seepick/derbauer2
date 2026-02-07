@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 /**
  * Mostly about buildings.
  *
- * Not implementing the [com.github.seepick.derbauer2.game.turn.ResourceStep] interface, as used as a composition element.
+ * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceStep] as used as a composition element.
  * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceStep]
  */
 class ProducesResourceTurnStep(val user: User) {

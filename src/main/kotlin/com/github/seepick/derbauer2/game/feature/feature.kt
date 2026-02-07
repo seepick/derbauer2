@@ -32,7 +32,7 @@ abstract class Feature(
     abstract val discriminator: Discriminator<out Feature>
 
     override fun toString() = "${this::class.simpleName}($label)"
-    abstract fun execute(user: User)
+    abstract fun mutate(user: User)
 
     /**
      * Allows for exhaustive when, although Feature itself is not sealed.

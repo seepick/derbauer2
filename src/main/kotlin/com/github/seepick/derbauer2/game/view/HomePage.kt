@@ -21,6 +21,7 @@ import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
+@Suppress("LongParameterList") // it's okay ;)
 class HomePage(
     turner: Turner,
     currentPage: CurrentPage,

@@ -33,7 +33,9 @@ object RottenFoodDescriptor : HappeningDescriptor {
         return RottenFoodHappening(rottenFood = rottenFood)
     }
 
-    override fun initProb(probs: Probs, user: User) {}
+    override fun initProb(probs: Probs, user: User) {
+        // not using probs
+    }
 }
 
 data class RottenFoodHappening(

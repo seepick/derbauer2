@@ -23,6 +23,7 @@ interface GenericTurnStep {
     fun execTurn()
 }
 
+@Suppress("LongParameterList") // it's okay ;)
 class Turner(
     private val user: User,
     private val genericSteps: List<GenericTurnStep>,

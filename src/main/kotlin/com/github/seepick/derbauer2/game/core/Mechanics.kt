@@ -9,7 +9,6 @@ import com.github.seepick.derbauer2.game.common.strict0To1
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.turn.Season
 
-
 /**
  * All game mechanics constants; a magic constant provider.
  */

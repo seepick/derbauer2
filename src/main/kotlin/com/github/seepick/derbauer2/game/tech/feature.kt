@@ -30,7 +30,7 @@ class TechnologyFeature(descriptor: TechnologyFeatureDescriptor) : Feature(descr
     override val discriminator = Discriminator.Technology(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
-    override fun execute(user: User) {
+    override fun mutate(user: User) {
         user.add(Knowledge())
         user.add(School())
     }

@@ -23,8 +23,7 @@ fun interface ActionBusListener {
 }
 
 /** Any user action. */
-interface Action {
-}
+interface Action
 
 class ActionsCollector : ActionBusListener {
 

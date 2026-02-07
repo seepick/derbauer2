@@ -17,7 +17,9 @@ import com.github.seepick.derbauer2.game.view.AsciiArt
 class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
 
     override val discriminator = Discriminator.Trading(this)
-    override fun execute(user: User) {}
+    override fun mutate(user: User) {
+        // nothing to do
+    }
 
     override fun deepCopy() = this // immutable
 
@@ -53,5 +55,7 @@ object TradeLandFeatureDescriptor : FeatureDescriptor(
 class TradeLandFeature(descriptor: TradeLandFeatureDescriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.TradeLand(this)
     override fun deepCopy() = this // immutable
-    override fun execute(user: User) {}
+    override fun mutate(user: User) {
+        // nothing to do, the feature just unlocks the option to trade land in the trading page
+    }
 }

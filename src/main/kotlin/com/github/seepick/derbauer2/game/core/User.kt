@@ -26,6 +26,7 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
         allMutable += entity
     }
 
+    @Suppress("ThrowsCount")
     private fun <E : Entity> validate(entity: E, disableCheck: Boolean) {
         if (entity::class.simpleName == null) {
             throw UserEnableException(
