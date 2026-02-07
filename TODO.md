@@ -2,7 +2,7 @@
 
 ## 1.2.0
 
-* IT: introduce ActionBus + centralize History
+* IT: introduce ActionBus + accumulate in TurnReport (turn scope); reset after next turn
 
 ## Backlog
 

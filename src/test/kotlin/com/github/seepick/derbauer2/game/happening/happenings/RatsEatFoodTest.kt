@@ -4,12 +4,12 @@ import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.food
 import com.github.seepick.derbauer2.game.prob.ProbThresholderKey
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.addResource
+import com.github.seepick.derbauer2.game.resource.food
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse

@@ -7,6 +7,11 @@ import kotlin.reflect.KClass
 
 val User.resources get() = ListX(all.filterIsInstance<Resource>())
 
+val User.gold get() = findResource(Gold::class).owned
+val User.food get() = findResource(Food::class).owned
+val User.citizen get() = findResource(Citizen::class).owned
+val User.land get() = findResource(Land::class).owned
+
 @Suppress("UNCHECKED_CAST")
 fun <R : Resource> User.findResource(resourceClass: KClass<R>): R =
     resources.find(resourceClass) as R

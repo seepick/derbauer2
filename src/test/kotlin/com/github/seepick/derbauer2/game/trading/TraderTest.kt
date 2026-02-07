@@ -4,10 +4,10 @@ import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.addResource
+import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo

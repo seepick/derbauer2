@@ -1,13 +1,13 @@
 package com.github.seepick.derbauer2.game.happening
 
 import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.core.gold
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
 import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbSelectorKey
 import com.github.seepick.derbauer2.game.prob.prob
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
 import com.github.seepick.derbauer2.game.testInfra.dsl.Given
 import com.github.seepick.derbauer2.game.testInfra.dsl.Then
