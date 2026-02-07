@@ -43,7 +43,7 @@ data class Zz(
     operator fun times(other: Zz) = Zz(value * other.value)
     operator fun times(other: Long) = Zz(value * other)
     operator fun times(other: Int) = Zz(value * other)
-    operator fun times(other: Percent) = Zz((value.toDouble() * other.value).toLong())
+    operator fun times(other: Percent) = Zz((value.toDouble() * other.number).toLong())
 
     override operator fun compareTo(other: Zz) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
@@ -75,7 +75,7 @@ data class Z(
     @Deprecated("user coerce fun")
     infix fun orMinOf(other: Z) = if (this < other) this else other
 
-    fun toPlusString() = if (value > 0) "+$this" else toString()
+    fun toPrefixedString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
     operator fun unaryMinus() = Zz(-value)
@@ -90,7 +90,7 @@ data class Z(
     operator fun times(other: Zz) = Zz(value * other.value)
     operator fun times(other: Long) = Z(value * other)
     operator fun times(other: Int) = Z(value * other)
-    operator fun times(other: Percent) = Z((value * other.value).toLong())
+    operator fun times(other: Percent) = Z((value * other.number).toLong())
 
     override operator fun compareTo(other: Z) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
@@ -141,19 +141,54 @@ val Double.`%`: Percent get() = Percent(this)
 val Int.`%`: Percent get() = Percent(this.toDouble() / 100.0)
 
 @JvmInline
-value class Percent(val value: Double) {
-    operator fun compareTo(other: Percent) = this.value.compareTo(other.value)
-    operator fun compareTo(other: Double) = this.value.compareTo(other)
-    operator fun plus(other: Percent) = Percent(this.value + other.value)
+value class Percent(val number: Double) {
+    operator fun compareTo(other: Percent) = this.number.compareTo(other.number)
+    operator fun compareTo(other: Double) = this.number.compareTo(other)
+    operator fun plus(other: Percent) = Percent(this.number + other.number)
 
     /**
      * How many of this is needed to get 'amount' back after % has been applied.
      * e.g. 50.% neededToGetTo(1) == 2
      */
     fun neededToGetTo(amount: Int): Z {
-        require(value != 0.0) { "division by zero" }
-        return ceil((1.0 / value) * amount).toLong().z
+        require(number != 0.0) { "division by zero" }
+        return ceil((1.0 / number) * amount).toLong().z
     }
 }
 
-operator fun Double.compareTo(other: Percent) = this.compareTo(other.value)
+operator fun Double.compareTo(other: Percent) = this.compareTo(other.number)
+
+@Suppress("ObjectPropertyName", "DANGEROUS_CHARACTERS", "MagicNumber")
+val Int.`%01`: TypedPercent.ZeroToOne get() = TypedPercent.ZeroToOne(this.toDouble() / 100.0)
+
+sealed interface TypedPercent {
+    val raw: Percent
+
+    data class Anything(val number: Double) : TypedPercent {
+        override val raw = Percent(number)
+    }
+
+    data class ZeroToOne(val number: Double) : TypedPercent {
+        init {
+            require(number in 0.0..1.0) { "Percentage must be between 0.0 and 1.0 but was: $number" }
+        }
+
+        override val raw = Percent(number)
+    }
+
+    data class Positive(val number: Double) : TypedPercent {
+        init {
+            require(number >= 0.0) { "Percentage must be between >= 0.0 but was: $number" }
+        }
+
+        override val raw = Percent(number)
+    }
+
+    data class MinusOneToOne(val number: Double) : TypedPercent {
+        init {
+            require(number in -1.0..1.0) { "Percentage must be between -1.0 and +1.0 but was: $number" }
+        }
+
+        override val raw = Percent(number)
+    }
+}

@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.prob
 
+import com.github.seepick.derbauer2.game.common.TypedPercent
 import com.github.seepick.derbauer2.game.common.Zz
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -25,6 +26,10 @@ interface Probs {
     fun <T> getSelection(key: ProbSelectorKey, items: List<T>): T
     fun setDiffuser(key: ProbDiffuserKey, diffuser: ProbDiffuser)
     fun getDiffused(key: ProbDiffuserKey, baseValue: Zz): Zz
+
+    /** Range of 0.0-1.0 */
+    fun setThresholder(key: ProbThresholderKey, threshold: () -> TypedPercent.ZeroToOne)
+    fun getThresholder(key: ProbThresholderKey): Boolean
 }
 
 class ProbsImpl : Probs {
@@ -35,6 +40,7 @@ class ProbsImpl : Probs {
     val providerHandles = mutableMapOf<ProbProviderKey<*>, ProbProviderHandle<*>>()
     val selectorHandles = mutableMapOf<ProbSelectorKey, ProbSelectorHandle<Any>>()
     val diffuserHandles = mutableMapOf<ProbDiffuserKey, ProbDiffuserHandle>()
+    val thresholderHandles = mutableMapOf<ProbThresholderKey, ProbThresholderHandle>()
 
     override fun <T> setProvider(
         key: ProbProviderKey<T>,
@@ -74,5 +80,15 @@ class ProbsImpl : Probs {
     override fun getDiffused(key: ProbDiffuserKey, baseValue: Zz): Zz {
         val handle = diffuserHandles[key] ?: error("Diffuser $key was not registered!")
         return handle.diffuser.diffuse(baseValue)
+    }
+
+    override fun setThresholder(key: ProbThresholderKey, threshold: () -> TypedPercent.ZeroToOne) {
+        require(!thresholderHandles.containsKey(key)) { "Thresholder source $key is already registered!" }
+        thresholderHandles[key] = ProbThresholderHandle(key, FixedProbThresholder(threshold))
+    }
+
+    override fun getThresholder(key: ProbThresholderKey): Boolean {
+        val handle = thresholderHandles[key] ?: error("Thresholder $key was not registered!")
+        return handle.thresholder.nextBoolean()
     }
 }

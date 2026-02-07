@@ -31,7 +31,7 @@ class Turner(
             .sortedBy { it.order }
             .map { execStepToRCs(it) }
             .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
-        happenings = happeningTurner.buildHappeningMultiPages(),
+        happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
         newFeatures = featureTurner.buildFeatureMultiPages(),
     ).also {
         log.info { "🔁 Changes: $it" }

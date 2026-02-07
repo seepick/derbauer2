@@ -6,10 +6,13 @@ import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.core.hasEntity
+import com.github.seepick.derbauer2.game.core.ratsWillEatFoodProb
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
+import com.github.seepick.derbauer2.game.prob.ProbThresholderKey
+import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
@@ -17,13 +20,27 @@ import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
-object RatsEatFoodDescriptor : HappeningDescriptor(HappeningNature.Negative) {
+private val ratsWillHappenForSeasonKey = ProbThresholderKey("ratsWillHappenForSeason")
+val ProbThresholderKey.Companion.ratsWillHappenForSeason get() = ratsWillHappenForSeasonKey
 
-    override fun canHappen(user: User) = user.hasEntity(Food::class) && user.findResource<Food>().owned > 0
+object RatsEatFoodDescriptor : HappeningDescriptor {
+
+    override val nature = HappeningNature.Negative
+
+    override fun initProb(probs: Probs, user: User) {
+        probs.setThresholder(ProbThresholderKey.ratsWillHappenForSeason) {
+            user.turn.season.ratsWillEatFoodProb
+        }
+    }
+
+    override fun canHappen(user: User, probs: Probs) =
+        user.hasEntity(Food::class) &&
+                user.findResource<Food>().owned > 0
+
+    override fun willHappen(user: User, probs: Probs) =
+        probs.getThresholder(ProbThresholderKey.ratsWillHappenForSeason)
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
-        require(canHappen(user))
-//        user.turn.season.ratsEatFoodProbability // TODO wire-in Probs here somehow...
         val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)
         return RatsEatFoodHappening(amountFoodEaten = foodEaten)
     }

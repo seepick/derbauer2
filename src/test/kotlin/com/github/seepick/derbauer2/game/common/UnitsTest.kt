@@ -36,9 +36,9 @@ class UnitsTest : DescribeSpec({
     }
     describe("toPlusString") {
         it("z unsigned") {
-            0.z.toPlusString() shouldBeEqual "0"
-            1.z.toPlusString() shouldBeEqual "+1"
-            1024.z.toPlusString() shouldBeEqual "+1k"
+            0.z.toPrefixedString() shouldBeEqual "0"
+            1.z.toPrefixedString() shouldBeEqual "+1"
+            1024.z.toPrefixedString() shouldBeEqual "+1k"
         }
         it("zz signed") {
             (-1024).zz.toSymboledString() shouldBeEqual "-1k"

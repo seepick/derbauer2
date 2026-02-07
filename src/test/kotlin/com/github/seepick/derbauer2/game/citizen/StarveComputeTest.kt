@@ -23,7 +23,7 @@ class StarveComputeTest : DescribeSpec({
         ).forEach { (citizen, food, expectedCitizenUnfed) ->
             it("Given 10% eat and $citizen 🙎🏻‍♂️ and $food 🍖 Then $expectedCitizenUnfed unfed") {
                 val eatRatio = 10.`%`
-                val eaten = ceil(citizen * eatRatio.value).toLong().z
+                val eaten = ceil(citizen * eatRatio.number).toLong().z
                 StarveCompute.howManyUnfed(citizen.z, food.zz, eaten, eatRatio) shouldBeEqual expectedCitizenUnfed.z
             }
         }
@@ -33,7 +33,7 @@ class StarveComputeTest : DescribeSpec({
         ).forEach { (citizen, food, expectedCitizenUnfed) ->
             it("Given 50% eat and $citizen 🙎🏻‍♂️ and $food 🍖 Then $expectedCitizenUnfed unfed") {
                 val eatRatio = 50.`%`
-                val eaten = ceil(citizen * eatRatio.value).toLong().z
+                val eaten = ceil(citizen * eatRatio.number).toLong().z
                 StarveCompute.howManyUnfed(citizen.z, food.zz, eaten, eatRatio) shouldBeEqual expectedCitizenUnfed.z
             }
         }

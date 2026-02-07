@@ -119,6 +119,6 @@ class TurnerTest : DescribeSpec({
             // could think of a more sophisticated solution later...
             turner.execShouldContainChange(food, 0.zz)
         }
-        // test: different resources executed separate from each other (in different TX)
+        // different resources executed separate from each other (in different TX)
     }
 })

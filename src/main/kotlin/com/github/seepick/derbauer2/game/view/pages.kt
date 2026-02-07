@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
@@ -48,14 +49,14 @@ abstract class PromptGamePage(
 @Suppress("LongParameterList")
 abstract class NotificationPage(
     private val title: String,
-    private val emoji: String,
+    private val emoji: () -> Emoji,
     private val asciiArt: () -> AsciiArt,
     private val contentRenderer: (Textmap) -> Unit,
     private val button: Button,
 ) : Page, KeyListener by button {
 
     override fun render(textmap: Textmap) {
-        textmap.line("$emoji $title $emoji")
+        textmap.line("${emoji()} $title ${emoji()}")
         textmap.emptyLine()
         textmap.asciiart(asciiArt())
         textmap.emptyLine()

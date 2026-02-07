@@ -10,11 +10,10 @@ class HappeningPage(
     val multiView: HappeningMultiView,
 ) : NotificationPage(
     title = "Happening",
-    emoji = "✨",
+    emoji = { multiView.current().nature.emoji },
     asciiArt = { multiView.current().asciiArt },
     contentRenderer = { multiView.current().render(it) },
-    button = ContinueButton { multiView.continueNextOrFinish() }
-)
+    button = ContinueButton { multiView.continueNextOrFinish() })
 
 class HappeningMultiView(user: User, currentPage: CurrentPage) : MultiView<Happening>(
     user = user,

@@ -63,7 +63,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     /** @return negative numbered change */
     private fun calcBasicFoodEaten(citizen: Citizen): Z {
-        val rawConsumed = ceil(citizen.owned.value.toDouble() * Mechanics.citizenEatAmount.value).toLong().zz
+        val rawConsumed = ceil(citizen.owned.value.toDouble() * Mechanics.citizenEatAmount.number).toLong().zz
         val diffusedConsumed = probs.getDiffused(ProbDiffuserKey.eatKey, rawConsumed).toZLimitMinZero()
         return diffusedConsumed.coerceAtLeast(1.z)
     }

@@ -2,7 +2,8 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Percent
+import com.github.seepick.derbauer2.game.common.`%01`
+import com.github.seepick.derbauer2.game.common.TypedPercent
 import com.github.seepick.derbauer2.game.common.k
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.turn.Season
@@ -91,14 +92,14 @@ object Mechanics {
     val citizensStarvePerUnfedCitizen = 30.`%`
 
     // HAPPENINGS
-    val happeningGrowthRate = 1.`%`
-    val happeningIsNegativeChance = 5.`%`
+    val happeningGrowthRate = if (DEV) 90.`%` else 1.`%`
+    val happeningIsNegativeChance = if (DEV) 90.`%` else 5.`%`
 }
 
-val Season.ratsEatFoodProbability: Percent
+val Season.ratsWillEatFoodProb: TypedPercent.ZeroToOne
     get() = when (this) {
-        Season.Winter -> 100.`%`
-        Season.Autumn -> 75.`%`
-        Season.Spring -> 50.`%`
-        Season.Summer -> 25.`%`
+        Season.Winter -> 100.`%01`
+        Season.Autumn -> 75.`%01`
+        Season.Spring -> 50.`%01`
+        Season.Summer -> 25.`%01`
     }

@@ -22,7 +22,7 @@ class GrowthDiffuser(private val variation: Percent) : ProbDiffuser {
     private val random = Random()
 
     init {
-        require(variation.value >= 0.0)
+        require(variation.number >= 0.0)
     }
 
     override fun diffuse(baseValue: Zz): Zz =
@@ -31,7 +31,7 @@ class GrowthDiffuser(private val variation: Percent) : ProbDiffuser {
         } else {
             random.nextGaussianInRange(
                 mean = baseValue.toDouble(),
-                deviation = baseValue.toDouble() * variation.value,
+                deviation = baseValue.toDouble() * variation.number,
             ).roundToLong().zz
         }
 }
@@ -66,6 +66,4 @@ class StaticDiffuser(private val staticValue: Zz) : ProbDiffuser {
 data class ProbDiffuserHandle(
     val key: ProbDiffuserKey,
     val diffuser: ProbDiffuser,
-) {
-    fun withSelector(newDiffuser: ProbDiffuser) = ProbDiffuserHandle(key, newDiffuser)
-}
+)

@@ -25,9 +25,16 @@ class HappeningTurner(
 
     private val log = logger {}
 
+    init {
+        require(repo.getAllDescriptors().isNotEmpty()) { "At least one happening descriptor must be registered." }
+    }
+
     /** Delayed post-ctor initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
     override fun initProb() {
         log.debug { "Registering probabilities." }
+        repo.getAllDescriptors().forEach {
+            it.initProb(probs, user)
+        }
         probs.setProvider(
             ProbProviderKey.happeningTurner,
             GrowthProbCalculator(
@@ -35,13 +42,19 @@ class HappeningTurner(
                 growthRate = Mechanics.happeningGrowthRate,
             )
         ) {
-            log.debug { "New happening going to happen." }
+            log.debug { "New happening going to happen..." }
             val isNegative = probs.getProvision(ProbProviderKey.happeningIsNegative) != null
-            val descriptors = repo.getAllDescriptors().filter {
-                (!isNegative || it.nature == HappeningNature.Negative) && it.canHappen(user)
+
+            val canDescriptors = repo.getAllDescriptors().filter { it.canHappen(user, probs) }
+            val filteredCanDescriptors = canDescriptors.filter {
+                if (isNegative) {
+                    it.nature == HappeningNature.Negative
+                } else {
+                    it.nature != HappeningNature.Negative
+                } && it.willHappen(user, probs)
             }
-            require(descriptors.isNotEmpty()) { "Not enough happenings to proceed :(" }
-            val descriptor = probs.getSelection(ProbSelectorKey.happeningChoice, descriptors)
+            val ensuredDescriptors = filteredCanDescriptors.ifEmpty { canDescriptors }
+            val descriptor = probs.getSelection(ProbSelectorKey.happeningChoice, ensuredDescriptors)
             descriptor.buildHappening(user)
         }
 
@@ -55,9 +68,6 @@ class HappeningTurner(
         probs.setSelector<HappeningDescriptor>(ProbSelectorKey.happeningChoice, RandomProbSelector())
     }
 
-    fun buildHappeningMultiPages(): List<Happening> = buildList {
-        probs.getProvision(ProbProviderKey.happeningTurner)?.also {
-            add(it)
-        }
-    }
+    fun maybeHappening(): Happening? =
+        probs.getProvision(ProbProviderKey.happeningTurner)
 }
