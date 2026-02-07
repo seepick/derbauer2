@@ -2,228 +2,673 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <meta content="width=device-width,initial-scale=1" name="viewport"/>
+    <meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
     <title>DerBauer2</title>
     <style>
-        :root{
-          --header-h:160px;
-          --downloads-h:220px; /* includes the 200px image + padding */
-          --gap:60px;
-          --sky-top:#87d8ff;
-          --sky-bot:#6fc8ff;
-          --hill-start:#4bb44a;
-          --hill-end:#2f8a3d;
-          --accent:#ffd24a;
+        :root {
+          --skyTop: #1a7cff;
+          --skyMid: #4fb6ff;
+          --skyBottom: #93ddff;
+
+          --grassTop: #3fe46a;
+          --grassMid: #26c454;
+          --grassBottom: #17953a;
+
+          --castleStone1: #d9dde4;
+          --castleStone2: #aab3c2;
+          --castleStone3: #7a879c;
+          --roof1: #ff4a4a;
+          --roof2: #c81f2a;
+
+          --ink: rgba(8, 12, 18, 0.92);
+          --muted: rgba(8, 12, 18, 0.72);
+          --glass: rgba(255, 255, 255, 0.78);
+          --glassStrong: rgba(255, 255, 255, 0.9);
+
+          --quick: 140ms;
+          --snappy: cubic-bezier(0.2, 0.9, 0.2, 1);
         }
 
-        /* base layout */
-        html,body{height:100%;margin:0;padding:0;overflow:hidden;font-family: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;background:linear-gradient(var(--sky-top),var(--sky-bot));color:#043}
-        *{box-sizing:border-box}
-        .page{position:relative;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;overflow:hidden}
+        * {
+          box-sizing: border-box;
+        }
 
-        /* scenery covers whole viewport */
-        .scenery{position:fixed;inset:0;z-index:0;pointer-events:none}
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          overflow: hidden;
+          background: #0a4aa6;
+        }
 
-        /* header (fixed height) */
-        header{z-index:6;height:var(--header-h);width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding-top:8px}
-        h1{font-size:48px;margin:0;color:#fff;text-shadow:0 6px 12px rgba(0,0,0,0.28);font-family:"Comic Sans MS","Trebuchet MS",sans-serif;letter-spacing:1px}
-        .tagline{font-size:18px;margin:0;color:#fff;font-weight:700}
-        .desc{font-size:14px;margin:6px 18px 0 18px;color:rgba(255,255,255,0.95);max-width:1100px;text-align:center}
+        body {
+          color: var(--ink);
+          font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans",
+            "Liberation Sans", sans-serif;
+        }
 
-        /* main: fixed header & downloads; only screenshot scales */
-        main{position:relative;z-index:6;height:calc(100vh - var(--header-h) - var(--downloads-h));width:100%;display:flex;align-items:center;justify-content:center;padding:12px}
-        .screenshot-wrap{position:relative;display:flex;align-items:center;justify-content:center;width:100%;height:100%;max-width:1400px}
-        /* the screenshot itself scales to fill remaining space; NO hover effects, NO border, NO dropshadow */
-        .screenshot{max-width:100%;max-height:100%;width:auto;height:auto;border-radius:8px;display:block;user-select:none}
-        /* overlay logo anchored bottom-right inside wrapper; no border/background */
-        .overlay-logo{position:absolute;right:4%;bottom:4%;max-width:22%;height:auto;z-index:8;pointer-events:none}
+        .page {
+          height: 100vh;
+          width: 100vw;
+          position: relative;
+          overflow: hidden;
+        }
 
-        /* downloads row (fixed height) */
-        .downloads{position:relative;z-index:6;height:var(--downloads-h);width:100%;display:flex;align-items:center;justify-content:center;gap:var(--gap);padding:12px;box-sizing:border-box}
-        .dl-btn{display:inline-block;transition:transform 140ms ease,opacity 140ms;cursor:pointer}
-        .dl-btn img{height:200px;width:auto;display:block;object-fit:contain}
-        .dl-btn:hover{transform:scale(1.06);opacity:0.98}
+        .scenery {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+        }
 
-        /* footer github icon at bottom-right */
-        footer{position:fixed;right:12px;bottom:12px;z-index:9}
-        .github-link img{height:40px;width:40px;display:block;opacity:0.98;transition:transform 120ms}
-        .github-link img:hover{transform:scale(1.08)}
+        .sky {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(
+            to bottom,
+            var(--skyTop) 0%,
+            var(--skyMid) 42%,
+            var(--skyBottom) 62%,
+            rgba(0, 0, 0, 0) 62%
+          );
+        }
 
-        /* clouds animation + style */
-        .cloud{position:absolute;fill:#fff;opacity:0.95;filter:drop-shadow(0 6px 12px rgba(0,0,0,0.06))}
-        .cloud.c1{left:-30%;top:8%;width:420px;animation:cloudMove 56s linear infinite}
-        .cloud.c2{left:-45%;top:22%;width:320px;animation:cloudMove 40s linear infinite;animation-delay:6s}
-        .cloud.c3{left:-20%;top:4%;width:480px;animation:cloudMove 72s linear infinite;animation-delay:12s}
-        @keyframes cloudMove{from{transform:translateX(0)}to{transform:translateX(240%)}}
+        .ground {
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          height: 46vh;
+          background: linear-gradient(to bottom, var(--grassTop) 0%, var(--grassMid) 48%, var(--grassBottom) 100%);
+        }
 
-        /* birds flying across occasionally */
-        .bird{position:absolute;left:-10%;width:64px;height:32px;opacity:0.95;z-index:4;animation:birdFly 12s linear infinite}
-        .bird.b2{top:14%;animation-delay:4s;animation-duration:14s}
-        .bird.b3{top:48%;animation-delay:8s;animation-duration:16s}
-        @keyframes birdFly{0%{transform:translateX(-10%) translateY(0)}50%{transform:translateX(120%) translateY(-10px)}100%{transform:translateX(240%) translateY(0)}}
+        .sun {
+          position: absolute;
+          top: 6vh;
+          right: 6vw;
+          width: min(16vh, 160px);
+          height: min(16vh, 160px);
+          border-radius: 50%;
+          background: radial-gradient(circle at 35% 35%, #fff7b8, #ffd44b 58%, #ffb300);
+          transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 10px), 0);
+          transition: transform var(--quick) var(--snappy);
+        }
 
-        /* sun + pupils */
-        .sun{position:absolute;right:6%;top:4%;width:120px;height:120px;z-index:3;pointer-events:none}
-        .pupil{transition:transform 100ms linear}
+        .sun::after {
+          content: "";
+          position: absolute;
+          inset: -28%;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(255, 230, 140, 0.35), rgba(255, 230, 140, 0));
+        }
 
-        /* responsive tweaks */
-        @media (max-width:720px){
-          h1{font-size:34px}
-          .overlay-logo{max-width:30%}
-          .dl-btn img{height:140px}
+        .cloud {
+          position: absolute;
+          top: 10vh;
+          left: 10vw;
+          width: 190px;
+          height: 60px;
+          border-radius: 999px;
+          background: rgba(255, 255, 255, 0.86);
+          transform: translate3d(calc(var(--mx, 0) * 14px), calc(var(--my, 0) * 8px), 0);
+          transition: transform var(--quick) var(--snappy);
+        }
+
+        .cloud::before,
+        .cloud::after {
+          content: "";
+          position: absolute;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 50%;
+        }
+
+        .cloud::before {
+          width: 70px;
+          height: 70px;
+          left: 26px;
+          top: -30px;
+        }
+
+        .cloud::after {
+          width: 86px;
+          height: 86px;
+          right: 22px;
+          top: -40px;
+        }
+
+        .cloud.two {
+          top: 20vh;
+          left: 62vw;
+          width: 220px;
+          height: 70px;
+          opacity: 0.9;
+          transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 6px), 0);
+        }
+
+        .hill {
+          position: absolute;
+          bottom: 18vh;
+          width: 70vw;
+          height: 46vh;
+          border-radius: 50%;
+          opacity: 0.96;
+          transform: translate3d(calc(var(--mx, 0) * var(--px)), calc(var(--my, 0) * var(--py)), 0);
+          transition: transform var(--quick) var(--snappy);
+        }
+
+        .hill.one {
+          left: -12vw;
+          background: radial-gradient(circle at 30% 35%, #46ea72, #25c854 64%, #158c34);
+          --px: 18px;
+          --py: 10px;
+        }
+
+        .hill.two {
+          right: -18vw;
+          bottom: 12vh;
+          width: 74vw;
+          height: 50vh;
+          background: radial-gradient(circle at 55% 35%, #4bf07a, #26cf59 66%, #148531);
+          --px: 12px;
+          --py: 8px;
+        }
+
+        .tree {
+          position: absolute;
+          bottom: 22vh;
+          width: 64px;
+          height: 120px;
+          transform: translate3d(calc(var(--mx, 0) * 10px), calc(var(--my, 0) * 6px), 0);
+          transition: transform var(--quick) var(--snappy);
+          opacity: 0.98;
+          z-index: 2;
+        }
+
+        .tree .trunk {
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 16px;
+          height: 48px;
+          margin-left: -8px;
+          border-radius: 10px;
+          background: linear-gradient(to bottom, #7a4b2b, #5a341d);
+        }
+
+        .tree .crown {
+          position: absolute;
+          left: 50%;
+          bottom: 34px;
+          width: 64px;
+          height: 64px;
+          margin-left: -32px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 35% 35%, #62ff8d, #21c954 62%, #11883a);
+        }
+
+        .tree .crown::before,
+        .tree .crown::after {
+          content: "";
+          position: absolute;
+          width: 54px;
+          height: 54px;
+          border-radius: 50%;
+          background: radial-gradient(circle at 35% 35%, #66ff92, #24cc58 62%, #11883a);
+        }
+
+        .tree .crown::before {
+          left: -18px;
+          top: 10px;
+        }
+
+        .tree .crown::after {
+          right: -18px;
+          top: 14px;
+        }
+
+        .tree.left {
+          left: 8vw;
+          bottom: 20vh;
+        }
+
+        .tree.right {
+          right: 10vw;
+          bottom: 21vh;
+          transform: translate3d(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 5px), 0);
+        }
+
+        .castle {
+          position: absolute;
+          left: 25%;
+          top: 46vh;
+          width: min(360px, 56vw);
+          height: min(240px, 24vh);
+          transform: translate(-50%, -50%)
+            translate3d(calc(var(--mx, 0) * 8px), calc(var(--my, 0) * 6px), 0);
+          transition: transform var(--quick) var(--snappy);
+          opacity: 0.95;
+        }
+
+        .castle .wall {
+          position: absolute;
+          left: 10%;
+          right: 10%;
+          bottom: 0;
+          height: 58%;
+          border-radius: 18px 18px 14px 14px;
+          background: linear-gradient(to bottom, var(--castleStone1), var(--castleStone2) 70%, var(--castleStone3));
+        }
+
+        .castle .battlement {
+          position: absolute;
+          left: 10%;
+          right: 10%;
+          bottom: 58%;
+          height: 10%;
+          background: linear-gradient(to bottom, var(--castleStone1), var(--castleStone2));
+          border-radius: 14px 14px 10px 10px;
+          clip-path: polygon(
+            0% 100%,
+            0% 55%,
+            8% 55%,
+            8% 0%,
+            16% 0%,
+            16% 55%,
+            24% 55%,
+            24% 0%,
+            32% 0%,
+            32% 55%,
+            40% 55%,
+            40% 0%,
+            48% 0%,
+            48% 55%,
+            56% 55%,
+            56% 0%,
+            64% 0%,
+            64% 55%,
+            72% 55%,
+            72% 0%,
+            80% 0%,
+            80% 55%,
+            88% 55%,
+            88% 0%,
+            96% 0%,
+            96% 55%,
+            100% 55%,
+            100% 100%
+          );
+        }
+
+        .castle .tower {
+          position: absolute;
+          bottom: 0;
+          width: 18%;
+          height: 78%;
+          border-radius: 16px 16px 12px 12px;
+          background: linear-gradient(to bottom, var(--castleStone1), var(--castleStone2) 70%, var(--castleStone3));
+        }
+
+        .castle .tower.left {
+          left: 5%;
+        }
+
+        .castle .tower.right {
+          right: 5%;
+        }
+
+        .castle .roof {
+          position: absolute;
+          bottom: 78%;
+          width: 18%;
+          height: 22%;
+          background: linear-gradient(to bottom, var(--roof1), var(--roof2));
+          clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+          border-radius: 10px;
+        }
+
+        .castle .roof.left {
+          left: 5%;
+        }
+
+        .castle .roof.right {
+          right: 5%;
+        }
+
+        .castle .gate {
+          position: absolute;
+          left: 50%;
+          bottom: 0;
+          width: 20%;
+          height: 36%;
+          transform: translateX(-50%);
+          border-radius: 18px 18px 10px 10px;
+          background: linear-gradient(to bottom, #7b4b2a, #4c2b17);
+          box-shadow: inset 0 8px 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .castle .window {
+          position: absolute;
+          width: 8%;
+          height: 16%;
+          border-radius: 12px 12px 10px 10px;
+          background: linear-gradient(to bottom, rgba(40, 70, 120, 0.85), rgba(10, 20, 35, 0.85));
+          box-shadow: inset 0 6px 0 rgba(255, 255, 255, 0.16);
+        }
+
+        .castle .window.one {
+          left: 30%;
+          bottom: 26%;
+        }
+
+        .castle .window.two {
+          right: 30%;
+          bottom: 26%;
+        }
+
+        .content {
+          position: relative;
+          z-index: 2;
+          height: 100%;
+          width: min(1200px, 92vw);
+          margin: 0 auto;
+          padding: 18px 18px 16px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        header {
+          text-align: center;
+          padding-top: 6px;
+        }
+
+        h1 {
+          margin: 0;
+          font-size: clamp(44px, 5.2vw, 70px);
+          letter-spacing: 0.5px;
+          font-weight: 900;
+          color: rgba(10, 16, 18, 0.95);
+          text-shadow: 0 6px 0 rgba(0, 0, 0, 0.18), 0 14px 30px rgba(0, 0, 0, 0.18);
+          font-family: ui-rounded, "Comic Sans MS", "Trebuchet MS", "Segoe UI", system-ui, sans-serif;
+        }
+
+        .tagline {
+          margin: 6px 0 0;
+          font-size: clamp(16px, 1.6vw, 20px);
+          color: var(--muted);
+          font-weight: 650;
+        }
+
+        .blurb {
+          width: min(840px, 92vw);
+          margin: 0 auto;
+          text-align: center;
+          transform: translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 4px), 0);
+          transition: transform var(--quick) var(--snappy);
+        }
+
+        .blurb p {
+          margin: 0;
+          color: rgba(10, 14, 22, 0.82);
+          font-size: 14.5px;
+          line-height: 1.35;
+        }
+
+        .shotArea {
+          flex: 1;
+          min-height: 0;
+          display: grid;
+          place-items: center;
+          padding: 6px 0;
+        }
+
+        .shotFrame {
+          position: relative;
+          height: 100%;
+          width: 100%;
+          display: grid;
+          place-items: center;
+        }
+
+        .screenshot {
+          max-width: 100%;
+          max-height: 100%;
+          width: auto;
+          height: auto;
+          object-fit: contain;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+
+        .logoOverlay {
+          position: absolute;
+          right: 20%;
+          bottom: 6%;
+          width: clamp(90px, 14vw, 170px);
+          height: auto;
+          user-select: none;
+          -webkit-user-drag: none;
+          transform: translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 4px), 0);
+          transition: transform var(--quick) var(--snappy);
+        }
+
+        .downloads {
+          width: min(980px, 100%);
+          margin: 0 auto;
+          transform: translate3d(calc(var(--mx, 0) * 6px), calc(var(--my, 0) * 4px), 0);
+          transition: transform var(--quick) var(--snappy);
+          z-index: 1;
+        }
+
+        .downloadRow {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 60px;
+        }
+
+        .downloadRow a {
+          display: inline-block;
+          transform: translateZ(0);
+          transition: transform var(--quick) var(--snappy), opacity var(--quick) var(--snappy);
+          filter: saturate(0.8);
+        }
+
+        .downloadRow a:hover {
+          transform: scale(1.05);
+          filter: saturate(1.25);
+        }
+
+        .downloadRow a:active {
+          transform: scale(1.02);
+          opacity: 0.92;
+        }
+
+        .downloadRow a:focus-visible {
+          outline: 3px solid rgba(10, 90, 255, 0.6);
+          outline-offset: 5px;
+          border-radius: 10px;
+        }
+
+        .downloadRow img {
+          height: 200px;
+          width: auto;
+          display: block;
+          user-select: none;
+          -webkit-user-drag: none;
+        }
+
+        footer {
+          position: absolute;
+          right: 14px;
+          bottom: 12px;
+          z-index: 3;
+          display: flex;
+          align-items: flex-end;
+          gap: 10px;
+        }
+
+        .aiDisclaimer {
+          font-size: 11px;
+          color: rgba(0, 0, 0, 0.45);
+        }
+
+        .ghLink {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 42px;
+          height: 42px;
+          transition: transform var(--quick) var(--snappy), opacity var(--quick) var(--snappy);
+        }
+
+        .ghLink:hover {
+          transform: scale(1.06);
+        }
+
+        .ghLink:active {
+          transform: scale(1.02);
+          opacity: 0.9;
+        }
+
+        .ghLink img {
+          width: 26px;
+          height: 26px;
+          display: block;
+        }
+
+        @media (max-width: 980px) {
+          .downloadRow {
+            gap: 28px;
+          }
+
+          .downloadRow img {
+            height: 170px;
+          }
+        }
+
+        @media (max-width: 720px) {
+          .content {
+            width: 94vw;
+            padding: 14px 12px 12px;
+            gap: 8px;
+          }
+
+          .downloadRow {
+            gap: 16px;
+          }
+
+          .downloadRow img {
+            height: 130px;
+          }
+
+          .logoOverlay {
+            right: 6%;
+            bottom: 5%;
+            width: clamp(80px, 18vw, 150px);
+          }
+
+          .blurb p {
+            font-size: 13.5px;
+          }
+
+          .castle {
+            opacity: 0.85;
+          }
         }
     </style>
 </head>
 <body>
-<div class="page">
-    <!-- Background scenery (fills entire viewport) -->
+<div class="page" id="page">
     <div aria-hidden="true" class="scenery">
-        <svg preserveAspectRatio="xMidYMid slice" style="width:100%;height:100%;" viewBox="0 0 1600 900">
-            <defs>
-                <linearGradient id="skyG" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stop-color="#87d8ff"/>
-                    <stop offset="1" stop-color="#7ad0ff"/>
-                </linearGradient>
-                <linearGradient id="hillG" x1="0" x2="0" y1="0" y2="1">
-                    <stop offset="0" stop-color="#4bb44a"/>
-                    <stop offset="1" stop-color="#2f8a3d"/>
-                </linearGradient>
-            </defs>
+        <div class="sky"></div>
+        <div class="sun"></div>
+        <div class="cloud"></div>
+        <div class="cloud two"></div>
+        <div class="hill one"></div>
+        <div class="hill two"></div>
 
-            <!-- sky -->
-            <rect fill="url(#skyG)" height="900" width="1600" x="0" y="0"></rect>
+        <div class="tree left">
+            <div class="crown"></div>
+            <div class="trunk"></div>
+        </div>
+        <div class="tree right">
+            <div class="crown"></div>
+            <div class="trunk"></div>
+        </div>
 
-            <!-- sun with pupils (JS moves pupils) -->
-            <g transform="translate(1280,80)">
-                <g class="sun">
-                    <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 120 120">
-                        <defs>
-                            <radialGradient id="sunr">
-                                <stop offset="0" stop-color="#fff9d6"/>
-                                <stop offset="1" stop-color="#ffd45e"/>
-                            </radialGradient>
-                        </defs>
-                        <circle cx="60" cy="60" fill="url(#sunr)" r="30" stroke="#ffb84d" stroke-width="4"></circle>
-                        <g id="pupils" transform="translate(60,60)">
-                            <circle class="pupil" cx="-10" cy="0" fill="#222" id="p1" r="4"></circle>
-                            <circle class="pupil" cx="10" cy="0" fill="#222" id="p2" r="4"></circle>
-                        </g>
-                    </svg>
-                </g>
-            </g>
+        <div class="castle">
+            <div class="roof left"></div>
+            <div class="roof right"></div>
+            <div class="tower left"></div>
+            <div class="tower right"></div>
+            <div class="battlement"></div>
+            <div class="wall"></div>
+            <div class="gate"></div>
+            <div class="window one"></div>
+            <div class="window two"></div>
+        </div>
 
-            <!-- hills and ground -->
-            <path d="M0,700 C220,640 360,720 760,680 C1120,640 1360,720 1600,700 L1600,900 L0,900 Z"
-                  fill="url(#hillG)"/>
-            <rect fill="#398b3d" height="140" width="1600" x="0" y="760"/>
-
-            <!-- clouds -->
-            <g class="cloud c1">
-                <ellipse cx="100" cy="40" rx="72" ry="34"/>
-                <ellipse cx="148" cy="50" rx="48" ry="28"/>
-                <ellipse cx="56" cy="50" rx="52" ry="30"/>
-            </g>
-            <g class="cloud c2">
-                <ellipse cx="100" cy="40" rx="62" ry="30"/>
-                <ellipse cx="142" cy="48" rx="36" ry="22"/>
-                <ellipse cx="64" cy="46" rx="46" ry="26"/>
-            </g>
-            <g class="cloud c3">
-                <ellipse cx="110" cy="40" rx="86" ry="38"/>
-                <ellipse cx="160" cy="60" rx="54" ry="30"/>
-                <ellipse cx="58" cy="60" rx="62" ry="34"/>
-            </g>
-        </svg>
+        <div class="ground"></div>
     </div>
 
-    <header>
-        <h1>DerBauer2</h1>
-        <div class="tagline">From humble farms to Emperor — build, trade, and rule with heart and guile.</div>
-        <div class="desc">Manage farms and workshops, trade goods, research new technologies, recruit soldiers and
-            expand your realm. Make choices that shape your legend — build, trade, conquer, and charm your people.
-        </div>
-    </header>
+    <div class="content">
+        <header>
+            <h1>DerBauer2</h1>
+            <div class="tagline">Build your cozy kingdom. Trade smart. Defend what you grow.</div>
+        </header>
 
-    <main>
-        <div aria-label="DerBauer2 screenshot area" class="screenshot-wrap" role="img">
-            <!-- the screenshot scales only; no hover, no border, no drop shadow -->
-            <img alt="DerBauer2 screenshot" class="screenshot" id="screenshot" src="images/screenshot.png">
-            <!-- logo overlays bottom-right of screenshot; remains anchored when resized -->
-            <img alt="" class="overlay-logo" src="images/logo.png">
-        </div>
-    </main>
+        <section aria-label="Game description" class="blurb">
+            <p>
+                Start with a small settlement and shape it into a thriving realm. Build structures, manage citizens and
+                resources, strike clever trade deals, unlock new knowledge, and raise an army when danger approaches.
+            </p>
+        </section>
 
-    <div aria-hidden="false" class="downloads">
-        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe"
-           title="Download DerBauer2 for Windows">
-            <img alt="Download for Windows" src="images/download-windows.png">
-        </a>
-        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg"
-           title="Download DerBauer2 for macOS">
-            <img alt="Download for macOS" src="images/download-macos.png">
-        </a>
-        <a class="dl-btn" href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb"
-           title="Download DerBauer2 for Linux">
-            <img alt="Download for Linux" src="images/download-linux.png">
-        </a>
+        <main aria-label="Application preview" class="shotArea">
+            <div class="shotFrame">
+                <img alt="DerBauer2 screenshot" class="screenshot" src="images/screenshot.png"/>
+                <img alt="DerBauer2 logo" class="logoOverlay" src="images/logo.png"/>
+            </div>
+        </main>
+
+        <section aria-label="Downloads" class="downloads">
+            <div class="downloadRow">
+                <a
+                        aria-label="Download for Windows"
+                        href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.exe"
+                        title="Download for Windows"
+                >
+                    <img alt="Download for Windows" src="images/download-windows.png"/>
+                </a>
+                <a
+                        aria-label="Download for macOS"
+                        href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.dmg"
+                        title="Download for macOS"
+                >
+                    <img alt="Download for macOS" src="images/download-macos.png"/>
+                </a>
+                <a
+                        aria-label="Download for Linux"
+                        href="https://github.com/seepick/derbauer2/releases/latest/download/DerBauer2.deb"
+                        title="Download for Linux"
+                >
+                    <img alt="Download for Linux" src="images/download-linux.png"/>
+                </a>
+            </div>
+        </section>
     </div>
 
     <footer>
-        <a class="github-link" href="https://github.com/seepick/derbauer2" rel="noopener"
-           target="_blank" title="View the source code on GitHub">
-            <img alt="GitHub" src="images/github-logo.png">
+        <div class="aiDisclaimer">This page was created with AI assistance.</div>
+        <a
+                aria-label="View the source code on GitHub"
+                class="ghLink"
+                href="https://github.com/seepick/derbauer2"
+                title="View the source code on GitHub"
+        >
+            <img alt="" src="images/github-logo.png"/>
         </a>
     </footer>
-
-    <!-- birds (simple SVGs that fly across) -->
-    <div aria-hidden="true" class="bird b1" style="top:28%;">
-        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
-            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
-        </svg>
-    </div>
-    <div aria-hidden="true" class="bird b2" style="left:-12%;">
-        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
-            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
-        </svg>
-    </div>
-    <div aria-hidden="true" class="bird b3" style="left:-20%;">
-        <svg preserveAspectRatio="xMidYMid meet" viewBox="0 0 64 32">
-            <path d="M2 18 Q12 4 22 18 T42 18" fill="#2b2b2b"/>
-        </svg>
-    </div>
 </div>
-
-<script>
-    (function(){
-      // pupils follow cursor
-      const p1 = document.getElementById('p1');
-      const p2 = document.getElementById('p2');
-      window.addEventListener('mousemove', (e)=>{
-        const w = window.innerWidth, h = window.innerHeight;
-        const nx = (e.clientX / w - 0.5) * 2; // -1..1
-        const ny = (e.clientY / h - 0.5) * 2;
-        const max = 6; // px
-        const tx = nx * max;
-        const ty = ny * max;
-        if(p1) p1.style.transform = `translate(${tx}px, ${ty}px)`;
-        if(p2) p2.style.transform = `translate(${tx}px, ${ty}px)`;
-        // subtle parallax for clouds
-        document.querySelectorAll('.cloud').forEach((c,i)=>{
-          const factor = 6 + i*2;
-          c.style.transform = `translateX(${nx * factor}px)`;
-        });
-      });
-
-      // randomize bird delays so they appear occasionally
-      document.querySelectorAll('.bird').forEach((b)=>{
-        b.style.animationDelay = `${Math.random()*8}s`;
-      });
-
-      // ensure layout uses viewport height to avoid scrollbars on resize
-      function clampViewport(){ document.documentElement.style.height = window.innerHeight + 'px'; }
-      window.addEventListener('resize', clampViewport);
-      clampViewport();
-    })();
-</script>
 </body>
 </html>

@@ -54,29 +54,25 @@ The website should include:
     * use the `/docs/images/github-logo.png` image as an icon; make it the clickable link, no text rendered
     * link: `https://github.com/seepick/derbauer2`
     * tooltip: "View the source code on GitHub"
+* add a very subtle disclaimer that the page was created by AI.
+    * use a small font, with color which is semi-transparent.
 
 ## Style
 
 * make it visually appealing but keep it simple.
 * make it look fun, cartoon like, saturated colors.
 * the background like a scenery:
-    * blue sky
-    * green grass, trees, and hills
-    * some moving (animated) clouds
-    * the sun in the upper right corner
-* thus at the bottom green, and at the top blue
+    * blue sky; green grass, trees, and hills; the sun in the upper right corner
+    * thus at the bottom green, and at the top blue
+    * in the middle draw a castle, grey walls, red rooftop.
 * use a playful font for headings, and a clean sans-serif font for body text.
 
 ## UX
 
 * make the background (hills, clouds, etc.) fill the whole page, in width and height.
-* use some interactive elements, transitions, alpha, hover effects to make it engaging.
+* use some subtle interactive elements, transitions, alpha, hover effects to make it engaging.
     * transitions are short and feel quick.
 * make sure the download buttons have a hover effect, slightly scale up size (but NO dropshadow or glossy shiny thing).
-* make elements of the page react to the position of the mouse cursor
-    * animate the eyes of the sun following the cursor
-    * clouds moving slightly with the cursor
-* make occassionally elements run through the screen (like birds flying by, or a knight with his horse riding across).
 * no scrollbars are visible at any time, the whole content fits on the screen.
 
 ## Technical
@@ -94,3 +90,5 @@ The website should include:
 * Don't add a text below the download links.
 * Don't let any element be invisible due to an alpha glitch or similar.
 * Don't add a drop shadow to the combined box around the screenshot and the application logo.
+* Don't add boxes around elements; e.g. around download buttons, images, texts, etc.
+    * keep the page elements clean and simple, placed directly on the background.
