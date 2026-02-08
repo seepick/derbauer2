@@ -28,7 +28,7 @@ class TaxResourceStep(user: User, private val probs: Probs) : ProbInitializer,
     override fun calcChangesChecked() = buildResourceChanges {
         val citizen = user.findResource<Citizen>()
         val rawTax = citizen.owned * Mechanics.taxRate
-        val diffusedTax = probs.getDiffused(ProbDiffuserKey.taxKey, rawTax.zz).toZLimitMinZero()
+        val diffusedTax = probs.diffuse(ProbDiffuserKey.taxKey, rawTax.zz).toZLimitMinZero()
         val techAdjustedTax = if (user.hasTech(CapitalismTech::class)) {
             diffusedTax * Mechanics.techCapitalismTaxMultiplier
         } else {

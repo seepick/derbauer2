@@ -45,12 +45,12 @@ class RatsEatFoodTest : DescribeSpec({
         fun willHappen() = RatsEatFoodDescriptor.willHappen(user, probs)
 
         it("Given threshold no Then wont") {
-            every { probs.getThresholder(ProbThresholderKey.ratsWillHappenForSeason) } returns false
+            every { probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason) } returns false
 
             willHappen().shouldBeFalse()
         }
         it("Given threshold yes Then will") {
-            every { probs.getThresholder(ProbThresholderKey.ratsWillHappenForSeason) } returns true
+            every { probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason) } returns true
 
             willHappen().shouldBeTrue()
         }

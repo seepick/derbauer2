@@ -21,15 +21,15 @@ class ProbRegistrator(
 
 interface Probs {
     fun <T> setProvider(key: ProbProviderKey<T>, calculator: ProbCalculator, provider: () -> T)
-    fun <T> getProvision(key: ProbProviderKey<T>): T?
+    fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T?
     fun <T> setSelector(key: ProbSelectorKey, selector: ProbSelector<T>)
-    fun <T> getSelection(key: ProbSelectorKey, items: List<T>): T
+    fun <T> getSelectedItem(key: ProbSelectorKey, items: List<T>): T
     fun setDiffuser(key: ProbDiffuserKey, diffuser: ProbDiffuser)
-    fun getDiffused(key: ProbDiffuserKey, baseValue: Zz): Zz
+    fun diffuse(key: ProbDiffuserKey, baseValue: Zz): Zz
 
     /** Range of 0.0-1.0 */
     fun setThresholder(key: ProbThresholderKey, threshold: () -> StrictDouble.ZeroToOne)
-    fun getThresholder(key: ProbThresholderKey): Boolean
+    fun isThresholdReached(key: ProbThresholderKey): Boolean
 }
 
 class ProbsImpl : Probs {
@@ -52,7 +52,7 @@ class ProbsImpl : Probs {
         providerHandles[key] = ProbProviderHandle(key, calculator, provider)
     }
 
-    override fun <T> getProvision(key: ProbProviderKey<T>): T? {
+    override fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T? {
         val handler = providerHandles[key] ?: error("Provider with key '$key' was not registered!")
         @Suppress("UNCHECKED_CAST")
         return handler.provide() as? T?
@@ -64,7 +64,7 @@ class ProbsImpl : Probs {
         selectorHandles[key] = ProbSelectorHandle(key, selector) as ProbSelectorHandle<Any>
     }
 
-    override fun <T> getSelection(key: ProbSelectorKey, items: List<T>): T {
+    override fun <T> getSelectedItem(key: ProbSelectorKey, items: List<T>): T {
         val someHandle = selectorHandles[key] ?: error("Selector $key was not registered!")
         @Suppress("UNCHECKED_CAST")
         val handle = someHandle as? ProbSelectorHandle<T>
@@ -77,7 +77,7 @@ class ProbsImpl : Probs {
         diffuserHandles[key] = ProbDiffuserHandle(key, diffuser)
     }
 
-    override fun getDiffused(key: ProbDiffuserKey, baseValue: Zz): Zz {
+    override fun diffuse(key: ProbDiffuserKey, baseValue: Zz): Zz {
         val handle = diffuserHandles[key] ?: error("Diffuser $key was not registered!")
         return handle.diffuser.diffuse(baseValue)
     }
@@ -87,7 +87,7 @@ class ProbsImpl : Probs {
         thresholderHandles[key] = ProbThresholderHandle(key, FixedProbThresholder(threshold))
     }
 
-    override fun getThresholder(key: ProbThresholderKey): Boolean {
+    override fun isThresholdReached(key: ProbThresholderKey): Boolean {
         val handle = thresholderHandles[key] ?: error("Thresholder $key was not registered!")
         return handle.thresholder.nextBoolean()
     }

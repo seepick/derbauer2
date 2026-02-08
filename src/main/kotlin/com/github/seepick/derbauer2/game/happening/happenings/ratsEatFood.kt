@@ -39,7 +39,7 @@ object RatsEatFoodDescriptor : HappeningDescriptor {
                 user.findResource<Food>().owned > 0
 
     override fun willHappen(user: User, probs: Probs) =
-        probs.getThresholder(ProbThresholderKey.ratsWillHappenForSeason)
+        probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason)
 
     override fun buildHappening(user: User): RatsEatFoodHappening {
         val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)

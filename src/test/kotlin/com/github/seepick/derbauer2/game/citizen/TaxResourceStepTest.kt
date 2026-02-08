@@ -6,9 +6,8 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.prob.PassThroughDiffuser
 import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
-import com.github.seepick.derbauer2.game.prob.ProbsImpl
+import com.github.seepick.derbauer2.game.prob.ProbsStub
 import com.github.seepick.derbauer2.game.prob.StaticDiffuser
-import com.github.seepick.derbauer2.game.prob.updateDiffuser
 import com.github.seepick.derbauer2.game.resource.CapitalismTech
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -19,14 +18,14 @@ import io.kotest.matchers.equals.shouldBeEqual
 
 class TaxResourceStepTest : DescribeSpec({
     lateinit var user: User
-    lateinit var probs: ProbsImpl
+    lateinit var probs: ProbsStub
     lateinit var step: TaxResourceStep
     beforeTest {
         user = User()
-        probs = ProbsImpl()
+        probs = ProbsStub()
         step = TaxResourceStep(user, probs)
         step.initProb()
-        probs.updateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
+        probs.fixateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
     }
 
     fun calcChanges() = step.calcChanges()
@@ -49,7 +48,7 @@ class TaxResourceStepTest : DescribeSpec({
         }
         describe("Diffusion") {
             it("Given negative diffused value Then limit 💰 to 0") {
-                probs.updateDiffuser(ProbDiffuserKey.taxKey, StaticDiffuser(staticValue = (-1).zz))
+                probs.fixateDiffuser(ProbDiffuserKey.taxKey, StaticDiffuser(staticValue = (-1).zz))
 
                 calcChanges().shouldContainChange(Gold::class, 0.zz)
             }

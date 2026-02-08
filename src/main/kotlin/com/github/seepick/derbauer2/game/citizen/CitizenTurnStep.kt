@@ -66,7 +66,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
     /** @return negative numbered change */
     private fun calcBasicFoodEaten(citizen: Citizen): Z {
         val rawConsumed = ceil(citizen.owned.value.toDouble() * Mechanics.citizenEatAmount.number).toLong().zz
-        val diffusedConsumed = probs.getDiffused(ProbDiffuserKey.eatKey, rawConsumed).toZLimitMinZero()
+        val diffusedConsumed = probs.diffuse(ProbDiffuserKey.eatKey, rawConsumed).toZLimitMinZero()
         return diffusedConsumed.coerceAtLeast(1.z)
     }
 
@@ -79,7 +79,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun birthChange(citizen: Citizen): ResourceChange {
         val raw = citizen.owned * Mechanics.citizenBirthRate
-        val diffused = probs.getDiffused(ProbDiffuserKey.birthKey, raw.zz).toZLimitMinZero()
+        val diffused = probs.diffuse(ProbDiffuserKey.birthKey, raw.zz).toZLimitMinZero()
         val happyInfluenced = happinessInfluencedBirthChange(diffused)
         val capped = happyInfluenced.coerceAtLeast(1.z)
         return ResourceChange(citizen, capped)

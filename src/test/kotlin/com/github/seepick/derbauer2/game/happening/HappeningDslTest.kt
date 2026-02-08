@@ -5,7 +5,9 @@ import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescripto
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
 import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbSelectorKey
-import com.github.seepick.derbauer2.game.prob.prob
+import com.github.seepick.derbauer2.game.prob.fixateProvider
+import com.github.seepick.derbauer2.game.prob.fixateSelectorFirst
+import com.github.seepick.derbauer2.game.prob.probs
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -21,15 +23,13 @@ class HappeningDslTest : DslTest, DescribeSpec() {
     init {
         installDslExtension()
         describe("When turn and continue next page") {
-            it("Given probability for GoldFound is guaranteed Then it happens") {
+            it("Given FoundGold is happening Then it happens And user gets 💰") {
                 Given {
                     setOwned<Gold>(0.z)
                     mockHappeningDescriptorRepoReturns(FoundGoldDescriptor)
-                    prob {
-                        updateProvider(ProbProviderKey.happeningTurner, true)
-                        updateProvider(ProbProviderKey.happeningIsNegative, false)
-                        updateSelectorAlwaysFirst(ProbSelectorKey.happeningChoice)
-                    }
+                    probs.fixateProvider(ProbProviderKey.happeningTurner, true)
+                    probs.fixateProvider(ProbProviderKey.happeningIsNegative, false)
+                    probs.fixateSelectorFirst(ProbSelectorKey.happeningChoice)
                 } When {
                     nextTurnToReport {
                         nextPage()
