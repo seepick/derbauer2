@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.GeneratedByAI
+import com.github.seepick.derbauer2.game.core.AiGenerated
 import kotlin.math.abs
 import kotlin.math.ceil
 
@@ -101,7 +101,7 @@ data class Z(
 
 // operator fun Long.plus(other: Z) = Z(this + other.value) .........
 
-@GeneratedByAI
+@AiGenerated
 @Suppress("MagicNumber")
 private fun translateToMaxMagnitude(single: Long): MagnitutedNumber {
     val absSingle = if (single == Long.MIN_VALUE) Long.MAX_VALUE else abs(single)

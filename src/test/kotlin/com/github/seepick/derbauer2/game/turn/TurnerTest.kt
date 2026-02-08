@@ -10,7 +10,6 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
 import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
-import com.github.seepick.derbauer2.game.initCore
 import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -19,6 +18,7 @@ import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.givenFakeStorage
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.resource.totalStorageAmount
 import io.kotest.core.spec.style.DescribeSpec
 
 class TurnerTest : DescribeSpec({
@@ -26,18 +26,23 @@ class TurnerTest : DescribeSpec({
     lateinit var probabilities: ProbsImpl
     beforeTest {
         user = User()
-        user.initCore()
         probabilities = ProbsImpl()
     }
 
-    fun Turner.Companion.build(vararg steps: ResourceStep) = Turner(
-        user = user,
-        genericSteps = emptyList(),
-        resSteps = steps.toList(),
-        happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo).apply { initProb() },
-        featureTurner = FeatureTurner(user),
-        actionsCollector = ActionsCollector(),
-    )
+    fun Turner.Companion.build(vararg steps: ResourceStep): Turner {
+        val currentTurn = CurrentTurn()
+        val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo, currentTurn)
+            .apply { initProb() }
+        return Turner(
+            user = user,
+            globalSteps = emptyList(),
+            resSteps = steps.toList(),
+            happeningTurner = happeningTurner,
+            featureTurner = FeatureTurner(user),
+            actionsCollector = ActionsCollector(),
+            turn = currentTurn,
+        )
+    }
 
     fun Turner.execShouldContainChange(resource: Resource, expectedAmount: Zz) {
         execTurnAndBuildReport().resourceChanges.shouldContainChange(resource, expectedAmount)

@@ -2,7 +2,6 @@ package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
@@ -48,7 +47,7 @@ fun ResourceChanges.shouldBeEmpty() {
 data class FakeStorage<SR : StorableResource>(
     override val storableResourceClass: KClass<out SR>,
     override val storageAmount: Z,
-    override var _setOwnedInternal: Z = 1.z
+//    override var _setOwnedInternal: Z = 1.z
 ) : Entity, StoresResource {
     override val labelSingular = "test label"
     override fun deepCopy() = copy()

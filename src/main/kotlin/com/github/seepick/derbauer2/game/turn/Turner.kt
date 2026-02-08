@@ -19,25 +19,31 @@ import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-interface GenericTurnStep {
+/**
+ * Implementations are declared as Koin beans and injected into [Turner].
+ *
+ * Do NOT confuse it with something stored in Users.all as an Entity, as done for
+ * [com.github.seepick.derbauer2.game.resource.ProducesResource]
+ */
+interface GlobalTurnStep {
     fun execTurn()
 }
 
 @Suppress("LongParameterList") // it's okay ;)
 class Turner(
     private val user: User,
-    private val genericSteps: List<GenericTurnStep>,
+    private val turn: CurrentTurn,
+    private val actionsCollector: ActionsCollector,
+    private val globalSteps: List<GlobalTurnStep>,
     private val resSteps: List<ResourceStep>,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
-    private val actionsCollector: ActionsCollector,
-    private val turn: CurrentTurn,
 ) {
     private val log = logger {}
 
     fun execTurnAndBuildReport(): TurnReport {
         log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
-        genericSteps.forEach {
+        globalSteps.forEach {
             log.debug { "Executing generic turn step: $it" }
             it.execTurn()
         }
@@ -53,6 +59,7 @@ class Turner(
         )
         log.info { "🔁 Changes: $report" }
         log.debug { "🔁 User.all: $user" }
+        turn.next()
         log.info { "🔁🔁🔁 =================== ⬆️ TURN ⬆️ =================== 🔁🔁🔁" }
         return report
     }

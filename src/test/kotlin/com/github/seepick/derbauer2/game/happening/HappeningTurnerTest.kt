@@ -23,7 +23,7 @@ class HappeningTurnerTest : StringSpec({
         probs = ProbsImpl()
         happeningDescriptor = mockk()
         happening = mockk()
-        every { happeningDescriptor.initProb(any(), any()) } just Runs
+        every { happeningDescriptor.initProb(any(), any(), any()) } just Runs
         every { happeningDescriptor.buildHappening(any()) } returns happening
     }
     fun turner(
@@ -32,6 +32,7 @@ class HappeningTurnerTest : StringSpec({
         user = User(),
         probs = probs,
         repo = { descriptors },
+        currentTurn = mockk(),
     ).apply { initProb() }
 
     "When instantiate with empty descriptors repo Then throw" {

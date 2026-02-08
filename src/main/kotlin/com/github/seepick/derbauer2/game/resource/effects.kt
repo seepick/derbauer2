@@ -4,19 +4,35 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Ownable
 import kotlin.reflect.KClass
 
-/** For now can only produce 1 type of resource. */
 interface ProducesResource {
     val producingResourceClass: KClass<out Resource>
-    val producingResourceAmount: Z
+    val produceResourceAmount: Z
 }
 
-interface ProducesResourceOwnable : ProducesResource, Ownable {
-    val totalProducingResourceAmount get() = owned * producingResourceAmount
-}
+val <T> T.totalProduceResourceAmount where T : ProducesResource, T : Ownable
+    get() =
+        owned * produceResourceAmount
 
-/** For now can only store 1 type of resource. */
-interface StoresResource : Ownable {
+@Suppress("VariableMaxLength")
+val ProducesResource.totalOrSimpleProduceResourceAmount
+    get() = if (this is Ownable) {
+        totalProduceResourceAmount
+    } else {
+        produceResourceAmount
+    }
+
+interface StoresResource {
     val storableResourceClass: KClass<out StorableResource>
     val storageAmount: Z
-    val totalStorageAmount: Z get() = owned * storageAmount
 }
+
+val <T> T.totalStorageAmount where T : StoresResource, T : Ownable
+    get() =
+        owned * storageAmount
+
+val StoresResource.totalOrSimpleStorageAmount
+    get() = if (this is Ownable) {
+        totalStorageAmount
+    } else {
+        storageAmount
+    }

@@ -6,7 +6,8 @@ import kotlin.reflect.KClass
 
 interface Stat<SD : StrictDouble> : Entity {
     val value: SD
-    fun change(amount: Double)
+    fun changeBy(amount: Double)
+    fun changeTo(value: SD)
 }
 
 typealias StatKClass = KClass<out Stat<out StrictDouble>>

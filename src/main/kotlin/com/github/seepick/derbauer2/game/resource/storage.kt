@@ -45,4 +45,4 @@ fun User.totalStorageFor(resourceClass: KClass<out StorableResource>) =
     all
         .filterIsInstance<StoresResource>()
         .filter { it.storableResourceClass == resourceClass }
-        .sumOf { it.totalStorageAmount.value }.z
+        .sumOf { it.totalOrSimpleStorageAmount.value }.z

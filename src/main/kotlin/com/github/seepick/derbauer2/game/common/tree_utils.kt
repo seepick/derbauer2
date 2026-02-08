@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.GeneratedByAI
+import com.github.seepick.derbauer2.game.core.AiGenerated
 
-@GeneratedByAI
+@AiGenerated
 fun <T> validCycleFree(all: List<T>, adjacency: Map<T, List<T>>) {
     val visiting = mutableSetOf<T>()
     val visited = mutableSetOf<T>()
@@ -19,7 +19,7 @@ fun <T> validCycleFree(all: List<T>, adjacency: Map<T, List<T>>) {
     all.forEach { dfs(it) }
 }
 
-@GeneratedByAI
+@AiGenerated
 @Suppress("LongParameterList")
 fun <T> printTree(
     header: String,

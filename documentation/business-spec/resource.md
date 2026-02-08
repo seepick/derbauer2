@@ -7,10 +7,10 @@
     * if over limit, then... lose gradually, or hard limit?
 * sources/production of resources:
     * mainly by buildings (prod/cap)
-    * by citizens (gold via taxes)
+    * by citizens (gold via tax)
         * get via random events (happenings) depending on karma (and amount on wealth)
-    * trading
-    * income influenced by modifiers (tech/features/achievements)
+            * trading
+            * income influenced by modifiers (tech/features/achievements)
 * consumption of resources:
     * building
     * citizens (food)

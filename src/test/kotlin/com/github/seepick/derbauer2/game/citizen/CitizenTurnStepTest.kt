@@ -1,7 +1,9 @@
 package com.github.seepick.derbauer2.game.citizen
 
+import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.strictMin1To1
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -15,6 +17,8 @@ import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.shouldBeEmpty
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.stat.Happiness
+import com.github.seepick.derbauer2.game.stat.addStat
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.comparables.shouldBeLessThan
@@ -92,6 +96,36 @@ class CitizenTurnStepTest : DescribeSpec({
                 val citizen = user.addResource(Citizen(), 100.z)
 
                 turner.calcShouldContain(citizen, (citizen.owned * Mechanics.citizenBirthRate).zz)
+            }
+        }
+        describe("Given some happiness And food non-existing") {
+            fun givenSomeCitizensWhenTurnThenBirthRateShouldBe(
+                givenHappiness: Double,
+                expectedBirthMultiplier: Double,
+            ) {
+                val citizen = user.addResource(Citizen(), 100.z)
+                user.addStat(Happiness(), givenHappiness.strictMin1To1)
+                val expectedBirth = citizen.owned * Mechanics.citizenBirthRate * expectedBirthMultiplier.`%`
+
+                turner.calcShouldContain(citizen, expectedBirth.zz)
+            }
+            it("Given neutral happiness Then regular birth rate") {
+                givenSomeCitizensWhenTurnThenBirthRateShouldBe(
+                    givenHappiness = 0.0,
+                    expectedBirthMultiplier = 1.0,
+                )
+            }
+            it("Given positive happiness Then birth rate increased") {
+                givenSomeCitizensWhenTurnThenBirthRateShouldBe(
+                    givenHappiness = 1.0,
+                    expectedBirthMultiplier = 1.3,
+                )
+            }
+            it("Given negative happiness Then birth rate decreased") {
+                givenSomeCitizensWhenTurnThenBirthRateShouldBe(
+                    givenHappiness = -1.0,
+                    expectedBirthMultiplier = 0.7,
+                )
             }
         }
     }

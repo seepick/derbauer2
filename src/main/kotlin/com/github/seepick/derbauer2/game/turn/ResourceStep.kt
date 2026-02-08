@@ -18,7 +18,7 @@ interface ResourceStep {
         // declared order is of utmost significance!
         val stat = incrementor.getAndIncrement()
         val producesResourcesAndCitizen = incrementor.getAndIncrement()
-        val taxes = incrementor.getAndIncrement()
+        val tax = incrementor.getAndIncrement()
     }
 }
 

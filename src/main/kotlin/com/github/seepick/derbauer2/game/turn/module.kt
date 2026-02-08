@@ -8,7 +8,7 @@ import org.koin.dsl.module
 fun turnModule() = module {
     single {
         Turner(
-            genericSteps = getKoinBeansByType(),
+            globalSteps = getKoinBeansByType(),
             resSteps = getKoinBeansByType(),
             user = get(),
             happeningTurner = get(),

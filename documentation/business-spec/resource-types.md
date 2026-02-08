@@ -8,7 +8,7 @@
 * needs storage (houses), thus have capacity
 * if over limit, then lose gradually
 * affected by state happiness: do something "nice" for people
-* produce gold via taxes
+* produce gold via tax
     * income influenced by features/achievements
 * consume food
 * reproduce themselves via production rate (depends on happiness and food availability)

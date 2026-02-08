@@ -4,6 +4,9 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.testInfra.dsl.TestDsl
+import com.github.seepick.derbauer2.game.testInfra.dsl.WhenDsl
+import com.github.seepick.derbauer2.textengine.KeyInput
 import java.util.concurrent.atomic.AtomicInteger
 
 private val turnStepCounter = AtomicInteger(0)
@@ -23,4 +26,11 @@ fun ResourceStep.Companion.build(
 
 fun ResourceStep.calcShouldContain(resource: Resource, expected: Zz) {
     calcChanges().shouldContainChange(resource, expected)
+}
+
+@TestDsl
+class WhenReportPageDsl(whenDsl: WhenDsl) : WhenDsl by whenDsl {
+    fun nextPage() {
+        input(KeyInput.Enter)
+    }
 }

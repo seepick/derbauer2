@@ -18,14 +18,19 @@ interface HomePageDsl {
 }
 
 class WhenHomePageDsl(private val whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePageDsl {
-    override fun nextTurnToReport(code: WhenReportPageDsl.() -> Unit) {
+
+    fun nextTurn() {
         input(KeyInput.Enter)
+    }
+
+    override fun nextTurnToReport(code: WhenReportPageDsl.() -> Unit) {
+        nextTurn()
         page.shouldBeInstanceOf<ReportPage>()
         WhenReportPageDsl(whenDsl).code()
     }
 
     fun nextTurnToGameOver() {
-        input(KeyInput.Enter)
+        nextTurn()
         page.shouldBeInstanceOf<GameOverPage>()
     }
 
@@ -40,4 +45,3 @@ class WhenHomePageDsl(private val whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePa
         WhenBuildPageDsl(this).code()
     }
 }
-

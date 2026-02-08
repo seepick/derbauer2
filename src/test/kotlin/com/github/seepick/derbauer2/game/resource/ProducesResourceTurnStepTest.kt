@@ -38,7 +38,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         it("Given ok setup Then produce And resource untouched") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 calcStepChanges().shouldContainChange(
-                    food, 1.z * farm.producingResourceAmount
+                    food, 1.z * farm.produceResourceAmount
                 )
             }
         }
@@ -47,7 +47,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 farm.ownedForTest = 2.z
 
                 calcStepChanges().shouldContainChange(
-                    food, 2.z * farm.producingResourceAmount
+                    food, 2.z * farm.produceResourceAmount
                 )
             }
         }
@@ -75,12 +75,12 @@ class ProducesResourceTurnStepTest : DescribeSpec({
                 val multiplier = 100
                 user.add(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
 
-                calcStepChanges().shouldContainChange(food, farm.producingResourceAmount * multiplier)
+                calcStepChanges().shouldContainChange(food, farm.produceResourceAmount * multiplier)
             }
         }
         it("When multiple modifiers fold sequentially Then apply both") {
             `user with 0 🍖, 1 granary, 1 farm` {
-                val baseProduction = farm.totalProducingResourceAmount
+                val baseProduction = farm.totalProduceResourceAmount
                 user.add(ResourceProductionMultiplierStub1(Food::class, 2.0))
                 user.add(ResourceProductionMultiplierStub2(Food::class, 0.5))
 

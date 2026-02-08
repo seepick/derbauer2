@@ -17,14 +17,14 @@ import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
-class TaxesTurnStepTest : DescribeSpec({
+class TaxResourceStepTest : DescribeSpec({
     lateinit var user: User
     lateinit var probs: ProbsImpl
-    lateinit var step: TaxesResourceStep
+    lateinit var step: TaxResourceStep
     beforeTest {
         user = User()
         probs = ProbsImpl()
-        step = TaxesResourceStep(user, probs)
+        step = TaxResourceStep(user, probs)
         step.initProb()
         probs.updateDiffuser(ProbDiffuserKey.taxKey, PassThroughDiffuser)
     }
@@ -55,7 +55,7 @@ class TaxesTurnStepTest : DescribeSpec({
             }
         }
         describe("capitalism") {
-            it("Given capitalism Then taxes increased") {
+            it("Given capitalism Then tax increased") {
                 citizen.ownedForTest = 100.z
                 user.add(CapitalismTech())
                 val taxWithoutCapitalism = (citizen.owned * Mechanics.taxRate).zz

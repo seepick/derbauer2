@@ -16,6 +16,8 @@ import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
+import com.github.seepick.derbauer2.game.stat.Happiness
+import com.github.seepick.derbauer2.game.stat.findStatOrNull
 import kotlin.math.ceil
 
 private val probEatKey = ProbDiffuserKey("eat")
@@ -51,13 +53,13 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
         val food = user.findResourceOrNull<Food>() ?: return EatingStarvingResult(ResourceChanges.empty, false)
         val basicFoodEaten = calcBasicFoodEaten(citizen)
         val futureFoodOwned = food.owned.zz + (-basicFoodEaten) + producedFood
-        if (futureFoodOwned >= 0.zz) { // not enough food -> starving
+        if (futureFoodOwned >= 0.zz) { // enough food -> not starving
             return EatingStarvingResult(ResourceChanges(listOf(ResourceChange(food, -basicFoodEaten))), false)
         }
         // negative food eaten amount -> starve
-        val foo = food.owned + producedFood
-        val starveChange = calcStarveChange(citizen, foo, basicFoodEaten)
-        val effectivelyEaten = if (foo < 0.zz) 0.zz else -foo
+        val ownedPlusProduce = food.owned + producedFood
+        val starveChange = calcStarveChange(citizen, ownedPlusProduce, basicFoodEaten)
+        val effectivelyEaten = if (ownedPlusProduce < 0.zz) 0.zz else -ownedPlusProduce
         return EatingStarvingResult(ResourceChanges(listOf(ResourceChange(food, effectivelyEaten), starveChange)), true)
     }
 
@@ -78,8 +80,15 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
     private fun birthChange(citizen: Citizen): ResourceChange {
         val raw = citizen.owned * Mechanics.citizenBirthRate
         val diffused = probs.getDiffused(ProbDiffuserKey.birthKey, raw.zz).toZLimitMinZero()
-        val capped = diffused.coerceAtLeast(1.z)
+        val happyInfluenced = happinessInfluencedBirthChange(diffused)
+        val capped = happyInfluenced.coerceAtLeast(1.z)
         return ResourceChange(citizen, capped)
+    }
+
+    private fun happinessInfluencedBirthChange(base: Z): Z {
+        val happiness = user.findStatOrNull(Happiness::class) ?: return base
+        val multiplier = happiness.value.number * Mechanics.citizenBirthHappinessEffect.number
+        return (base.value.toDouble() * (multiplier + 1.0)).toLong().z
     }
 }
 

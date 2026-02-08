@@ -9,8 +9,6 @@
 * text-engine: support vert&horizontal alignment of (partial) content; thus delay string creation; pass config-object
 * change size of mainwindow with presets (small/med/big) in toolbar (would be an achievement to support resizable ;)
 * global exception handler (e.g. when koin bean definition is missing); show error dialog with exc.message
-* maybe provide deterministic order of entities/resources (give each a weight? e.g. for turn report)
-    * or, it might encode some necessary info, maintaining order; e.g. how it was feature unlocked, chronologically
 * improve GitHub action: first verify, then build assets (win/mac/linux) with new version already
     * then mutate state: verify assets exist; GIT tag+push; create GitHub release and upload assets (no build anymore)
 

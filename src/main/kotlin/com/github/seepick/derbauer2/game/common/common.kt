@@ -1,9 +1,14 @@
 package com.github.seepick.derbauer2.game.common
 
+import com.github.seepick.derbauer2.game.core.AiGenerated
 import java.util.Locale
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.math.abs
+import kotlin.math.floor
+import kotlin.math.log10
+import kotlin.math.max
 
 @OptIn(ExperimentalContracts::class)
 fun ifDo(condition: Boolean, execution: () -> Unit): Boolean {
@@ -33,4 +38,9 @@ fun <T, R> List<T>.requireUniqueBy(prefixMessage: String? = null, fieldExtractor
     }
 }
 
-fun Double.toFormatted() = String.format(Locale.ENGLISH, "%.2f", this)
+@AiGenerated
+fun Double.toFormatted(): String {
+    val absValue = abs(this)
+    val decimals = if (absValue == 0.0) 2 else max(2, -floor(log10(absValue)).toInt() + 1)
+    return String.format(Locale.ENGLISH, "%.${decimals}f", this)
+}

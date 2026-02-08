@@ -6,9 +6,9 @@
     * consume food per turn
         * starve (people die) if no food available
         * do a proper calculation: each citizen X food; (not just check if food > 0)
-    * pay taxes (gold income) per turn
+    * pay tax (gold income) per turn
         * actually the main (only?) income of gold
-    * reproducing itself over time (depending on stats such as health/wealth/luck)
+            * reproducing itself over time (depending on stats such as health/wealth/luck)
 * used up (consumed) for army
     * one knight request X (1?) citizen
     * basically from worker to soldier

@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.testInfra.PageTest
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
+import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
@@ -30,6 +31,7 @@ class GameRendererTest : PageTest, StringSpec({
             ctx.user.addResource(Food(), 3.z)
             DummyPage(
                 user = ctx.user,
+                turn = ctx.currentTurn,
                 pageContent = "pageContent",
                 promptIndicator = "promptIndicator",
                 metaOptions = listOf(MetaOptionImpl(KeyPressed.Command.Escape, "metaLabel")),
@@ -73,11 +75,12 @@ class GameRendererTest : PageTest, StringSpec({
 
 class DummyPage(
     user: User,
+    turn: CurrentTurn,
     private val pageContent: String = "pageContent",
     private val promptIndicator: String = "promptIndicator",
-    private val metaOptions: List<MetaOption> = listOf(MetaOptionImpl(KeyPressed.Command.Escape, "metaLabel"))
+    private val metaOptions: List<MetaOption> = listOf(MetaOptionImpl(KeyPressed.Command.Escape, "metaLabel")),
 ) : Page {
-    private val gameRenderer = GameRenderer(user)
+    private val gameRenderer = GameRenderer(user, turn)
     override fun render(textmap: Textmap) {
         gameRenderer.render(textmap, promptIndicator, metaOptions) {
             textmap.line(pageContent)

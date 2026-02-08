@@ -21,11 +21,8 @@ interface Asset : Entity, Ownable
 
 interface Ownable : Entity {
     val owned: Z get() = _setOwnedInternal
-
     @Suppress("PropertyName", "VariableNaming")
     var _setOwnedInternal: Z
-
-    // funny things possible ;) operator fun unaryMinus(): Zz = -owned
 }
 
 interface OwnableReference {

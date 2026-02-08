@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.Ownable
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.ProducesResourceOwnable
+import com.github.seepick.derbauer2.game.resource.ProducesResource
 import com.github.seepick.derbauer2.game.resource.StoresResource
 import kotlin.reflect.KClass
 
@@ -41,7 +41,7 @@ class House : Building, StoresResource, HasLabels by Data, HasEmoji by Data {
     override fun toString() = "House(owned=$owned)"
 }
 
-class Farm : Building, ProducesResourceOwnable, HasLabels by Data,
+class Farm : Building, ProducesResource, HasLabels by Data,
     HasEmoji by Data {
     object Data : HasLabels, HasEmoji {
         override val labelSingular = "Farm"
@@ -51,7 +51,7 @@ class Farm : Building, ProducesResourceOwnable, HasLabels by Data,
     override val costsGold = Mechanics.farmCostsGold
     override val landUse = Mechanics.farmLandUse
     override val producingResourceClass = Food::class
-    override val producingResourceAmount = Mechanics.farmProduceFood
+    override val produceResourceAmount = Mechanics.farmProduceFood
 
     override fun deepCopy() = Farm().also { it._setOwnedInternal = owned }
     override fun toString() = "Farm(owned=$owned)"

@@ -86,9 +86,10 @@ object Mechanics {
 
     // STATS
     // ========================================================================
-    val initHappiness = DoubleMin1To1(if (DEV) 0.0 else 0.4)
+    val startingHappiness = DoubleMin1To1(if (DEV) 0.0 else 0.4)
     val statHappinessConsumedPerCitizen = if (DEV) Double.MIN_VALUE else 0.00001
     val theaterProducesHappiness = if (DEV) 0.1 else 0.01
+    val citizenBirthHappinessEffect = 30.`%`
 
     // END TURN
     // ========================================================================
@@ -97,14 +98,23 @@ object Mechanics {
     val taxGrowthVariation = 40.`%`
     val citizenEatAmount = 10.`%`
     val citizenEatVariation = 30.`%`
-    val citizenBirthVariation = 20.`%`
-    val citizenBirthRate = 10.`%`
+    val citizenBirthVariation = 30.`%`
+    val citizenBirthRate = 6.`%`
     val citizensStarvePerUnfedCitizen = 30.`%`
 
     // HAPPENINGS
     val happeningGrowthRate = if (DEV) 90.`%` else 1.`%`
     val happeningIsNegativeChance = if (DEV) 90.`%` else 5.`%`
 }
+
+@Suppress("MagicNumber")
+val Season.happinessChanger: Double
+    get() = when (this) {
+        Season.Spring -> 0.005
+        Season.Summer -> 0.01
+        Season.Autumn -> -0.005
+        Season.Winter -> -0.01
+    }
 
 val Season.ratsWillEatFoodProb: Double0To1
     get() = when (this) {

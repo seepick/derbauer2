@@ -20,7 +20,7 @@ fun User.execTx(txs: List<Tx>): TxResult = if (txs.isEmpty()) {
 
 private fun handleFail(maybeSnapshot: TxCopyResult.Fail<User>) = when (maybeSnapshot) {
     is TxCopyResult.Fail.NegativeAmount -> {
-        log.debug(maybeSnapshot.e) { "Negative value during snapshot creation and TX application." }
+        log.debug { "Snapshot-creation/TX-application: ${maybeSnapshot.exception}" }
         TxResult.Fail.InsufficientResources(
             "Transactions blocked due to negative value.${maybeSnapshot.failDetails?.let { " ($it)" } ?: ""}"
         )
@@ -71,7 +71,7 @@ private sealed interface TxCopyResult<T> {
     ) : TxCopyResult<T> {
 
         class NegativeAmount<T>(
-            val e: NegativeZException,
+            val exception: NegativeZException,
             failDetails: String? = null,
         ) : Fail<T>(failDetails) {
             companion object

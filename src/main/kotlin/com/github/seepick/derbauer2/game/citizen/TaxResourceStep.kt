@@ -18,8 +18,8 @@ import com.github.seepick.derbauer2.game.turn.ResourceStep
 private val probTaxKey = ProbDiffuserKey("tax")
 val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 
-class TaxesResourceStep(user: User, private val probs: Probs) : ProbInitializer,
-    DefaultResourceStep(user, ResourceStep.Order.taxes, listOf(Citizen::class, Gold::class)) {
+class TaxResourceStep(user: User, private val probs: Probs) : ProbInitializer,
+    DefaultResourceStep(user, ResourceStep.Order.tax, listOf(Citizen::class, Gold::class)) {
 
     override fun initProb() {
         probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))

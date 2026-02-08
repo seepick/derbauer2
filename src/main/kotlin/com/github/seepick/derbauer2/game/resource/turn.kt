@@ -26,13 +26,10 @@ class ProducesResourceTurnStep(val user: User) {
 
     private fun plainProduction() = ResourceChanges(
         user.all.filterIsInstance<ProducesResource>().map { producer ->
+            val resource = user.findResource(producer.producingResourceClass)
             ResourceChange(
-                resource = user.findResource(producer.producingResourceClass),
-                changeAmount = if (producer is ProducesResourceOwnable) {
-                    producer.totalProducingResourceAmount
-                } else {
-                    producer.producingResourceAmount
-                }
+                resource = resource,
+                changeAmount = producer.totalOrSimpleProduceResourceAmount,
             )
         })
 }
