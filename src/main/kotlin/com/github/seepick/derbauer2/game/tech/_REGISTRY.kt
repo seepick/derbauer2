@@ -13,5 +13,8 @@ object DefaultTechItemRepo : TechItemRepo {
         AgricultureTechRef,
         IrrigationTechRef,
         CapitalismTechRef,
+        // ...
+        // ..
+        // .
     )
 }

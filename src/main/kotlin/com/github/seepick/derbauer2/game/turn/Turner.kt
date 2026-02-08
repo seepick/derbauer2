@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.feature.FeatureInfo
+import com.github.seepick.derbauer2.game.feature.FeatureSubPage
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
@@ -101,6 +101,6 @@ data class TurnReport(
     val turn: Turn,
     val resourceChanges: ResourceChanges,
     val happenings: List<Happening>,
-    val newFeatures: List<FeatureInfo>,
+    val newFeatures: List<FeatureSubPage>,
     val actions: List<Action>,
 )

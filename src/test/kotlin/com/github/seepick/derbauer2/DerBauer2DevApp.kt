@@ -19,7 +19,7 @@ object DerBauer2DevApp {
         startApp(
             isDevMode = true,
             version = "0.0.0-DEV",
-            prefStatePath = DerBauer2DevApp::class,
+            prefStorageFqn = DerBauer2DevApp::class,
             postInit = { koin ->
                 val user = koin.get<User>()
                 user.findResource<Gold>().ownedForTest = 1000.z

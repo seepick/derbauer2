@@ -2,11 +2,12 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Double0To1
-import com.github.seepick.derbauer2.game.common.DoubleMin1To1
+import com.github.seepick.derbauer2.game.common.Double01
+import com.github.seepick.derbauer2.game.common.Double11
 import com.github.seepick.derbauer2.game.common.k
-import com.github.seepick.derbauer2.game.common.strict0To1
+import com.github.seepick.derbauer2.game.common.strict01
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.turn.Season
 
 /**
@@ -86,7 +87,7 @@ object Mechanics {
 
     // STATS
     // ========================================================================
-    val startingHappiness = DoubleMin1To1(if (DEV) 0.0 else 0.4)
+    val startingHappiness = Double11(if (DEV) 0.0 else 0.4)
     val statHappinessConsumedPerCitizen = if (DEV) Double.MIN_VALUE else 0.00001
     val theaterProducesHappiness = if (DEV) 0.1 else 0.01
     val citizenBirthHappinessEffect = 30.`%`
@@ -116,10 +117,18 @@ val Season.happinessChanger: Double
         Season.Winter -> -0.01
     }
 
-val Season.ratsWillEatFoodProb: Double0To1
+val Season.ratsWillEatFoodProb: Double01
     get() = when (this) {
-        Season.Winter -> 1.0.strict0To1
-        Season.Autumn -> 0.75.strict0To1
-        Season.Spring -> 0.5.strict0To1
-        Season.Summer -> 0.25.strict0To1
+        Season.Winter -> 1.0.strict01
+        Season.Autumn -> 0.75.strict01
+        Season.Spring -> 0.5.strict01
+        Season.Summer -> 0.25.strict01
+    }
+
+val HappeningNature.happinessImpact
+    get() = when (this) {
+        HappeningNature.Negative -> -0.05
+        HappeningNature.Mixed -> 0.0
+        HappeningNature.Neutral -> 0.0
+        HappeningNature.Positive -> 0.05
     }

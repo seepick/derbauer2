@@ -28,13 +28,13 @@ class HappeningTurner(
     private val log = logger {}
 
     init {
-        require(repo.getAllDescriptors().isNotEmpty()) { "At least one happening descriptor must be registered." }
+        require(repo.all.isNotEmpty()) { "At least one happening descriptor must be registered." }
     }
 
     /** Delayed post-ctor initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
     override fun initProb() {
         log.debug { "Registering probabilities." }
-        repo.getAllDescriptors().forEach {
+        repo.all.forEach {
             it.initProb(probs, user, currentTurn)
         }
         probs.setProvider(
@@ -47,7 +47,7 @@ class HappeningTurner(
             log.debug { "New happening going to happen..." }
             val isNegative = probs.getProvisionOrNull(ProbProviderKey.happeningIsNegative) != null
 
-            val canDescriptors = repo.getAllDescriptors().filter { it.canHappen(user, probs) }
+            val canDescriptors = repo.all.filter { it.canHappen(user, probs) }
             val filteredCanDescriptors = canDescriptors.filter {
                 if (isNegative) {
                     it.nature == HappeningNature.Negative

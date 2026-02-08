@@ -8,12 +8,12 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 import kotlin.reflect.KClass
 
-fun coreModule(prefStatePath: KClass<*>) = module {
+fun coreModule(prefStorageFqn: KClass<*>) = module {
     single { User(txValidators = get<TxValidatorRepo>().validators) }
     single { WarningBus(listeners = getKoinBeansByType<WarningListener>()) }
 
     // textengine requirements
-    single { PreferencesStateRepository(prefStatePath) } bind TextengineStateRepository::class
+    single { PreferencesStateRepository(prefStorageFqn) } bind TextengineStateRepository::class
     single { ActionBusImpl(listeners = getKoinBeansByType<ActionBusListener>()) } bind ActionBus::class
     singleOf(::ActionsCollector)
 }

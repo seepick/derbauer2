@@ -9,18 +9,29 @@ interface StatModifier {
     fun modification(statClass: StatKClass): Double?
 }
 
-class StatTurnStep(
+interface GlobalStatModifierRepo {
+    val all: List<StatModifier>
+}
+
+class GlobalStatModifierRepoImpl(
+    modifiers: List<StatModifier>,
+) : GlobalStatModifierRepo {
+    override val all = modifiers
+}
+
+class StatCompositeGlobalTurnStep(
     private val user: User,
-    private val staticModifiers: List<StatModifier>,
+    private val globalModifiers: GlobalStatModifierRepo,
 ) : GlobalTurnStep {
 
     private val log = logger {}
 
     override fun execTurn() {
-        val modifiers = user.all.filterIsInstance<StatModifier>() + staticModifiers
-        log.debug { "execTurn() using modifiers: $modifiers" }
+        val entityLocalModifiers = user.all.filterIsInstance<StatModifier>()
+        val allModifiers = entityLocalModifiers + globalModifiers.all
+        log.debug { "execTurn() using modifiers: $allModifiers" }
         user.stats.forEach { stat: Stat<out StrictDouble> ->
-            stat.changeBy(modifiers.mapNotNull { it.modification(stat::class) }.sum())
+            stat.changeBy(allModifiers.mapNotNull { it.modification(stat::class) }.sum())
         }
     }
 

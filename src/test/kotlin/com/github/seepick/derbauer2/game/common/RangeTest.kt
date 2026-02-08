@@ -20,7 +20,7 @@ class RangeTest : DescribeSpec({
                 0.5 to "c",
                 1.0 to "c",
             ).forEach { (number, expected) ->
-                range.map(DoubleMin1To1(number)) shouldBeEqual expected
+                range.map(Double11(number)) shouldBeEqual expected
             }
         }
     }

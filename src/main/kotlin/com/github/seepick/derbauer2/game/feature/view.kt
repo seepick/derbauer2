@@ -17,22 +17,26 @@ private val featureEmoji = "🔓".emoji
 @Suppress("ObjectPropertyName", "NonAsciiCharacters")
 val Emoji.Companion.`feature 🔓` get() = featureEmoji
 
-class FeatureMultiView(user: User, currentPage: CurrentPage) : MultiView<FeatureInfo>(
+class FeatureMultiView(user: User, currentPage: CurrentPage) : MultiView<FeatureSubPage>(
     user = user,
     currentPage = currentPage,
     targetPageClass = FeatureViewPage::class,
-)
+) {
+    override fun alsoExecute(page: FeatureSubPage) {
+        // nothing global to do; already handled by sub-page
+    }
+}
 
 class FeatureViewPage(
     private val multiView: FeatureMultiView,
 ) : NotificationPage(
     title = "Feature Unlocked",
     emoji = { Emoji.`page 📄` },
-    contentRenderer = { multiView.current().render(it) },
-    asciiArt = { multiView.current().asciiArt },
+    contentRenderer = { multiView.currentUnseen().render(it) },
+    asciiArt = { multiView.currentUnseen().asciiArt },
     button = ContinueButton { multiView.continueNextOrFinish() })
 
-data class FeatureInfo(private val feature: Feature) : MultiViewSubPage {
+data class FeatureSubPage(private val feature: Feature) : MultiViewSubPage {
     override val asciiArt = feature.asciiArt
 
     override fun render(textmap: Textmap) {

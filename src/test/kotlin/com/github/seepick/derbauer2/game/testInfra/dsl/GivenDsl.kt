@@ -1,12 +1,15 @@
 package com.github.seepick.derbauer2.game.testInfra.dsl
 
 import com.github.seepick.derbauer2.game.common.ListX
+import com.github.seepick.derbauer2.game.common.StrictDouble
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.core.Asset
+import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
 import com.github.seepick.derbauer2.game.initGame
 import com.github.seepick.derbauer2.game.prob.disableAllProbs
+import com.github.seepick.derbauer2.game.stat.Stat
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.Beeper
@@ -42,24 +45,35 @@ fun Given(
 @TestDsl
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
-    fun mockHappeningDescriptorRepoReturns(vararg descriptors: HappeningDescriptor) {
+    fun registerHappeningDescriptors(vararg descriptors: HappeningDescriptor) {
         koin.declareMock<HappeningDescriptorRepo> {
-            every { getAllDescriptors() } answers { descriptors.toList() }
+            every { all } answers { descriptors.toList() }
         }
     }
 
-    inline fun <reified A : Asset> setOwned(amount: Z): A {
-        val asset = user.all.findOrSet<A>()
-        asset.ownedForTest = amount
-        return asset
-    }
+    inline fun <reified A : Asset> setOwned(amount: Z): A =
+        user.all.findOrAdd<A>().also {
+            it.ownedForTest = amount
+        }
 
-    inline fun <reified A : Asset> ListX<in A>.findOrSet(): A = findOrNull<A>() ?: createAssetInstance()
+    inline fun <reified S : Stat<StrictDouble.MinusOneToOne>> setStatD11(number: StrictDouble.MinusOneToOne): S =
+        user.all.findOrAdd<S>().also {
+            it.changeTo(number)
+        }
 
-    inline fun <reified A : Asset> createAssetInstance(): A {
-        val asset = A::class.primaryConstructor!!.call()
-        user.add(asset)
-        return asset
+    inline fun <reified E : Entity> ListX<in E>.findOrAdd(): E =
+        findOrNull<E>() ?: newEntity()
+
+    inline fun <reified E : Entity> newEntity(): E {
+        val primaryConstructor = E::class.primaryConstructor
+            ?: error("Unable to get primary ctor for: ${E::class.qualifiedName}")
+        val entity = try {
+            primaryConstructor.callBy(emptyMap()) // call() doesn't support default params, thus.
+        } catch (e: Exception) {
+            throw IllegalArgumentException("Unable to instantiate 0-arg ctor for: ${E::class.qualifiedName}", e)
+        }
+        user.add(entity)
+        return entity
     }
 }
 

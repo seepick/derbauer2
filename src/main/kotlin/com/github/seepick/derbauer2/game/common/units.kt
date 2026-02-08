@@ -161,16 +161,18 @@ value class Percent(val number: Double) {
 operator fun Double.compareTo(other: Percent) = this.compareTo(other.number)
 
 val Double.strictAny: DoubleAny get() = DoubleAny(this)
-val Double.strict0To1: Double0To1 get() = Double0To1(this)
-val Double.strictMin1To1: DoubleMin1To1 get() = com.github.seepick.derbauer2.game.common.DoubleMin1To1(this)
-val Double.strictPos: DoublePos get() = com.github.seepick.derbauer2.game.common.DoublePos(this)
+val Double.strict01: Double01 get() = Double01(this)
+val Double.strict11: Double11 get() = Double11(this)
+val Double.strictPos: DoublePos get() = DoublePos(this)
 
 typealias DoubleAny = StrictDouble.Anything
-typealias Double0To1 = StrictDouble.ZeroToOne
+typealias Double01 = StrictDouble.ZeroToOne
 typealias DoublePos = StrictDouble.Positive
-typealias DoubleMin1To1 = StrictDouble.MinusOneToOne
+typealias Double11 = StrictDouble.MinusOneToOne
 
-sealed class StrictDouble(val number: Double) {
+sealed class StrictDouble(val number: Double) : Comparable<StrictDouble> {
+
+    override fun compareTo(other: StrictDouble) = this.number.compareTo(other.number)
 
     override fun toString() = "${this::class.simpleName}(${number.toFormatted()})"
     override fun equals(other: Any?) = other is StrictDouble && this::class == other::class && number == other.number

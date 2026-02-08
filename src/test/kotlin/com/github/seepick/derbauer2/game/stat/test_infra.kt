@@ -8,3 +8,7 @@ fun <S : Stat<SD>, SD : StrictDouble> User.addStat(stat: S, value: SD): S {
     stat.changeTo(value)
     return stat
 }
+
+object EmptyGlobalStatModifierRepo : GlobalStatModifierRepo {
+    override val all = emptyList<StatModifier>()
+}

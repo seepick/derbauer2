@@ -8,5 +8,5 @@ fun techModule() = module {
     singleOf(::TechPage)
     singleOf(::TechService)
     single { DefaultTechItemRepo } bind TechItemRepo::class
-    single { TechTree(items = get<TechItemRepo>().items, user = get()) }
+    single { TechTree(techs = get<TechItemRepo>().items, user = get()) }
 }

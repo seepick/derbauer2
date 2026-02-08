@@ -16,10 +16,12 @@ import com.github.seepick.derbauer2.game.view.viewModule
 import org.koin.dsl.module
 import kotlin.reflect.KClass
 
-fun gameModule(prefStatePath: KClass<*>) = module {
+fun gameModule(
+    prefStorageFqn: KClass<*>,
+) = module {
     includes(
         probModule(),
-        coreModule(prefStatePath),
+        coreModule(prefStorageFqn),
         resourceModule(),
         buildingModule(),
         citizenModule(),

@@ -13,14 +13,14 @@ interface MultiViewSubPage : Renderer {
 }
 
 abstract class MultiView<PAGE : MultiViewSubPage>(
-    private val user: User,
+    protected val user: User,
     private val currentPage: CurrentPage,
     private val targetPageClass: KClass<out Page>
 ) {
     private val log = logger {}
     private var onFinishedProcessing: () -> Unit = {}
     private val unseen = mutableListOf<PAGE>()
-    fun current() = unseen.first()
+    fun currentUnseen() = unseen.first()
 
     fun process(toBeProcessed: List<PAGE>, onFinishedProcessing: () -> Unit) {
         if (toBeProcessed.isEmpty()) {
@@ -31,7 +31,7 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
         this.onFinishedProcessing = onFinishedProcessing
         log.debug { "Going to process ${toBeProcessed.size} sub-page(s) 📄" }
         unseen.addAll(toBeProcessed)
-        current().execute(user)
+        execCurrent()
     }
 
     fun continueNextOrFinish() {
@@ -40,8 +40,15 @@ abstract class MultiView<PAGE : MultiViewSubPage>(
             log.debug { "Done processing sub-pages 📄." }
             onFinishedProcessing()
         } else {
-            log.debug { "Showing next sub-page 📄: ${current()}" }
-            current().execute(user)
+            execCurrent()
         }
     }
+
+    private fun execCurrent() {
+        log.debug { "Showing (and executing) next sub-page 📄: ${currentUnseen()}" }
+        currentUnseen().execute(user)
+        alsoExecute(currentUnseen())
+    }
+
+    protected abstract fun alsoExecute(page: PAGE)
 }

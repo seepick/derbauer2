@@ -22,7 +22,7 @@ object DerBauer2 {
         startApp(
             isDevMode = isDevMode,
             version = AppProperties.instance.version,
-            prefStatePath = DerBauer2::class,
+            prefStorageFqn = DerBauer2::class,
         )
     }
 }
@@ -33,7 +33,7 @@ val Emoji.Companion.`derbauer2 🏰` get() = appEmoji
 fun startApp(
     isDevMode: Boolean,
     version: String,
-    prefStatePath: KClass<*>,
+    prefStorageFqn: KClass<*>,
     postInit: (Koin) -> Unit = {},
 ) {
     val appTitle = "DerBauer2 ${Emoji.`derbauer2 🏰`}"
@@ -41,7 +41,7 @@ fun startApp(
 
     showMainWindow(
         title = "$appTitle v${version}$devModeSuffix",
-        mainModule = gameModule(prefStatePath),
+        mainModule = gameModule(prefStorageFqn),
     ) { koin ->
         koin.initGame()
         postInit(koin)

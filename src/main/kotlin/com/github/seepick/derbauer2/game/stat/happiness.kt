@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.DoubleMin1To1
+import com.github.seepick.derbauer2.game.common.Double11
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.common.rangeOfMin1To1
@@ -21,21 +21,21 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 val Emoji.Companion.happiness get() = Happiness.emoji
 
-class Happiness(initialValue: DoubleMin1To1 = DoubleMin1To1(0.0)) : Stat<DoubleMin1To1> {
+class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
 
     private val log = logger {}
-    override var value: DoubleMin1To1 = initialValue
+    override var value: Double11 = initialValue
         private set
     val emoji get() = emojiRange.map(value)
     override val labelSingular = "Happiness"
 
     override fun changeBy(amount: Double) { // reuse in the future, once a 2nd stat exists
-        val newValue = DoubleMin1To1((value.number + amount).coerceIn(-1.0, 1.0))
+        val newValue = Double11((value.number + amount).coerceIn(-1.0, 1.0))
         log.debug { "changing ${Emoji.happiness} by ${amount.toFormatted()} => ${newValue.number.toFormatted()}" }
         value = newValue
     }
 
-    override fun changeTo(value: DoubleMin1To1) {
+    override fun changeTo(value: Double11) {
         log.trace { "Changing value from ${this.value} to $value" }
         this.value = value
     }
