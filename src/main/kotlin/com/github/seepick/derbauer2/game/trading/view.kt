@@ -11,6 +11,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.findResource
+import com.github.seepick.derbauer2.game.resource.food
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
@@ -24,6 +25,7 @@ import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import com.github.seepick.derbauer2.textengine.prompt.SingleSelectPrompt
 import kotlin.reflect.KClass
 
 class TradingPage(
@@ -41,19 +43,42 @@ class TradePromptBuilder(
     private val resultHandler: TxResultHandler,
     private val tradingService: TradingService,
 ) : PromptProvider {
-    override fun buildPrompt() = SelectPrompt(
+    override fun buildPrompt(): SingleSelectPrompt = SelectPrompt(
         options = Options.Singled(buildList {
-            add(buildTradeOption(Buy, Food::class to 1.z, Gold::class to Mechanics.buyFoodCostGold))
-            add(buildTradeOption(Sell, Food::class to 1.z, Gold::class to Mechanics.sellFoodGainGold))
+            val userHasTradeFeature = false // FIXME implement feature
+            val foodTradeAmount = if (userHasTradeFeature) 100L else 10L
+            val foodSellAmount = foodTradeAmount.coerceAtMost(user.food.value)
+            addAll(buildFoodOptions(foodTradeAmount, foodSellAmount))
             if (user.hasFeature(TradeLandFeature::class)) {
-                add(buildTradeOption(Buy, Land::class to 1.z, Gold::class to Mechanics.buyLandCostGold))
+                add(buildLandOption())
             }
         })
     )
 
+    private fun buildLandOption() = buildTradeOption(
+        Buy,
+        Land::class to 1.z,
+        Gold::class to Mechanics.buyLandCostGold * 1
+    )
+
+    private fun buildFoodOptions(foodTradeAmount: Long, foodSellAmount: Long) = listOf(
+        buildTradeOption(
+            Buy,
+            Food::class to foodTradeAmount.z,
+            Gold::class to Mechanics.buyFoodCostGold * foodTradeAmount
+        ),
+        buildTradeOption(
+            Sell,
+            Food::class to foodSellAmount.z,
+            Gold::class to Mechanics.sellFoodGainGold * foodSellAmount
+        )
+    )
+
     @Suppress("SpreadOperator")
     private fun buildTradeOption(
-        operation: TradeOperation, target: Pair<KClass<out Resource>, Z>, vararg counters: Pair<KClass<out Resource>, Z>
+        operation: TradeOperation,
+        target: Pair<KClass<out Resource>, Z>,
+        vararg counters: Pair<KClass<out Resource>, Z>,
     ) = SelectOption(
         label = buildLabel(operation, target, counters), onSelected = {
             resultHandler.handle(tradingService.trade(buildTradeRequests(operation, target, counters)))
@@ -62,7 +87,7 @@ class TradePromptBuilder(
     private fun buildLabel(
         operation: TradeOperation,
         target: Pair<KClass<out Resource>, Z>,
-        counters: Array<out Pair<KClass<out Resource>, Z>>
+        counters: Array<out Pair<KClass<out Resource>, Z>>,
     ) = OptionLabel.Single.Dynamic {
         val targetResource = user.findResource(target.first)
         val operationLabel = "${operation.label} ${target.second} " +
@@ -82,7 +107,7 @@ class TradePromptBuilder(
         private fun buildTradeRequests(
             operation: TradeOperation,
             target: Pair<KClass<out Resource>, Z>,
-            counters: Array<out Pair<KClass<out Resource>, Z>>
+            counters: Array<out Pair<KClass<out Resource>, Z>>,
         ): List<TradeRequest> = buildList {
             add(TradeRequest(target.first, operation, target.second))
             addAll(counters.map { (costResource, costAmount) ->

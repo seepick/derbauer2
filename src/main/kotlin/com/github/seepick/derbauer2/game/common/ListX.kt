@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
+import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import kotlin.reflect.KClass
 
 @Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
@@ -39,5 +40,5 @@ fun errorNotFoundEntity(notFoundClass: KClass<*>, options: List<Any>): Nothing {
 
 class NotFoundEntityException(notFoundClass: KClass<*>, options: List<Any>) :
     IllegalArgumentException(
-        "Nothing found for ${notFoundClass.simpleName} (available: ${options.map { it::class.simpleName }})"
+        "Nothing found for ${notFoundClass.simpleNameEmojied} (available: ${options.map { it::class.simpleNameEmojied }})"
     )
