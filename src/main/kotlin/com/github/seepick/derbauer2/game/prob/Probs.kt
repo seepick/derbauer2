@@ -36,11 +36,10 @@ class ProbsImpl : Probs {
 
     private val log = logger {}
 
-    // visible for testing
-    val providerHandles = mutableMapOf<ProbProviderKey<*>, ProbProviderHandle<*>>()
-    val selectorHandles = mutableMapOf<ProbSelectorKey, ProbSelectorHandle<Any>>()
-    val diffuserHandles = mutableMapOf<ProbDiffuserKey, ProbDiffuserHandle>()
-    val thresholderHandles = mutableMapOf<ProbThresholderKey, ProbThresholderHandle>()
+    private val providerHandles = mutableMapOf<ProbProviderKey<*>, ProbProviderHandle<*>>()
+    private val selectorHandles = mutableMapOf<ProbSelectorKey, ProbSelectorHandle<Any>>()
+    private val diffuserHandles = mutableMapOf<ProbDiffuserKey, ProbDiffuserHandle>()
+    private val thresholderHandles = mutableMapOf<ProbThresholderKey, ProbThresholderHandle>()
 
     override fun <T> setProvider(
         key: ProbProviderKey<T>,
@@ -54,8 +53,12 @@ class ProbsImpl : Probs {
 
     override fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T? {
         val handler = providerHandles[key] ?: error("Provider with key '$key' was not registered!")
-        @Suppress("UNCHECKED_CAST")
-        return handler.provide() as? T?
+        return if (handler.calculator.nextBoolean()) {
+            @Suppress("UNCHECKED_CAST")
+            handler.provider() as T
+        } else {
+            null
+        }
     }
 
     override fun <T> setSelector(key: ProbSelectorKey, selector: ProbSelector<T>) {
@@ -89,6 +92,6 @@ class ProbsImpl : Probs {
 
     override fun isThresholdReached(key: ProbThresholderKey): Boolean {
         val handle = thresholderHandles[key] ?: error("Thresholder $key was not registered!")
-        return handle.thresholder.nextBoolean()
+        return handle.thresholder.isThresholdReached()
     }
 }

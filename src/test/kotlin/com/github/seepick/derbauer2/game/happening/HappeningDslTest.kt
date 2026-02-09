@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescripto
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
 import com.github.seepick.derbauer2.game.prob.ProbProviderKey
 import com.github.seepick.derbauer2.game.prob.ProbSelectorKey
-import com.github.seepick.derbauer2.game.prob.fixateProvider
-import com.github.seepick.derbauer2.game.prob.fixateSelectorFirst
+import com.github.seepick.derbauer2.game.prob.fixateAlwaysFirstSelector
+import com.github.seepick.derbauer2.game.prob.fixateConstantValueProvider
 import com.github.seepick.derbauer2.game.prob.probs
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.gold
@@ -31,9 +31,9 @@ class HappeningDslTest : DslTest, StringSpec() {
             Given {
                 setOwned<Gold>(0.z)
                 registerHappeningDescriptors(FoundGoldDescriptor)
-                probs.fixateProvider(ProbProviderKey.happeningTurner, true)
-                probs.fixateProvider(ProbProviderKey.happeningIsNegative, false)
-                probs.fixateSelectorFirst(ProbSelectorKey.happeningChoice)
+                probs.fixateConstantValueProvider(ProbProviderKey.happeningTurner, true)
+                probs.fixateConstantValueProvider(ProbProviderKey.happeningIsNegative, false)
+                probs.fixateAlwaysFirstSelector(ProbSelectorKey.happeningChoice)
             } When {
                 nextTurnToReport {
                     nextPage()
@@ -50,10 +50,10 @@ class HappeningDslTest : DslTest, StringSpec() {
                 setOwned<Gold>(0.z)
                 setStatD11<Happiness>(initialHappiness)
                 registerHappeningDescriptors(HappeningDescriptorStub(HappeningNature.Positive, canHappen = true))
-                probs.fixateProvider(ProbProviderKey.happeningTurner, true)
+                probs.fixateConstantValueProvider(ProbProviderKey.happeningTurner, true)
                 println("111: ${user.happiness}")
-                probs.fixateProvider(ProbProviderKey.happeningIsNegative, false)
-                probs.fixateSelectorFirst(ProbSelectorKey.happeningChoice)
+                probs.fixateConstantValueProvider(ProbProviderKey.happeningIsNegative, false)
+                probs.fixateAlwaysFirstSelector(ProbSelectorKey.happeningChoice)
             } When {
                 nextTurnToReport {
                     nextPage()

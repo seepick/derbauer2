@@ -20,11 +20,11 @@ data class FixedProbThresholder(
     private val threshold: () -> StrictDouble.ZeroToOne,
 ) : ProbThresholder {
 
-    override fun nextBoolean() =
+    override fun isThresholdReached() =
         Random.nextDouble(0.0, 1.0) < threshold().number
 
 }
 
 fun interface ProbThresholder {
-    fun nextBoolean(): Boolean
+    fun isThresholdReached(): Boolean
 }

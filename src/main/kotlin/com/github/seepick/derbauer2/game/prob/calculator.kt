@@ -9,9 +9,9 @@ fun interface ProbCalculator {
     fun nextBoolean(): Boolean
 }
 
-object AlwaysTrueProbCalculator : AlwaysProbCalculator(true)
-object AlwaysFalseProbCalculator : AlwaysProbCalculator(false)
-open class AlwaysProbCalculator(private val always: Boolean) : ProbCalculator {
+object ConstantTrueProbCalculator : ConstantProbCalculator(true)
+object ConstantFalseProbCalculator : ConstantProbCalculator(false)
+open class ConstantProbCalculator(private val always: Boolean) : ProbCalculator {
     override fun nextBoolean() = always
 }
 

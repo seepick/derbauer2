@@ -8,7 +8,7 @@ val GivenDsl.probs get() = koin.get<Probs>() as ProbsStub
 
 fun GivenDsl.disableAllProbs() {
     ProbDiffuserKey.all.forEach { key ->
-        probs.fixateDiffuserPassthrough(key)
+        probs.fixatePassthroughDiffuser(key)
     }
     // provider, selector, thresholder?
 }
