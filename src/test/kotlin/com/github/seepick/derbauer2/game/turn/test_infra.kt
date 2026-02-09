@@ -50,7 +50,7 @@ fun Arb.Companion.turnReport() = arbitrary {
         turn = turn().bind(),
         resourceChanges = ResourceChanges.empty,
         happenings = emptyList(),
-        newFeatures = emptyList(),
+        featurePages = emptyList(),
         actions = emptyList(),
     )
 }
@@ -59,7 +59,7 @@ fun TurnReport.Companion.empty() = TurnReport(
     turn = Turn(1),
     resourceChanges = ResourceChanges.empty,
     happenings = emptyList(),
-    newFeatures = emptyList(),
+    featurePages = emptyList(),
     actions = emptyList(),
 )
 

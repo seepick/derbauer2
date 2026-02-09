@@ -1,6 +1,8 @@
 package com.github.seepick.derbauer2.game.turn
 
 interface Reports {
+    val all: List<TurnReport>
+
     fun add(report: TurnReport)
     fun last(): TurnReport
 }
@@ -8,7 +10,7 @@ interface Reports {
 /** Assessement of historical data */
 class ReportsImpl : Reports {
 
-    private val all = mutableListOf<TurnReport>()
+    override val all = mutableListOf<TurnReport>()
 
     override fun add(report: TurnReport) {
         all += report

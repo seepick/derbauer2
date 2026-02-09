@@ -36,8 +36,10 @@ data class Zz(
     fun toZOrThrowIfNegative() = value.z
     fun toDouble() = value.toDouble()
 
-    fun timesCeil(mulitiplier: Double): Zz = ceil(this.toDouble() * mulitiplier).toLong().zz
-    fun timesFloor(mulitiplier: Double): Zz = floor(this.toDouble() * mulitiplier).toLong().zz
+    infix fun timesCeil(mulitiplier: Double): Zz = ceil(this.toDouble() * mulitiplier).toLong().zz
+    infix fun timesFloor(mulitiplier: Double): Zz = floor(this.toDouble() * mulitiplier).toLong().zz
+    infix fun divCeil(mulitiplier: Double): Zz = ceil(this.toDouble() / mulitiplier).toLong().zz
+    infix fun divFloor(mulitiplier: Double): Zz = floor(this.toDouble() / mulitiplier).toLong().zz
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Zz) = Zz(value + other.value)
@@ -85,8 +87,12 @@ data class Z(
     fun toPrefixedString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
-    fun timesCeil(percent: Percent): Z =
-        ceil(this.value.toDouble() * percent.number).toLong().z
+    infix fun timesCeil(percent: Percent): Z = ceil(this.value.toDouble() * percent.number).toLong().z
+    infix fun timesFloor(percent: Percent): Z = floor(this.value.toDouble() * percent.number).toLong().z
+
+    infix fun divCeil(mulitiplier: Double): Z = ceil(this.toDouble() / mulitiplier).toLong().z
+    infix fun divFloor(mulitiplier: Double): Z = floor(this.toDouble() / mulitiplier).toLong().z
+    infix fun divFloor(mulitiplier: Z): Z = floor(this.toDouble() / mulitiplier.toDouble()).toLong().z
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Z) = Z(value + other.value)

@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.stat.HappinessFeature
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
+import com.github.seepick.derbauer2.game.trading.FoodMerchantFeature
 import com.github.seepick.derbauer2.game.trading.TradeLandFeature
 import com.github.seepick.derbauer2.game.trading.TradingFeature
 import com.github.seepick.derbauer2.game.view.AsciiArt
@@ -49,6 +50,7 @@ abstract class Feature(
         fun <T> asRuntimeType(code: (F) -> T) = code(feature)
         class Trading(feature: TradingFeature) : Discriminator<TradingFeature>(feature)
         class TradeLand(feature: TradeLandFeature) : Discriminator<TradeLandFeature>(feature)
+        class FoodMerchant(feature: FoodMerchantFeature) : Discriminator<FoodMerchantFeature>(feature)
         class Technology(feature: TechnologyFeature) : Discriminator<TechnologyFeature>(feature)
         class Happiness(feature: HappinessFeature) : Discriminator<HappinessFeature>(feature)
     }

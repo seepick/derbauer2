@@ -25,7 +25,7 @@ class ReportPage(
     gameRenderer = gameRenderer,
     button = ContinueButton {
         happeningMultiView.process(reports.last().happenings) {
-            featureMultiView.process(reports.last().newFeatures) {
+            featureMultiView.process(reports.last().featurePages) {
                 current.pageClass = HomePage::class
             }
         }

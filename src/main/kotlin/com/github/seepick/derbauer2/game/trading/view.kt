@@ -12,6 +12,8 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.food
+import com.github.seepick.derbauer2.game.resource.freeStorageFor
+import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.view.BackButton
@@ -43,35 +45,41 @@ class TradePromptBuilder(
     private val resultHandler: TxResultHandler,
     private val tradingService: TradingService,
 ) : PromptProvider {
+
     override fun buildPrompt(): SingleSelectPrompt = SelectPrompt(
         options = Options.Singled(buildList {
-            val userHasTradeFeature = false // FIXME implement feature
-            val foodTradeAmount = if (userHasTradeFeature) 100L else 10L
-            val foodSellAmount = foodTradeAmount.coerceAtMost(user.food.value)
-            addAll(buildFoodOptions(foodTradeAmount, foodSellAmount))
+            addAll(buildFoodOptions())
             if (user.hasFeature(TradeLandFeature::class)) {
                 add(buildLandOption())
             }
         })
     )
 
+    private fun buildFoodOptions(): List<SelectOption<OptionLabel.Single.Dynamic>> {
+        val foodTradeAmount = if (user.hasFeature(FoodMerchantFeature::class)) 100.z else 10.z
+        val foodBuyAmount = foodTradeAmount
+            .coerceAtMost(user.freeStorageFor<Food>()) // can store
+            .coerceAtMost(user.gold divFloor Mechanics.buyFoodCostGold) // can afford
+
+        val foodSellAmount = foodTradeAmount.coerceAtMost(user.food)
+        return listOf(
+            buildTradeOption(
+                Buy,
+                Food::class to foodBuyAmount,
+                Gold::class to Mechanics.buyFoodCostGold * foodBuyAmount
+            ),
+            buildTradeOption(
+                Sell,
+                Food::class to foodSellAmount,
+                Gold::class to Mechanics.sellFoodGainGold * foodSellAmount
+            )
+        )
+    }
+
     private fun buildLandOption() = buildTradeOption(
         Buy,
         Land::class to 1.z,
         Gold::class to Mechanics.buyLandCostGold * 1
-    )
-
-    private fun buildFoodOptions(foodTradeAmount: Long, foodSellAmount: Long) = listOf(
-        buildTradeOption(
-            Buy,
-            Food::class to foodTradeAmount.z,
-            Gold::class to Mechanics.buyFoodCostGold * foodTradeAmount
-        ),
-        buildTradeOption(
-            Sell,
-            Food::class to foodSellAmount.z,
-            Gold::class to Mechanics.sellFoodGainGold * foodSellAmount
-        )
     )
 
     @Suppress("SpreadOperator")

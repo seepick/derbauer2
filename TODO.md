@@ -11,10 +11,10 @@
 * IT: detekt file max lines
 * IT: refactor HasLabels, HasEmoji... shizzle; see: Entity
 * IT: koin test missing bean
+* IT: delete Feature discriminator enum shizzle -or? useful e.g. to assign mechanics-values to specific and exhaustive!
 
 ## Backlog
 
 * BZ: ad HappinessDeathPostModifier: look into history, if previous turns also deaths; if so, increase more (with max!)
-* IT: delete Feature discriminator enum shizzle -or? useful e.g. to assign mechanics-values to specific and exhaustive!
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * IT: make tech enables Feature

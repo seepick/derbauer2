@@ -67,9 +67,11 @@ fun Prompt.shouldHaveSelectOption(label: String) {
 }
 
 fun List<String>.shouldContainSingleIgnoringCase(search: String): String =
-    filter {
-        it.contains(search, ignoreCase = true)
-    }.shouldBeSingleton().first()
+    withClue({ "Expected to contain '$search' but was: ${joinToString { "'$it'" }}" }) {
+        filter {
+            it.contains(search, ignoreCase = true)
+        }.shouldBeSingleton().first()
+    }
 
 fun Prompt.indexOfOption(searchLabel: String) =
     indexOfOptionOrNull(searchLabel) ?: error("No option found for label: '$searchLabel'")

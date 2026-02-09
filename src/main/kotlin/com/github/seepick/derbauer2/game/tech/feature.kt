@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.citizen
+import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 object TechnologyFeatureDescriptor : FeatureDescriptor(
@@ -19,7 +20,7 @@ object TechnologyFeatureDescriptor : FeatureDescriptor(
 ) {
     override val enumIdentifier = FeatureDescriptorType.Technology
 
-    override fun check(user: User) =
+    override fun check(user: User, reports: Reports) =
         user.hasEntity(Citizen::class) &&
                 user.citizen >= Mechanics.featureTechCitizenThresholdGreater
 

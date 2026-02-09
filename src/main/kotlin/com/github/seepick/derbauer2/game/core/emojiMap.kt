@@ -20,6 +20,7 @@ val emojiMap: Map<KClass<out Any>, Emoji?> = mapOf(
     Farm::class to Farm.Data.emojiOrNull,
 
     Happiness::class to Happiness.emoji,
+    Warning::class to Emoji.warning,
 )
 
 val KClass<*>.simpleNameEmojied: String

@@ -1,9 +1,11 @@
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class WarningBus(
-    private val listeners: List<WarningListener>
+    private val listeners: List<WarningListener>,
 ) {
     private val log = logger {}
 
@@ -27,7 +29,15 @@ enum class WarningType {
 data class Warning(
     val type: WarningType,
     val message: String,
-)
+) {
+    override fun toString(): String = "${this::class.simpleNameEmojied}(type=$type, message='$message')"
+
+    companion object {
+        val emoji = "⚠️".emoji
+    }
+}
+
+val Emoji.Companion.warning get() = Warning.emoji
 
 fun interface WarningListener {
     fun onWarning(warning: Warning)

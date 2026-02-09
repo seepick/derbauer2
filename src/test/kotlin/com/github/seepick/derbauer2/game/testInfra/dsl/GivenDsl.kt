@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.testInfra.dsl
 import com.github.seepick.derbauer2.game.common.ListX
 import com.github.seepick.derbauer2.game.common.StrictDouble
 import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
@@ -52,7 +53,7 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         }
     }
 
-    inline fun <reified A : Asset> setOwned(amount: Z): A =
+    inline fun <reified A : Asset> setOwned(amount: Z = 0.z): A =
         user.all.findOrAdd<A>().also {
             it.ownedForTest = amount
         }

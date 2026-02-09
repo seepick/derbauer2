@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.food
 import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -26,18 +27,6 @@ class TradingDslTest : DslTest, DescribeSpec() {
         installDslExtension()
         describe("When buy 🍖") {
             val defaultFoodBuyAmount = 10
-            it("Given 0 💰 Then warn ⚠️") {
-                Given {
-                    setOwned<Gold>(0.z)
-                    setOwned<Food>(0.z)
-                    user.add(TradingFeature())
-                } When {
-                    selectPrompt("trade")
-                    selectPrompt("buy $defaultFoodBuyAmount 🍖")
-                } Then {
-                    shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
-                }
-            }
             it("Given sufficient 💰 Then traded ✅ ") {
                 Given {
                     setOwned<Gold>(Mechanics.buyFoodCostGold * defaultFoodBuyAmount)
@@ -59,9 +48,36 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     )
                 }
             }
+            it("Given little storage for 🍖 And plenty 💰 Then max buy capped to free storage") {
+                val foodDiff = 2
+                Given {
+                    setOwned<Gold>(1000.z)
+                    setOwned<Granary>(1.z)
+                    setOwned<Food>(Mechanics.granaryCapacity - foodDiff)
+                    user.add(TradingFeature())
+                } When {
+                    selectPrompt("trade")
+                } Then {
+                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("buy $foodDiff 🍖 food")
+                }
+            }
+            it("Given plenty storage for 🍖 And little 💰 Then max buy capped to affordable amount") {
+                val buyableFoodAmount = 2
+                Given {
+                    setOwned<Gold>(Mechanics.buyFoodCostGold * buyableFoodAmount)
+                    setOwned<Granary>(1.z)
+                    setOwned<Food>(0.z)
+                    user.add(TradingFeature())
+                } When {
+                    selectPrompt("trade")
+                } Then {
+                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("buy $buyableFoodAmount 🍖 food")
+                }
+            }
         }
         describe("When sell 🍖") {
-            it("Max sell capped 3/10") {
+            // Successful sell
+            it("Given less 🍖 owned than default tradable amount Then max sell capped to owned") {
                 val foodOwned = 3
                 Given {
                     setOwned<Gold>(0.z)
@@ -71,7 +87,23 @@ class TradingDslTest : DslTest, DescribeSpec() {
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("Sell $foodOwned 🍖 Food")
+                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("sell $foodOwned 🍖 food")
+                }
+            }
+        }
+        describe("Buy Land 🌍") {
+            it("Given 0 💰 Then warn ⚠️") {
+                Given {
+                    setOwned<Gold>(0.z)
+                    setOwned<Land>(0.z)
+                    setOwned<Food>()
+                    user.add(TradingFeature())
+                    user.add(TradeLandFeature())
+                } When {
+                    selectPrompt("trade")
+                    selectPrompt("buy 1 🌍")
+                } Then {
+                    shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
                 }
             }
         }

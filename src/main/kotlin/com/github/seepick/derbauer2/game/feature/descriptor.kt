@@ -3,8 +3,10 @@ package com.github.seepick.derbauer2.game.feature
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.stat.HappinessFeatureDescriptor
 import com.github.seepick.derbauer2.game.tech.TechnologyFeatureDescriptor
+import com.github.seepick.derbauer2.game.trading.FoodMerchantFeature
 import com.github.seepick.derbauer2.game.trading.TradeLandFeatureDescriptor
 import com.github.seepick.derbauer2.game.trading.TradingFeature
+import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 /** Enforce exhaustion despite FeatureDescriptor not being a sealed class */
@@ -13,6 +15,7 @@ enum class FeatureDescriptorType(val descriptor: FeatureDescriptor) {
     Technology(TechnologyFeatureDescriptor),
     Happiness(HappinessFeatureDescriptor),
     Trading(TradingFeature.Descriptor),
+    FoodMerchant(FoodMerchantFeature.Descriptor)
 }
 
 abstract class FeatureDescriptor(
@@ -23,7 +26,7 @@ abstract class FeatureDescriptor(
 
     @Suppress("unused")
     abstract val enumIdentifier: FeatureDescriptorType // only to enforce registration here ;)
-    abstract fun check(user: User): Boolean
+    abstract fun check(user: User, reports: Reports): Boolean
     abstract fun build(): Feature
 
     companion object {

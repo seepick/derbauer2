@@ -17,7 +17,7 @@ data class ResourcesTradedAction(val requests: List<TradeRequest>) : Action {
 class TradingService(
     private val user: User,
     private val actionBus: ActionBus,
-) : Action {
+) {
 
     private val log = logger {}
 

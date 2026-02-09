@@ -34,12 +34,13 @@ class TurnerTest : DescribeSpec(
             val currentTurn = CurrentTurnImpl()
             val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo, currentTurn)
                 .apply { initProb() }
+            val featureTurner = FeatureTurner(user, ReportsImpl())
             return Turner(
                 user = user,
                 globalSteps = emptyList(),
                 resSteps = steps.toList(),
                 happeningTurner = happeningTurner,
-                featureTurner = FeatureTurner(user),
+                featureTurner = featureTurner,
                 actionsCollector = ActionsCollector(),
                 turn = currentTurn,
             )

@@ -52,7 +52,7 @@ class Turner(
                 .map { execResourceStep(it) }
                 .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
             happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
-            newFeatures = featureTurner.buildFeatureMultiPages(),
+            featurePages = featureTurner.buildFeatureMultiPages(),
             actions = actionsCollector.getAllAndClear(),
         )
         globalSteps.forEach { it.execPostTurn(report) }
@@ -100,7 +100,7 @@ data class TurnReport(
     val turn: Turn,
     val resourceChanges: ResourceChanges,
     val happenings: List<Happening>,
-    val newFeatures: List<FeatureSubPage>,
+    val featurePages: List<FeatureSubPage>, // TODO execute before, and only add Feature (instead of page)
     val actions: List<Action>,
 ) {
     companion object // for extension functions
