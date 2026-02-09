@@ -18,7 +18,6 @@ import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.stat.Happiness
 import com.github.seepick.derbauer2.game.stat.findStatOrNull
-import kotlin.math.ceil
 
 private val probEatKey = ProbDiffuserKey("eat")
 val ProbDiffuserKey.Companion.eatKey get() = probEatKey
@@ -65,8 +64,8 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     /** @return negative numbered change */
     private fun calcBasicFoodEaten(citizen: Citizen): Z {
-        val rawConsumed = ceil(citizen.owned.value.toDouble() * Mechanics.citizenEatAmount.number).toLong().zz
-        val diffusedConsumed = probs.diffuse(ProbDiffuserKey.eatKey, rawConsumed).toZLimitMinZero()
+        val rawConsumed = citizen.owned.timesCeil(Mechanics.citizenEatAmount)
+        val diffusedConsumed = probs.diffuse(ProbDiffuserKey.eatKey, rawConsumed.zz).toZLimitMinZero()
         return diffusedConsumed.coerceAtLeast(1.z)
     }
 

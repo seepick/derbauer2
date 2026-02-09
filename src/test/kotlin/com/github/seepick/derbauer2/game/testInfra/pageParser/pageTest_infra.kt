@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.building.BuildingService
 import com.github.seepick.derbauer2.game.core.ActionBusImpl
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.turn.CurrentTurn
+import com.github.seepick.derbauer2.game.turn.CurrentTurnImpl
 import com.github.seepick.derbauer2.game.turn.ReportsImpl
 import com.github.seepick.derbauer2.game.turn.Turner
 import com.github.seepick.derbauer2.game.view.GameRenderer
@@ -28,7 +28,7 @@ class SetupGamePageContext {
     val currentPage = CurrentPage(BuildingPage::class)
     val turner = mockk<Turner> {}
     val reports = ReportsImpl()
-    val currentTurn = CurrentTurn()
+    val currentTurn = CurrentTurnImpl()
     val gameRenderer = GameRenderer(user, currentTurn)
     val resultHandler = mockk<TxResultHandler>()
     val textmap = Textmap(MainWin.matrixSize)

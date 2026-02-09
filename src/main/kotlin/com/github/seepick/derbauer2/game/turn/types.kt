@@ -2,17 +2,25 @@ package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.game.core.AiGenerated
 
-class CurrentTurn {
-    var current = Turn()
-        private set
+interface CurrentTurn {
+    val current: Turn
+    fun next(): Turn
 
-    fun next() {
-        current = current.increment()
-    }
+    companion object // for extensions
+}
+
+class CurrentTurnImpl : CurrentTurn {
+    override var current: Turn = Turn()
+    override fun next() =
+        current.increment().also {
+            current = it
+        }
 }
 
 @Suppress("MagicNumber")
+@AiGenerated // partially
 data class Turn(val number: Int = 1) {
     init {
         require(number >= 1) { "Turn number must be >= 1 but was: $number" }

@@ -121,12 +121,20 @@ val Season.happinessChanger: Double
         Season.Winter -> -0.01
     }
 
+val Season.foodProductionModifier: Double
+    get() = when (this) {
+        Season.Spring -> 0.9
+        Season.Summer -> 1.3
+        Season.Autumn -> 1.1
+        Season.Winter -> 0.7
+    }
+
 val Season.ratsWillEatFoodProb: Double01
     get() = when (this) {
-        Season.Winter -> 1.0.double01
-        Season.Autumn -> 0.75.double01
         Season.Spring -> 0.5.double01
         Season.Summer -> 0.25.double01
+        Season.Autumn -> 0.75.double01
+        Season.Winter -> 1.0.double01
     }
 
 val HappeningNature.happinessImpact

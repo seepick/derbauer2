@@ -62,3 +62,19 @@ fun TurnReport.Companion.empty() = TurnReport(
     newFeatures = emptyList(),
     actions = emptyList(),
 )
+
+operator fun CurrentTurn.Companion.invoke(season: Season) = CurrentTurn(season.anyValidTurnNumber)
+operator fun CurrentTurn.Companion.invoke(number: Int) = CurrentTurnStub(Turn(number))
+
+class CurrentTurnStub(initialTurn: Turn) : CurrentTurn {
+    override var current: Turn = initialTurn
+    override fun next() = current.increment().also { current = it }
+}
+
+val Season.anyValidTurnNumber: Int
+    get() = when (this) {
+        Season.Spring -> 1
+        Season.Summer -> 14
+        Season.Autumn -> 27
+        Season.Winter -> 40
+    }

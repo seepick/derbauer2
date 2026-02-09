@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.common
 import com.github.seepick.derbauer2.game.core.AiGenerated
 import kotlin.math.abs
 import kotlin.math.ceil
+import kotlin.math.floor
 
 val Long.zz get() = Zz(this)
 @Suppress("VariableMinLength")
@@ -34,6 +35,9 @@ data class Zz(
     fun toZLimitMinZero() = if (value < 0) 0.z else value.z
     fun toZOrThrowIfNegative() = value.z
     fun toDouble() = value.toDouble()
+
+    fun timesCeil(mulitiplier: Double): Zz = ceil(this.toDouble() * mulitiplier).toLong().zz
+    fun timesFloor(mulitiplier: Double): Zz = floor(this.toDouble() * mulitiplier).toLong().zz
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Zz) = Zz(value + other.value)
@@ -80,6 +84,9 @@ data class Z(
 
     fun toPrefixedString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
+
+    fun timesCeil(percent: Percent): Z =
+        ceil(this.value.toDouble() * percent.number).toLong().z
 
     operator fun unaryMinus() = Zz(-value)
     operator fun plus(other: Z) = Z(value + other.value)

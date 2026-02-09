@@ -31,7 +31,7 @@ class TurnerTest : DescribeSpec(
         }
 
         fun Turner.Companion.build(vararg steps: ResourceTurnStep): Turner {
-            val currentTurn = CurrentTurn()
+            val currentTurn = CurrentTurnImpl()
             val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo, currentTurn)
                 .apply { initProb() }
             return Turner(
