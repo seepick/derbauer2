@@ -8,7 +8,7 @@ import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
-import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
+import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
@@ -25,7 +25,7 @@ class BuildTxTest : DescribeSpec({
     lateinit var buildingService: BuildingService
     lateinit var actionBus: ActionBus
     beforeTest {
-        user = User(DefaultTxValidatorRepo.validators)
+        user = User(DefaultTxValidatorRegistry.validators)
         actionBus = mockk()
         buildingService = BuildingService(user, actionBus)
     }

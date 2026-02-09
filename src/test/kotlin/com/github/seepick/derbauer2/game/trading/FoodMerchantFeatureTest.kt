@@ -30,13 +30,13 @@ class FoodMerchantFeatureTest : StringSpec({
         val reports = ReportsImpl().apply {
             add(reportWithFoodTrade(threshold - 1))
         }
-        FoodMerchantFeature.Descriptor.check(user, reports) shouldBe false
+        FoodMerchantFeature.Ref.check(user, reports) shouldBe false
     }
     "Sufficient trades Then check passes" {
         val reports = ReportsImpl().apply {
             add(reportWithFoodTrade(threshold - 1))
             add(reportWithFoodTrade(1))
         }
-        FoodMerchantFeature.Descriptor.check(user, reports) shouldBe true
+        FoodMerchantFeature.Ref.check(user, reports) shouldBe true
     }
 })

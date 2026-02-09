@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
-import com.github.seepick.derbauer2.game.feature.enableFeature
+import com.github.seepick.derbauer2.game.feature.addFeature
 import com.github.seepick.derbauer2.game.testInfra.DslTest
 import com.github.seepick.derbauer2.game.testInfra.dsl.Given
 import com.github.seepick.derbauer2.game.testInfra.dsl.Then
@@ -17,7 +16,7 @@ class TechDslTest : DslTest, StringSpec() {
         installDslExtension()
         "Given tech enabled When re-render page Then prompt contains research option" {
             Given {
-                user.enableFeature(FeatureDescriptorType.Technology)
+                user.addFeature(TechnologyFeature())
             } When {
                 page.invalidate()
             } Then {

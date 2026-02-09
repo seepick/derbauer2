@@ -6,9 +6,10 @@ import com.github.seepick.derbauer2.game.turn.Reports
 class FeatureTurner(
     private val user: User,
     private val reports: Reports,
+    private val featureRefRegistry: FeatureRefRegistry,
 ) {
     fun buildFeatureMultiPages(): List<FeatureSubPage> =
-        FeatureDescriptor.all
+        featureRefRegistry.getAll()
             .filter { !user.hasFeature(it) && it.check(user, reports) }
             .map { FeatureSubPage(it.build()) }
 }

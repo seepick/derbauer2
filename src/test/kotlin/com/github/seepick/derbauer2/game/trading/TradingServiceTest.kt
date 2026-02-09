@@ -11,7 +11,7 @@ import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.gold
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
 import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
-import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRepo
+import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
@@ -22,7 +22,7 @@ class TradingServiceTest : DescribeSpec({
     lateinit var user: User
     lateinit var service: TradingService
     beforeTest {
-        user = User(DefaultTxValidatorRepo.validators)
+        user = User(DefaultTxValidatorRegistry.validators)
         service = TradingService(user, ActionBusStub())
     }
 

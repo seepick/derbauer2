@@ -29,6 +29,7 @@ fun dslTestModule() = module {
     single { ProbsStub() } bind Probs::class
     single { EmptyGlobalPreStatModifierRepo } bind GlobalPreStatModifierRepo::class
     single { EmptyGlobalPostStatModifierRepo } bind GlobalPostStatModifierRepo::class
+//    FeatureRefRegistry?
 }
 
 /** Does NOT initialize starting game assets; clean state for tests + more stability (independence). */

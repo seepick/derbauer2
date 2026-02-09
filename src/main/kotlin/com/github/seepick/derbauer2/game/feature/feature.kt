@@ -16,8 +16,8 @@ fun <F : Feature> User.hasFeature(featureClass: KClass<F>): Boolean =
 inline fun <reified F : Feature> User.hasFeature(): Boolean =
     hasFeature(F::class)
 
-fun User.hasFeature(descriptor: FeatureDescriptor): Boolean =
-    all.filterIsInstance<Feature>().any { it.descriptor == descriptor }
+fun User.hasFeature(ref: FeatureRef): Boolean =
+    all.filterIsInstance<Feature>().any { it.ref == ref }
 
 interface FeatureData {
     val label: String
@@ -26,9 +26,9 @@ interface FeatureData {
 }
 
 abstract class Feature(
-    val descriptor: FeatureDescriptor,
-) : Entity, FeatureData by descriptor {
-    override val labelSingular = descriptor.label
+    val ref: FeatureRef,
+) : Entity, FeatureData by ref {
+    override val labelSingular = ref.label
 
     abstract val discriminator: Discriminator<out Feature>
 

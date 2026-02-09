@@ -11,7 +11,6 @@
 * IT: detekt file max lines
 * IT: refactor HasLabels, HasEmoji... shizzle; see: Entity
 * IT: koin test missing bean
-* IT: delete Feature discriminator enum shizzle -or? useful e.g. to assign mechanics-values to specific and exhaustive!
 
 ## Backlog
 

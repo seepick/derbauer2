@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.happening
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.happening.happenings.HappeningRefRegistry
 import com.github.seepick.derbauer2.game.prob.GrowthProbCalculator
 import com.github.seepick.derbauer2.game.prob.PercentageProbCalculator
 import com.github.seepick.derbauer2.game.prob.ProbInitializer
@@ -21,7 +21,7 @@ val ProbSelectorKey.Companion.happeningChoice get() = ProbSelectorKey("happening
 class HappeningTurner(
     private val user: User,
     private val probs: Probs,
-    private val repo: HappeningDescriptorRepo,
+    private val repo: HappeningRefRegistry,
     private val currentTurn: CurrentTurn,
 ) : ProbInitializer {
 
@@ -67,7 +67,7 @@ class HappeningTurner(
             )
         ) { true }
 
-        probs.setSelector<HappeningDescriptor>(ProbSelectorKey.happeningChoice, RandomProbSelector())
+        probs.setSelector<HappeningRef>(ProbSelectorKey.happeningChoice, RandomProbSelector())
     }
 
     fun maybeHappening(): Happening? =

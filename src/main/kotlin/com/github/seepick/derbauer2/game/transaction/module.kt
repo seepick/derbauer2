@@ -4,5 +4,5 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 fun transactionModule() = module {
-    single { DefaultTxValidatorRepo } bind TxValidatorRepo::class
+    single { DefaultTxValidatorRegistry } bind TxValidatorRegistry::class
 }

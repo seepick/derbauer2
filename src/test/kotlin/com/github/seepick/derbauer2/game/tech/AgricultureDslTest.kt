@@ -4,8 +4,7 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.core.shouldHaveEntity
 import com.github.seepick.derbauer2.game.core.shouldNotHaveEntity
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
-import com.github.seepick.derbauer2.game.feature.enableFeature
+import com.github.seepick.derbauer2.game.feature.addFeature
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.testInfra.DslTest
@@ -22,7 +21,7 @@ class AgricultureDslTest : DslTest, StringSpec() {
             Given {
                 setOwned<Knowledge>(1000.z)
                 setOwned<Gold>(1000.z)
-                user.enableFeature(FeatureDescriptorType.Technology)
+                user.addFeature(TechnologyFeature())
                 page.invalidate()
             } When {
                 selectPrompt("research")
@@ -35,7 +34,7 @@ class AgricultureDslTest : DslTest, StringSpec() {
             Given {
                 setOwned<Knowledge>(0.z)
                 setOwned<Gold>(0.z)
-                user.enableFeature(FeatureDescriptorType.Technology)
+                user.addFeature(TechnologyFeature())
                 page.invalidate()
             } When {
                 selectPrompt("research")

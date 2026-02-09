@@ -1,19 +1,19 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
+import com.github.seepick.derbauer2.game.happening.HappeningRef
 
-interface HappeningDescriptorRepo {
+interface HappeningRefRegistry {
     /** @return is never empty */
-    val all: List<HappeningDescriptor>
+    val all: List<HappeningRef>
 
     companion object
 }
 
-object DefaultHappeningDescriptorRepo : HappeningDescriptorRepo {
+object DefaultHappeningRefRegistry : HappeningRefRegistry {
     override val all = listOf(
-        FoundGoldDescriptor,
-        RatsEatFoodDescriptor,
-        RottenFoodDescriptor,
+        FoundGoldHappening.Ref,
+        RatsEatFoodHappening.Ref,
+        RottenFoodHappening.Ref,
         // ...
         // ..
         // .

@@ -10,8 +10,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.feature.Feature
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
+import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.turn.Reports
@@ -64,7 +63,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
     }
 }
 
-class HappinessFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
+class HappinessFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     override val discriminator = Discriminator.Happiness(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
@@ -73,13 +72,11 @@ class HappinessFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor
         user.add(Theater())
     }
 
-    object Descriptor : FeatureDescriptor(
+    object Ref : FeatureRef(
         label = "Happiness",
         asciiArt = AsciiArt.smiley,
         multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.happiness}",
     ) {
-        override val enumIdentifier = FeatureDescriptorType.Happiness
-
         override fun check(user: User, reports: Reports) =
             user.hasEntity(Citizen::class) && user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
 

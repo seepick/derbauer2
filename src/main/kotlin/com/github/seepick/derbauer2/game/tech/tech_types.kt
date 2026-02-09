@@ -15,11 +15,8 @@ import com.github.seepick.derbauer2.game.stat.PreStatModifier
 import com.github.seepick.derbauer2.game.stat.StatKClass
 
 /**
- * CAVE: Register in [DefaultTechItemRepo]
+ * CAVE: Register Refs in [DefaultTechRefRegistry]
  */
-object AgricultureTechRef : AbstractTechRef(data = AgricultureTech.Data) {
-    override val techClass = AgricultureTech::class
-}
 
 class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier {
     override val handlingResource = Food::class
@@ -37,10 +34,10 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier
             add(Gold::class, Mechanics.techAgricultureCostsGold)
         }
     }
-}
 
-object IrrigationTechRef : AbstractTechRef(data = IrrigationTech.Data) {
-    override val techClass = IrrigationTech::class
+    object Ref : AbstractTechRef(data = Data) {
+        override val techClass = AgricultureTech::class
+    }
 }
 
 class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier {
@@ -59,11 +56,13 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier 
             add(Gold::class, Mechanics.techIrrigationCostsGold)
         }
     }
+
+    object Ref : AbstractTechRef(data = Data) {
+        override val techClass = IrrigationTech::class
+    }
+
 }
 
-object CapitalismTechRef : AbstractTechRef(data = CapitalismTech.Data) {
-    override val techClass = CapitalismTech::class
-}
 
 class CapitalismTech : Tech, TechData by Data, PreStatModifier {
 
@@ -83,5 +82,9 @@ class CapitalismTech : Tech, TechData by Data, PreStatModifier {
             add(Knowledge::class, Mechanics.techCapitalismCostsKnowledge)
             add(Gold::class, Mechanics.techCapitalismCostsGold)
         }
+    }
+
+    object Ref : AbstractTechRef(data = Data) {
+        override val techClass = CapitalismTech::class
     }
 }

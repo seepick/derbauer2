@@ -20,7 +20,7 @@ interface HappeningData {
 
 interface Happening : MultiViewSubPage, HappeningData
 
-interface HappeningDescriptor : HappeningData {
+interface HappeningRef : HappeningData {
     /** technically able to: entities existing, minimum resources owned */
     fun canHappen(user: User, probs: Probs): Boolean
     /** wants to based on probability&co */

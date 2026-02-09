@@ -9,8 +9,8 @@ import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.core.ratsWillEatFoodProb
 import com.github.seepick.derbauer2.game.happening.Happening
 import com.github.seepick.derbauer2.game.happening.HappeningData
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
 import com.github.seepick.derbauer2.game.happening.HappeningNature
+import com.github.seepick.derbauer2.game.happening.HappeningRef
 import com.github.seepick.derbauer2.game.prob.ProbThresholderKey
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Food
@@ -24,32 +24,9 @@ import com.github.seepick.derbauer2.textengine.textmap.Textmap
 private val ratsWillHappenForSeasonKey = ProbThresholderKey("ratsWillHappenForSeason")
 val ProbThresholderKey.Companion.ratsWillHappenForSeason get() = ratsWillHappenForSeasonKey
 
-object RatsEatFoodDescriptor : HappeningDescriptor {
-
-    override val nature = HappeningNature.Negative
-
-    override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
-        probs.setThresholder(ProbThresholderKey.ratsWillHappenForSeason) {
-            turn.current.season.ratsWillEatFoodProb
-        }
-    }
-
-    override fun canHappen(user: User, probs: Probs) =
-        user.hasEntity(Food::class) &&
-                user.findResource<Food>().owned > 0
-
-    override fun willHappen(user: User, probs: Probs) =
-        probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason)
-
-    override fun buildHappening(user: User): RatsEatFoodHappening {
-        val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)
-        return RatsEatFoodHappening(amountFoodEaten = foodEaten)
-    }
-}
-
 data class RatsEatFoodHappening(
     val amountFoodEaten: Z,
-    private val descriptor: HappeningData = RatsEatFoodDescriptor,
+    private val descriptor: HappeningData = Ref,
 ) : Happening, HappeningData by descriptor {
     init {
         require(amountFoodEaten > 0) { "amountFoodEaten must be positive: $amountFoodEaten" }
@@ -64,10 +41,32 @@ data class RatsEatFoodHappening(
     override fun execute(user: User) {
         user.execTx(TxOwnable(Food::class, -amountFoodEaten)).errorOnFail()
     }
+
+    object Ref : HappeningRef {
+        override val nature = HappeningNature.Negative
+
+        override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
+            probs.setThresholder(ProbThresholderKey.ratsWillHappenForSeason) {
+                turn.current.season.ratsWillEatFoodProb
+            }
+        }
+
+        override fun canHappen(user: User, probs: Probs) =
+            user.hasEntity(Food::class) &&
+                    user.findResource<Food>().owned > 0
+
+        override fun willHappen(user: User, probs: Probs) =
+            probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason)
+
+        override fun buildHappening(user: User): RatsEatFoodHappening {
+            val foodEaten = user.findResource<Food>().owned.coerceAtMost(15.z)
+            return RatsEatFoodHappening(amountFoodEaten = foodEaten)
+        }
+    }
+
 }
 
-@Suppress("ObjectPropertyName")
-private val _rat = AsciiArt(
+private val ratAscii = AsciiArt(
     """
          .---.
       (\./)     \.......-
@@ -75,4 +74,5 @@ private val _rat = AsciiArt(
       " ` " "
       """.trimIndent()
 )
-val AsciiArt.Companion.rat get() = _rat
+
+val AsciiArt.Companion.rat get() = ratAscii

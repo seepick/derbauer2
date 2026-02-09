@@ -2,12 +2,14 @@ package com.github.seepick.derbauer2
 
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
-import com.github.seepick.derbauer2.game.feature.enableFeature
+import com.github.seepick.derbauer2.game.feature.addFeature
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.startApp
+import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
+import com.github.seepick.derbauer2.game.trading.TradeLandFeature
+import com.github.seepick.derbauer2.game.trading.TradingFeature
 
 object DerBauer2DevApp {
     init {
@@ -23,9 +25,9 @@ object DerBauer2DevApp {
             postInit = { koin ->
                 val user = koin.get<User>()
                 user.findResource<Gold>().ownedForTest = 1000.z
-                user.enableFeature(FeatureDescriptorType.Technology)
-                user.enableFeature(FeatureDescriptorType.Trading)
-                user.enableFeature(FeatureDescriptorType.TradeLand)
+                user.addFeature(TechnologyFeature())
+                user.addFeature(TradingFeature())
+                user.addFeature(TradeLandFeature())
 //                val agr = koin.get<TechTree>().filterResearchableItems().single { it.type == TechType.AGRICULTURE }
 //                user.researchTech(agr)
             }

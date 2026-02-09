@@ -27,7 +27,7 @@ class RatsEatFoodTest : DescribeSpec({
     }
 
     describe("can happen") {
-        fun canHappen() = RatsEatFoodDescriptor.canHappen(user, probs)
+        fun canHappen() = RatsEatFoodHappening.Ref.canHappen(user, probs)
 
         it("Given no 🍖 Then cant") {
             canHappen().shouldBeFalse()
@@ -42,7 +42,7 @@ class RatsEatFoodTest : DescribeSpec({
         }
     }
     describe("will happen") {
-        fun willHappen() = RatsEatFoodDescriptor.willHappen(user, probs)
+        fun willHappen() = RatsEatFoodHappening.Ref.willHappen(user, probs)
 
         it("Given threshold no Then wont") {
             every { probs.isThresholdReached(ProbThresholderKey.ratsWillHappenForSeason) } returns false
@@ -60,18 +60,18 @@ class RatsEatFoodTest : DescribeSpec({
 
         it("Given no food Then fail") {
             shouldThrow<IllegalArgumentException> {
-                RatsEatFoodDescriptor.buildHappening(user)
+                RatsEatFoodHappening.Ref.buildHappening(user)
             }
         }
         it("Given more than max food Then should eat only max amount") {
             user.addResource(Food(), maxFoodEaten + 5)
-            val happening = RatsEatFoodDescriptor.buildHappening(user)
+            val happening = RatsEatFoodHappening.Ref.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual maxFoodEaten
         }
         it("Given less food than max Then should eat all food") {
             user.addResource(Food(), maxFoodEaten - 1.z)
-            val happening = RatsEatFoodDescriptor.buildHappening(user)
+            val happening = RatsEatFoodHappening.Ref.buildHappening(user)
 
             happening.amountFoodEaten shouldBeEqual maxFoodEaten - 1.z
         }
@@ -82,7 +82,7 @@ class RatsEatFoodTest : DescribeSpec({
             user.addResource(Land(), 10.z)
             user.addBuilding(Granary(), 1.z)
             user.addResource(Food(), origAmount)
-            val happening = RatsEatFoodDescriptor.buildHappening(user)
+            val happening = RatsEatFoodHappening.Ref.buildHappening(user)
 
             happening.execute(user)
 

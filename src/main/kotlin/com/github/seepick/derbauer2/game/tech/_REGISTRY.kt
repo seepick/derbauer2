@@ -1,14 +1,14 @@
 package com.github.seepick.derbauer2.game.tech
 
-interface TechItemRepo {
-    val items: List<TechRef>
+interface TechRefRegistry {
+    fun getAll(): List<TechRef>
 }
 
-object DefaultTechItemRepo : TechItemRepo {
-    override val items = listOf(
-        AgricultureTechRef,
-        IrrigationTechRef,
-        CapitalismTechRef,
+object DefaultTechRefRegistry : TechRefRegistry {
+    override fun getAll() = listOf(
+        AgricultureTech.Ref,
+        IrrigationTech.Ref,
+        CapitalismTech.Ref,
         // ...
         // ..
         // .

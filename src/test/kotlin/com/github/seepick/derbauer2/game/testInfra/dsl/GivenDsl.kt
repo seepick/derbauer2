@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Entity
-import com.github.seepick.derbauer2.game.happening.HappeningDescriptor
-import com.github.seepick.derbauer2.game.happening.happenings.HappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.happening.HappeningRef
+import com.github.seepick.derbauer2.game.happening.happenings.HappeningRefRegistry
 import com.github.seepick.derbauer2.game.initGame
 import com.github.seepick.derbauer2.game.prob.disableAllProbs
 import com.github.seepick.derbauer2.game.stat.Stat
@@ -47,8 +47,8 @@ fun Given(
 @TestDsl
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
-    fun registerHappeningDescriptors(vararg descriptors: HappeningDescriptor) {
-        koin.declareMock<HappeningDescriptorRepo> {
+    fun registerHappeningDescriptors(vararg descriptors: HappeningRef) {
+        koin.declareMock<HappeningRefRegistry> {
             every { all } answers { descriptors.toList() }
         }
     }

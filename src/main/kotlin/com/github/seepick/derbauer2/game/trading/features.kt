@@ -6,8 +6,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.Feature
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
-import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
+import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Land
@@ -16,7 +15,7 @@ import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
-class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
+class TradingFeature(descriptor: Ref = Ref) : Feature(descriptor) {
 
     override val discriminator = Discriminator.Trading(this)
     override fun mutate(user: User) {
@@ -25,12 +24,11 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
 
     override fun deepCopy() = this // immutable
 
-    object Descriptor : FeatureDescriptor(
+    object Ref : FeatureRef(
         label = "Trading",
         asciiArt = AsciiArt.coin,
         multilineDescription = "A marketplace has opened for you. Enjoy you darn capitalist! 🤑",
     ) {
-        override val enumIdentifier = FeatureDescriptorType.Trading
         override fun check(user: User, reports: Reports) =
             user.hasEntity<Food>() &&
                     user.storageUsage<Food>() >= Mechanics.featureTradingThresholdFoodStorageUsedBigger
@@ -40,20 +38,19 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
 }
 
 
-class TradeLandFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
+class TradeLandFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     override val discriminator = Discriminator.TradeLand(this)
     override fun deepCopy() = this // immutable
     override fun mutate(user: User) {
         // nothing to do, the feature just unlocks the option to trade land in the trading page
     }
 
-    object Descriptor : FeatureDescriptor(
+    object Ref : FeatureRef(
         label = "Trade Land",
         asciiArt = AsciiArt.island,
         multilineDescription = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\n" +
                 "And some more... hehe 😅",
     ) {
-        override val enumIdentifier = FeatureDescriptorType.TradeLand
         override fun check(user: User, reports: Reports) =
             user.hasFeature<TradingFeature>() &&
                     user.hasEntity<Land>() &&
@@ -63,7 +60,7 @@ class TradeLandFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor
     }
 }
 
-class FoodMerchantFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
+class FoodMerchantFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     override val discriminator = Discriminator.FoodMerchant(this)
     override fun mutate(user: User) {
         // nothing to do
@@ -71,14 +68,12 @@ class FoodMerchantFeature(descriptor: Descriptor = Descriptor) : Feature(descrip
 
     override fun deepCopy() = this // immutable
 
-    object Descriptor : FeatureDescriptor(
+    object Ref : FeatureRef(
         label = "Food Merchant",
         asciiArt = AsciiArt.coin,
         multilineDescription = "You have been busy trading your food 🍖 😋 🍖\n"
                 + "You shall be rewarded by even moooooar cheesy, faty, yummy food trading! 💰 🤑 💰",
     ) {
-        override val enumIdentifier = FeatureDescriptorType.FoodMerchant
-
         override fun check(user: User, reports: Reports) =
             reports.filterAllActionInstanceOf<ResourcesTradedAction>()
                 .sumOf { action ->

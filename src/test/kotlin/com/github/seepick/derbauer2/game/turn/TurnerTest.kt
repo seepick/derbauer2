@@ -7,9 +7,10 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.feature.FeatureRefRegistry
 import com.github.seepick.derbauer2.game.feature.FeatureTurner
 import com.github.seepick.derbauer2.game.happening.HappeningTurner
-import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningDescriptorRepo
+import com.github.seepick.derbauer2.game.happening.happenings.DefaultHappeningRefRegistry
 import com.github.seepick.derbauer2.game.prob.ProbsImpl
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -32,9 +33,10 @@ class TurnerTest : DescribeSpec(
 
         fun Turner.Companion.build(vararg steps: ResourceTurnStep): Turner {
             val currentTurn = CurrentTurnImpl()
-            val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningDescriptorRepo, currentTurn)
+            val happeningTurner = HappeningTurner(user, probabilities, DefaultHappeningRefRegistry, currentTurn)
                 .apply { initProb() }
-            val featureTurner = FeatureTurner(user, ReportsImpl())
+            val featureReg = FeatureRefRegistry { emptyList() }
+            val featureTurner = FeatureTurner(user, ReportsImpl(), featureReg)
             return Turner(
                 user = user,
                 globalSteps = emptyList(),
