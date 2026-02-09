@@ -73,6 +73,7 @@ class GameRendererTest : PageTest, StringSpec({
     }
 })
 
+@Suppress("LongParameterList")
 class DummyPage(
     user: User,
     turn: CurrentTurn,

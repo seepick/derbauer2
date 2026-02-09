@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber", "VariableMaxLength")
+
 package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.DerBauer2
@@ -13,7 +15,7 @@ import com.github.seepick.derbauer2.game.turn.Season
 /**
  * All game mechanics constants; a magic constant provider.
  */
-@Suppress("MayBeConstant", "MagicNumber", "VariableMaxLength")
+@Suppress("MayBeConstant")
 object Mechanics {
 
     private val DEV = DerBauer2.isDevMode

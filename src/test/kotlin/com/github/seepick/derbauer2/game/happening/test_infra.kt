@@ -25,5 +25,7 @@ class HappeningDescriptorStub(
     override fun canHappen(user: User, probs: Probs) = canHappen
     override fun willHappen(user: User, probs: Probs) = willHappen
     override fun buildHappening(user: User) = happening
-    override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {}
+    override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
+        // no-op
+    }
 }

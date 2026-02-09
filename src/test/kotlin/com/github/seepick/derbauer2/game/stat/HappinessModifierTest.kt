@@ -24,10 +24,11 @@ class HappinessModifierTest : StringSpec({
         "Given some 🙎🏻‍♂️ and 🥳 Then -🥳 * 🙎🏻‍♂️" {
             val citizen = user.addResource(Citizen(), 100.z)
             val happiness = user.add(Happiness())
+            val expectedHappinessChange = -(citizen.owned.value * Mechanics.statHappinessConsumedPerCitizen)
 
             val modification = HappinessCitizenPreModifier().calcModifierOrNull(user, happiness::class)
 
-            modification.shouldNotBeNull() shouldBeEqual -(citizen.owned.value * Mechanics.statHappinessConsumedPerCitizen)
+            modification.shouldNotBeNull() shouldBeEqual expectedHappinessChange
         }
     }
     // context("HappinessSeasonPreModifier")
@@ -36,8 +37,7 @@ class HappinessModifierTest : StringSpec({
             user.add(Citizen())
             user.add(Happiness())
             val report = TurnReport.empty().copy(
-                resourceChanges = buildResourceChanges { add(Citizen::class, (-1).zz) }
-            )
+                resourceChanges = buildResourceChanges { add(Citizen::class, (-1).zz) })
 
             val modification = HappinessDeathPostModifier().calcModifierOrNull(report, user, Happiness::class)
 

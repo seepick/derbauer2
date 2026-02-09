@@ -6,8 +6,7 @@ ROOT="${CWD%/bin}"
 cd "${ROOT}" || exit 1
 source "./bin/_includes.sh"
 
-
-echoH1 "🏁  Verifying local state"
+echoH1 "🏁  Preparing Release"
 
 ./bin/validate_documentation.sh || exit 1
 ./bin/build_doc_diagrams.sh || exit 1
@@ -15,4 +14,4 @@ echoH1 "🏁  Verifying local state"
 echo "👷🏻‍♂️  Run Gradle and Tests"
 ./gradlew detekt test uiTest check jacocoTestCoverageVerification -PenableUiTests -PfailOnDetektIssue || exit 1
 
-echoSuccess "Verifying local state"
+echoSuccess "Preparing Release"

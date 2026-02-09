@@ -17,6 +17,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.mockk.every
 import org.koin.test.KoinTest
 import org.koin.test.mock.declareMock
+import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
 
 private val log = logger {}
@@ -57,8 +58,8 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         }
 
     inline fun <reified S : Stat<StrictDouble.MinusOneToOne>> setStatD11(number: StrictDouble.MinusOneToOne): S =
-        user.all.findOrAdd<S>().also {
-            it.changeTo(number)
+        user.all.findOrAdd<S>().apply {
+            changeTo(number)
         }
 
     inline fun <reified E : Entity> ListX<in E>.findOrAdd(): E =
@@ -70,12 +71,15 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
         val entity = try {
             primaryConstructor.callBy(emptyMap()) // call() doesn't support default params, thus.
         } catch (e: Exception) {
-            throw IllegalArgumentException("Unable to instantiate 0-arg ctor for: ${E::class.qualifiedName}", e)
+            throw EntityConstructorNotFoundException(E::class, e)
         }
         user.add(entity)
         return entity
     }
 }
+
+class EntityConstructorNotFoundException(entityClass: KClass<*>, cause: Throwable) :
+    IllegalArgumentException("Unable to find 0-arg constructor for entity class: ${entityClass.simpleName}", cause)
 
 @Suppress("TestFunctionName")
 infix fun GivenDsl.When(code: WhenHomePageDsl.() -> Unit) = WhenHomePageDsl(WhenDslImpl(koin)).apply(code)

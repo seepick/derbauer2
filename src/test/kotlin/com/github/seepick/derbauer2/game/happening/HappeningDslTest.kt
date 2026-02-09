@@ -23,7 +23,6 @@ import io.kotest.matchers.comparables.shouldBeGreaterThan
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-
 class HappeningDslTest : DslTest, StringSpec() {
     init {
         installDslExtension()

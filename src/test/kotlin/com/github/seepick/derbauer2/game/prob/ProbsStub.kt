@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.prob
 import com.github.seepick.derbauer2.game.common.StrictDouble
 import com.github.seepick.derbauer2.game.common.Zz
 
+@Suppress("ClassOrdering")
 class ProbsStub : Probs {
 
     // ------------------------------ item PROVIDER ------------------------------
