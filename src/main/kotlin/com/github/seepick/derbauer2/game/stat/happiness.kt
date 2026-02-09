@@ -64,25 +64,25 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
     }
 }
 
-object HappinessFeatureDescriptor : FeatureDescriptor(
-    label = "Happiness",
-    asciiArt = AsciiArt.smiley,
-    multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.happiness}",
-) {
-    override val enumIdentifier = FeatureDescriptorType.Happiness
-
-    override fun check(user: User, reports: Reports) =
-        user.hasEntity(Citizen::class) && user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
-
-    override fun build() = HappinessFeature(this)
-}
-
-class HappinessFeature(descriptor: HappinessFeatureDescriptor) : Feature(descriptor) {
+class HappinessFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.Happiness(this)
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
     override fun mutate(user: User) {
         user.add(Happiness(Mechanics.startingHappiness))
         user.add(Theater())
+    }
+
+    object Descriptor : FeatureDescriptor(
+        label = "Happiness",
+        asciiArt = AsciiArt.smiley,
+        multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.happiness}",
+    ) {
+        override val enumIdentifier = FeatureDescriptorType.Happiness
+
+        override fun check(user: User, reports: Reports) =
+            user.hasEntity(Citizen::class) && user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
+
+        override fun build() = HappinessFeature()
     }
 }

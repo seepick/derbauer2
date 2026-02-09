@@ -39,28 +39,28 @@ class TradingFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) 
     }
 }
 
-object TradeLandFeatureDescriptor : FeatureDescriptor(
-    label = "Trade Land",
-    asciiArt = AsciiArt.island,
-    multilineDescription = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\n" +
-            "And some more... hehe 😅",
-) {
-    override val enumIdentifier = FeatureDescriptorType.TradeLand
-    override fun check(user: User, reports: Reports) =
-        user.hasFeature<TradingFeature>() &&
-                user.hasEntity<Land>() &&
-                user.landAvailable <= Mechanics.featureTradeLandThresholdLandAvailableLesser
 
-    override fun build() = TradeLandFeature()
-}
-
-class TradeLandFeature(descriptor: TradeLandFeatureDescriptor = TradeLandFeatureDescriptor) : Feature(descriptor) {
+class TradeLandFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
     override val discriminator = Discriminator.TradeLand(this)
     override fun deepCopy() = this // immutable
     override fun mutate(user: User) {
         // nothing to do, the feature just unlocks the option to trade land in the trading page
     }
-    // TODO refactor inline descriptor
+
+    object Descriptor : FeatureDescriptor(
+        label = "Trade Land",
+        asciiArt = AsciiArt.island,
+        multilineDescription = "You can now buy ${Land.Data.emojiAndLabelPlural} for some other stuff.\n" +
+                "And some more... hehe 😅",
+    ) {
+        override val enumIdentifier = FeatureDescriptorType.TradeLand
+        override fun check(user: User, reports: Reports) =
+            user.hasFeature<TradingFeature>() &&
+                    user.hasEntity<Land>() &&
+                    user.landAvailable <= Mechanics.featureTradeLandThresholdLandAvailableLesser
+
+        override fun build() = TradeLandFeature()
+    }
 }
 
 class FoodMerchantFeature(descriptor: Descriptor = Descriptor) : Feature(descriptor) {
