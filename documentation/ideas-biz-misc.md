@@ -11,6 +11,7 @@
 * add stats.happy + game renderer/resource info bar: add happy indicator: "12/20 🙎🏻‍♂️☹️"
 * probability (happening) cool-down mechanism to avoid same thing too often
 * ad history, if Reports would be outside of User, then could take deepCopies of user and store them
+* make HappeningNature.happinessImpact more sophisticated
 
 Low:
 

@@ -171,7 +171,6 @@ typealias Double01 = StrictDouble.ZeroToOne
 typealias DoublePos = StrictDouble.Positive
 typealias Double11 = StrictDouble.MinusOneToOne
 
-// TODO refactor to Any properly; use in stat modifier
 sealed class StrictDouble(val number: Double) : Comparable<StrictDouble> {
 
     override fun compareTo(other: StrictDouble) = this.number.compareTo(other.number)
