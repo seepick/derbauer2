@@ -6,11 +6,11 @@ import com.github.seepick.derbauer2.game.prob.GrowthDiffuser
 import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
 import com.github.seepick.derbauer2.game.prob.ProbInitializer
 import com.github.seepick.derbauer2.game.prob.Probs
-import com.github.seepick.derbauer2.game.resource.CapitalismTech
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
+import com.github.seepick.derbauer2.game.tech.CapitalismTech
 import com.github.seepick.derbauer2.game.tech.hasTech
 import com.github.seepick.derbauer2.game.turn.DefaultResourceStep
 import com.github.seepick.derbauer2.game.turn.ResourceStep

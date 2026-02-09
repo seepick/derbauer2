@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.turn.GlobalTurnStep
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 interface StatModifier {
-    fun modification(statClass: StatKClass): Double?
+    fun modification(user: User, statClass: StatKClass): Double?
 }
 
 interface GlobalStatModifierRepo {
@@ -31,7 +31,7 @@ class StatCompositeGlobalTurnStep(
         val allModifiers = entityLocalModifiers + globalModifiers.all
         log.debug { "execTurn() using modifiers: $allModifiers" }
         user.stats.forEach { stat: Stat<out StrictDouble> ->
-            stat.changeBy(allModifiers.mapNotNull { it.modification(stat::class) }.sum())
+            stat.changeBy(allModifiers.mapNotNull { it.modification(user, stat::class) }.sum())
         }
     }
 

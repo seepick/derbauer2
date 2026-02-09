@@ -29,10 +29,10 @@ class RangeTest : DescribeSpec({
             shouldThrow<IllegalArgumentException> { rangeOf<DoubleAny, Any>() }
         }
         it("unsorted fails") {
-            shouldThrow<IllegalArgumentException> { rangeOf(1.0.strictAny to "b", 0.5.strictAny to "a") }
+            shouldThrow<IllegalArgumentException> { rangeOf(1.0.doubleAny to "b", 0.5.doubleAny to "a") }
         }
         it("duplicate fails") {
-            shouldThrow<IllegalArgumentException> { rangeOf(0.0.strictAny to "a1", 0.0.strictAny to "a2") }
+            shouldThrow<IllegalArgumentException> { rangeOf(0.0.doubleAny to "a1", 0.0.doubleAny to "a2") }
         }
     }
 })

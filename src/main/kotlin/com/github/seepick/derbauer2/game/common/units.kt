@@ -160,10 +160,10 @@ value class Percent(val number: Double) {
 
 operator fun Double.compareTo(other: Percent) = this.compareTo(other.number)
 
-val Double.strictAny: DoubleAny get() = DoubleAny(this)
-val Double.strict01: Double01 get() = Double01(this)
-val Double.strict11: Double11 get() = Double11(this)
-val Double.strictPos: DoublePos get() = DoublePos(this)
+val Double.doubleAny: DoubleAny get() = DoubleAny(this)
+val Double.double01: Double01 get() = Double01(this)
+val Double.double11: Double11 get() = Double11(this)
+val Double.doublePos: DoublePos get() = DoublePos(this)
 
 typealias DoubleAny = StrictDouble.Anything
 typealias Double01 = StrictDouble.ZeroToOne

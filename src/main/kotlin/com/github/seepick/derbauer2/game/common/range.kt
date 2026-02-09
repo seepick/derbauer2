@@ -22,7 +22,7 @@ inline fun <reified SD : StrictDouble, T> rangeOf(
 fun <T> rangeOfMin1To1(
     limits: List<Pair<Double, T>>,
 ): Range<Double11, T> = rangeOf<Double11, T>(limits.map {
-    it.first.strict11 to it.second
+    it.first.double11 to it.second
 })
 
 fun <T> rangeOfMin1To1(

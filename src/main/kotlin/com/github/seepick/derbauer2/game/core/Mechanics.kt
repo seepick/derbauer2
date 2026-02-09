@@ -4,8 +4,8 @@ import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Double01
 import com.github.seepick.derbauer2.game.common.Double11
+import com.github.seepick.derbauer2.game.common.double01
 import com.github.seepick.derbauer2.game.common.k
-import com.github.seepick.derbauer2.game.common.strict01
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.turn.Season
@@ -91,6 +91,7 @@ object Mechanics {
     val statHappinessConsumedPerCitizen = if (DEV) Double.MIN_VALUE else 0.00001
     val theaterProducesHappiness = if (DEV) 0.1 else 0.01
     val citizenBirthHappinessEffect = 30.`%`
+    val techCapitalismHappinessPerCitizenMultiplier = -0.001
 
     // END TURN
     // ========================================================================
@@ -119,10 +120,10 @@ val Season.happinessChanger: Double
 
 val Season.ratsWillEatFoodProb: Double01
     get() = when (this) {
-        Season.Winter -> 1.0.strict01
-        Season.Autumn -> 0.75.strict01
-        Season.Spring -> 0.5.strict01
-        Season.Summer -> 0.25.strict01
+        Season.Winter -> 1.0.double01
+        Season.Autumn -> 0.75.double01
+        Season.Spring -> 0.5.double01
+        Season.Summer -> 0.25.double01
     }
 
 val HappeningNature.happinessImpact

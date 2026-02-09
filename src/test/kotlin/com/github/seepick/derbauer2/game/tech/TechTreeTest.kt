@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.resource.AgricultureTech
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

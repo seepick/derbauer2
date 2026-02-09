@@ -1,15 +1,21 @@
-package com.github.seepick.derbauer2.game.resource
+package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.tech.AbstractTechRef
-import com.github.seepick.derbauer2.game.tech.Tech
-import com.github.seepick.derbauer2.game.tech.TechData
+import com.github.seepick.derbauer2.game.resource.Food
+import com.github.seepick.derbauer2.game.resource.GlobalResourceProductionModifier
+import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.Knowledge
+import com.github.seepick.derbauer2.game.resource.buildResourceChanges
+import com.github.seepick.derbauer2.game.resource.citizen
+import com.github.seepick.derbauer2.game.stat.Happiness
+import com.github.seepick.derbauer2.game.stat.StatKClass
+import com.github.seepick.derbauer2.game.stat.StatModifier
 
 /**
- * CAVE: Register in [com.github.seepick.derbauer2.game.tech.DefaultTechItemRepo]
+ * CAVE: Register in [DefaultTechItemRepo]
  */
 object AgricultureTechRef : AbstractTechRef(data = AgricultureTech.Data) {
     override val techClass = AgricultureTech::class
@@ -59,7 +65,14 @@ object CapitalismTechRef : AbstractTechRef(data = CapitalismTech.Data) {
     override val techClass = CapitalismTech::class
 }
 
-class CapitalismTech : Tech, TechData by Data {
+class CapitalismTech : Tech, TechData by Data, StatModifier {
+
+    override fun modification(user: User, statClass: StatKClass): Double? =
+        when (statClass) {
+            Happiness::class -> user.citizen.toDouble() * Mechanics.techCapitalismHappinessPerCitizenMultiplier
+            else -> null
+        }
+
     override fun deepCopy() = this
 
     object Data : TechData {

@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.strict11
+import com.github.seepick.derbauer2.game.common.double11
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
@@ -13,9 +13,9 @@ import io.kotest.matchers.nulls.shouldNotBeNull
 class StatTurnStepTest : StringSpec({
     "Given modifier When applied Then user stat changed" {
         val user = User()
-        val happiness = user.add(Happiness(0.0.strict11))
+        val happiness = user.add(Happiness(0.0.double11))
         val modifier = object : StatModifier {
-            override fun modification(statClass: StatKClass): Double? =
+            override fun modification(user: User, statClass: StatKClass): Double? =
                 if (statClass == happiness::class) -0.5 else null
         }
 
@@ -30,9 +30,9 @@ class HappinessCitizenModifierTest : StringSpec({
         val user = User()
         val citizen = user.addResource(Citizen(), 100.z)
         val initialHappiness = 0.0
-        val happiness = user.add(Happiness(initialHappiness.strict11))
+        val happiness = user.add(Happiness(initialHappiness.double11))
 
-        val modification = HappinessCitizenModifier(user).modification(happiness::class)
+        val modification = HappinessCitizenModifier().modification(user, happiness::class)
 
         modification.shouldNotBeNull() shouldBeEqual -(citizen.owned.value * Mechanics.statHappinessConsumedPerCitizen)
     }

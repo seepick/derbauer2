@@ -8,10 +8,10 @@ import com.github.seepick.derbauer2.game.prob.PassThroughDiffuser
 import com.github.seepick.derbauer2.game.prob.ProbDiffuserKey
 import com.github.seepick.derbauer2.game.prob.ProbsStub
 import com.github.seepick.derbauer2.game.prob.StaticDiffuser
-import com.github.seepick.derbauer2.game.resource.CapitalismTech
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.shouldContainChange
+import com.github.seepick.derbauer2.game.tech.CapitalismTech
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

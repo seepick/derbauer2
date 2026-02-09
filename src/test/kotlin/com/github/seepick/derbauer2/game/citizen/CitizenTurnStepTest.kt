@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.citizen
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.strict11
+import com.github.seepick.derbauer2.game.common.double11
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -104,7 +104,7 @@ class CitizenTurnStepTest : DescribeSpec({
                 expectedBirthMultiplier: Double,
             ) {
                 val citizen = user.addResource(Citizen(), 100.z)
-                user.addStat(Happiness(), givenHappiness.strict11)
+                user.addStat(Happiness(), givenHappiness.double11)
                 val expectedBirth = citizen.owned * Mechanics.citizenBirthRate * expectedBirthMultiplier.`%`
 
                 turner.calcShouldContain(citizen, expectedBirth.zz)

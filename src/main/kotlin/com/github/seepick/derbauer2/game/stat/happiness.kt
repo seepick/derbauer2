@@ -44,7 +44,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
     override fun toString() = "${this::class.simpleNameEmojied}($value)"
 
     companion object {
-        val emoji = "😃".emoji
+        val emoji = " 🥳".emoji
 
         private val emojiRange = rangeOfMin1To1(
             listOf(
@@ -59,7 +59,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
                 0.4 to "😃",
                 0.6 to "🤗",
                 0.8 to "😍",
-                0.9 to "🥰",
+                0.9 to Emoji.happiness.value,
             ).map { it.first to it.second.emoji })
     }
 }
@@ -87,10 +87,8 @@ class HappinessFeature(descriptor: HappinessFeatureDescriptor) : Feature(descrip
     }
 }
 
-class HappinessCitizenModifier(
-    private val user: User
-) : StatModifier {
-    override fun modification(statClass: StatKClass): Double? {
+class HappinessCitizenModifier : StatModifier {
+    override fun modification(user: User, statClass: StatKClass): Double? {
         if (statClass != Happiness::class || !user.hasEntity(Citizen::class)) {
             return null
         }
@@ -103,7 +101,7 @@ class HappinessCitizenModifier(
 class HappinessSeasonModifier(
     private val turn: CurrentTurn,
 ) : StatModifier {
-    override fun modification(statClass: StatKClass): Double? {
+    override fun modification(user: User, statClass: StatKClass): Double? {
         if (statClass != Happiness::class) {
             return null
         }

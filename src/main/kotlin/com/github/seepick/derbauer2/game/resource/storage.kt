@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import kotlin.reflect.KClass
 
 @Suppress("MagicNumber")
@@ -35,8 +36,15 @@ inline fun <reified SR : StorableResource> User.freeStorageFor(resource: SR) =
 inline fun <reified SR : StorableResource> User.freeStorageFor() =
     freeStorageFor(SR::class)
 
-inline fun <reified SR : StorableResource> User.freeStorageFor(resoureClass: KClass<out SR>) =
-    totalStorageFor(resoureClass) - findResource(resoureClass).owned
+inline fun <reified SR : StorableResource> User.freeStorageFor(resoureClass: KClass<out SR>): Z {
+    val owned = findResource(resoureClass).owned
+    val storage = totalStorageFor(resoureClass)
+    require(owned <= storage) {
+        "Failed to compute free storage for ${resoureClass.simpleNameEmojied} as " +
+                "owned [$owned] is bigger than storage capacity [$storage]."
+    }
+    return storage - owned
+}
 
 context(user: User)
 val StorableResource.freeStorage: Z get() = user.freeStorageFor(this)

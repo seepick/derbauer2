@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.common.strict11
+import com.github.seepick.derbauer2.game.common.double11
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldDescriptor
 import com.github.seepick.derbauer2.game.happening.happenings.FoundGoldHappening
@@ -45,7 +45,7 @@ class HappeningDslTest : DslTest, StringSpec() {
             }
         }
         "Given positive happening Then +happiness" {
-            val initialHappiness = 0.0.strict11
+            val initialHappiness = 0.0.double11
             Given {
                 setOwned<Gold>(0.z)
                 setStatD11<Happiness>(initialHappiness)
