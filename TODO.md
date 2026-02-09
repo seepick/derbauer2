@@ -19,6 +19,3 @@
 * IT: delete Feature discriminator enum shizzle -or? useful e.g. to assign mechanics-values to specific and exhaustive!
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * IT: make tech enables Feature
-* BZ: find derbauer2 original commodore game; look through inspirations
-
-

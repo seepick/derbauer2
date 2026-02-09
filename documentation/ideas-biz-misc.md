@@ -1,5 +1,6 @@
 # Misc Business Ideas
 
+* ! find derbauer2 original commodore game; look through inspirations
 * new functionality "special actions", like organzing festival (+x happiness)
 * increase designators (title, city) based on "some criteria"
     * can be upped and lowered again! different than feature, which is a one-way unlock
