@@ -7,7 +7,6 @@ import com.github.seepick.derbauer2.game.common.rangeOfMin1To1
 import com.github.seepick.derbauer2.game.common.toFormatted
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.happinessChanger
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.feature.Feature
@@ -15,7 +14,6 @@ import com.github.seepick.derbauer2.game.feature.FeatureDescriptor
 import com.github.seepick.derbauer2.game.feature.FeatureDescriptorType
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
-import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -60,7 +58,8 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
                 0.6 to "🤗",
                 0.8 to "😍",
                 0.9 to Emoji.happiness.value,
-            ).map { it.first to it.second.emoji })
+            ).map { it.first to it.second.emoji },
+        )
     }
 }
 
@@ -85,28 +84,4 @@ class HappinessFeature(descriptor: HappinessFeatureDescriptor) : Feature(descrip
         user.add(Happiness(Mechanics.startingHappiness))
         user.add(Theater())
     }
-}
-
-class HappinessCitizenModifier : StatModifier {
-    override fun modification(user: User, statClass: StatKClass): Double? {
-        if (statClass != Happiness::class || !user.hasEntity(Citizen::class)) {
-            return null
-        }
-        return -(user.citizen.value.toDouble() * Mechanics.statHappinessConsumedPerCitizen)
-    }
-
-    override fun toString() = "${this::class.simpleName}"
-}
-
-class HappinessSeasonModifier(
-    private val turn: CurrentTurn,
-) : StatModifier {
-    override fun modification(user: User, statClass: StatKClass): Double? {
-        if (statClass != Happiness::class) {
-            return null
-        }
-        return turn.current.season.happinessChanger
-    }
-
-    override fun toString() = "${this::class.simpleName}"
 }

@@ -64,7 +64,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         it("Producing above the storage capacity As limit caps are done in Turner") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 food.ownedForTest = granary.totalStorageAmount - 1.z
-                calcStepChanges().shouldBeSingleton().first().changeAmount.value shouldBeGreaterThan 1
+                calcStepChanges().shouldBeSingleton().first().change.value shouldBeGreaterThan 1
             }
         }
     }

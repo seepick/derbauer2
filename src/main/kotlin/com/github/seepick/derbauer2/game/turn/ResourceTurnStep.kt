@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KClass
 
-interface ResourceStep {
+interface ResourceTurnStep {
     val order: Int
     fun calcChanges(): ResourceChanges
 
@@ -22,11 +22,11 @@ interface ResourceStep {
     }
 }
 
-abstract class DefaultResourceStep(
+abstract class DefaultResourceTurnStep(
     val user: User,
     override val order: Int,
     private val requiresEntities: List<KClass<out Entity>>,
-) : ResourceStep {
+) : ResourceTurnStep {
 
     protected abstract fun calcChangesChecked(): ResourceChanges
 

@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 
-class Theater : Building, StatModifier, HasLabels by Data, HasEmoji by Data {
+class Theater : Building, PreStatModifier, HasLabels by Data, HasEmoji by Data {
     object Data : HasLabels, HasEmoji {
         override val labelSingular = "Theater"
     }
@@ -18,7 +18,7 @@ class Theater : Building, StatModifier, HasLabels by Data, HasEmoji by Data {
     override val costsGold = Mechanics.theaterCostsGold
     override val landUse = Mechanics.theaterLanduse
 
-    override fun modification(user: User, statClass: StatKClass): Double? = when (statClass) {
+    override fun calcModifierOrNull(user: User, statClass: StatKClass): Double? = when (statClass) {
         Happiness::class -> owned.toDouble() * Mechanics.theaterProducesHappiness
         else -> null
     }

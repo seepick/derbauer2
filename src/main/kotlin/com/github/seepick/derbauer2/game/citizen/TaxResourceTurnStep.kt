@@ -12,14 +12,14 @@ import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.tech.CapitalismTech
 import com.github.seepick.derbauer2.game.tech.hasTech
-import com.github.seepick.derbauer2.game.turn.DefaultResourceStep
-import com.github.seepick.derbauer2.game.turn.ResourceStep
+import com.github.seepick.derbauer2.game.turn.DefaultResourceTurnStep
+import com.github.seepick.derbauer2.game.turn.ResourceTurnStep
 
 private val probTaxKey = ProbDiffuserKey("tax")
 val ProbDiffuserKey.Companion.taxKey get() = probTaxKey
 
-class TaxResourceStep(user: User, private val probs: Probs) : ProbInitializer,
-    DefaultResourceStep(user, ResourceStep.Order.tax, listOf(Citizen::class, Gold::class)) {
+class TaxResourceTurnStep(user: User, private val probs: Probs) : ProbInitializer,
+    DefaultResourceTurnStep(user, ResourceTurnStep.Order.tax, listOf(Citizen::class, Gold::class)) {
 
     override fun initProb() {
         probs.setDiffuser(ProbDiffuserKey.taxKey, GrowthDiffuser(variation = Mechanics.taxGrowthVariation))

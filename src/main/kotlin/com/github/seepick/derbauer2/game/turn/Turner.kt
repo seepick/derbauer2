@@ -26,7 +26,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
  * [com.github.seepick.derbauer2.game.resource.ProducesResource]
  */
 interface GlobalTurnStep {
-    fun execTurn()
+    fun execPreTurn()
+    fun execPostTurn(report: TurnReport)
 }
 
 @Suppress("LongParameterList") // it's okay ;)
@@ -35,7 +36,7 @@ class Turner(
     private val turn: CurrentTurn,
     private val actionsCollector: ActionsCollector,
     private val globalSteps: List<GlobalTurnStep>,
-    private val resSteps: List<ResourceStep>,
+    private val resSteps: List<ResourceTurnStep>,
     private val happeningTurner: HappeningTurner,
     private val featureTurner: FeatureTurner,
 ) {
@@ -43,10 +44,7 @@ class Turner(
 
     fun execTurnAndBuildReport(): TurnReport {
         log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
-        globalSteps.forEach {
-            log.debug { "Executing generic turn step: $it" }
-            it.execTurn()
-        }
+        globalSteps.forEach { it.execPreTurn() }
         val report = TurnReport(
             turn = turn.current,
             resourceChanges = resSteps
@@ -55,8 +53,9 @@ class Turner(
                 .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
             happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
             newFeatures = featureTurner.buildFeatureMultiPages(),
-            actions = actionsCollector.getAllAndClear()
+            actions = actionsCollector.getAllAndClear(),
         )
+        globalSteps.forEach { it.execPostTurn(report) }
         log.info { "🔁 Changes: $report" }
         log.debug { "🔁 User.all: $user" }
         turn.next()
@@ -64,7 +63,7 @@ class Turner(
         return report
     }
 
-    private fun execResourceStep(step: ResourceStep): ResourceChanges =
+    private fun execResourceStep(step: ResourceTurnStep): ResourceChanges =
         step.calcChanges().toLimitedAmounts().also { changes ->
             log.debug { "Executing: ${changes.toShortString()}" }
             user.execTx(changes).errorOnFail() // assume TXs were already validated
@@ -73,9 +72,9 @@ class Turner(
     private fun ResourceChanges.toLimitedAmounts() = ResourceChanges(
         changes.map { change ->
             val resource = user.findResource(change.resourceClass)
-            val limitedAmount = limitAmount(resource, change.changeAmount)
+            val limitedAmount = limitAmount(resource, change.change)
             ResourceChange(resource, limitedAmount)
-        }
+        },
     )
 
     private fun limitAmount(resource: Resource, change: Zz): Zz =
@@ -103,4 +102,6 @@ data class TurnReport(
     val happenings: List<Happening>,
     val newFeatures: List<FeatureSubPage>,
     val actions: List<Action>,
-)
+) {
+    companion object // for extension functions
+}

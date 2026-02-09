@@ -7,8 +7,8 @@ import kotlin.reflect.KClass
 /**
  * Mostly about buildings.
  *
- * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceStep] as used as a composition element.
- * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceStep]
+ * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceTurnStep] as used as a composition element.
+ * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceTurnStep]
  */
 class ProducesResourceTurnStep(val user: User) {
 
@@ -17,7 +17,7 @@ class ProducesResourceTurnStep(val user: User) {
             .filterIsInstance<GlobalResourceProductionModifier>().groupBy { it.handlingResource }
         plainProduction().changes.forEach { change ->
             val modifiers = modifiersByResource[change.resourceClass] ?: emptyList()
-            val modifiedAmount = modifiers.fold(change.changeAmount) { acc, modifier ->
+            val modifiedAmount = modifiers.fold(change.change) { acc, modifier ->
                 modifier.modifyAmount(user, acc)
             }
             add(ResourceChange(change.resourceClass, modifiedAmount))
@@ -31,7 +31,8 @@ class ProducesResourceTurnStep(val user: User) {
                 resource = resource,
                 changeAmount = producer.totalOrSimpleProduceResourceAmount,
             )
-        })
+        },
+    )
 }
 
 interface GlobalResourceProductionModifier {

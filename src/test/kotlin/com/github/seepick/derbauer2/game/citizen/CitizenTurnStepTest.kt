@@ -154,7 +154,7 @@ class CitizenTurnStepTest : DescribeSpec({
             fun turnAndGetCitizenChangeWith(givenFood: Z): Zz {
                 citizen.ownedForTest = citizens
                 food.ownedForTest = givenFood
-                return turner.calc().changes.single { it.resourceClass == Citizen::class }.changeAmount
+                return turner.calc().changes.single { it.resourceClass == Citizen::class }.change
             }
 
             val starvedA = turnAndGetCitizenChangeWith(almostEnoughFood.z).toZAbs()

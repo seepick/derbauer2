@@ -89,8 +89,9 @@ object Mechanics {
     // ========================================================================
     val startingHappiness = Double11(if (DEV) 0.0 else 0.4)
     val statHappinessConsumedPerCitizen = if (DEV) Double.MIN_VALUE else 0.00001
+    val statHappinessDeathPenalty = -0.05
+    val statHappinessCitizenBirthEffect = 30.`%`
     val theaterProducesHappiness = if (DEV) 0.1 else 0.01
-    val citizenBirthHappinessEffect = 30.`%`
     val techCapitalismHappinessPerCitizenMultiplier = -0.001
 
     // END TURN

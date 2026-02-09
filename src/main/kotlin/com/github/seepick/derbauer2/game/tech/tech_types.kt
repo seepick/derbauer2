@@ -11,8 +11,8 @@ import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
 import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.stat.Happiness
+import com.github.seepick.derbauer2.game.stat.PreStatModifier
 import com.github.seepick.derbauer2.game.stat.StatKClass
-import com.github.seepick.derbauer2.game.stat.StatModifier
 
 /**
  * CAVE: Register in [DefaultTechItemRepo]
@@ -65,9 +65,9 @@ object CapitalismTechRef : AbstractTechRef(data = CapitalismTech.Data) {
     override val techClass = CapitalismTech::class
 }
 
-class CapitalismTech : Tech, TechData by Data, StatModifier {
+class CapitalismTech : Tech, TechData by Data, PreStatModifier {
 
-    override fun modification(user: User, statClass: StatKClass): Double? =
+    override fun calcModifierOrNull(user: User, statClass: StatKClass): Double? =
         when (statClass) {
             Happiness::class -> user.citizen.toDouble() * Mechanics.techCapitalismHappinessPerCitizenMultiplier
             else -> null

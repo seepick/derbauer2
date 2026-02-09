@@ -7,7 +7,11 @@ import org.koin.dsl.module
 
 fun statModule() = module {
     singleOf(::StatCompositeGlobalTurnStep)
-    singleOf(::HappinessCitizenModifier)
-    singleOf(::HappinessSeasonModifier)
-    single { GlobalStatModifierRepoImpl(modifiers = getKoinBeansByType()) } bind GlobalStatModifierRepo::class
+
+    singleOf(::HappinessCitizenPreModifier)
+    singleOf(::HappinessSeasonPreModifier)
+    singleOf(::HappinessDeathPostModifier)
+
+    single { GlobalPreStatModifierRepoImpl(modifiers = getKoinBeansByType()) } bind GlobalPreStatModifierRepo::class
+    single { GlobalPostStatModifierRepoImpl(modifiers = getKoinBeansByType()) } bind GlobalPostStatModifierRepo::class
 }

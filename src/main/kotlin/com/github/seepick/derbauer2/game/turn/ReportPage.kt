@@ -42,10 +42,10 @@ class ReportPage(
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    (user.findResource(change.resourceClass).owned.zz - change.changeAmount).toString()
+                    (user.findResource(change.resourceClass).owned.zz - change.change).toString()
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    change.changeAmount.toSymboledString() + " ="
+                    change.change.toSymboledString() + " ="
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
                     user.findResource(change.resourceClass).owned.toString()

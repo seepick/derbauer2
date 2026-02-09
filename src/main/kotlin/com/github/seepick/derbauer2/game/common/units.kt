@@ -23,6 +23,7 @@ data class Zz(
     val value: Long,
 ) : Comparable<Zz> {
     val magnitutedValue = translateToMaxMagnitude(value)
+    val isNegative = value < 0
 
     fun toSymboledString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
@@ -170,6 +171,7 @@ typealias Double01 = StrictDouble.ZeroToOne
 typealias DoublePos = StrictDouble.Positive
 typealias Double11 = StrictDouble.MinusOneToOne
 
+// TODO refactor to Any properly; use in stat modifier
 sealed class StrictDouble(val number: Double) : Comparable<StrictDouble> {
 
     override fun compareTo(other: StrictDouble) = this.number.compareTo(other.number)

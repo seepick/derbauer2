@@ -4,8 +4,10 @@ import com.github.seepick.derbauer2.game.core.CollectingWarningListener
 import com.github.seepick.derbauer2.game.gameModule
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.prob.ProbsStub
-import com.github.seepick.derbauer2.game.stat.EmptyGlobalStatModifierRepo
-import com.github.seepick.derbauer2.game.stat.GlobalStatModifierRepo
+import com.github.seepick.derbauer2.game.stat.EmptyGlobalPostStatModifierRepo
+import com.github.seepick.derbauer2.game.stat.EmptyGlobalPreStatModifierRepo
+import com.github.seepick.derbauer2.game.stat.GlobalPostStatModifierRepo
+import com.github.seepick.derbauer2.game.stat.GlobalPreStatModifierRepo
 import com.github.seepick.derbauer2.game.view.textengineModule
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.core.spec.Extendable
@@ -22,15 +24,11 @@ interface DslTest : KoinTest
 private val log = logger {}
 
 fun dslTestModule() = module {
-    log.trace {
-        "Declaring additional/overriding test koin beans: " +
-                "CollectingWarningListener, ProbsStub, EmptyGlobalStatModifierRepo"
-    }
+    log.trace { "Declaring additional/overriding test-specific Koin beans (probs, stat-modifiers, etc)" }
     singleOf(::CollectingWarningListener)
-
-    // override real ProbsImpl ones:
     single { ProbsStub() } bind Probs::class
-    single { EmptyGlobalStatModifierRepo } bind GlobalStatModifierRepo::class
+    single { EmptyGlobalPreStatModifierRepo } bind GlobalPreStatModifierRepo::class
+    single { EmptyGlobalPostStatModifierRepo } bind GlobalPostStatModifierRepo::class
 }
 
 /** Does NOT initialize starting game assets; clean state for tests + more stability (independence). */
@@ -42,7 +40,7 @@ fun Extendable.installDslExtension() {
                 gameModule(this::class),
                 dslTestModule(),
             ),
-            mockProvider = { mockkClass(it, relaxed = true) }
-        )
+            mockProvider = { mockkClass(it, relaxed = true) },
+        ),
     )
 }

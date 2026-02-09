@@ -26,8 +26,8 @@ private val probBirthKey = ProbDiffuserKey("birth")
 val ProbDiffuserKey.Companion.birthKey get() = probBirthKey
 
 /**
- * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceStep] as used as a composition element.
- * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceStep]
+ * Not implementing [com.github.seepick.derbauer2.game.turn.ResourceTurnStep] as used as a composition element.
+ * See: [com.github.seepick.derbauer2.game.turn.ProduceCitzenCompositeResourceTurnStep]
  */
 class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbInitializer {
 
@@ -87,7 +87,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun happinessInfluencedBirthChange(base: Z): Z {
         val happiness = user.findStatOrNull(Happiness::class) ?: return base
-        val multiplier = happiness.value.number * Mechanics.citizenBirthHappinessEffect.number
+        val multiplier = happiness.value.number * Mechanics.statHappinessCitizenBirthEffect.number
         return (base.value.toDouble() * (multiplier + 1.0)).toLong().z
     }
 }

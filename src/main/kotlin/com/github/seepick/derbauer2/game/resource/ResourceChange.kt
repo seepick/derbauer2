@@ -28,7 +28,7 @@ fun resourceChangesOf(changesChanges: List<ResourceChanges>): ResourceChanges =
 
 data class ResourceChange(
     val resourceClass: KClass<out Resource>,
-    val changeAmount: Zz,
+    val change: Zz,
 ) {
     constructor(resource: Resource, changeAmount: Zz) : this(resource::class, changeAmount)
     constructor(resourceClass: KClass<out Resource>, changeAmount: Z) : this(resourceClass, changeAmount.zz)
@@ -36,11 +36,11 @@ data class ResourceChange(
 
     operator fun plus(other: ResourceChange): ResourceChange {
         require(other.resourceClass::class == this.resourceClass::class)
-        return ResourceChange(resourceClass, changeAmount + other.changeAmount)
+        return ResourceChange(resourceClass, change + other.change)
     }
 
     override fun toString() =
-        "${this::class.simpleName}(${changeAmount.toSymboledString()} ${resourceClass.simpleNameEmojied})"
+        "${this::class.simpleName}(${change.toSymboledString()} ${resourceClass.simpleNameEmojied})"
 }
 
 
@@ -61,20 +61,20 @@ data class ResourceChanges private constructor(
     }
 
     fun merge(other: ResourceChanges) = buildResourceChanges {
-        changes.forEach { add(it.resourceClass, it.changeAmount) }
-        other.changes.forEach { add(it.resourceClass, it.changeAmount) }
+        changes.forEach { add(it.resourceClass, it.change) }
+        other.changes.forEach { add(it.resourceClass, it.change) }
     }
 
     fun invertSig() = buildResourceChanges {
-        changes.forEach { add(it.resourceClass, -it.changeAmount) }
+        changes.forEach { add(it.resourceClass, -it.change) }
     }
 
     fun changeFor(resourceClass: KClass<out Resource>): ResourceChange? =
-        changes.firstOrNull { it.resourceClass == resourceClass }
+        changes.singleOrNull { it.resourceClass == resourceClass }
 
     fun toShortString() = "${this::class.simpleName}(${
         changes.joinToString("/") {
-            "${it.changeAmount.toSymboledString()}${it.resourceClass.emojiOrSimpleName}"
+            "${it.change.toSymboledString()}${it.resourceClass.emojiOrSimpleName}"
         }
     })"
 
@@ -129,7 +129,7 @@ data class ResourceChanges private constructor(
 }
 
 fun List<ResourceChange>.requireAllZeroOrPositive() {
-    val negativeChanges = filter { it.changeAmount < 0.zz }
+    val negativeChanges = filter { it.change < 0.zz }
     require(negativeChanges.isEmpty()) {
         "All resource changes must be non-negative, but found negative changes: $negativeChanges"
     }
@@ -146,5 +146,5 @@ fun ResourceChanges.toFormatted(): String =
 context(user: User)
 fun ResourceChanges.toFormattedList(): List<String> =
     changes.map { change ->
-        "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.changeAmount}"
+        "${user.findResource(change.resourceClass).emojiSpaceOrEmpty}${change.change}"
     }

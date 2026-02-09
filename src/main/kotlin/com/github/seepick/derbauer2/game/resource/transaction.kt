@@ -12,7 +12,7 @@ fun User.execTx(changes: ResourceChanges) =
     execTx(changes.changes.map { line ->
         TxOwnable(
             ownableClass = line.resourceClass,
-            amount = line.changeAmount,
+            amount = line.change,
         )
     })
 
