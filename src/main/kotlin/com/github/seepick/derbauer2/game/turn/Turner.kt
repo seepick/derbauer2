@@ -74,7 +74,7 @@ class Turner(
     private fun ResourceChanges.toLimitedAmounts() = ResourceChanges(
         changes.map { change ->
             val resource = user.findResource(change.resourceClass)
-            val limitedAmount = limitAmount(resource, change.change)
+            val limitedAmount = limitAmount(resource, change.amount)
             ResourceChange(resource, limitedAmount)
         },
     )

@@ -14,7 +14,7 @@ class ResourceReportTest : DescribeSpec({
                 add(gold, 40.z)
                 add(gold, 2.z)
             }
-            report.changes.shouldBeSingleton().first().change shouldBeEqual 42.zz
+            report.changes.shouldBeSingleton().first().amount shouldBeEqual 42.zz
         }
     }
     describe("merge") {

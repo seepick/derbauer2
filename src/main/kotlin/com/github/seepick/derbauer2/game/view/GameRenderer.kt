@@ -1,27 +1,41 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.findResourceOrNull
 import com.github.seepick.derbauer2.game.resource.toInfoBarString
 import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.emptyLine
+import kotlin.reflect.KClass
+import kotlin.reflect.full.isSubclassOf
+
+
+inline fun <reified E : Entity> List<E>.sortIfViewOrder(): List<E> =
+    if (E::class.isSubclassOf(ViewOrder::class)) {
+        sortedBy { (it as ViewOrder).viewOrder }
+    } else {
+        this
+    }
 
 class GameRenderer(
     private val user: User,
     private val turn: CurrentTurn,
 ) {
     private val MetaOption.formatted get() = "${key.label}: $label"
-    private val defaultDisplayedResources = listOf(Gold::class, Food::class, Land::class, Citizen::class)
+    private val defaultDisplayedResources: List<KClass<out Resource>> =
+        listOf(Gold::class, Food::class, Land::class, Citizen::class)
 
     private fun renderInfoBar(): String =
         defaultDisplayedResources
             .mapNotNull { user.findResourceOrNull(it) }
+            .sortIfViewOrder()
             .joinToString(" $RESOURCE_INFO_SEPARATOR ") { it.toInfoBarString(user) }
 
     fun render(

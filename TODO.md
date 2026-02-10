@@ -3,12 +3,12 @@
 ## 1.3.0
 
 * BZ: change city/user titles based on "some stats" (e.g. happiness, population, etc.); display more prominent
-* UI: deterministic order
-    * of resources (in turn report; info bar)
-    * of tech (logical); right now "irrigation" puts itself on top (weird)
+* UI: deterministic order of tech (logical); right now "irrigation" puts itself on top (weird)
 
 ## Backlog
 
+* IT: kotlin poet to generate resource declarations
+* IT: use classpath scan, to get all Resource impls, and print in declared order
 * UX: remember window position
 * BZ: interactive happening; being asked a Y/N question, with some randomness of the outcome (success; damage;
   intensity)

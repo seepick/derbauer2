@@ -8,15 +8,18 @@ import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.emojiAndLabelSingular
 import com.github.seepick.derbauer2.game.tech.`knowledge 🧪`
+import com.github.seepick.derbauer2.game.view.ViewOrder
 
-interface Resource : Asset, HasLabels, HasEmoji
+
+interface Resource : Asset, HasLabels, HasEmoji, ViewOrder
 
 interface StorableResource : Resource
 
-class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
+    object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Citizen"
         override val emoji = Emoji.`citizen 🙎🏻‍♂️`
+        override val viewOrder = ViewOrder.ResourceOrder.Citizen
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -24,11 +27,12 @@ class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data {
     override fun toString() = "${this.emojiAndLabelSingular}(owned=$owned)"
 }
 
-class Gold : Resource, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Gold : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
+    object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Gold"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`gold 💰`
+        override val viewOrder = ViewOrder.ResourceOrder.Gold
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -36,11 +40,12 @@ class Gold : Resource, HasLabels by Data, HasEmoji by Data {
     override fun toString() = "${this.emojiAndLabelSingular}(owned=$owned)"
 }
 
-class Food : StorableResource, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Food : StorableResource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
+    object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Food"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`food 🍖`
+        override val viewOrder = ViewOrder.ResourceOrder.Food
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -48,11 +53,12 @@ class Food : StorableResource, HasLabels by Data, HasEmoji by Data {
     override fun toString() = "${this.emojiAndLabelSingular}(owned=$owned)"
 }
 
-class Land : Resource, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Land : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
+    object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Land"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`land 🌍`
+        override val viewOrder = ViewOrder.ResourceOrder.Land
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -60,11 +66,12 @@ class Land : Resource, HasLabels by Data, HasEmoji by Data {
     override fun toString() = "${this.emojiAndLabelSingular}(owned=$owned)"
 }
 
-class Knowledge : Resource, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Knowledge : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
+    object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Knowledge"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`knowledge 🧪`
+        override val viewOrder = ViewOrder.ResourceOrder.Knowledge
     }
 
     override var _setOwnedInternal: Z = 0.z

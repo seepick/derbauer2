@@ -48,12 +48,14 @@ class TradePromptBuilder(
 
     private fun TradeCompoundRequests.toSingleSelectPrompt() = SelectPrompt(
         options = Options.Singled(
-            items = options.map { option ->
-                SelectOption(
-                    label = option.buildLabel(),
-                    onSelected = { resultHandler.handle(tradeService.trade(option)) },
-                )
-            }
+            items = options
+                .sortedByViewOrder(user)
+                .map { option ->
+                    SelectOption(
+                        label = option.buildLabel(),
+                        onSelected = { resultHandler.handle(tradeService.trade(option)) },
+                    )
+                }
         )
     )
 
@@ -72,3 +74,6 @@ class TradePromptBuilder(
             }"
         }
 }
+
+fun List<TradeCompoundRequest>.sortedByViewOrder(user: User): List<TradeCompoundRequest> =
+    sortedBy { user.findResource(it.target.resoureClass).viewOrder }

@@ -37,6 +37,7 @@ class BuildingPage(
                         label = OptionLabel.Table(
                             listOf(
                                 "Build ${building.labelSingular}",
+                                // once more generic, use the Resource.ViewOrder to sort properly
                                 "${user.findResource<Gold>().emojiSpaceOrEmpty}${building.costsGold}",
                                 "${user.findResource<Land>().emojiSpaceOrEmpty}${building.landUse}",
                                 "(${building.owned})",

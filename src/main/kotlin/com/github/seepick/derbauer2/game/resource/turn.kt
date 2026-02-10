@@ -20,7 +20,7 @@ class ProducesResourceTurnStep(val user: User) {
         plainProduction().changes.forEach { change ->
             val bonuses = bonusesByResource[change.resourceClass] ?: emptyList()
             val totalBonus = bonuses.sumOf { it.productionBonus(user).number }.`%`
-            val baseProduction = change.change
+            val baseProduction = change.amount
             val finalAmount = baseProduction.timesFloor(1.0 + totalBonus.number)
             add(ResourceChange(change.resourceClass, finalAmount))
         }

@@ -4,6 +4,7 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.feature.FeatureMultiView
 import com.github.seepick.derbauer2.game.happening.HappeningMultiView
+import com.github.seepick.derbauer2.game.resource.ResourceChange
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.view.ContinueButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
@@ -43,16 +44,20 @@ class ReportPage(
                     "${res.emojiSpaceOrEmpty}${res.labelPlural}"
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    (user.findResource(change.resourceClass).owned.zz - change.change).toString()
+                    (user.findResource(change.resourceClass).owned.zz - change.amount).toString()
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
-                    change.change.toSymboledString() + " ="
+                    change.amount.toSymboledString() + " ="
                 },
                 TransformingTableCol(align = TableAlign.Right) { _, _, change ->
                     user.findResource(change.resourceClass).owned.toString()
                 },
             ),
-            rowItems = reports.last().resourceChanges.changes,
+            rowItems = reports.last().resourceChanges.changes.sortedByViewOrder(user),
         )
     },
 )
+
+fun List<ResourceChange>.sortedByViewOrder(user: User): List<ResourceChange> =
+    sortedBy { user.findResource(it.resourceClass).viewOrder }
+

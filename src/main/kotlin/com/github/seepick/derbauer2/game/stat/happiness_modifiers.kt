@@ -40,7 +40,7 @@ class HappinessDeathPostModifier : PostStatModifier {
         }
         val citizenChange = report.resourceChanges.changeFor(Citizen::class) ?: return null
 
-        return if (citizenChange.change.isNegative) {
+        return if (citizenChange.amount.isNegative) {
             Mechanics.statHappinessDeathPenalty
         } else {
             null

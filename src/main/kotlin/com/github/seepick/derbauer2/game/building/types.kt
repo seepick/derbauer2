@@ -13,6 +13,7 @@ import com.github.seepick.derbauer2.game.resource.StoresResource
 import kotlin.reflect.KClass
 
 interface Building : Asset, OccupiesLand {
+    // TODO change `costsGold` to a more generic `costs` that can include multiple resources
     val costsGold: Z
 }
 
