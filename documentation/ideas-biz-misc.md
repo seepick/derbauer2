@@ -1,5 +1,21 @@
 # Misc Business Ideas
 
+* army has atk/def/hp; "high level scenario probability tasks/tech"???
+* happening festival: Y/N (+happy, -food)
+* building warehouse stores multiple resource types (food + construction resources (wood, stone, metal))
+* ad wood, regrowing trees depends on land owned; forrester building for bonus
+* enable hhappenings based on "things"; e.g. military happenings (being attacked, etc.) only if have feature
+* entity successions:
+    * tent -> house -> villa
+    * field -> farm -> plantation
+    * warrior -> knight; phalanx (high def), catapult (good against non-barbarian NPCs)
+    * church -> cathedral
+    * market -> trading post -> stock exchange
+    * school -> university -> academy -> research institute
+    * park -> theater -> colosseum
+* GENERAL // keep MEDIEVAL theme, oldschool; no weird names like "capitalism", didn't exist back then
+* player death/rebirth concept (like in fugger2)
+    * start with being 16 years (tell a story); once reache higher age, increase probability to die
 * use "theme color changing" functionality to indicate epoches/ages; a major shift; maybe emojis/ascii/texts/... too?
 * ! find derbauer2 original commodore game; look through inspirations
 * new functionality "special actions", like organzing festival (+x happiness)
