@@ -31,7 +31,7 @@ class TradingServiceTest : DescribeSpec({
             it("When buy infinite resource like gold Then succeed") {
                 user.add(Gold())
                 service.trade(
-                    TradeRequest(Gold::class, Buy, 1.z),
+                    TradeSingleRequest(Gold::class, Buy, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
             it("Given enough storage When buy storable Then succeed") {
@@ -39,14 +39,14 @@ class TradingServiceTest : DescribeSpec({
                 user.addBuilding(Granary(), 1.z)
 
                 service.trade(
-                    TradeRequest(Food::class, Buy, 1.z),
+                    TradeSingleRequest(Food::class, Buy, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
             it("Given no storage When buy Then fail") {
                 user.add(Food())
 
                 service.trade(
-                    TradeRequest(Food::class, Buy, 1.z),
+                    TradeSingleRequest(Food::class, Buy, 1.z),
                 ).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
             }
         }
@@ -54,7 +54,7 @@ class TradingServiceTest : DescribeSpec({
         describe("Operation") {
             it("When buy infinite resource gold Then increased") {
                 user.add(Gold())
-                service.trade(TradeRequest(Gold::class, Buy, 1.z))
+                service.trade(TradeSingleRequest(Gold::class, Buy, 1.z))
                 user.gold shouldBeEqual 1.z
             }
         }
@@ -66,26 +66,26 @@ class TradingServiceTest : DescribeSpec({
                 user.add(Gold())
 
                 service.trade(
-                    TradeRequest(Gold::class, Sell, 1.z),
+                    TradeSingleRequest(Gold::class, Sell, 1.z),
                 ).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
             }
             it("Given some gold When selling Then succeed") {
                 user.addResource(Gold(), 1.z)
 
                 service.trade(
-                    TradeRequest(Gold::class, Sell, 1.z),
+                    TradeSingleRequest(Gold::class, Sell, 1.z),
                 ) shouldBeEqual TxResult.Success
             }
         }
         describe("Operation") {
             it("Given no gold When selling Then gold unchanged") {
                 user.add(Gold())
-                service.trade(TradeRequest(Gold::class, Sell, 1.z))
+                service.trade(TradeSingleRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }
             it("Given some gold When selling Then gold changed") {
                 user.addResource(Gold(), 1.z)
-                service.trade(TradeRequest(Gold::class, Sell, 1.z))
+                service.trade(TradeSingleRequest(Gold::class, Sell, 1.z))
                 user.gold shouldBe 0.z
             }
         }

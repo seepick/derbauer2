@@ -116,6 +116,10 @@ sealed interface OptionLabel {
     data class Table(val columns: List<String>) : OptionLabel
 }
 
+typealias StaticLabel = OptionLabel.Single.Dynamic
+typealias DynamicLabel = OptionLabel.Single.Dynamic
+typealias TableLabel = OptionLabel.Table
+
 typealias SingleSelectPrompt = SelectPrompt<OptionLabel.Single, Options<OptionLabel.Single>>
 typealias StaticSelectPrompt = SelectPrompt<OptionLabel.Single.Static, Options<OptionLabel.Single.Static>>
 typealias DynamicSelectPrompt = SelectPrompt<OptionLabel.Single.Dynamic, Options<OptionLabel.Single.Dynamic>>

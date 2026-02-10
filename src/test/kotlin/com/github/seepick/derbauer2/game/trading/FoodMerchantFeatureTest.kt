@@ -20,7 +20,7 @@ class FoodMerchantFeatureTest : StringSpec({
         user = User()
     }
     fun foodTradeWithAnyAmount() =
-        TradeRequest(Food::class, Arb.int(-100..100).next().zz)
+        TradeSingleRequest(Food::class, Arb.int(-100..100).next().zz)
 
     fun reportWithFoodTrade(tradingCount: Int) = TurnReport.empty().copy(
         actions = List(tradingCount) {

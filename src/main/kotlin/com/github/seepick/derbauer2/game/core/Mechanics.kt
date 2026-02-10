@@ -58,12 +58,15 @@ object Mechanics {
     val theaterLanduse = 3.z
     val theaterCostsGold = 250.z
 
-    // TRADE
+    // TRADING
     // ========================================================================
 
     val buyFoodCostGold = 5.z
     val sellFoodGainGold = if (DEV) 20.z else 2.z
     val buyLandCostGold = 50.z
+
+    val tradeFoodAmountBasic = 10.z
+    val tradeFoodAmountWithMerchant = 100.z
 
     // FEATURE
     // ========================================================================
