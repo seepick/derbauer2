@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.AiGenerated
 import java.util.Locale
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
@@ -9,6 +8,10 @@ import kotlin.math.abs
 import kotlin.math.floor
 import kotlin.math.log10
 import kotlin.math.max
+
+/** Indicating the annotated code was entirely or at least mostly written by an LLM. */
+@Target(AnnotationTarget.CLASS, AnnotationTarget.FUNCTION, AnnotationTarget.FILE)
+annotation class AiGenerated
 
 @OptIn(ExperimentalContracts::class)
 fun ifDo(condition: Boolean, execution: () -> Unit): Boolean {

@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import kotlin.reflect.KClass
 
 @Suppress("JavaDefaultMethodsNotOverriddenByDelegation")

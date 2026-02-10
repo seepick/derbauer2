@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.transaction.TxValidator
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -13,7 +14,19 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     private val log = logger {}
 
     var userTitle = UserTitle.initial
+        set(value) {
+            if (field != value) {
+                log.info { "Setting user title to: $value" }
+            }
+            field = value
+        }
     var cityTitle = CityTitle.initial
+        set(value) {
+            if (field != value) {
+                log.info { "Setting city title to: $value" }
+            }
+            field = value
+        }
 
     private val allMutable = mutableListOf<Entity>()
     val all = ListX(allMutable)
@@ -29,18 +42,18 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     @Suppress("ThrowsCount")
     private fun <E : Entity> validate(entity: E, disableCheck: Boolean) {
         if (entity::class.simpleName == null) {
-            throw UserEnableException(
+            throw IllegalEntityException(
                 "Cannot add anonymous class (entity=$entity / entity.label='${entity.label}')"
             )
         }
         if (!disableCheck && entity is Ownable && entity.owned != 0.z) {
-            throw UserEnableException(
+            throw IllegalEntityException(
                 "Adding ownable ${entity.label} must be 0 but was: ${entity.owned}; " +
                         "(change it later via TX or: disable checks, but for tests only!)"
             )
         }
         if (all.any { it::class == entity::class }) {
-            throw UserEnableException("Entity ${entity::class.simpleName} already exists!")
+            throw IllegalEntityException("Entity ${entity::class.simpleName} already exists!")
         }
     }
 
@@ -61,7 +74,6 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     }
 
     override fun hashCode(): Int = allMutable.hashCode()
-
     override fun toString() = "User(all=${all.delegate.map { it.toString() }})"
 }
 
@@ -72,4 +84,4 @@ inline fun <reified E : Entity> User.hasEntity() = hasEntity(E::class)
 
 fun User.isGameOver() = hasEntity<Citizen>() && citizen == 0.z
 
-class UserEnableException(message: String) : Exception(message)
+class IllegalEntityException(message: String) : Exception(message)

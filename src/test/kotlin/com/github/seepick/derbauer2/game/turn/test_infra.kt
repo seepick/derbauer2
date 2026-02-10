@@ -55,14 +55,6 @@ fun Arb.Companion.turnReport() = arbitrary {
     )
 }
 
-fun TurnReport.Companion.empty() = TurnReport(
-    turn = Turn(1),
-    resourceChanges = ResourceChanges.empty,
-    happenings = emptyList(),
-    featurePages = emptyList(),
-    actions = emptyList(),
-)
-
 operator fun CurrentTurn.Companion.invoke(season: Season) = CurrentTurn(season.anyValidTurnNumber)
 operator fun CurrentTurn.Companion.invoke(number: Int) = CurrentTurnStub(Turn(number))
 

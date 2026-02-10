@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.testInfra.PageTest
 import com.github.seepick.derbauer2.game.testInfra.pageParser.GamePageContext
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
+import com.github.seepick.derbauer2.game.view.Texts
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContain

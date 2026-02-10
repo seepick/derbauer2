@@ -52,6 +52,22 @@ value class AsciiArt(val value: String) {
             YwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwYwY
             """.trimIndent()
         )
+        val shield = AsciiArt(
+            """
+             _____________________
+            |  |.o. .o.|WwW WwW|  |
+            |  |`;`o`;`| wWwWw |  |
+            |  |  `;`  |   W   |  |
+            ;  |-------|-------|  ;
+             ; ; WwWWwW|.o..o. ; ;
+              \ \ W  W |`;``;`/ /
+               \ '. WwW|.o. .' /
+                '. `.w | `;` .'
+                  '. `.|.` .'
+                    '. | .'
+                      '+'
+            """.trimIndent()
+        )
         val smiley = AsciiArt(
             """
                   .-""${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}${'"'}-.

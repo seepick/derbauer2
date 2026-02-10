@@ -1,6 +1,8 @@
-package com.github.seepick.derbauer2.game.core
+package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.core.Warning
+import com.github.seepick.derbauer2.game.core.`warning ⚠️`
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -20,7 +22,7 @@ val emojiMap: Map<KClass<out Any>, Emoji?> = mapOf(
     Land::class to Emoji.`land 🌍`,
 
     Happiness::class to Emoji.`happiness 🥳`,
-    Warning::class to Emoji.`warning ⚠️`,
+    Warning::class to Emoji.Companion.`warning ⚠️`,
 )
 
 val KClass<*>.simpleNameEmojied: String

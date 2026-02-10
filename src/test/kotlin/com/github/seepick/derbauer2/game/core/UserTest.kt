@@ -23,12 +23,12 @@ class UserTest : DescribeSpec({
         it("duplicate fail") {
             user.add(Citizen())
 
-            shouldThrow<UserEnableException> {
+            shouldThrow<IllegalEntityException> {
                 user.add(Citizen())
             }.message shouldContain "Citizen"
         }
         it("lambda fails") {
-            shouldThrow<UserEnableException> {
+            shouldThrow<IllegalEntityException> {
                 user.add(object : Entity {
                     override val label = "fail in lambda"
                     override fun deepCopy() = this

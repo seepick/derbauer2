@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.core
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.view.emojiSpaceOrEmpty
 import kotlin.math.abs
 import kotlin.reflect.KClass
 

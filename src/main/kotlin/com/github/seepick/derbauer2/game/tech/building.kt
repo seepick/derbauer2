@@ -5,10 +5,10 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.ProducesResource
 import com.github.seepick.derbauer2.game.view.ViewOrder
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 
 class School : Building, ProducesResource, HasLabels by Data, ViewOrder by Data {
     object Data : HasLabels, ViewOrder {

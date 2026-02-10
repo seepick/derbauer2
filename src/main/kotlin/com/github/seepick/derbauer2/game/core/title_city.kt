@@ -14,18 +14,3 @@ enum class CityTitle(
     }
 }
 
-
-@Suppress("MagicNumber")
-enum class UserTitle(
-    val label: String,
-) {
-    // keep order!
-    Sir("Young Sire"),
-    Lord("Lord"),
-    King("King"),
-    Emperor("Emperor");
-
-    companion object {
-        val initial = entries.first()
-    }
-}

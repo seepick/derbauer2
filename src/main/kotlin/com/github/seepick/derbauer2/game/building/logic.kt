@@ -6,7 +6,6 @@ import com.github.seepick.derbauer2.game.core.ActionBus
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landOwned
@@ -14,6 +13,7 @@ import com.github.seepick.derbauer2.game.resource.totalLandUse
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.TxValidator
 import com.github.seepick.derbauer2.game.transaction.execTx
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 

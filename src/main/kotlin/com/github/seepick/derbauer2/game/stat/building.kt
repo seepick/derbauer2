@@ -6,8 +6,8 @@ import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.view.ViewOrder
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 
 class Theater : Building, PreStatModifier, HasLabels by Data, ViewOrder by Data {
     object Data : HasLabels, ViewOrder {

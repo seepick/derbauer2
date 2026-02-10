@@ -2,8 +2,6 @@
 
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.AiGenerated
-
 fun String.countGraphemes(): Int = extractGraphemes().size
 
 @AiGenerated

@@ -8,12 +8,12 @@ import com.github.seepick.derbauer2.game.common.toFormatted
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.view.AsciiArt
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private val happinessEmoji = "🥳".emoji

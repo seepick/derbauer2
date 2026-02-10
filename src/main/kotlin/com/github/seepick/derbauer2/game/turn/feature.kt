@@ -1,18 +1,18 @@
 package com.github.seepick.derbauer2.game.turn
 
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.view.AsciiArt
+import com.github.seepick.derbauer2.game.view.Texts
 
-class SeasonFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
+class SeasonFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "The Four Season",
         asciiArt = AsciiArt.sun,
         multilineDescription = Texts.featureSeasonMultilineDescription,
         checkIt = { _, reports ->
-            reports.lastTurnNumber() >= (Mechanics.featureSeasonUnlockTurn - 2) // necessary adjustment
+            reports.last().turn.number >= (Mechanics.featureSeasonUnlockTurn - 2) // necessary adjustment
         },
         buildIt = { SeasonFeature() }
     )

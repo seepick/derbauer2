@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.common.k
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.turn.Season
+import com.github.seepick.derbauer2.game.turn.Turn
 
 /**
  * All game mechanics constants; a magic constant provider.
@@ -102,6 +103,11 @@ object Mechanics {
     val statHappinessCitizenBirthEffect = 30.`%`
     val theaterProducesHappiness = if (DEV) 0.1 else 0.01
     val techCapitalismHappinessPerCitizenMultiplier = -0.001
+
+    // MISC (age, titles, etc)
+    // ========================================================================
+
+    val featureLordAge = if (DEV) Turn(5) else Turn.byYears(2)
 
     // END TURN
     // ========================================================================

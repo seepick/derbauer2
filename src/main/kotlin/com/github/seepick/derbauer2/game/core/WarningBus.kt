@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.core
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class WarningBus(

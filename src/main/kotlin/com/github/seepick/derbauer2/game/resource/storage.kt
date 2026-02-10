@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.simpleNameEmojied
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import kotlin.reflect.KClass
 
 @Suppress("MagicNumber")

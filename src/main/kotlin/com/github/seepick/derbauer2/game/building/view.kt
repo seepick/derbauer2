@@ -2,9 +2,7 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
-import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.view.BackButton
@@ -12,8 +10,10 @@ import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.game.view.SecondaryBackButton
+import com.github.seepick.derbauer2.game.view.Texts
 import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.game.view.ViewOrder
+import com.github.seepick.derbauer2.game.view.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.OptionLabel

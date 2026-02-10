@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.transaction.Tx
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxType
+import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
@@ -13,7 +14,7 @@ private val log = logger {}
 data class TxOwnable(
     override val ownableClass: KClass<out Ownable>,
     val operation: TxOperation,
-    val amount: Z
+    val amount: Z,
 ) : Tx, OwnableReference {
 
     override val type = TxType.OWNABLE

@@ -1,6 +1,5 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.AiGenerated
 import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.floor

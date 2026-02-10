@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.core
+package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.`build 🛠️`
 import com.github.seepick.derbauer2.game.common.Emoji
@@ -9,10 +9,10 @@ import com.github.seepick.derbauer2.game.turn.Season
 @Suppress("MayBeConstant", "VariableMaxLength")
 object Texts {
 
-    val buildPage = "Your builders are ready for work ${Emoji.`build 🛠️`}"
-    val tradePage = "The good-humored merchant is here to do business with you ${Emoji.`trade 💸`}"
+    val buildPage = "Your builders are ready for work ${Emoji.Companion.`build 🛠️`}"
+    val tradePage = "The good-humored merchant is here to do business with you ${Emoji.Companion.`trade 💸`}"
     fun techPage(emojiAndOwned: String) =
-        "What is your philosopher heart desiring next? ${Emoji.`tech 🔬`}\n\n" +
+        "What is your philosopher heart desiring next? ${Emoji.Companion.`tech 🔬`}\n\n" +
                 "Your genius wisdom expands $emojiAndOwned units of knowledge."
 
     val techPageEmpty = "Your mind is empty...\nGo ahead and read some books first."

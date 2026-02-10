@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.resource.ResourceChanges
+
 interface Reports {
     val all: List<TurnReport>
 
@@ -18,12 +20,18 @@ class ReportsImpl : Reports {
         all += report
     }
 
-
     // ... can be asked in the future about complex insights ...
 
-    override fun last() = all.last()
+    // a temporary solution, as order is: first executing logic (using this), before instantiating+adding report...
+    override fun last() = all.lastOrNull() ?: TurnReport.empty()
 
     companion object // for extensions
 }
 
-fun Reports.lastTurnNumber() = all.lastOrNull()?.turn?.number ?: 0
+fun TurnReport.Companion.empty() = TurnReport(
+    turn = Turn(1),
+    resourceChanges = ResourceChanges.empty,
+    happenings = emptyList(),
+    featurePages = emptyList(),
+    actions = emptyList(),
+)

@@ -4,7 +4,6 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.emojiAndLabelFor
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.core.ratsWillEatFoodProb
 import com.github.seepick.derbauer2.game.happening.Happening
@@ -19,6 +18,7 @@ import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.game.view.AsciiArt
+import com.github.seepick.derbauer2.game.view.emojiAndLabelFor
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
 private val ratsWillHappenForSeasonKey = ProbThresholderKey("ratsWillHappenForSeason")
@@ -26,8 +26,8 @@ val ProbThresholderKey.Companion.ratsWillHappenForSeason get() = ratsWillHappenF
 
 data class RatsEatFoodHappening(
     val amountFoodEaten: Z,
-    private val descriptor: HappeningData = Ref,
-) : Happening, HappeningData by descriptor {
+    private val data: HappeningData = Ref,
+) : Happening, HappeningData by data {
     init {
         require(amountFoodEaten > 0) { "amountFoodEaten must be positive: $amountFoodEaten" }
     }

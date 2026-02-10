@@ -1,8 +1,9 @@
-package com.github.seepick.derbauer2.game.core
+package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.core.HasLabels
 
 interface HasEmoji {
     val emoji: Emoji

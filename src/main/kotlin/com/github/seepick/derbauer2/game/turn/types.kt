@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.turn
 
+import com.github.seepick.derbauer2.game.common.AiGenerated
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
-import com.github.seepick.derbauer2.game.core.AiGenerated
 
 interface CurrentTurn {
     val current: Turn
@@ -21,7 +21,7 @@ class CurrentTurnImpl : CurrentTurn {
 
 @Suppress("MagicNumber")
 @AiGenerated // partially
-data class Turn(val number: Int = 1) {
+data class Turn(val number: Int = 1) : Comparable<Turn> {
     init {
         require(number >= 1) { "Turn number must be >= 1 but was: $number" }
     }
@@ -35,14 +35,16 @@ data class Turn(val number: Int = 1) {
         else -> Season.Winter
     }
 
-    fun toSeasonedString() = "${season.emoji}  W$week Y$year"
-
     fun increment() = Turn(number + 1)
+    override fun compareTo(other: Turn) = this.number.compareTo(other.number)
+
+    fun toSeasonedString() = "${season.emoji}  W$week Y$year"
     override fun toString() = "${this::class.simpleName}($number / ${toSeasonedString()})"
 
     companion object {
         private const val WEEKS_PER_YEAR = 52
         private const val WEEKS_PER_SEASON = WEEKS_PER_YEAR / 4 // 13
+        fun byYears(years: Int) = Turn((years * WEEKS_PER_YEAR) + 1)
     }
 }
 

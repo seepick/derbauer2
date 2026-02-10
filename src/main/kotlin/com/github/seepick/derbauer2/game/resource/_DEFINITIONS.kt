@@ -5,11 +5,11 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabels
-import com.github.seepick.derbauer2.game.core.emojiAndLabelSingular
 import com.github.seepick.derbauer2.game.tech.`knowledge 🧪`
+import com.github.seepick.derbauer2.game.view.HasEmoji
 import com.github.seepick.derbauer2.game.view.ViewOrder
+import com.github.seepick.derbauer2.game.view.emojiAndLabelSingular
 
 class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
     object Data : HasLabels, HasEmoji, ViewOrder {

@@ -3,7 +3,6 @@
 
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.AiGenerated
 import java.text.BreakIterator
 
 fun String.requireIsSingleEmoji() {

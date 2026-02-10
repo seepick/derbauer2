@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.feature
 
+import com.github.seepick.derbauer2.game.core.UserTitleLordFeature
 import com.github.seepick.derbauer2.game.stat.HappinessFeature
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trade.FoodMerchantFeature
@@ -19,6 +20,7 @@ object DefaultFeatureRefRegistry : FeatureRefRegistry {
         TradeFeature.Ref,
         FoodMerchantFeature.Ref,
         SeasonFeature.Ref,
+        UserTitleLordFeature.Ref,
         // ...
         // ..
         // .

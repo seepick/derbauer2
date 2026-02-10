@@ -47,6 +47,7 @@ data class FeatureSubPage(private val feature: Feature) : MultiViewSubPage {
 
     override fun execute(user: User) {
         user.add(feature)
+        println("exec: $feature")
         feature.mutate(user)
     }
 }

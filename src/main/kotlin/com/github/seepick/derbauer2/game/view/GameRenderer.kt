@@ -3,7 +3,6 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndOwned
-import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Food

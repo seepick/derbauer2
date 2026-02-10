@@ -6,6 +6,7 @@
 
 ## Backlog
 
+* BZ: keep track of user age (independent of turn); initialize with 15 years; become Lord by roughly 20
 * UX: replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
     * events/interactions make sounds (happening, etc...) for better feedback
     * provide button to toggle sound on/off; improve compose view-model state
@@ -22,5 +23,5 @@
 * BZ: get ideas/names/concepts from other games; age empire, anno, civ, settlers, fugger, ...
 * UI: use compose viewmodel
 * minorIT: refactor deterministic order of Tech; use tree to do it properly (not manually registry)
-* BZ: change city/user titles based on "some stats" (e.g. happiness, population, etc.); display more prominent
 * IT: custom type SingleLine and MultiLine
+* BZ: finish user title (now only Lord); also city title (depend on citizen); maybe stats

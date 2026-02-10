@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
@@ -11,8 +10,9 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.landAvailable
 import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.view.AsciiArt
+import com.github.seepick.derbauer2.game.view.emojiAndLabelPlural
 
-class TradeFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
+class TradeFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "Trading",
         asciiArt = AsciiArt.coin,
@@ -25,7 +25,7 @@ class TradeFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
     )
 }
 
-class TradeLandFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
+class TradeLandFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "Trade Land",
         asciiArt = AsciiArt.island,
@@ -40,7 +40,7 @@ class TradeLandFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
     )
 }
 
-class FoodMerchantFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
+class FoodMerchantFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "Food Merchant",
         asciiArt = AsciiArt.coin,

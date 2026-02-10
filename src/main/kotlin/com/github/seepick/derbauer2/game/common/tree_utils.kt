@@ -1,7 +1,5 @@
 package com.github.seepick.derbauer2.game.common
 
-import com.github.seepick.derbauer2.game.core.AiGenerated
-
 @AiGenerated
 fun <T> validCycleFree(all: List<T>, adjacency: Map<T, List<T>>) {
     val visiting = mutableSetOf<T>()

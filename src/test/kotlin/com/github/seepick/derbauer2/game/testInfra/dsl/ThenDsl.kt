@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.CollectingWarningListener
 import com.github.seepick.derbauer2.game.core.WarningType
-import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
+import com.github.seepick.derbauer2.game.view.emojiSpaceOrEmpty
 import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.collections.shouldContain

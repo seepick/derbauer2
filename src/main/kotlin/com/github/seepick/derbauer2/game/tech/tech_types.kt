@@ -1,7 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Mechanics
-import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.GlobalResourceProductionBonus
@@ -12,6 +11,7 @@ import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.stat.Happiness
 import com.github.seepick.derbauer2.game.stat.PreStatModifier
 import com.github.seepick.derbauer2.game.stat.StatKClass
+import com.github.seepick.derbauer2.game.view.Texts
 import com.github.seepick.derbauer2.game.view.ViewOrder
 
 /**
