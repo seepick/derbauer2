@@ -71,7 +71,7 @@ object Mechanics {
     // FEATURE
     // ========================================================================
 
-    val featureTradingThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
+    val featureTradeThresholdFoodStorageUsedBigger = if (DEV) 40.`%` else 80.`%`
     val featureTradeLandThresholdLandAvailableLesser = 3.z
     val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 3.z
     val featureHappinessCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 6.z

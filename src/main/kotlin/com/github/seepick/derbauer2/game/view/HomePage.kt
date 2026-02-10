@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.BuildingPage
-import com.github.seepick.derbauer2.game.building.`building 🛠️`
+import com.github.seepick.derbauer2.game.building.`build 🛠️`
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
@@ -9,9 +9,9 @@ import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.tech.TechPage
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.tech.`tech 🔬`
-import com.github.seepick.derbauer2.game.trading.TradingFeature
-import com.github.seepick.derbauer2.game.trading.TradingPage
-import com.github.seepick.derbauer2.game.trading.`trade 💸`
+import com.github.seepick.derbauer2.game.trade.TradeFeature
+import com.github.seepick.derbauer2.game.trade.TradePage
+import com.github.seepick.derbauer2.game.trade.`trade 💸`
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.turn.Turner
@@ -39,12 +39,12 @@ class HomePage(
     promptBuilder = {
         SelectPrompt(
             options = Options.Singled(buildList {
-                if (user.hasFeature<TradingFeature>()) {
+                if (user.hasFeature<TradeFeature>()) {
                     add(SelectOption("Trade ${Emoji.`trade 💸`}") {
-                        currentPage.pageClass = TradingPage::class
+                        currentPage.pageClass = TradePage::class
                     })
                 }
-                add(SelectOption("Build ${Emoji.`building 🛠️`}") {
+                add(SelectOption("Build ${Emoji.`build 🛠️`}") {
                     currentPage.pageClass = BuildingPage::class
                 })
                 if (user.hasFeature<TechnologyFeature>()) {

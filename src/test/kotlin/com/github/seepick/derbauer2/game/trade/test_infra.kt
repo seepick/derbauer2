@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
@@ -10,5 +10,5 @@ operator fun ResourcesTradedAction.Companion.invoke(vararg requests: TradeSingle
 operator fun ResourcesTradedAction.Companion.invoke(vararg requests: Pair<KClass<out Resource>, Zz>) =
     ResourcesTradedAction(requests.map { TradeSingleRequest(it.first, it.second) })
 
-fun TradingService.trade(requestsX: TradeSingleRequest, vararg requestsXS: TradeSingleRequest) =
+fun TradeService.trade(requestsX: TradeSingleRequest, vararg requestsXS: TradeSingleRequest) =
     trade(listOf(requestsX, *requestsXS))

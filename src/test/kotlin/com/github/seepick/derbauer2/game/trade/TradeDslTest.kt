@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.common.z
@@ -22,7 +22,7 @@ import com.github.seepick.derbauer2.textengine.shouldContainSingleIgnoringCase
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual
 
-class TradingDslTest : DslTest, DescribeSpec() {
+class TradeDslTest : DslTest, DescribeSpec() {
     init {
         installDslExtension()
         describe("When buy 🍖") {
@@ -32,7 +32,7 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     setOwned<Gold>(Mechanics.buyFoodCostGold * defaultFoodBuyAmount)
                     setOwned<Food>(0.z)
                     setOwned<Granary>(1.z)
-                    user.add(TradingFeature())
+                    user.add(TradeFeature())
                 } When {
                     selectPrompt("trade")
                     selectPrompt("buy $defaultFoodBuyAmount 🍖")
@@ -54,11 +54,11 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     setOwned<Gold>(1000.z)
                     setOwned<Granary>(1.z)
                     setOwned<Food>(Mechanics.granaryCapacity - foodDiff)
-                    user.add(TradingFeature())
+                    user.add(TradeFeature())
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("buy $foodDiff 🍖 food")
+                    pageAs<TradePage>().prompt.selectOptions.shouldContainSingleIgnoringCase("buy $foodDiff 🍖 food")
                 }
             }
             it("Given plenty storage for 🍖 And little 💰 Then max buy capped to affordable amount") {
@@ -67,11 +67,11 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     setOwned<Gold>(Mechanics.buyFoodCostGold * buyableFoodAmount)
                     setOwned<Granary>(1.z)
                     setOwned<Food>(0.z)
-                    user.add(TradingFeature())
+                    user.add(TradeFeature())
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    val options = pageAs<TradingPage>().prompt.selectOptions
+                    val options = pageAs<TradePage>().prompt.selectOptions
                     options shouldContainSingleIgnoringCase "buy $buyableFoodAmount 🍖 food"
                 }
             }
@@ -84,11 +84,11 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     setOwned<Gold>(0.z)
                     setOwned<Granary>(1.z)
                     setOwned<Food>(foodOwned.z)
-                    user.add(TradingFeature())
+                    user.add(TradeFeature())
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    val options = pageAs<TradingPage>().prompt.selectOptions
+                    val options = pageAs<TradePage>().prompt.selectOptions
                     options shouldContainSingleIgnoringCase "sell $foodOwned 🍖 food"
                 }
             }
@@ -99,7 +99,7 @@ class TradingDslTest : DslTest, DescribeSpec() {
                     setOwned<Gold>(0.z)
                     setOwned<Land>(0.z)
                     setOwned<Food>()
-                    user.add(TradingFeature())
+                    user.add(TradeFeature())
                     user.add(TradeLandFeature())
                 } When {
                     selectPrompt("trade")

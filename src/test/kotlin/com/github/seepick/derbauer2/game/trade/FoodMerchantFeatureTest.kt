@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Mechanics

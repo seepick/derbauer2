@@ -48,5 +48,5 @@ class BuildingPage(
 }, buttons = listOf(BackButton {
     currentPage.pageClass = HomePage::class
 }), contentRenderer = { textmap ->
-    textmap.line(Texts.buildingPage)
+    textmap.line(Texts.buildPage)
 })

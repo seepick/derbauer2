@@ -5,7 +5,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
-val enableUiTests = true // project.findProperty("enableUiTests") != null
+val enableUiTests = project.findProperty("enableUiTests") != null
 val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"

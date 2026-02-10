@@ -20,7 +20,7 @@ import io.mockk.just
 import io.mockk.mockk
 import io.mockk.verify
 
-class BuildTxTest : DescribeSpec({
+class BuildingServiceTest : DescribeSpec({
     lateinit var user: User
     lateinit var buildingService: BuildingService
     lateinit var actionBus: ActionBus

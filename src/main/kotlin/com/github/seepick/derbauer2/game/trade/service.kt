@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.z
@@ -13,14 +13,14 @@ import com.github.seepick.derbauer2.game.resource.Land
 import com.github.seepick.derbauer2.game.resource.food
 import com.github.seepick.derbauer2.game.resource.freeStorageFor
 import com.github.seepick.derbauer2.game.resource.gold
-import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
-import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
+import com.github.seepick.derbauer2.game.trade.TradeOperation.Buy
+import com.github.seepick.derbauer2.game.trade.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.transaction.TxOperation
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-class TradingService(
+class TradeService(
     private val user: User,
     private val actionBus: ActionBus,
 ) {

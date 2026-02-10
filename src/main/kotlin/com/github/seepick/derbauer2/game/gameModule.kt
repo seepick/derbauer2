@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.prob.probModule
 import com.github.seepick.derbauer2.game.resource.resourceModule
 import com.github.seepick.derbauer2.game.stat.statModule
 import com.github.seepick.derbauer2.game.tech.techModule
-import com.github.seepick.derbauer2.game.trading.tradingModule
+import com.github.seepick.derbauer2.game.trade.tradeModule
 import com.github.seepick.derbauer2.game.transaction.transactionModule
 import com.github.seepick.derbauer2.game.turn.turnModule
 import com.github.seepick.derbauer2.game.view.viewModule
@@ -26,7 +26,7 @@ fun gameModule(
         buildingModule(),
         citizenModule(),
         transactionModule(),
-        tradingModule(),
+        tradeModule(),
         turnModule(),
         happeningModule(),
         featureModule(),

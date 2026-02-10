@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
@@ -9,8 +9,8 @@ import com.github.seepick.derbauer2.game.resource.Food
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.addResource
 import com.github.seepick.derbauer2.game.resource.gold
-import com.github.seepick.derbauer2.game.trading.TradeOperation.Buy
-import com.github.seepick.derbauer2.game.trading.TradeOperation.Sell
+import com.github.seepick.derbauer2.game.trade.TradeOperation.Buy
+import com.github.seepick.derbauer2.game.trade.TradeOperation.Sell
 import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
 import com.github.seepick.derbauer2.game.transaction.TxResult
 import io.kotest.core.spec.style.DescribeSpec
@@ -18,12 +18,12 @@ import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
-class TradingServiceTest : DescribeSpec({
+class TradeServiceTest : DescribeSpec({
     lateinit var user: User
-    lateinit var service: TradingService
+    lateinit var service: TradeService
     beforeTest {
         user = User(DefaultTxValidatorRegistry.validators)
-        service = TradingService(user, ActionBusStub())
+        service = TradeService(user, ActionBusStub())
     }
 
     context("Buy") {

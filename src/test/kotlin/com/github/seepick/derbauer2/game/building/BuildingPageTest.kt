@@ -21,7 +21,7 @@ class BuildingPageTest : PageTest, StringSpec({
             ctx.buildBuildingsPage()
         }) {
             contentString shouldBeEqual """
-                ${Texts.buildingPage}
+                ${Texts.buildPage}
                 
                 [1] Build House 💰 40  🌍 1 (0)
                 [2] Build Farm  💰 120 🌍 4 (0)

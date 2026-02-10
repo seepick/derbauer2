@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -15,9 +15,9 @@ import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
-class TradingFeature(descriptor: Ref = Ref) : Feature(descriptor) {
+class TradeFeature(descriptor: Ref = Ref) : Feature(descriptor) {
 
-    override val discriminator = Discriminator.Trading(this)
+    override val discriminator = Discriminator.Trade(this)
     override fun mutate(user: User) {
         // nothing to do
     }
@@ -31,9 +31,9 @@ class TradingFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     ) {
         override fun check(user: User, reports: Reports) =
             user.hasEntity<Food>() &&
-                    user.storageUsage<Food>() >= Mechanics.featureTradingThresholdFoodStorageUsedBigger
+                    user.storageUsage<Food>() >= Mechanics.featureTradeThresholdFoodStorageUsedBigger
 
-        override fun build() = TradingFeature()
+        override fun build() = TradeFeature()
     }
 }
 
@@ -52,7 +52,7 @@ class TradeLandFeature(descriptor: Ref = Ref) : Feature(descriptor) {
                 "And some more... hehe 😅",
     ) {
         override fun check(user: User, reports: Reports) =
-            user.hasFeature<TradingFeature>() &&
+            user.hasFeature<TradeFeature>() &&
                     user.hasEntity<Land>() &&
                     user.landAvailable <= Mechanics.featureTradeLandThresholdLandAvailableLesser
 

@@ -5,4 +5,4 @@ import com.github.seepick.derbauer2.game.common.emoji
 
 private val buildingEmoji = "🛠️".emoji
 @Suppress("ObjectPropertyName", "NonAsciiCharacters")
-val Emoji.Companion.`building 🛠️` get() = buildingEmoji
+val Emoji.Companion.`build 🛠️` get() = buildingEmoji

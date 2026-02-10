@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.building.WhenBuildPageDsl
 import com.github.seepick.derbauer2.game.testInfra.dsl.TestDsl
 import com.github.seepick.derbauer2.game.testInfra.dsl.WhenDsl
-import com.github.seepick.derbauer2.game.trading.TradingPage
+import com.github.seepick.derbauer2.game.trade.TradePage
 import com.github.seepick.derbauer2.game.turn.ReportPage
 import com.github.seepick.derbauer2.game.turn.WhenReportPageDsl
 import com.github.seepick.derbauer2.textengine.KeyInput
@@ -36,7 +36,7 @@ class WhenHomePageDsl(private val whenDsl: WhenDsl) : WhenDsl by whenDsl, HomePa
 
     override fun selectTrade() {
         selectPrompt("trade")
-        page.shouldBeInstanceOf<TradingPage>()
+        page.shouldBeInstanceOf<TradePage>()
     }
 
     override fun selectBuild(code: WhenBuildPageDsl.() -> Unit) {

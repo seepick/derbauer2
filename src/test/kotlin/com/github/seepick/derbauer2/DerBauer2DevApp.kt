@@ -8,8 +8,8 @@ import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.startApp
 import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
-import com.github.seepick.derbauer2.game.trading.TradeLandFeature
-import com.github.seepick.derbauer2.game.trading.TradingFeature
+import com.github.seepick.derbauer2.game.trade.TradeFeature
+import com.github.seepick.derbauer2.game.trade.TradeLandFeature
 
 object DerBauer2DevApp {
     init {
@@ -26,7 +26,7 @@ object DerBauer2DevApp {
                 val user = koin.get<User>()
                 user.findResource<Gold>().ownedForTest = 1000.z
                 user.addFeature(TechnologyFeature())
-                user.addFeature(TradingFeature())
+                user.addFeature(TradeFeature())
                 user.addFeature(TradeLandFeature())
 //                val agr = koin.get<TechTree>().filterResearchableItems().single { it.type == TechType.AGRICULTURE }
 //                user.researchTech(agr)

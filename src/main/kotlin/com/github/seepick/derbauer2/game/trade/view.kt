@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.trading
+package com.github.seepick.derbauer2.game.trade
 
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
@@ -15,7 +15,7 @@ import com.github.seepick.derbauer2.textengine.prompt.PromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 
-class TradingPage(
+class TradePage(
     currentPage: CurrentPage,
     gameRenderer: GameRenderer,
     tradePromptBuilder: TradePromptBuilder,
@@ -26,25 +26,25 @@ class TradingPage(
     gameRenderer = gameRenderer,
     promptBuilder = tradePromptBuilder,
     contentRenderer = { textmap ->
-        textmap.line(Texts.tradingPage)
+        textmap.line(Texts.tradePage)
     }
 )
 
 class TradePromptBuilder(
     private val resultHandler: TxResultHandler,
     private val user: User,
-    private val tradingService: TradingService,
+    private val tradeService: TradeService,
 ) : PromptProvider {
 
     override fun buildPrompt() =
-        tradingService.buildOptions().toSingleSelectPrompt()
+        tradeService.buildOptions().toSingleSelectPrompt()
 
     private fun TradeCompoundRequests.toSingleSelectPrompt() = SelectPrompt(
         options = Options.Singled(
             items = options.map { option ->
                 SelectOption(
                     label = option.buildLabel(),
-                    onSelected = { resultHandler.handle(tradingService.trade(option)) },
+                    onSelected = { resultHandler.handle(tradeService.trade(option)) },
                 )
             }
         )
