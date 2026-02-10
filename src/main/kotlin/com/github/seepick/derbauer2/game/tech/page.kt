@@ -9,6 +9,7 @@ import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
+import com.github.seepick.derbauer2.game.view.SecondaryBackButton
 import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
@@ -26,23 +27,29 @@ class TechPage(
     private val techTree: TechTree,
     private val resultHandler: TxResultHandler,
     private val techService: TechService,
-) : PromptGamePage(gameRenderer = gameRenderer, promptBuilder = {
-    val techs = techTree.filterResearchableItems()
-    if (techs.isEmpty()) {
-        EmptyPagePromptProvider(Texts.techPageEmpty)
-    } else {
-        val maxColCount = techs.maxOf { it.costs.size }
-        SelectPrompt(Options.Tabled(techs.map {
-            it.toSelectOption(user, maxColCount, techService, resultHandler)
-        }))
-    }
-}, buttons = listOf(BackButton {
-    currentPage.pageClass = HomePage::class
-}), contentRenderer = { textmap ->
-    textmap.line(Texts.techPage)
-    textmap.emptyLine()
-    textmap.line("Your genius wisdom expands ${user.findResource<Knowledge>().emojiAndOwned} units of knowledge.")
-})
+) : PromptGamePage(
+    gameRenderer = gameRenderer, promptBuilder = {
+        val techs = techTree.filterResearchableItems()
+        if (techs.isEmpty()) {
+            EmptyPagePromptProvider(Texts.techPageEmpty)
+        } else {
+            val maxColCount = techs.maxOf { it.costs.size }
+            SelectPrompt(Options.Tabled(techs.map {
+                it.toSelectOption(user, maxColCount, techService, resultHandler)
+            }))
+        }
+    }, buttons = listOf(
+        BackButton {
+            currentPage.pageClass = HomePage::class
+        },
+        SecondaryBackButton {
+            currentPage.pageClass = HomePage::class
+        },
+    ), contentRenderer = { textmap ->
+        textmap.line(Texts.techPage)
+        textmap.emptyLine()
+        textmap.line("Your genius wisdom expands ${user.findResource<Knowledge>().emojiAndOwned} units of knowledge.")
+    })
 
 private fun TechRef.toSelectOption(
     user: User,

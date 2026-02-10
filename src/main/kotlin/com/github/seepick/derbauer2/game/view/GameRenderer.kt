@@ -28,7 +28,7 @@ class GameRenderer(
         textmap: Textmap,
         promptIndicator: String,
         metaOptions: List<MetaOption> = emptyList(),
-        content: (Textmap) -> Unit
+        content: (Textmap) -> Unit,
     ) {
         textmap.aligned(renderInfoBar(), turn.current.toPrettyString())
         textmap.hr()
@@ -38,7 +38,8 @@ class GameRenderer(
         textmap.hr()
         textmap.aligned(
             left = "[$promptIndicator]> ▉",
-            right = metaOptions.joinToString("   ") { it.formatted },
+            right = metaOptions.filter { it.renderHint }
+                .joinToString("   ") { it.formatted },
         )
     }
 
@@ -51,9 +52,11 @@ class GameRenderer(
 interface MetaOption {
     val key: KeyPressed.Command // ENTER
     val label: String // Buy Building
+    val renderHint: Boolean
 }
 
 data class MetaOptionImpl(
     override val key: KeyPressed.Command,
     override val label: String,
+    override val renderHint: Boolean = true,
 ) : MetaOption

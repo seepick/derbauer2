@@ -8,6 +8,7 @@ import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
+import com.github.seepick.derbauer2.game.view.SecondaryBackButton
 import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
@@ -23,30 +24,36 @@ class BuildingPage(
     gameRenderer: GameRenderer,
     private val resultHandler: TxResultHandler,
     private val buildingService: BuildingService,
-) : PromptGamePage(gameRenderer = gameRenderer, promptBuilder = {
-    if (user.buildings.isEmpty()) {
-        EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
-    } else {
-        SelectPrompt(
-            options = Options.Tabled(user.buildings.map { building ->
-                SelectOption(
-                    label = OptionLabel.Table(
-                        listOf(
-                            "Build ${building.labelSingular}",
-                            "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold}",
-                            "${Land.Data.emojiSpaceOrEmpty}${building.landUse}",
-                            "(${building.owned})",
-                        )
-                    ),
-                    onSelected = {
-                        resultHandler.handle(buildingService.build(building::class))
-                    },
-                )
-            })
-        )
-    }
-}, buttons = listOf(BackButton {
-    currentPage.pageClass = HomePage::class
-}), contentRenderer = { textmap ->
-    textmap.line(Texts.buildPage)
-})
+) : PromptGamePage(
+    gameRenderer = gameRenderer, promptBuilder = {
+        if (user.buildings.isEmpty()) {
+            EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
+        } else {
+            SelectPrompt(
+                options = Options.Tabled(user.buildings.map { building ->
+                    SelectOption(
+                        label = OptionLabel.Table(
+                            listOf(
+                                "Build ${building.labelSingular}",
+                                "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold}",
+                                "${Land.Data.emojiSpaceOrEmpty}${building.landUse}",
+                                "(${building.owned})",
+                            )
+                        ),
+                        onSelected = {
+                            resultHandler.handle(buildingService.build(building::class))
+                        },
+                    )
+                })
+            )
+        }
+    }, buttons = listOf(
+        BackButton {
+            currentPage.pageClass = HomePage::class
+        },
+        SecondaryBackButton {
+            currentPage.pageClass = HomePage::class
+        },
+    ), contentRenderer = { textmap ->
+        textmap.line(Texts.buildPage)
+    })

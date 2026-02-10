@@ -7,7 +7,7 @@ import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
 
 fun BackButton(
     label: String = "Back",
-    onExecute: () -> Unit
+    onExecute: () -> Unit,
 ) = Button(
     key = KeyPressed.Command.Enter,
     label = label,
@@ -16,17 +16,28 @@ fun BackButton(
 
 fun ContinueButton(
     label: String = "Continue",
-    onExecute: () -> Unit
+    onExecute: () -> Unit,
 ) = Button(
     key = KeyPressed.Command.Enter,
     label = label,
     onExecute = onExecute,
 )
 
+fun SecondaryBackButton(
+    label: String = "",
+    onExecute: () -> Unit,
+) = Button(
+    key = KeyPressed.Command.Escape,
+    label = label,
+    renderHint = false,
+    onExecute = onExecute,
+)
+
 class Button(
     override val key: KeyPressed.Command,
     override val label: String,
-    private val option: MetaOption = MetaOptionImpl(key, label),
+    renderHint: Boolean = true,
+    private val option: MetaOption = MetaOptionImpl(key, label, renderHint),
     private val onExecute: () -> Unit,
 ) : MetaOption by option, KeyListener {
 

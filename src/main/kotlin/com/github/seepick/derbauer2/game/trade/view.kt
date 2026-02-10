@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
+import com.github.seepick.derbauer2.game.view.SecondaryBackButton
 import com.github.seepick.derbauer2.game.view.TxResultHandler
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.DynamicLabel
@@ -20,9 +21,14 @@ class TradePage(
     gameRenderer: GameRenderer,
     tradePromptBuilder: TradePromptBuilder,
 ) : PromptGamePage(
-    buttons = listOf(BackButton {
-        currentPage.pageClass = HomePage::class
-    }),
+    buttons = listOf(
+        BackButton {
+            currentPage.pageClass = HomePage::class
+        },
+        SecondaryBackButton {
+            currentPage.pageClass = HomePage::class
+        },
+    ),
     gameRenderer = gameRenderer,
     promptBuilder = tradePromptBuilder,
     contentRenderer = { textmap ->

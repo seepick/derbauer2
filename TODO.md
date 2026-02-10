@@ -3,7 +3,6 @@
 ## 1.3.0
 
 * BZ: change city/user titles based on "some stats" (e.g. happiness, population, etc.); display more prominent
-* UI: support ESC if in sub-menu
 * UI: deterministic order
     * of resources (in turn report; info bar)
     * of tech (logical); right now "irrigation" puts itself on top (weird)
