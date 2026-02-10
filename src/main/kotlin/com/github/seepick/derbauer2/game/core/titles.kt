@@ -1,17 +1,16 @@
 package com.github.seepick.derbauer2.game.core
 
-@Suppress("MagicNumber")
 enum class CityTitle(
-    val label: String,
-    val order: Int,
-) {
-    Village("Village", 0),
-    Town("Town", 1),
-    City("City", 2),
-    Metropolis("Metropolis", 3);
+    override val label: String,
+) : HasLabel {
+    // keep order!
+    Village("Village"),
+    Town("Town"),
+    City("City"),
+    Metropolis("Metropolis");
 
     companion object {
-        val initial = entries.minBy { it.order }
+        val initial = entries.first()
     }
 }
 
@@ -19,14 +18,14 @@ enum class CityTitle(
 @Suppress("MagicNumber")
 enum class UserTitle(
     val label: String,
-    val order: Int,
 ) {
-    Sir("Sir", 0),
-    Lord("Lord", 1),
-    King("King", 2),
-    Emperor("Emperor", 3);
+    // keep order!
+    Sir("Young Sire"),
+    Lord("Lord"),
+    King("King"),
+    Emperor("Emperor");
 
     companion object {
-        val initial = entries.minBy { it.order }
+        val initial = entries.first()
     }
 }

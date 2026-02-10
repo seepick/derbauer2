@@ -52,6 +52,6 @@ class HomePage(
             })
         )
     }, contentRenderer = { textmap ->
-        textmap.line("You are home... 🏠")
+        textmap.line("You feel cozy in your ${user.cityTitle.label}... 🏠")
         textmap.line("What shall we do next, ${user.userTitle.label}?")
     })
