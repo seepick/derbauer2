@@ -45,6 +45,7 @@ class TurnerTest : DescribeSpec(
                 featureTurner = featureTurner,
                 actionsCollector = ActionsCollector(),
                 turn = currentTurn,
+                reports = ReportsImpl(),
             )
         }
 

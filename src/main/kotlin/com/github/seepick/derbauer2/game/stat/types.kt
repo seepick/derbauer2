@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.game.core.Entity
 import kotlin.reflect.KClass
 
 interface Stat<SD : StrictDouble> : Entity {
-    val value: SD
+    val currentValue: SD
     fun changeBy(amount: Double)
     fun changeTo(value: SD)
 }

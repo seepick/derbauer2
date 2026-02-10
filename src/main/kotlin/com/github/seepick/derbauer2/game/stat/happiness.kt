@@ -9,7 +9,7 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
-import com.github.seepick.derbauer2.game.feature.Feature
+import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
@@ -21,27 +21,29 @@ private val happinessEmoji = "🥳".emoji
 @Suppress("ObjectPropertyName", "NonAsciiCharacters")
 val Emoji.Companion.`happiness 🥳` get() = happinessEmoji
 
-class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
+class Happiness(
+    initialValue: Double11 = Double11(0.0),
+) : Stat<Double11> {
 
     private val log = logger {}
-    override var value: Double11 = initialValue
+    override var currentValue = initialValue
         private set
-    val emoji get() = emojiRange.map(value)
-    override val labelSingular = "Happiness"
+    val currentEmoji get() = emojiRange.map(currentValue)
+    override val label = "Happiness"
 
     override fun changeBy(amount: Double) { // reuse in the future, once a 2nd stat exists
-        val newValue = Double11((value.number + amount).coerceIn(-1.0, 1.0))
+        val newValue = Double11((currentValue.number + amount).coerceIn(-1.0, 1.0))
         log.debug { "changing ${Emoji.`happiness 🥳`} by ${amount.toFormatted()} => ${newValue.number.toFormatted()}" }
-        value = newValue
+        currentValue = newValue
     }
 
     override fun changeTo(value: Double11) {
-        log.trace { "Changing value from ${this.value} to $value" }
-        this.value = value
+        log.trace { "Changing value from ${this.currentValue} to $value" }
+        this.currentValue = value
     }
 
-    override fun deepCopy() = Happiness(value)
-    override fun toString() = "${this::class.simpleNameEmojied}($value)"
+    override fun deepCopy() = Happiness(currentValue)
+    override fun toString() = "${this::class.simpleNameEmojied}($currentValue)"
 
     companion object {
         val emoji = Emoji.`happiness 🥳`
@@ -65,8 +67,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
     }
 }
 
-class HappinessFeature(descriptor: Ref = Ref) : Feature(descriptor) {
-    override val discriminator = Discriminator.Happiness(this)
+class HappinessFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     override fun deepCopy() = this // immutable
     override fun toString() = "${javaClass.simpleName}[label=$label]"
     override fun mutate(user: User) {
@@ -80,7 +81,8 @@ class HappinessFeature(descriptor: Ref = Ref) : Feature(descriptor) {
         multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.`happiness 🥳`}",
     ) {
         override fun check(user: User, reports: Reports) =
-            user.hasEntity(Citizen::class) && user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
+            user.hasEntity(Citizen::class) &&
+                    user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
 
         override fun build() = HappinessFeature()
     }

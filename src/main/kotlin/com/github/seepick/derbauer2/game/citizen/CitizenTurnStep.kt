@@ -86,7 +86,7 @@ class CitizenTurnStep(private val user: User, private val probs: Probs) : ProbIn
 
     private fun happinessInfluencedBirthChange(base: Z): Z {
         val happiness = user.findStatOrNull(Happiness::class) ?: return base
-        val multiplier = happiness.value.number * Mechanics.statHappinessCitizenBirthEffect.number
+        val multiplier = happiness.currentValue.number * Mechanics.statHappinessCitizenBirthEffect.number
         return (base.value.toDouble() * (multiplier + 1.0)).toLong().z
     }
 }

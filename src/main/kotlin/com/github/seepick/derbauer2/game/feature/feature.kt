@@ -1,13 +1,9 @@
 package com.github.seepick.derbauer2.game.feature
 
 import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.stat.HappinessFeature
-import com.github.seepick.derbauer2.game.tech.TechnologyFeature
-import com.github.seepick.derbauer2.game.trade.FoodMerchantFeature
-import com.github.seepick.derbauer2.game.trade.TradeFeature
-import com.github.seepick.derbauer2.game.trade.TradeLandFeature
-import com.github.seepick.derbauer2.game.turn.SeasonFeature
+import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import kotlin.reflect.KClass
 
@@ -20,40 +16,29 @@ inline fun <reified F : Feature> User.hasFeature(): Boolean =
 fun User.hasFeature(ref: FeatureRef): Boolean =
     all.filterIsInstance<Feature>().any { it.ref == ref }
 
-interface FeatureData {
-    val label: String
+interface FeatureData : HasLabel {
     val asciiArt: AsciiArt
     val multilineDescription: String
 }
 
-abstract class Feature(
-    val ref: FeatureRef,
-) : Entity, FeatureData by ref {
-    override val labelSingular = ref.label
+interface Feature : Entity, FeatureData {
+    val ref: FeatureRef
+    fun mutate(user: User)
+}
 
-    abstract val discriminator: Discriminator<out Feature>
-
+abstract class FeatureImpl(
+    override val ref: FeatureRef,
+) : Feature, FeatureData by ref {
     override fun toString() = "${this::class.simpleName}($label)"
-    abstract fun mutate(user: User)
+}
 
-    /**
-     * Allows for exhaustive when, although Feature itself is not sealed.
-     *
-     *     val feature: Feature = getSomeFeature()
-     *     when(val discriminator = feature.discriminator) {
-     *         is Feature.Discriminator.Technology -> discriminator.asRuntimeType { tech: TechnologyFeature ->
-     *         }
-     *         is Feature.Discriminator.TradeLand -> discriminator.asRuntimeType { tech: TradeLandFeature ->
-     *         }
-     *     }
-     */
-    sealed class Discriminator<F : Feature>(private val feature: F) {
-        fun <T> asRuntimeType(code: (F) -> T) = code(feature)
-        class Trade(feature: TradeFeature) : Discriminator<TradeFeature>(feature)
-        class TradeLand(feature: TradeLandFeature) : Discriminator<TradeLandFeature>(feature)
-        class FoodMerchant(feature: FoodMerchantFeature) : Discriminator<FoodMerchantFeature>(feature)
-        class Technology(feature: TechnologyFeature) : Discriminator<TechnologyFeature>(feature)
-        class Season(feature: SeasonFeature) : Discriminator<SeasonFeature>(feature)
-        class Happiness(feature: HappinessFeature) : Discriminator<HappinessFeature>(feature)
-    }
+abstract class FeatureRef(
+    final override val label: String,
+    final override val asciiArt: AsciiArt,
+    final override val multilineDescription: String,
+) : FeatureData {
+
+    @Suppress("unused")
+    abstract fun check(user: User, reports: Reports): Boolean
+    abstract fun build(): Feature
 }

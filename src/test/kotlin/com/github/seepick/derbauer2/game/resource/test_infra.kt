@@ -49,7 +49,7 @@ data class FakeStorage<SR : StorableResource>(
     override val storageAmount: Z,
 //    override var _setOwnedInternal: Z = 1.z
 ) : Entity, StoresResource {
-    override val labelSingular = "test label"
+    override val label = "test label"
     override fun deepCopy() = copy()
 }
 
@@ -72,7 +72,7 @@ abstract class AbstractResourceProductionBonusEntity(
     override val handlingResource: KClass<out Resource>,
     private val bonus: Percent,
 ) : Entity, GlobalResourceProductionBonus {
-    override val labelSingular: String get() = this::class.simpleName!!
+    override val label: String get() = this::class.simpleName!!
     override fun productionBonus(user: User) = bonus
     override fun deepCopy() = this
 }

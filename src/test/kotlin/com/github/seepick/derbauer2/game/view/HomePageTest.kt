@@ -9,7 +9,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class HomePageTest : PageTest, StringSpec({
 
     fun GamePageContext.buildHomePage() =
-        HomePage(turner, currentPage, gameRenderer, user, reports)
+        HomePage(turner, currentPage, gameRenderer, user)
 
     "Given init assets Then render home page content" {
         renderGamePage({ it.buildHomePage() }) {

@@ -34,7 +34,7 @@ class StatCompositeGlobalTurnStepTest : StringSpec({
 
         turner.execPreTurn()
 
-        stat.value.number shouldBeEqual statChangeAmount
+        stat.currentValue.number shouldBeEqual statChangeAmount
     }
     "Given global post-modifier When executed Then stat changed" {
         val stat = user.addStatWith(0.0)
@@ -42,7 +42,7 @@ class StatCompositeGlobalTurnStepTest : StringSpec({
 
         turner.execPostTurn(anyReport)
 
-        stat.value.number shouldBeEqual statChangeAmount
+        stat.currentValue.number shouldBeEqual statChangeAmount
     }
     "Given local pre-modifier When executed Then stat changed" {
         val stat = user.addStatWith(0.0)
@@ -50,7 +50,7 @@ class StatCompositeGlobalTurnStepTest : StringSpec({
 
         newTurner().execPreTurn()
 
-        stat.value.number shouldBeEqual statChangeAmount
+        stat.currentValue.number shouldBeEqual statChangeAmount
     }
     "Given local post-modifier When executed Then stat changed" {
         val stat = user.addStatWith(0.0)
@@ -58,6 +58,6 @@ class StatCompositeGlobalTurnStepTest : StringSpec({
 
         newTurner().execPostTurn(anyReport)
 
-        stat.value.number shouldBeEqual statChangeAmount
+        stat.currentValue.number shouldBeEqual statChangeAmount
     }
 })

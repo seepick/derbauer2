@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.common.z
 import kotlin.math.abs
 import kotlin.reflect.KClass
 
-interface Entity : DeepCopyable<Entity>, HasLabels
+interface Entity : DeepCopyable<Entity>, HasLabel
 
 /** Needed to validate transactions; create a copy/snapshot, apply TXs, and then validate. */
 fun interface DeepCopyable<T> {
@@ -17,7 +17,7 @@ fun interface DeepCopyable<T> {
  * A physical object (house, resource, people); not an abstract concept (tech).
  * PS: itest assumes that all Assets have a zero-argument constructor; see GivenDsl#createAssetInstance
  */
-interface Asset : Entity, Ownable
+interface Asset : Entity, Ownable, HasLabels
 
 interface Ownable : Entity {
     val owned: Z get() = _setOwnedInternal
@@ -31,7 +31,12 @@ interface OwnableReference {
     val ownableClass: KClass<out Ownable>
 }
 
-interface HasLabels {
+interface HasLabel {
+    val label: String
+}
+
+interface HasLabels : HasLabel {
+    override val label get() = labelSingular
     val labelSingular: String
     val labelPlural: String get() = labelSingular + "s"
     fun labelFor(unsignedAmount: Z) = if (unsignedAmount == 1.z) labelSingular else labelPlural

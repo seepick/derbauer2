@@ -30,7 +30,7 @@ class UserTest : DescribeSpec({
         it("lambda fails") {
             shouldThrow<UserEnableException> {
                 user.add(object : Entity {
-                    override val labelSingular = "fail in lambda"
+                    override val label = "fail in lambda"
                     override fun deepCopy() = this
                 })
             }.message.shouldContainInAnyOrder("fail in lambda", "anonymous class")

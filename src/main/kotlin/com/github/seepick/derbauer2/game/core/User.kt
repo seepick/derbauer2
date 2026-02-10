@@ -30,12 +30,12 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     private fun <E : Entity> validate(entity: E, disableCheck: Boolean) {
         if (entity::class.simpleName == null) {
             throw UserEnableException(
-                "Cannot add anonymous class (entity=$entity / entity.label='${entity.labelSingular}')"
+                "Cannot add anonymous class (entity=$entity / entity.label='${entity.label}')"
             )
         }
         if (!disableCheck && entity is Ownable && entity.owned != 0.z) {
             throw UserEnableException(
-                "Adding ownable ${entity.labelSingular} must be 0 but was: ${entity.owned}; " +
+                "Adding ownable ${entity.label} must be 0 but was: ${entity.owned}; " +
                         "(change it later via TX or: disable checks, but for tests only!)"
             )
         }

@@ -20,14 +20,14 @@ object EmptyGlobalPostStatModifierRepo : GlobalPostStatModifierRepo {
 
 class PreStatModifierEntity(
     private val modifier: PreStatModifier,
-    override val labelSingular: String = "PreStatModifierEntity.label",
+    override val label: String = "PreStatModifierEntity.label",
 ) : PreStatModifier by modifier, Entity {
     override fun deepCopy() = this
 }
 
 class PostStatModifierEntity(
     private val modifier: PostStatModifier,
-    override val labelSingular: String = "PostStatModifierEntity.label",
+    override val label: String = "PostStatModifierEntity.label",
 ) : PostStatModifier by modifier, Entity {
     override fun deepCopy() = this
 }

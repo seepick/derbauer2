@@ -78,7 +78,7 @@ inline fun <reified E : Entity> List<E>.sortIfViewOrder(): List<E> =
 
 fun Resource.toInfoBarString(user: User): String =
     if (this is Citizen && user.hasStat(Happiness::class)) {
-        user.findStat(Happiness::class).emoji.string + " "
+        user.findStat(Happiness::class).currentEmoji.string + " "
     } else {
         ""
     } + when (this) {

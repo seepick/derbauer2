@@ -1,11 +1,10 @@
 package com.github.seepick.derbauer2.game.trade
 
-import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndLabelPlural
 import com.github.seepick.derbauer2.game.core.hasEntity
-import com.github.seepick.derbauer2.game.feature.Feature
+import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.feature.hasFeature
 import com.github.seepick.derbauer2.game.resource.Food
@@ -15,14 +14,10 @@ import com.github.seepick.derbauer2.game.resource.storageUsage
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
-class TradeFeature(descriptor: Ref = Ref) : Feature(descriptor) {
-
-    override val discriminator = Discriminator.Trade(this)
-    override fun mutate(user: User) {
-        // nothing to do
-    }
+class TradeFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
 
     override fun deepCopy() = this // immutable
+    override fun mutate(user: User) {}
 
     object Ref : FeatureRef(
         label = "Trading",
@@ -38,8 +33,7 @@ class TradeFeature(descriptor: Ref = Ref) : Feature(descriptor) {
 }
 
 
-class TradeLandFeature(descriptor: Ref = Ref) : Feature(descriptor) {
-    override val discriminator = Discriminator.TradeLand(this)
+class TradeLandFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
     override fun deepCopy() = this // immutable
     override fun mutate(user: User) {
         // nothing to do, the feature just unlocks the option to trade land in the trading page
@@ -60,12 +54,9 @@ class TradeLandFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     }
 }
 
-class FoodMerchantFeature(descriptor: Ref = Ref) : Feature(descriptor) {
-    override val discriminator = Discriminator.FoodMerchant(this)
-    override fun mutate(user: User) {
-        // nothing to do
-    }
+class FoodMerchantFeature(descriptor: Ref = Ref) : FeatureImpl(descriptor) {
 
+    override fun mutate(user: User) {}
     override fun deepCopy() = this // immutable
 
     object Ref : FeatureRef(
@@ -85,7 +76,3 @@ class FoodMerchantFeature(descriptor: Ref = Ref) : Feature(descriptor) {
         override fun build() = FoodMerchantFeature()
     }
 }
-
-inline fun <reified A : Action> Reports.filterAllActionInstanceOf(): List<A> =
-    all.flatMap { it.actions }.filterIsInstance<A>()
-

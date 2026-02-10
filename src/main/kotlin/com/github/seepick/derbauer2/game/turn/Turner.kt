@@ -43,7 +43,7 @@ class Turner(
 ) {
     private val log = logger {}
 
-    fun execTurnAndAddReport() {
+    fun execTurnAndAddReport(): TurnReport {
         log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
         globalSteps.forEach { it.execPreTurn() }
         val report = buildAndExecReport()
@@ -53,6 +53,7 @@ class Turner(
         turn.next()
         reports.add(report)
         log.info { "🔁🔁🔁 =================== ⬆️ TURN ⬆️ =================== 🔁🔁🔁" }
+        return report // for easier testing ;)
     }
 
     private fun buildAndExecReport() = TurnReport(

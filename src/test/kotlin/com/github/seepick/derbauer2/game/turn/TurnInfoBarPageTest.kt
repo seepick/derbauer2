@@ -11,7 +11,7 @@ import io.kotest.matchers.string.shouldContain
 class TurnInfoBarPageTest : PageTest, DescribeSpec({
 
     fun GamePageContext.buildPage() =
-        HomePage(turner, currentPage, gameRenderer, user, reports)
+        HomePage(turner, currentPage, gameRenderer, user)
 
     describe("Turn info bar") {
         it("Given no season feature Then render turn") {

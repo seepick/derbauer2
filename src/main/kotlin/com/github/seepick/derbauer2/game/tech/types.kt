@@ -1,17 +1,15 @@
 package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Entity
+import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.view.ViewOrder
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
-interface Tech : Entity, TechData {
-    override val labelSingular get() = label
-}
+interface Tech : Entity, TechData
 
-interface TechData {
-    val label: String
+interface TechData : HasLabel {
     val description: String
     val requirements: Set<TechData>
     val costs: ResourceChanges

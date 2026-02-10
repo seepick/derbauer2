@@ -7,7 +7,7 @@ import kotlin.reflect.KClass
 
 val User.stats get() = ListX(all.filterIsInstance<Stat<out StrictDouble>>())
 
-val User.happiness get() = findStat(Happiness::class).value
+val User.happiness get() = findStat(Happiness::class).currentValue
 
 fun User.hasStat(statClass: StatKClass): Boolean =
     stats.findOrNull(statClass) != null
