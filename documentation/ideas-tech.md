@@ -47,8 +47,6 @@ Low:
 ## UI
 
 * ad text engine, be able to enter numbers (also freetext maybe?)
-* replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
-    * events/interactions make sounds (happening, etc...) for better feedback
 * make magnituded number from "1k" to "1.2k"
 * choose color theme (circular button in toolbar, dropdown with a few common presets)
 * let AI generate some prompts; old-english style, arrrr, bloody hell; irish kingdom, aight?!

@@ -63,9 +63,14 @@ sealed interface TxResult {
             override val message: String = "Insufficient resources" + (additionalMessage?.let { ": $it" } ?: "")
         }
 
+        object TradingZeroBlocked : Fail() {
+            override val warningType = WarningType.TRADING_ZERO_BLOCKED
+            override val message = "It makes no sense to trade 0 resources."
+        }
+
         data class CompoundFail(
             val fails: List<Fail>,
-            override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}"
+            override val message: String = "Multiple failures:\n${fails.joinToString("\n") { "* ${it.message}" }}",
         ) : Fail() {
             override val warningType = WarningType.COMPOUND
         }

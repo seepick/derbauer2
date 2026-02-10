@@ -3,10 +3,12 @@
 ## 1.3.0
 
 * BZ: interactive happening; being asked Y/N; randomness of the outcome (success; damage; intensity)
-* UX: disable being able trading 0
 
 ## Backlog
 
+* UX: replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
+    * events/interactions make sounds (happening, etc...) for better feedback
+    * provide button to toggle sound on/off; improve compose view-model state
 * BZ: tech enables feature, (adds to game engine/functionality/action...)
 * BZ: new season dependent happening
 * IT: ad Building: change `costsGold` to a more generic `costs` that can include multiple resources

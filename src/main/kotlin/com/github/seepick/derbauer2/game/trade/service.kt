@@ -26,24 +26,25 @@ class TradeService(
 ) {
     private val log = logger {}
 
-    fun trade(option: TradeCompoundRequest) =
+    fun trade(option: TradeCompoundRequest) = if (option.target.amount == 0.z) {
+        TxResult.Fail.TradingZeroBlocked
+    } else {
         trade(option.toSingleRequests())
+    }
 
     fun trade(requests: List<TradeSingleRequest>): TxResult {
         log.info { "${Emoji.`trade 💸`} trading for: $requests" }
-        return user.execTx(requests.map { it.toTxOwnable() })
-            .ifIsSuccess {
-                actionBus.dispatch(ResourcesTradedAction(requests))
-            }
+        return user.execTx(requests.map { it.toTxOwnable() }).ifIsSuccess {
+            actionBus.dispatch(ResourcesTradedAction(requests))
+        }
     }
 
-    fun buildOptions() =
-        TradeCompoundRequests(buildList {
-            addAll(buildFoodOptions())
-            if (user.hasFeature(TradeLandFeature::class)) {
-                addAll(buildLandOptions())
-            }
-        })
+    fun buildOptions() = TradeCompoundRequests(buildList {
+        addAll(buildFoodOptions())
+        if (user.hasFeature(TradeLandFeature::class)) {
+            addAll(buildLandOptions())
+        }
+    })
 
     private fun buildFoodOptions(): List<TradeCompoundRequest> {
         val foodTradeAmount = if (user.hasFeature(FoodMerchantFeature::class)) {
@@ -51,8 +52,7 @@ class TradeService(
         } else {
             Mechanics.tradeFoodAmountBasic
         }
-        val foodBuyAmount = foodTradeAmount
-            .coerceAtMost(user.freeStorageFor<Food>()) // can store
+        val foodBuyAmount = foodTradeAmount.coerceAtMost(user.freeStorageFor<Food>()) // can store
             .coerceAtMost(user.gold divFloor Mechanics.buyFoodCostGold) // can afford
         val foodSellAmount = foodTradeAmount.coerceAtMost(user.food)
         return listOf(
@@ -60,8 +60,7 @@ class TradeService(
                 Buy,
                 TradeAmount(Food::class, foodBuyAmount),
                 listOf(TradeAmount(Gold::class, Mechanics.buyFoodCostGold * foodBuyAmount)),
-            ),
-            TradeCompoundRequest(
+            ), TradeCompoundRequest(
                 Sell,
                 TradeAmount(Food::class, foodSellAmount),
                 listOf(TradeAmount(Gold::class, Mechanics.sellFoodGainGold * foodSellAmount))
@@ -72,9 +71,7 @@ class TradeService(
     private fun buildLandOptions(): List<TradeCompoundRequest> = buildList {
         add(
             TradeCompoundRequest(
-                Buy,
-                TradeAmount(Land::class, 1.z),
-                listOf(TradeAmount(Gold::class, Mechanics.buyLandCostGold * 1))
+                Buy, TradeAmount(Land::class, 1.z), listOf(TradeAmount(Gold::class, Mechanics.buyLandCostGold * 1))
             )
         )
     }
@@ -88,9 +85,7 @@ private fun TradeCompoundRequest.toSingleRequests(): List<TradeSingleRequest> = 
 }
 
 private fun TradeSingleRequest.toTxOwnable() = TxOwnable(
-    ownableClass = resourceClass,
-    amount = amount,
-    operation = operation.asTxOperation
+    ownableClass = resourceClass, amount = amount, operation = operation.asTxOperation
 )
 
 private val TradeOperation.asTxOperation

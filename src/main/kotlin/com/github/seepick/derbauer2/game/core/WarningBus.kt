@@ -24,6 +24,7 @@ enum class WarningType {
     LAND_OVERUSE,
     INSUFFICIENT_RESOURCES,
     COMPOUND,
+    TRADING_ZERO_BLOCKED,
 }
 
 data class Warning(
