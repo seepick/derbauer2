@@ -6,16 +6,14 @@ import com.github.seepick.derbauer2.game.common.extractGraphemes
 class Textmap(
     private val cols: Int,
     private val rows: Int,
-) : TextmapWriter {
-
+) {
     private val tableGenerator = LineWritingTableGenerator(this::line)
-
     private val cursor = Cursor()
     private val grid = Grid(cols = cols, rows = rows)
 
     constructor(matrixSize: MatrixSize) : this(cols = matrixSize.cols, rows = matrixSize.rows)
 
-    override fun line(line: String) = apply {
+    fun line(line: String) = apply {
         if (line.contains('\n')) {
             throw InvalidTextmapException(
                 "Newline character not allowed in line(): '$line' => use multiLine() instead."
@@ -29,7 +27,7 @@ class Textmap(
         cursor.nextLine()
     }
 
-    override fun aligned(left: String, right: String) = apply {
+    fun aligned(left: String, right: String) = apply {
         val leftCells = left.countGraphemes()
         val rightCells = right.countGraphemes()
         if (leftCells + rightCells > cols) {
@@ -39,25 +37,25 @@ class Textmap(
         line("$left$gap$right")
     }
 
-    override fun hr() = apply {
+    fun hr() = apply {
         line(HR_SYMBOL.repeat(cols))
     }
 
-    override fun toFullString() = grid.toFullString()
-
-    override fun toGrid() = grid.toArrayArray()
-
-    override fun fillVertical(minus: Int) = apply {
+    fun fillVertical(minus: Int) = apply {
         repeat(rows - (cursor.y + minus)) { cursor.nextLine() }
     }
 
-    override fun <T> customTable(cols: List<TransformingTableCol<T>>, rowItems: List<T>) = apply {
+    fun <T> customTable(cols: List<TransformingTableCol<T>>, rowItems: List<T>) = apply {
         tableGenerator.transformingTable(cols, rowItems)
     }
 
-    override fun simpleTable(cols: List<TableCol>, rows: List<List<String>>) = apply {
+    fun simpleTable(cols: List<TableCol> = emptyList(), rows: List<List<String>>) = apply {
         tableGenerator.table(cols, rows)
     }
+
+    fun toFullString() = grid.toFullString()
+
+    fun toGrid() = grid.toArrayArray()
 
     fun clear() = apply {
         grid.reset()
@@ -68,3 +66,13 @@ class Textmap(
         private const val HR_SYMBOL = "="
     }
 }
+
+fun Textmap.emptyLine() = line("")
+
+fun Textmap.multiLine(text: String) = apply {
+    text.split("\n").forEach(::line)
+}
+
+data class MatrixSize(val cols: Int, val rows: Int)
+
+class InvalidTextmapException(message: String) : IllegalArgumentException(message)

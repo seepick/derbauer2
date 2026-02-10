@@ -19,11 +19,14 @@ class ProbRegistrator(
     }
 }
 
+@Suppress("ComplexInterface")
 interface Probs {
     fun <T> setProvider(key: ProbProviderKey<T>, calculator: ProbCalculator, provider: () -> T)
-    fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T?
+    fun <T> provisionOrNull(key: ProbProviderKey<T>): T?
+
     fun <T> setSelector(key: ProbSelectorKey, selector: ProbSelector<T>)
-    fun <T> getSelectedItem(key: ProbSelectorKey, items: List<T>): T
+    fun <T> selectItem(key: ProbSelectorKey, items: List<T>): T
+
     fun setDiffuser(key: ProbDiffuserKey, diffuser: ProbDiffuser)
     fun diffuse(key: ProbDiffuserKey, baseValue: Zz): Zz
 
@@ -51,7 +54,7 @@ class ProbsImpl : Probs {
         providerHandles[key] = ProbProviderHandle(key, calculator, provider)
     }
 
-    override fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T? {
+    override fun <T> provisionOrNull(key: ProbProviderKey<T>): T? {
         val handler = providerHandles[key] ?: error("Provider with key '$key' was not registered!")
         return if (handler.calculator.nextBoolean()) {
             @Suppress("UNCHECKED_CAST")
@@ -67,7 +70,7 @@ class ProbsImpl : Probs {
         selectorHandles[key] = ProbSelectorHandle(key, selector) as ProbSelectorHandle<Any>
     }
 
-    override fun <T> getSelectedItem(key: ProbSelectorKey, items: List<T>): T {
+    override fun <T> selectItem(key: ProbSelectorKey, items: List<T>): T {
         val someHandle = selectorHandles[key] ?: error("Selector $key was not registered!")
         @Suppress("UNCHECKED_CAST")
         val handle = someHandle as? ProbSelectorHandle<T>

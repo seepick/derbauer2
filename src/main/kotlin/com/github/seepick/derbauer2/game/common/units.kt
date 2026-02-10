@@ -19,7 +19,7 @@ val Int.k get() = toLong().k
 
 
 /** Signed long. */
-@Suppress("TooManyFunctions")
+@Suppress("TooManyFunctions", "MethodOverloading")
 data class Zz(
     val value: Long,
 ) : Comparable<Zz> {

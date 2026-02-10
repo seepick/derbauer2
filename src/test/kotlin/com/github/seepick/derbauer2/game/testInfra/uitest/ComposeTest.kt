@@ -17,6 +17,7 @@ import com.github.seepick.derbauer2.textengine.keyboard.asComposeKey
 import io.github.oshai.kotlinlogging.KLogger
 
 /** See: https://www.scribd.com/document/759389692/compose-testing-cheatsheet */
+@Suppress("ComplexInterface")
 interface ComposeTest {
 
     val log: KLogger

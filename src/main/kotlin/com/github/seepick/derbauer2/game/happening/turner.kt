@@ -45,7 +45,7 @@ class HappeningTurner(
             )
         ) {
             log.debug { "New happening going to happen..." }
-            val isNegative = probs.getProvisionOrNull(ProbProviderKey.happeningIsNegative) != null
+            val isNegative = probs.provisionOrNull(ProbProviderKey.happeningIsNegative) != null
 
             val canDescriptors = repo.all.filter { it.canHappen(user, probs) }
             val filteredCanDescriptors = canDescriptors.filter {
@@ -56,7 +56,7 @@ class HappeningTurner(
                 } && it.willHappen(user, probs)
             }
             val ensuredDescriptors = filteredCanDescriptors.ifEmpty { canDescriptors }
-            val descriptor = probs.getSelectedItem(ProbSelectorKey.happeningChoice, ensuredDescriptors)
+            val descriptor = probs.selectItem(ProbSelectorKey.happeningChoice, ensuredDescriptors)
             descriptor.buildHappening(user)
         }
 
@@ -71,5 +71,5 @@ class HappeningTurner(
     }
 
     fun maybeHappening(): Happening? =
-        probs.getProvisionOrNull(ProbProviderKey.happeningTurner)
+        probs.provisionOrNull(ProbProviderKey.happeningTurner)
 }

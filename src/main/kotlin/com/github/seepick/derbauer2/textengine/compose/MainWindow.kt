@@ -67,7 +67,7 @@ fun showMainWindow(
     }
 }
 
-@Suppress("FunctionName", "DestructuringDeclarationWithTooManyEntries")
+@Suppress("FunctionName", "DestructuringDeclarationWithTooManyEntries", "LongMethod")
 @Composable
 fun MainWindow(
     title: String,

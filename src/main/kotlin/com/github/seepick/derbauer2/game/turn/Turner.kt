@@ -45,16 +45,7 @@ class Turner(
     fun execTurnAndBuildReport(): TurnReport {
         log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
         globalSteps.forEach { it.execPreTurn() }
-        val report = TurnReport(
-            turn = turn.current,
-            resourceChanges = resSteps
-                .sortedBy { it.order }
-                .map { execResourceStep(it) }
-                .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
-            happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
-            featurePages = featureTurner.buildFeatureMultiPages(),
-            actions = actionsCollector.getAllAndClear(),
-        )
+        val report = buildAndExecReport()
         globalSteps.forEach { it.execPostTurn(report) }
         log.info { "🔁 Changes: $report" }
         log.debug { "🔁 User.all: $user" }
@@ -62,6 +53,17 @@ class Turner(
         log.info { "🔁🔁🔁 =================== ⬆️ TURN ⬆️ =================== 🔁🔁🔁" }
         return report
     }
+
+    private fun buildAndExecReport() = TurnReport(
+        turn = turn.current,
+        resourceChanges = resSteps
+            .sortedBy { it.order }
+            .map { execResourceStep(it) }
+            .reduceOrNull { accRc, otherRc -> accRc.merge(otherRc) } ?: ResourceChanges.empty,
+        happenings = happeningTurner.maybeHappening()?.let { listOf(it) } ?: emptyList(),
+        featurePages = featureTurner.buildFeatureMultiPages(),
+        actions = actionsCollector.getAllAndClear(),
+    )
 
     private fun execResourceStep(step: ResourceTurnStep): ResourceChanges =
         step.calcChanges().toLimitedAmounts().also { changes ->

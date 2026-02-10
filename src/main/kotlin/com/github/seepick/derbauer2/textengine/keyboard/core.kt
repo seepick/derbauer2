@@ -34,6 +34,7 @@ sealed class PrintChar(val char: Char) {
         object Eight : Numeric(8)
         object Nine : Numeric(9)
         companion object {
+            @Suppress("CyclomaticComplexMethod")
             fun fromInt(int: Int): Numeric = when (int) {
                 0 -> Zero
                 1 -> One

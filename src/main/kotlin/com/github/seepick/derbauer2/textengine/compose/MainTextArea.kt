@@ -24,18 +24,23 @@ fun MainTextArea(textmap: Textmap, tick: Int) {
             .testTag(TestTags.mainTextArea)
             .semantics { text = AnnotatedString(fullText) }
     ) {
-        textmap.toGrid().forEachIndexed { rowIndex, row ->
-            row.forEachIndexed { colIndex, cell ->
-                if (cell != " ") {
-                    Text(
-                        text = cell,
-                        modifier = Modifier.offset(
-                            x = MainWin.cellWidth * colIndex,
-                            y = MainWin.cellHeight * rowIndex
-                        ),
-                        style = MainWin.mainTextStyle,
-                    )
-                }
+        renderGrid(textmap)
+    }
+}
+
+@Composable
+private fun renderGrid(textmap: Textmap) {
+    textmap.toGrid().forEachIndexed { rowIndex, row ->
+        row.forEachIndexed { colIndex, cell ->
+            if (cell != " ") {
+                Text(
+                    text = cell,
+                    modifier = Modifier.offset(
+                        x = MainWin.cellWidth * colIndex,
+                        y = MainWin.cellHeight * rowIndex
+                    ),
+                    style = MainWin.mainTextStyle,
+                )
             }
         }
     }

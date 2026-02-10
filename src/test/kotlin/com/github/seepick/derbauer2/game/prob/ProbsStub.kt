@@ -15,7 +15,7 @@ class ProbsStub : Probs {
         providerHandles[key] = ProbProviderHandle(key, calculator, provider)
     }
 
-    override fun <T> getProvisionOrNull(key: ProbProviderKey<T>): T? {
+    override fun <T> provisionOrNull(key: ProbProviderKey<T>): T? {
         val handler = providerHandles[key] ?: error("No provider for key $key")
         val calculator = fixatedProviders[key] ?: handler.calculator
         return if (calculator.nextBoolean()) {
@@ -39,7 +39,7 @@ class ProbsStub : Probs {
         selectorHandles[key] = ProbSelectorHandle(key, selector)
     }
 
-    override fun <T> getSelectedItem(key: ProbSelectorKey, items: List<T>): T {
+    override fun <T> selectItem(key: ProbSelectorKey, items: List<T>): T {
         val handle = selectorHandles[key] ?: error("No selector for key $key")
         @Suppress("UNCHECKED_CAST")
         val selector = (fixatedSelectors[key] ?: handle.selector) as ProbSelector<T>
