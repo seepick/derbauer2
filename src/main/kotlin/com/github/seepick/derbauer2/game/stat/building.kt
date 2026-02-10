@@ -3,14 +3,13 @@ package com.github.seepick.derbauer2.game.stat
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.core.HasEmoji
 import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 
-class Theater : Building, PreStatModifier, HasLabels by Data, HasEmoji by Data {
-    object Data : HasLabels, HasEmoji {
+class Theater : Building, PreStatModifier, HasLabels by Data {
+    object Data : HasLabels {
         override val labelSingular = "Theater"
     }
 

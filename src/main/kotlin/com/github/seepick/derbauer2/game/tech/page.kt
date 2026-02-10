@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiAndOwned
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.resource.toFormattedList

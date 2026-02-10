@@ -5,9 +5,11 @@ import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
 
 interface HasEmoji {
-    val emojiOrNull: Emoji? get() = null
-    val emojiSpaceOrEmpty: String get() = emojiOrNull?.let { "$it " } ?: ""
+    val emoji: Emoji
 }
+
+val Any.emojiOrNull: Emoji? get() = (this as? HasEmoji)?.emoji
+val Any.emojiSpaceOrEmpty: String get() = emojiOrNull?.let { "$it  " } ?: "" // two spaces for rendering width issue
 
 val <T> T.emojiAndLabelSingular: String where T : HasLabels, T : HasEmoji
     get() = "$emojiSpaceOrEmpty$labelSingular"

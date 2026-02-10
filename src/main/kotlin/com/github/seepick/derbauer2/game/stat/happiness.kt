@@ -17,7 +17,9 @@ import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-val Emoji.Companion.happiness get() = Happiness.emoji
+private val happinessEmoji = "🥳".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`happiness 🥳` get() = happinessEmoji
 
 class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
 
@@ -29,7 +31,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
 
     override fun changeBy(amount: Double) { // reuse in the future, once a 2nd stat exists
         val newValue = Double11((value.number + amount).coerceIn(-1.0, 1.0))
-        log.debug { "changing ${Emoji.happiness} by ${amount.toFormatted()} => ${newValue.number.toFormatted()}" }
+        log.debug { "changing ${Emoji.`happiness 🥳`} by ${amount.toFormatted()} => ${newValue.number.toFormatted()}" }
         value = newValue
     }
 
@@ -42,7 +44,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
     override fun toString() = "${this::class.simpleNameEmojied}($value)"
 
     companion object {
-        val emoji = " 🥳".emoji
+        val emoji = Emoji.`happiness 🥳`
 
         private val emojiRange = rangeOfMin1To1(
             listOf(
@@ -57,7 +59,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
                 0.4 to "😃",
                 0.6 to "🤗",
                 0.8 to "😍",
-                0.9 to Emoji.happiness.value,
+                0.9 to Emoji.`happiness 🥳`.value,
             ).map { it.first to it.second.emoji },
         )
     }
@@ -75,7 +77,7 @@ class HappinessFeature(descriptor: Ref = Ref) : Feature(descriptor) {
     object Ref : FeatureRef(
         label = "Happiness",
         asciiArt = AsciiArt.smiley,
-        multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.happiness}",
+        multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.`happiness 🥳`}",
     ) {
         override fun check(user: User, reports: Reports) =
             user.hasEntity(Citizen::class) && user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater

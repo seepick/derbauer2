@@ -33,12 +33,14 @@ data class Warning(
     override fun toString(): String = "${this::class.simpleNameEmojied}(type=$type, message='$message')"
 
     companion object {
-        val emoji = "⚠️".emoji
+        val emoji = Emoji.`warning ⚠️`
     }
 }
-
-val Emoji.Companion.warning get() = Warning.emoji
 
 fun interface WarningListener {
     fun onWarning(warning: Warning)
 }
+
+private val warningEmoji = "⚠️".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`warning ⚠️` get() = warningEmoji

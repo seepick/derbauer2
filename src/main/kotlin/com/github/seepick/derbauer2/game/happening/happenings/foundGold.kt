@@ -18,14 +18,18 @@ import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 
-data class FoundGoldHappening(val goldFound: Z, private val data: HappeningData = Ref) :
-    Happening, HappeningData by data {
+data class FoundGoldHappening(
+    val goldFound: Z,
+    private val data: HappeningData = Ref,
+) : Happening, HappeningData by data {
 
     override val asciiArt = AsciiArt.goldPot
 
     override fun render(textmap: Textmap) {
         textmap.line(
-            "Lucky you, you found ${goldFound.toPrefixedString()} ${Gold.Data.emojiAndLabelFor(goldFound)} 🥳"
+            "Lucky you, you found ${goldFound.toPrefixedString()} ${
+                Gold.Data.emojiAndLabelFor(goldFound)
+            }"
         )
     }
 
@@ -35,13 +39,11 @@ data class FoundGoldHappening(val goldFound: Z, private val data: HappeningData 
 
     object Ref : HappeningRef {
         override val nature = HappeningNature.Positive
-        override fun canHappen(user: User, probs: Probs) =
-            user.hasEntity(Gold::class)
+        override fun canHappen(user: User, probs: Probs) = user.hasEntity(Gold::class)
 
         override fun willHappen(user: User, probs: Probs) = true
 
-        override fun buildHappening(user: User): FoundGoldHappening =
-            FoundGoldHappening(goldFound = 100.z, this)
+        override fun buildHappening(user: User): FoundGoldHappening = FoundGoldHappening(goldFound = 100.z, this)
 
         override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
             // not using probs

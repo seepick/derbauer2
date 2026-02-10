@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.common.requireUniqueBy
 import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiOrSimpleName
+import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import kotlin.reflect.KClass
 

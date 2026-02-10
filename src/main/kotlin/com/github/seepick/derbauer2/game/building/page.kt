@@ -2,8 +2,10 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
+import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
+import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -35,8 +37,8 @@ class BuildingPage(
                         label = OptionLabel.Table(
                             listOf(
                                 "Build ${building.labelSingular}",
-                                "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold}",
-                                "${Land.Data.emojiSpaceOrEmpty}${building.landUse}",
+                                "${user.findResource<Gold>().emojiSpaceOrEmpty}${building.costsGold}",
+                                "${user.findResource<Land>().emojiSpaceOrEmpty}${building.landUse}",
                                 "(${building.owned})",
                             )
                         ),
