@@ -8,10 +8,10 @@ import io.kotest.matchers.shouldBe
 class TurnTest : DescribeSpec({
     describe("toFullInfo") {
         it("all") {
-            Turn(1).toPrettyString() shouldBe "${Season.Spring.emoji}  W1 Y1"
-            Turn(14 + 52).toPrettyString() shouldBe "${Season.Summer.emoji}  W14 Y2"
-            Turn(27).toPrettyString() shouldBe "${Season.Autumn.emoji}  W27 Y1"
-            Turn(40).toPrettyString() shouldBe "${Season.Winter.emoji}  W40 Y1"
+            Turn(1).toSeasonedString() shouldBe "${Season.Spring.emoji}  W1 Y1"
+            Turn(14 + 52).toSeasonedString() shouldBe "${Season.Summer.emoji}  W14 Y2"
+            Turn(27).toSeasonedString() shouldBe "${Season.Autumn.emoji}  W27 Y1"
+            Turn(40).toSeasonedString() shouldBe "${Season.Winter.emoji}  W40 Y1"
         }
     }
     describe("values") {

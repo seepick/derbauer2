@@ -15,15 +15,15 @@ import com.github.seepick.derbauer2.textengine.compose.MainWin
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.mockk.mockk
 
-fun renderGamePage(buildPage: (SetupGamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {
-    val ctx = SetupGamePageContext()
+fun renderGamePage(buildPage: (GamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {
+    val ctx = GamePageContext()
     val page = buildPage(ctx)
     page.render(ctx.textmap)
     val parser = GamePageParser(ctx.textmap.toFullString())
     parser.pageTestCode()
 }
 
-class SetupGamePageContext {
+class GamePageContext {
     val user = User()
     val currentPage = CurrentPage(BuildingPage::class)
     val turner = mockk<Turner> {}

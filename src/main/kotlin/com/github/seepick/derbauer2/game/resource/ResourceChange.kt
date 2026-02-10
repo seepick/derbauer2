@@ -52,7 +52,6 @@ data class ResourceChanges private constructor(
 ) : List<ResourceChange> by changes {
 
     init {
-        // TODO use a map instead to guarantee uniqueness and make lookups faster
         changes.requireUniqueBy("Must not contain multiple changes for the same resource!") {
             it.resourceClass
         }

@@ -7,6 +7,7 @@ import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trade.FoodMerchantFeature
 import com.github.seepick.derbauer2.game.trade.TradeFeature
 import com.github.seepick.derbauer2.game.trade.TradeLandFeature
+import com.github.seepick.derbauer2.game.turn.SeasonFeature
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import kotlin.reflect.KClass
 
@@ -52,6 +53,7 @@ abstract class Feature(
         class TradeLand(feature: TradeLandFeature) : Discriminator<TradeLandFeature>(feature)
         class FoodMerchant(feature: FoodMerchantFeature) : Discriminator<FoodMerchantFeature>(feature)
         class Technology(feature: TechnologyFeature) : Discriminator<TechnologyFeature>(feature)
+        class Season(feature: SeasonFeature) : Discriminator<SeasonFeature>(feature)
         class Happiness(feature: HappinessFeature) : Discriminator<HappinessFeature>(feature)
     }
 }

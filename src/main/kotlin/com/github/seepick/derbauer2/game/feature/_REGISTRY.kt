@@ -5,6 +5,7 @@ import com.github.seepick.derbauer2.game.tech.TechnologyFeature
 import com.github.seepick.derbauer2.game.trade.FoodMerchantFeature
 import com.github.seepick.derbauer2.game.trade.TradeFeature
 import com.github.seepick.derbauer2.game.trade.TradeLandFeature
+import com.github.seepick.derbauer2.game.turn.SeasonFeature
 
 fun interface FeatureRefRegistry {
     fun getAll(): List<FeatureRef>
@@ -17,6 +18,7 @@ object DefaultFeatureRefRegistry : FeatureRefRegistry {
         HappinessFeature.Ref,
         TradeFeature.Ref,
         FoodMerchantFeature.Ref,
+        SeasonFeature.Ref,
         // ...
         // ..
         // .

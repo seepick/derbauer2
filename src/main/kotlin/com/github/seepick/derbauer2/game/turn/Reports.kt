@@ -18,9 +18,12 @@ class ReportsImpl : Reports {
         all += report
     }
 
+
     // ... can be asked in the future about complex insights ...
 
     override fun last() = all.last()
 
     companion object // for extensions
 }
+
+fun Reports.lastTurnNumber() = all.lastOrNull()?.turn?.number ?: 0

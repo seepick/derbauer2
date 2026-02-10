@@ -59,7 +59,7 @@ class Happiness(initialValue: Double11 = Double11(0.0)) : Stat<Double11> {
                 0.4 to "😃",
                 0.6 to "🤗",
                 0.8 to "😍",
-                0.9 to Emoji.`happiness 🥳`.value,
+                0.9 to Emoji.`happiness 🥳`.string,
             ).map { it.first to it.second.emoji },
         )
     }

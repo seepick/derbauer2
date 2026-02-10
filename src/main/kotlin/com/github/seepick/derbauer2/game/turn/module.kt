@@ -15,6 +15,7 @@ fun turnModule() = module {
             featureTurner = get(),
             actionsCollector = get(),
             turn = get(),
+            reports = get(),
         )
     }
     singleOf(::CurrentTurnImpl) bind CurrentTurn::class

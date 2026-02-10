@@ -32,6 +32,7 @@ interface GlobalTurnStep {
 
 @Suppress("LongParameterList") // it's okay ;)
 class Turner(
+    private val reports: Reports,
     private val user: User,
     private val turn: CurrentTurn,
     private val actionsCollector: ActionsCollector,
@@ -42,7 +43,7 @@ class Turner(
 ) {
     private val log = logger {}
 
-    fun execTurnAndBuildReport(): TurnReport {
+    fun execTurnAndAddReport() {
         log.info { "🔁🔁🔁 =================== ⬇️ TURN ⬇️ =================== 🔁🔁🔁" }
         globalSteps.forEach { it.execPreTurn() }
         val report = buildAndExecReport()
@@ -50,8 +51,8 @@ class Turner(
         log.info { "🔁 Changes: $report" }
         log.debug { "🔁 User.all: $user" }
         turn.next()
+        reports.add(report)
         log.info { "🔁🔁🔁 =================== ⬆️ TURN ⬆️ =================== 🔁🔁🔁" }
-        return report
     }
 
     private fun buildAndExecReport() = TurnReport(

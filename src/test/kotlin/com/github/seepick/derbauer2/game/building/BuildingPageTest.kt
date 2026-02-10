@@ -2,7 +2,7 @@ package com.github.seepick.derbauer2.game.building
 
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.testInfra.PageTest
-import com.github.seepick.derbauer2.game.testInfra.pageParser.SetupGamePageContext
+import com.github.seepick.derbauer2.game.testInfra.pageParser.GamePageContext
 import com.github.seepick.derbauer2.game.testInfra.pageParser.renderGamePage
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.equals.shouldBeEqual
@@ -11,7 +11,7 @@ import io.kotest.matchers.string.shouldContainIgnoringCase
 
 class BuildingPageTest : PageTest, StringSpec({
 
-    fun SetupGamePageContext.buildBuildingsPage() =
+    fun GamePageContext.buildBuildingsPage() =
         BuildingPage(user, currentPage, gameRenderer, resultHandler, buildingService)
 
     "Given some Then check content" {

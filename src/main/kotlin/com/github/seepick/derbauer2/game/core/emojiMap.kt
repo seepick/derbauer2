@@ -27,4 +27,4 @@ val KClass<*>.simpleNameEmojied: String
     get() = (simpleName ?: "!simpleName!") + (emojiMap[this]?.let { " $it" } ?: "")
 
 val KClass<*>.emojiOrSimpleName: String
-    get() = emojiMap[this]?.value ?: simpleName ?: "!simpleName!"
+    get() = emojiMap[this]?.string ?: simpleName ?: "!simpleName!"

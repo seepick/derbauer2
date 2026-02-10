@@ -3,12 +3,12 @@
 package com.github.seepick.derbauer2.game.common
 
 @JvmInline
-value class Emoji(val value: String) {
+value class Emoji(val string: String) {
     init {
-        value.requireIsSingleEmoji()
+        string.requireIsSingleEmoji()
     }
 
-    override fun toString() = value
+    override fun toString() = string
 
     companion object
 }

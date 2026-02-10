@@ -8,7 +8,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class EmojiTest : StringSpec({
     listOf("😀", "🚙", "✅", "🤝", "🏴‍☠️").forEach { valid ->
         "success for [$valid]" {
-            Emoji(valid).value shouldBeEqual valid
+            Emoji(valid).string shouldBeEqual valid
         }
     }
     "toString" {

@@ -49,12 +49,12 @@ class TurnerTest : DescribeSpec(
         }
 
         fun Turner.execShouldContainChange(resource: Resource, expectedAmount: Zz) {
-            execTurnAndBuildReport().resourceChanges.shouldContainChange(resource, expectedAmount)
+            execTurnAndAddReport().resourceChanges.shouldContainChange(resource, expectedAmount)
         }
 
         describe("Special Cases") {
             it("Given nothing Then empty changes") {
-                val report = Turner.build().execTurnAndBuildReport()
+                val report = Turner.build().execTurnAndAddReport()
 
                 report.resourceChanges.shouldBeEmpty()
             }

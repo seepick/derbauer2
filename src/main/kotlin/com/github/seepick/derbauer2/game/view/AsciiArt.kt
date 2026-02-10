@@ -70,6 +70,23 @@ value class AsciiArt(val value: String) {
                          ''''
             """.trimIndent()
         )
+        val sun = AsciiArt(
+            """
+                        |
+                        |
+              `.        |        .'
+                `.    .---.    .'
+                   .~       ~.
+                  /   O   O   \
+        -- -- -- (             ) -- -- --
+                  \    `-'    /
+                   ~.       .~
+                .'    ~---~    `.
+              .'        |        `.
+                        |
+                        |
+        """.trimIndent()
+        )
         val gameOver = AsciiArt(
             """
                   ____
