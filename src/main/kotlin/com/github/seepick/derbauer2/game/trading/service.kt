@@ -39,7 +39,9 @@ class TradingService(
 
     fun buildOptions() = TradeCompoundRequests(buildList {
         addAll(buildFoodOptions())
-        addAll(buildLandOptions())
+        if (user.hasFeature(TradeLandFeature::class)) {
+            addAll(buildLandOptions())
+        }
     })
 
     private fun buildFoodOptions(): List<TradeCompoundRequest> {
@@ -64,15 +66,13 @@ class TradingService(
     }
 
     private fun buildLandOptions(): List<TradeCompoundRequest> = buildList {
-        if (user.hasFeature(TradeLandFeature::class)) {
-            add(
-                TradeCompoundRequest(
-                    Buy,
-                    TradeAmount(Land::class, 1.z),
-                    listOf(TradeAmount(Gold::class, Mechanics.buyLandCostGold * 1))
-                )
+        add(
+            TradeCompoundRequest(
+                Buy,
+                TradeAmount(Land::class, 1.z),
+                listOf(TradeAmount(Gold::class, Mechanics.buyLandCostGold * 1))
             )
-        }
+        )
     }
 }
 

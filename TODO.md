@@ -2,7 +2,6 @@
 
 ## 1.3.0
 
-* BZ: TradePromptBuilder#userHasTradeFeature; triggered by having traded enough food (tracking interactions)
 * BZ: change city/user titles based on "some stats" (e.g. happiness, population, etc.); display more prominent
 * UI: support ESC if in sub-menu
 * UI: deterministic order
