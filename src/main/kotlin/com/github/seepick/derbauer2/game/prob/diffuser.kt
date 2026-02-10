@@ -14,7 +14,7 @@ value class ProbDiffuserKey(val name: String) {
     companion object
 }
 
-interface ProbDiffuser {
+fun interface ProbDiffuser {
     fun diffuse(baseValue: Zz): Zz
 }
 

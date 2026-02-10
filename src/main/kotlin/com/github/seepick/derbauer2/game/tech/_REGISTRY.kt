@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
-interface TechRefRegistry {
+fun interface TechRefRegistry {
     fun getAll(): List<TechRef>
 }
 

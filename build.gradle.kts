@@ -162,7 +162,7 @@ tasks.jacocoTestCoverageVerification {
 detekt {
     toolVersion = libs.versions.detekt.get()
     source.setFrom("src/main/kotlin", "src/test/kotlin")
-    config.setFrom(project.rootDir.absolutePath + "/config/detekt.yml")
+    config.setFrom("config/detekt.yml")
     parallel = true
     ignoreFailures = !failOnDetektIssue // ignore by default, only fail if explicitly set
 }

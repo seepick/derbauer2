@@ -38,7 +38,7 @@ data class BuildingBuiltAction(val buildingClass: KClass<out Building>) : Action
     override fun toString() = "${this::class.simpleName}(building=${buildingClass.simpleNameEmojied})"
 }
 
-/** Do NOT make this a functional implementation as we need a concrete class reference. */
+@Suppress("kotlin:S6516") // dont make this a functional implementation; need a concrete class reference
 object BuildingTxValidator : TxValidator {
     override fun validateTx(user: User) =
         with(user) {

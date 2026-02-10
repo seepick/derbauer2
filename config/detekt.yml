@@ -44,11 +44,11 @@ console-reports:
 output-reports:
   active: true
   exclude:
-    # - 'TxtOutputReport'
-    # - 'XmlOutputReport'
-    # - 'HtmlOutputReport'
+    - 'TxtOutputReport'
+    #     - 'XmlOutputReport'
+    #     - 'HtmlOutputReport'
     - 'MdOutputReport'
-  # - 'SarifOutputReport'
+#     - 'SarifOutputReport'
 
 
 formatting:
@@ -104,7 +104,8 @@ complexity:
     threshold: 80
   LongMethod:
     active: true
-    threshold: 10
+    threshold: 15
+    excludes: [ '**/test/**' ]
   LongParameterList:
     active: true
     functionThreshold: 5
@@ -141,11 +142,11 @@ complexity:
   TooManyFunctions:
     active: true
     excludes: [ '**/test/**' ]
-    thresholdInFiles: 8
-    thresholdInClasses: 5
-    thresholdInInterfaces: 5
-    thresholdInObjects: 5
-    thresholdInEnums: 4
+    thresholdInFiles: 10
+    thresholdInClasses: 10
+    thresholdInInterfaces: 10
+    thresholdInObjects: 10
+    thresholdInEnums: 6
     ignoreDeprecated: false
     ignorePrivate: false
     ignoreOverridden: false

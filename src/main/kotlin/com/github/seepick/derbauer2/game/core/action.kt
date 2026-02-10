@@ -2,12 +2,12 @@ package com.github.seepick.derbauer2.game.core
 
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-interface ActionBus {
+fun interface ActionBus {
     fun dispatch(action: Action)
 }
 
 class ActionBusImpl(
-    private val listeners: List<ActionBusListener>
+    private val listeners: List<ActionBusListener>,
 ) : ActionBus {
 
     private val log = logger {}

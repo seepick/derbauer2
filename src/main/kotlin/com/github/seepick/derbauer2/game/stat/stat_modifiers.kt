@@ -10,7 +10,7 @@ fun interface PreStatModifier {
     companion object // for extensions
 }
 
-interface GlobalPreStatModifierRepo {
+fun interface GlobalPreStatModifierRepo {
     fun getAll(): List<PreStatModifier>
 }
 

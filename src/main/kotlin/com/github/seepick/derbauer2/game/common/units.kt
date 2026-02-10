@@ -78,13 +78,6 @@ data class Z(
     val zz get() = value.zz
     fun toDouble() = value.toDouble()
 
-    @Deprecated("user coerce fun")
-    fun coerceIn(min: Z, max: Z) = value.coerceIn(min.value, max.value).z
-    @Deprecated("user coerce fun")
-    infix fun orMaxOf(other: Z) = if (this > other) this else other
-    @Deprecated("user coerce fun")
-    infix fun orMinOf(other: Z) = if (this < other) this else other
-
     fun toPrefixedString() = if (value > 0) "+$this" else toString()
     override fun toString() = magnitutedValue.toString()
 
