@@ -43,8 +43,10 @@ fun startApp(
     showMainWindow(
         title = "$appTitle v${version}$devModeSuffix",
         mainModule = gameModule(prefStorageFqn),
-    ) { koin ->
-        koin.initGame()
-        postInit(koin)
-    }
+        initState = { koin ->
+            koin.initGame()
+            postInit(koin)
+        },
+    )
 }
+

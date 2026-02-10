@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
@@ -33,10 +34,12 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.WindowPosition
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
+import com.github.seepick.derbauer2.game.view.attachMacosQuitHandler
 import com.github.seepick.derbauer2.game.view.textengineModule
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.TestTags
+import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import com.github.seepick.derbauer2.textengine.bgColor
 import com.github.seepick.derbauer2.textengine.fgColor
 import com.github.seepick.derbauer2.textengine.keyboard.toKeyPressed
@@ -62,11 +65,15 @@ fun showMainWindow(
             MainWindow(
                 title = title,
                 initState = initState,
-                onClose = ::exitApplication,
+                onClose = {
+                    log.info { "Closing MainWindow -> exit application" }
+                    exitApplication()
+                },
             )
         }
     }
 }
+//window.x to window.y
 
 @Suppress("FunctionName", "DestructuringDeclarationWithTooManyEntries", "LongMethod")
 @Composable
@@ -75,28 +82,36 @@ fun MainWindow(
     initState: (Koin) -> Unit,
     onClose: () -> Unit,
 ) {
+    val textengineStateRepository = koinInject<TextengineStateRepository>()
+
     val state = rememberWindowState(
         size = MainWin.dpSize,
-        position = WindowPosition.Aligned(Alignment.Center),
+        position = textengineStateRepository.getWindowPosition()?.let { WindowPosition(it.first.dp, it.second.dp) }
+            ?: WindowPosition.Aligned(Alignment.Center),
     )
     var tick by remember { mutableLongStateOf(1L) }
     tick.toString()
     val currentPage = koinInject<CurrentPage>()
-    val page = getKoin().get<Page>(clazz = currentPage.pageClass)
+    val page = getKoin().get<Page>(clazz = currentPage.pageClass) // this is the right way to do it, not via koinInject
     val textmap = koinInject<Textmap>()
-    log.trace { "UI render tick #$tick" }
+    log.trace { "UI render tick #$tick" } // enforce recomposition on tick change
     val (toolbarWidth, toolbarOffset, toolbarAlpha, mainBoxModifier) = rememberMainWindowState(
         page = page,
         onTick = { tick++ },
     )
     MaterialTheme {
-        RunOnceWithKoin(initState = initState)
         Window(
             title = title,
-            onCloseRequest = onClose,
+            onCloseRequest = {
+                log.debug { "Ignoring close request; handled differently." }
+            },
             resizable = false,
             state = state,
         ) {
+            RunOnceWithKoin(window = window, initState = initState, onClosing = {
+                textengineStateRepository.setWindowPosition(window.x to window.y)
+                onClose()
+            })
             val focusRequester = remember { FocusRequester() }
             LaunchedEffect(Unit) { focusRequester.requestFocus() }
             Box(
@@ -122,12 +137,24 @@ fun MainWindow(
 @Suppress("FunctionName")
 private fun RunOnceWithKoin(
     initState: (Koin) -> Unit,
+    onClosing: () -> Unit,
+    window: ComposeWindow,
 ) {
     var initialized by remember { mutableIntStateOf(0) }
     if (initialized == 0) {
         initialized = 1
         log.debug { "Compose is going to initialize state (initialized=$initialized)" }
-        initState(getKoin())
+        val koin = getKoin()
+        initState(koin)
+        attachMacosQuitHandler {
+            onClosing()
+        }
+        window.addWindowListener(object : java.awt.event.WindowAdapter() {
+            override fun windowClosing(e: java.awt.event.WindowEvent?) {
+                log.debug { "Received AWT windowClosing event" }
+                onClosing()
+            }
+        })
     }
 }
 

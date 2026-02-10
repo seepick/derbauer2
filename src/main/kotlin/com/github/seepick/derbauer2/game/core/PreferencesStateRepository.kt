@@ -5,6 +5,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import java.util.prefs.Preferences
 import kotlin.reflect.KClass
 
+//interface GameStateRepository
+
 class PreferencesStateRepository(
     prefStatePath: KClass<*>,
 ) : TextengineStateRepository {
@@ -29,7 +31,21 @@ class PreferencesStateRepository(
         prefs.flush()
     }
 
+    override fun getWindowPosition(): WinPos? =
+        if (prefs.keys().toSet().contains(KEY_WIN_POS)) {
+            prefs.get(KEY_WIN_POS, "").split("/").let { it[0].toInt() to it[1].toInt() }
+        } else {
+            null
+        }
+
+    override fun setWindowPosition(position: WinPos) {
+        log.debug { "Saving window position: $position" }
+        prefs.put(KEY_WIN_POS, "${position.first}/${position.second}")
+        prefs.flush()
+    }
+
     companion object {
+        private const val KEY_WIN_POS = "window.position"
         private const val KEY_IS_PLAYING = "music.isPlaying"
         private const val IGNORE_DEFAULT_BOOLEAN = false
 
@@ -39,3 +55,5 @@ class PreferencesStateRepository(
             )
     }
 }
+
+typealias WinPos = Pair<Int, Int>

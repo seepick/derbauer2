@@ -5,7 +5,6 @@
 ## 1.3.0
 
 * BZ: interactive happening; being asked Y/N; randomness of the outcome (success; damage; intensity)
-* UX: remember window position
 * UX: disable being able trading 0
 * IT: delete Feature.Discriminator
 
