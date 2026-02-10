@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
@@ -73,3 +75,7 @@ object BuildingOrder {
     val Theater = counter.incrementAndGet()
     val School = counter.incrementAndGet()
 }
+
+private val buildingEmoji = "🛠️".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`build 🛠️` get() = buildingEmoji

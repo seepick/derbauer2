@@ -8,12 +8,9 @@ import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.citizen
-import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 class TechnologyFeature(ref: Ref = Ref) : FeatureImpl(ref) {
-    override fun deepCopy() = this // immutable
-    override fun toString() = "${javaClass.simpleName}[label=$label]"
     override fun mutate(user: User) {
         user.add(Knowledge())
         user.add(School())
@@ -24,11 +21,12 @@ class TechnologyFeature(ref: Ref = Ref) : FeatureImpl(ref) {
         asciiArt = AsciiArt.book,
         multilineDescription = "Welcome to the age of enlightenment!\n" +
                 "You can now research new technologies to advance your civilization.",
-    ) {
-        override fun check(user: User, reports: Reports) =
+        checkIt = { user, _ ->
             user.hasEntity(Citizen::class) &&
                     user.citizen >= Mechanics.featureTechCitizenThresholdGreater
-
-        override fun build() = TechnologyFeature()
-    }
+        },
+        buildIt = {
+            TechnologyFeature()
+        },
+    )
 }

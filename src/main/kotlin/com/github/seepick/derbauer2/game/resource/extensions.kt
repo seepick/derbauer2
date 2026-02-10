@@ -26,9 +26,6 @@ fun <R : Resource> User.findResourceOrNull(resourceClass: KClass<R>): R? =
 inline fun <reified R : Resource> User.findResourceOrNull(): R? =
     resources.findOrNull<R>()
 
-context(user: User)
-val ResourceReference.resource get() = user.findResource(resourceClass)
-
 inline fun <reified SR : StorableResource> User.isAbleToStore(resource: SR, amount: Z) =
     amount <= freeStorageFor(resource)
 

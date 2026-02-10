@@ -5,16 +5,6 @@ import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
-import kotlin.reflect.KClass
-
-fun <F : Feature> User.hasFeature(featureClass: KClass<F>): Boolean =
-    all.findOrNull(featureClass) != null
-
-inline fun <reified F : Feature> User.hasFeature(): Boolean =
-    hasFeature(F::class)
-
-fun User.hasFeature(ref: FeatureRef): Boolean =
-    all.filterIsInstance<Feature>().any { it.ref == ref }
 
 interface FeatureData : HasLabel {
     val asciiArt: AsciiArt
@@ -29,6 +19,8 @@ interface Feature : Entity, FeatureData {
 abstract class FeatureImpl(
     override val ref: FeatureRef,
 ) : Feature, FeatureData by ref {
+    override fun mutate(user: User) {}
+    override fun deepCopy() = this // immutable by default
     override fun toString() = "${this::class.simpleName}($label)"
 }
 
@@ -36,9 +28,9 @@ abstract class FeatureRef(
     final override val label: String,
     final override val asciiArt: AsciiArt,
     final override val multilineDescription: String,
+    private val checkIt: (user: User, reports: Reports) -> Boolean,
+    private val buildIt: () -> Feature,
 ) : FeatureData {
-
-    @Suppress("unused")
-    abstract fun check(user: User, reports: Reports): Boolean
-    abstract fun build(): Feature
+    fun check(user: User, reports: Reports) = checkIt(user, reports)
+    fun build() = buildIt()
 }

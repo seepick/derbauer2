@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.trade
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
@@ -77,3 +79,7 @@ class TradePromptBuilder(
 
 fun List<TradeCompoundRequest>.sortedByViewOrder(user: User): List<TradeCompoundRequest> =
     sortedBy { user.findResource(it.target.resoureClass).viewOrder }
+
+private val tradeEmoji = "💸".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`trade 💸` get() = tradeEmoji

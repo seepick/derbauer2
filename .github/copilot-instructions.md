@@ -35,8 +35,7 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 
 ## AI Specific Coding Rules
 
-* Whenever you write a new class or function, always add the `@com.github.seepick.derbauer2.game.core.AiGenerated`
-  annotation to it (ensure using import statements).
+* When you write a new class or function which is longer than 5 lines of code, add the `@AiGenerated` annotation to it.
 * Write **short functions**, ideally 2-5 lines. If longer, split into smaller functions and give them descriptive names.
 * Do NOT write any **inline comments**; the code should be self-explanatory. If you need to explain something, write a
   separate function with a descriptive name.

@@ -6,11 +6,6 @@ import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.view.ViewOrder
 import java.util.concurrent.atomic.AtomicInteger
-import kotlin.reflect.KClass
-
-interface ResourceReference {
-    val resourceClass: KClass<out Resource>
-}
 
 private val goldEmoji = "💰️".emoji
 val Emoji.Companion.`gold 💰` get() = goldEmoji

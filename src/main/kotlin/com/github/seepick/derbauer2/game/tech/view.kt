@@ -1,5 +1,7 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiAndOwned
@@ -83,3 +85,11 @@ object TechOrder {
     val Irrigation = counter.incrementAndGet()
     val Capitalism = counter.incrementAndGet()
 }
+
+private val researchEmoji = "🔬️".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`tech 🔬` get() = researchEmoji
+
+private val knowledgeEmoji = "🧪".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`knowledge 🧪` get() = knowledgeEmoji

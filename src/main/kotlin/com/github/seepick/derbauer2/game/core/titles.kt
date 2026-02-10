@@ -15,6 +15,7 @@ enum class CityTitle(
     }
 }
 
+
 @Suppress("MagicNumber")
 enum class UserTitle(
     val label: String,

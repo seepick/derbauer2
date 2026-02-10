@@ -13,7 +13,6 @@ import com.github.seepick.derbauer2.game.feature.FeatureImpl
 import com.github.seepick.derbauer2.game.feature.FeatureRef
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.resource.citizen
-import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
@@ -68,8 +67,6 @@ class Happiness(
 }
 
 class HappinessFeature(ref: Ref = Ref) : FeatureImpl(ref) {
-    override fun deepCopy() = this // immutable
-    override fun toString() = "${javaClass.simpleName}[label=$label]"
     override fun mutate(user: User) {
         user.add(Happiness(Mechanics.startingHappiness))
         user.add(Theater())
@@ -79,11 +76,12 @@ class HappinessFeature(ref: Ref = Ref) : FeatureImpl(ref) {
         label = "Happiness",
         asciiArt = AsciiArt.smiley,
         multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.`happiness 🥳`}",
-    ) {
-        override fun check(user: User, reports: Reports) =
+        checkIt = { user, _ ->
             user.hasEntity(Citizen::class) &&
                     user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater
-
-        override fun build() = HappinessFeature()
-    }
+        },
+        buildIt = {
+            HappinessFeature()
+        },
+    )
 }
