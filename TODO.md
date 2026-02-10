@@ -14,6 +14,8 @@
 
 ## Backlog
 
+* IT: delete Feature.Discriminator
+* IT: ad TurnReport.featurePages:List<FeatureSubPage> ... execute before, and only add Feature (instead of page)
 * BZ: ad HappinessDeathPostModifier: look into history, if previous turns also deaths; if so, increase more (with max!)
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * IT: make tech enables Feature

@@ -10,7 +10,7 @@ import com.github.seepick.derbauer2.game.transaction.TxResult
 import com.github.seepick.derbauer2.game.transaction.execTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-// TODO enforce that each resource only occurs once, by changing List to Map with Resource as key
+/** The same resource could occure multiple times in these requests. */
 data class ResourcesTradedAction(val requests: List<TradeRequest>) : Action {
     companion object // for extensions
 }

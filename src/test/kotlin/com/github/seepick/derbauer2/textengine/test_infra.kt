@@ -66,7 +66,7 @@ fun Prompt.shouldHaveSelectOption(label: String) {
         .shouldContainSingleIgnoringCase(label)
 }
 
-fun List<String>.shouldContainSingleIgnoringCase(search: String): String =
+infix fun List<String>.shouldContainSingleIgnoringCase(search: String): String =
     withClue({ "Expected to contain '$search' but was: ${joinToString { "'$it'" }}" }) {
         filter {
             it.contains(search, ignoreCase = true)

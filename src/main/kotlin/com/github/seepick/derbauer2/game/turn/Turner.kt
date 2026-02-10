@@ -100,7 +100,7 @@ data class TurnReport(
     val turn: Turn,
     val resourceChanges: ResourceChanges,
     val happenings: List<Happening>,
-    val featurePages: List<FeatureSubPage>, // TODO execute before, and only add Feature (instead of page)
+    val featurePages: List<FeatureSubPage>,
     val actions: List<Action>,
 ) {
     companion object // for extension functions

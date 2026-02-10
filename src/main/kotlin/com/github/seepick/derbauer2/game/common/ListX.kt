@@ -19,15 +19,13 @@ interface ListXOps<E : Any> : List<E> {
         }
     }
 
-    fun find(entityClass: KClass<out E>): E =
-        findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
+    fun find(entityClass: KClass<out E>): E = findOrNull(entityClass) ?: errorNotFoundEntity(entityClass, this)
 
     @Suppress("UNCHECKED_CAST")
     fun <X> findAs(entityClass: KClass<out E>): X =
         findOrNull(entityClass) as X ?: errorNotFoundEntity(entityClass, this)
 
-    fun <V> letIfExists(klass: KClass<out E>, letCode: (E) -> V): V? =
-        findOrNull(klass)?.let(letCode)
+    fun <V> letIfExists(klass: KClass<out E>, letCode: (E) -> V): V? = findOrNull(klass)?.let(letCode)
 
     fun alsoIfExists(klass: KClass<out E>, alsoCode: (E) -> Unit) {
         findOrNull(klass)?.also(alsoCode)
@@ -38,7 +36,6 @@ fun errorNotFoundEntity(notFoundClass: KClass<*>, options: List<Any>): Nothing {
     throw NotFoundEntityException(notFoundClass, options)
 }
 
-class NotFoundEntityException(notFoundClass: KClass<*>, options: List<Any>) :
-    IllegalArgumentException(
-        "Nothing found for ${notFoundClass.simpleNameEmojied} (available: ${options.map { it::class.simpleNameEmojied }})"
-    )
+class NotFoundEntityException(notFoundClass: KClass<*>, options: List<Any>) : IllegalArgumentException(
+    "Nothing found for ${notFoundClass.simpleNameEmojied} (available: ${options.map { it::class.simpleNameEmojied }})"
+)

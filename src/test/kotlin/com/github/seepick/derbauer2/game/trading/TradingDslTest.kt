@@ -71,7 +71,8 @@ class TradingDslTest : DslTest, DescribeSpec() {
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("buy $buyableFoodAmount 🍖 food")
+                    val options = pageAs<TradingPage>().prompt.selectOptions
+                    options shouldContainSingleIgnoringCase "buy $buyableFoodAmount 🍖 food"
                 }
             }
         }
@@ -87,7 +88,8 @@ class TradingDslTest : DslTest, DescribeSpec() {
                 } When {
                     selectPrompt("trade")
                 } Then {
-                    pageAs<TradingPage>().prompt.selectOptions.shouldContainSingleIgnoringCase("sell $foodOwned 🍖 food")
+                    val options = pageAs<TradingPage>().prompt.selectOptions
+                    options shouldContainSingleIgnoringCase "sell $foodOwned 🍖 food"
                 }
             }
         }

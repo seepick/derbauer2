@@ -46,7 +46,7 @@ abstract class Feature(
      *         }
      *     }
      */
-    sealed class Discriminator<F : Feature>(private val feature: F) { // TODO delete this
+    sealed class Discriminator<F : Feature>(private val feature: F) {
         fun <T> asRuntimeType(code: (F) -> T) = code(feature)
         class Trading(feature: TradingFeature) : Discriminator<TradingFeature>(feature)
         class TradeLand(feature: TradeLandFeature) : Discriminator<TradeLandFeature>(feature)
