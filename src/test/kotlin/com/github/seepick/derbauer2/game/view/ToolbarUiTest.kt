@@ -5,8 +5,7 @@ import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performMouseInput
-import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeTest
-import com.github.seepick.derbauer2.game.testInfra.uitest.UiTest
+import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeUiTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
 import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.isToolbarVisible
@@ -15,7 +14,7 @@ import org.junit.Rule
 import org.junit.Test
 
 // actually should be part of textengine, but leave it for now as it work require some infra-rework :)
-class ToolbarUiTest : UiTest, ComposeTest {
+class ToolbarUiTest : ComposeUiTest {
 
     override val log = logger {}
     @get:Rule

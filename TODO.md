@@ -12,6 +12,7 @@
 
 ## Backlog
 
+* UX: remember window position
 * BZ: interactive happening; being asked a Y/N question, with some randomness of the outcome (success; damage;
   intensity)
 * rename "house" to "tent"

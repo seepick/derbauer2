@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -78,7 +79,7 @@ fun MainWindow(
         size = MainWin.dpSize,
         position = WindowPosition.Aligned(Alignment.Center),
     )
-    var tick by remember { mutableIntStateOf(0) }
+    var tick by remember { mutableLongStateOf(1L) }
     tick.toString()
     val currentPage = koinInject<CurrentPage>()
     val page = getKoin().get<Page>(clazz = currentPage.pageClass)

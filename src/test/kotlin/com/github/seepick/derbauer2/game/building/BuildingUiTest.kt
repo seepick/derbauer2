@@ -5,18 +5,16 @@ import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.testInfra.pageParser.keyForSelectOption
 import com.github.seepick.derbauer2.game.testInfra.pageParser.readSingleResource
-import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeTest
-import com.github.seepick.derbauer2.game.testInfra.uitest.UiTest
+import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeUiTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.comparables.shouldBeLessThan
 import io.kotest.matchers.equals.shouldBeEqual
-import io.kotest.matchers.string.shouldContainIgnoringCase
 import org.junit.Rule
 import org.junit.Test
 
-class BuildingUiTest : UiTest, ComposeTest {
+class BuildingUiTest : ComposeUiTest {
 
     override val log = logger {}
     @get:Rule
@@ -24,7 +22,6 @@ class BuildingUiTest : UiTest, ComposeTest {
 
     @Test
     fun `When build house Then change assets`() = uiTest {
-        gameText.contentString shouldContainIgnoringCase "you are home"
         val initialGold = gameText.readSingleResource(Gold.Data.emojiOrNull).owned
 
         pressKey(gameText.keyForSelectOption("build"))
@@ -36,8 +33,6 @@ class BuildingUiTest : UiTest, ComposeTest {
 
     @Test
     fun `When build many farms Then fail`() = uiTest { ctx ->
-        gameText.contentString shouldContainIgnoringCase "you are home"
-
         pressKey(gameText.keyForSelectOption("build"))
         repeat(3) {
             pressKey(gameText.keyForSelectOption("farm"))

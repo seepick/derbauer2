@@ -15,10 +15,14 @@ import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.keyboard.asComposeKey
 import io.github.oshai.kotlinlogging.KLogger
+import org.junit.experimental.categories.Category
+
+interface UiTestCategory
 
 /** See: https://www.scribd.com/document/759389692/compose-testing-cheatsheet */
 @Suppress("ComplexInterface")
-interface ComposeTest {
+@Category(UiTestCategory::class)
+interface ComposeUiTest {
 
     val log: KLogger
     val ui: ComposeContentTestRule
@@ -34,6 +38,7 @@ interface ComposeTest {
 
     @OptIn(InternalComposeUiApi::class)
     fun pressKey(key: Key) {
+        log.trace { "pressKey($key)" }
         gameTextNode.performKeyPress(KeyEvent(key, KeyEventType.KeyDown))
         logGameText()
     }
