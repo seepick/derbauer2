@@ -74,14 +74,13 @@ class FoodMerchantFeature(descriptor: Ref = Ref) : Feature(descriptor) {
         multilineDescription = "You have been busy trading your food 🍖 😋 🍖\n"
                 + "You shall be rewarded by even moooooar cheesy, faty, yummy food trading! 💰 🤑 💰",
     ) {
+        /** Check if within one round >=X times food traded && only if that happened >=Y times. */
         override fun check(user: User, reports: Reports) =
-            // FIXME check if within one round >=X times food traded && only if that happened >=Y times
-            reports.filterAllActionInstanceOf<ResourcesTradedAction>()
-                .sumOf { action ->
-                    action.requests.count { trade ->
-                        trade.resourceClass == Food::class // bought or sold
-                    }
-                } >= Mechanics.featureFoodMerchantThresholdFoodTrades
+            reports.all.count { report ->
+                report.actions.filterIsInstance<ResourcesTradedAction>().count { trade ->
+                    trade.requests.any { request -> request.resourceClass == Food::class } // bought or sold
+                } >= Mechanics.featureFoodMerchantThresholdFoodTradesAmount
+            } >= Mechanics.featureFoodMerchantThresholdFoodTradesAmountTimes
 
         override fun build() = FoodMerchantFeature()
     }

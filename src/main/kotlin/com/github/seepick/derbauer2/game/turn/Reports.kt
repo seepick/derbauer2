@@ -5,6 +5,8 @@ interface Reports {
 
     fun add(report: TurnReport)
     fun last(): TurnReport
+
+    companion object // for extensions
 }
 
 /** Assessement of historical data */
@@ -19,4 +21,6 @@ class ReportsImpl : Reports {
     // ... can be asked in the future about complex insights ...
 
     override fun last() = all.last()
+
+    companion object // for extensions
 }
