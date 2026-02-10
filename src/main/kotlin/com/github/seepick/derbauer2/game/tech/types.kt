@@ -2,6 +2,7 @@ package com.github.seepick.derbauer2.game.tech
 
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
+import com.github.seepick.derbauer2.game.view.ViewOrder
 import kotlin.reflect.KClass
 import kotlin.reflect.full.createInstance
 
@@ -16,7 +17,7 @@ interface TechData {
     val costs: ResourceChanges
 }
 
-interface TechRef : TechData {
+interface TechRef : TechData, ViewOrder {
     val techClass: KClass<out Tech>
     fun buildTech(): Tech
 }

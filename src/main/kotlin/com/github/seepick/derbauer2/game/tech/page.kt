@@ -18,39 +18,41 @@ import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
-import com.github.seepick.derbauer2.textengine.textmap.emptyLine
+import com.github.seepick.derbauer2.textengine.textmap.multiLine
 
 @Suppress("LongParameterList") // it's ok ;)
 class TechPage(
     private val user: User,
     private val currentPage: CurrentPage,
-    gameRenderer: GameRenderer,
     private val techTree: TechTree,
-    private val resultHandler: TxResultHandler,
     private val techService: TechService,
+    private val resultHandler: TxResultHandler,
+    gameRenderer: GameRenderer,
 ) : PromptGamePage(
-    gameRenderer = gameRenderer, promptBuilder = {
+    contentRenderer = { textmap ->
+        textmap.multiLine(Texts.techPage(user.findResource<Knowledge>().emojiAndOwned))
+    },
+    promptBuilder = {
         val techs = techTree.filterResearchableItems()
         if (techs.isEmpty()) {
             EmptyPagePromptProvider(Texts.techPageEmpty)
         } else {
             val maxColCount = techs.maxOf { it.costs.size }
-            SelectPrompt(Options.Tabled(techs.map {
-                it.toSelectOption(user, maxColCount, techService, resultHandler)
-            }))
+            SelectPrompt(
+                Options.Tabled(
+                    techs
+                        .sortedBy { it.viewOrder }
+                        .map { it.toSelectOption(user, maxColCount, techService, resultHandler) })
+            )
         }
-    }, buttons = listOf(
-        BackButton {
-            currentPage.pageClass = HomePage::class
-        },
-        SecondaryBackButton {
-            currentPage.pageClass = HomePage::class
-        },
-    ), contentRenderer = { textmap ->
-        textmap.line(Texts.techPage)
-        textmap.emptyLine()
-        textmap.line("Your genius wisdom expands ${user.findResource<Knowledge>().emojiAndOwned} units of knowledge.")
-    })
+    },
+    buttons = listOf(
+        BackButton { currentPage.pageClass = HomePage::class },
+        SecondaryBackButton { currentPage.pageClass = HomePage::class },
+    ),
+    gameRenderer = gameRenderer,
+)
+
 
 private fun TechRef.toSelectOption(
     user: User,
@@ -60,7 +62,7 @@ private fun TechRef.toSelectOption(
 ): SelectOption<OptionLabel.Table> = SelectOption(
     label = OptionLabel.Table(
         buildList {
-            add("Research $label")
+            add(label)
             with(user) {
                 addAll(costs.toFormattedList())
             }

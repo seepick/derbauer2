@@ -15,4 +15,12 @@ interface ViewOrder {
 
         val Knowledge = counter.incrementAndGet()
     }
+
+    object TechOrder {
+        private val counter = AtomicInteger()
+
+        val Agriculture = counter.incrementAndGet()
+        val Irrigation = counter.incrementAndGet()
+        val Capitalism = counter.incrementAndGet()
+    }
 }

@@ -3,7 +3,6 @@
 ## 1.3.0
 
 * BZ: change city/user titles based on "some stats" (e.g. happiness, population, etc.); display more prominent
-* UI: deterministic order of tech (logical); right now "irrigation" puts itself on top (weird)
 
 ## Backlog
 
@@ -27,3 +26,4 @@
 * BZ: get ideas/names/concepts from other games; age empire, anno, civ, settlers, fugger, ...
 * UI: use compose viewmodel
 * UI: ad text engine, be able to enter numbers (also freetext maybe?)
+* minorIT: refactor deterministic order of Tech; use tree to do it properly (not manually registry)

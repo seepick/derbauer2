@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.resource.citizen
 import com.github.seepick.derbauer2.game.stat.Happiness
 import com.github.seepick.derbauer2.game.stat.PreStatModifier
 import com.github.seepick.derbauer2.game.stat.StatKClass
+import com.github.seepick.derbauer2.game.view.ViewOrder
 
 /**
  * CAVE: Register Refs in [DefaultTechRefRegistry]!
@@ -34,6 +35,7 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionBonus {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = AgricultureTech::class
+        override val viewOrder = ViewOrder.TechOrder.Agriculture
     }
 }
 
@@ -54,6 +56,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionBonus {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = IrrigationTech::class
+        override val viewOrder = ViewOrder.TechOrder.Irrigation
     }
 
 }
@@ -81,5 +84,6 @@ class CapitalismTech : Tech, TechData by Data, PreStatModifier {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = CapitalismTech::class
+        override val viewOrder = ViewOrder.TechOrder.Capitalism
     }
 }
