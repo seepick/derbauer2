@@ -59,7 +59,7 @@ class TaxResourceStepTest : DescribeSpec(
                     citizen.ownedForTest = 100.z
                     user.add(CapitalismTech())
                     val taxWithoutCapitalism = (citizen.owned * Mechanics.taxRate).zz
-                    val expectedTax = taxWithoutCapitalism * Mechanics.techCapitalismTaxMultiplier
+                    val expectedTax = taxWithoutCapitalism.timesFloor(Mechanics.techCapitalismTaxMultiplier)
 
                     calcChanges().shouldContainChange(Gold::class, expectedTax)
                 }

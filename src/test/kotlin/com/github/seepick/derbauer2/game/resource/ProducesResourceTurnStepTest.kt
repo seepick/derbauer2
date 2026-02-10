@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.resource
 import com.github.seepick.derbauer2.game.building.Farm
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
+import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
@@ -11,33 +12,33 @@ import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.comparables.shouldBeGreaterThan
-
-private data class SetupContext(
-    val step: ProducesResourceTurnStep,
-    val user: User,
-    val food: Food,
-    val farm: Farm,
-    val granary: Granary,
-) {
-    fun calcStepChanges() = step.calcResourceChanges().changes
-}
-
-private fun `user with 0 🍖, 1 granary, 1 farm`(
-    test: SetupContext.() -> Unit,
-) {
-    val user = User(DefaultTxValidatorRegistry.validators)
-    val food = user.add(Food())
-    val farm = user.addBuilding(Farm(), 1.z)
-    val granary = user.addBuilding(Granary(), 1.z)
-
-    test(SetupContext(ProducesResourceTurnStep(user), user, food, farm, granary))
-}
+import kotlin.math.floor
 
 class ProducesResourceTurnStepTest : DescribeSpec({
+
+    data class SetupContext(
+        val step: ProducesResourceTurnStep,
+        val user: User,
+        val food: Food,
+        val farm: Farm,
+        val granary: Granary,
+    )
+
+    fun `user with 0 🍖, 1 granary, 1 farm`(
+        test: SetupContext.() -> Unit,
+    ) {
+        val user = User(DefaultTxValidatorRegistry.validators)
+        val food = user.add(Food())
+        val farm = user.addBuilding(Farm(), 1.z)
+        val granary = user.addBuilding(Granary(), 1.z)
+
+        test(SetupContext(ProducesResourceTurnStep(user), user, food, farm, granary))
+    }
+
     describe("happy cases") {
         it("Given ok setup Then produce And resource untouched") {
             `user with 0 🍖, 1 granary, 1 farm` {
-                calcStepChanges().shouldContainChange(
+                step.calcResourceChanges().shouldContainChange(
                     food, 1.z * farm.produceResourceAmount
                 )
             }
@@ -46,7 +47,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
             `user with 0 🍖, 1 granary, 1 farm` {
                 farm.ownedForTest = 2.z
 
-                calcStepChanges().shouldContainChange(
+                step.calcResourceChanges().shouldContainChange(
                     food, 2.z * farm.produceResourceAmount
                 )
             }
@@ -64,27 +65,30 @@ class ProducesResourceTurnStepTest : DescribeSpec({
         it("Producing above the storage capacity As limit caps are done in Turner") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 food.ownedForTest = granary.totalStorageAmount - 1.z
-                calcStepChanges().shouldBeSingleton().first().change.value shouldBeGreaterThan 1
+                step.calcResourceChanges().shouldBeSingleton().first().change.value shouldBeGreaterThan 1
             }
         }
     }
 
     describe("modifier interactions") {
-        it("When modifier 100x Then produce 100x") {
+        it("When bonus 20% Then produce 100x") {
             `user with 0 🍖, 1 granary, 1 farm` {
-                val multiplier = 100
-                user.add(ResourceProductionMultiplierStub(Food::class, multiplier.toDouble()))
+                val bonus = 20.`%`
+                user.add(ResourceProductionBonusEntityStub(Food::class, bonus))
 
-                calcStepChanges().shouldContainChange(food, farm.produceResourceAmount * multiplier)
+                step.calcResourceChanges().shouldContainChange(food, farm.produceResourceAmount.timesFloor(bonus + 1.0))
             }
         }
-        it("When multiple modifiers fold sequentially Then apply both") {
+        it("When 2 bonuses given Then apply them on base value together") {
             `user with 0 🍖, 1 granary, 1 farm` {
                 val baseProduction = farm.totalProduceResourceAmount
-                user.add(ResourceProductionMultiplierStub1(Food::class, 2.0))
-                user.add(ResourceProductionMultiplierStub2(Food::class, 0.5))
+                val bonus1 = 50.`%`
+                val bonus2 = 100.`%`
+                user.add(ResourceProductionBonusEntityStub1(Food::class, bonus1))
+                user.add(ResourceProductionBonusEntityStub2(Food::class, bonus2))
 
-                calcStepChanges().shouldContainChange(food, (baseProduction.toDouble() * 2.0 * 0.5).zz)
+                val expectedFinalProduction = floor(baseProduction.toDouble() * (1.0 + (bonus1 + bonus2).number))
+                step.calcResourceChanges().shouldContainChange(food, expectedFinalProduction.zz)
             }
         }
     }

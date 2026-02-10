@@ -6,6 +6,7 @@ import com.github.seepick.derbauer2.game.DerBauer2
 import com.github.seepick.derbauer2.game.common.`%`
 import com.github.seepick.derbauer2.game.common.Double01
 import com.github.seepick.derbauer2.game.common.Double11
+import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.double01
 import com.github.seepick.derbauer2.game.common.k
 import com.github.seepick.derbauer2.game.common.z
@@ -78,11 +79,11 @@ object Mechanics {
 
     val techAgricultureCostsKnowledge = if (DEV) 4.z else 40.z
     val techAgricultureCostsGold = if (DEV) 10.z else 300.z
-    val techAgricultureFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
+    val techAgricultureFoodProductionBonus = if (DEV) 100.`%` else 20.`%`
 
     val techIrrigationCostsKnowledge = if (DEV) 6.z else 60.z
     val techIrrigationCostsGold = 400.z
-    val techIrrigationFoodProductionMultiplier = if (DEV) 200.`%` else 120.`%`
+    val techIrrigationFoodProductionBonus = if (DEV) 100.`%` else 20.`%`
 
     val techCapitalismCostsKnowledge = if (DEV) 8.z else 80.z
     val techCapitalismCostsGold = if (DEV) 20.z else 400.z
@@ -122,12 +123,12 @@ val Season.happinessChanger: Double
         Season.Winter -> -0.01
     }
 
-val Season.foodProductionModifier: Double
+val Season.foodProductionBonus: Percent
     get() = when (this) {
-        Season.Spring -> 0.9
-        Season.Summer -> 1.3
-        Season.Autumn -> 1.1
-        Season.Winter -> 0.7
+        Season.Spring -> (-5).`%`
+        Season.Summer -> 20.`%`
+        Season.Autumn -> 15.`%`
+        Season.Winter -> (-25).`%`
     }
 
 val Season.ratsWillEatFoodProb: Double01

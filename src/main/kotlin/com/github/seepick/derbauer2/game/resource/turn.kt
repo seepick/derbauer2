@@ -1,8 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.`%`
+import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.core.foodProductionModifier
+import com.github.seepick.derbauer2.game.core.foodProductionBonus
 import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import kotlin.reflect.KClass
 
@@ -14,39 +15,35 @@ import kotlin.reflect.KClass
  */
 class ProducesResourceTurnStep(val user: User) {
     fun calcResourceChanges() = buildResourceChanges {
-        val modifiersByResource = user.all
-            .filterIsInstance<GlobalResourceProductionModifier>().groupBy { it.handlingResource }
+        val bonusesByResource = user.all
+            .filterIsInstance<GlobalResourceProductionBonus>().groupBy { it.handlingResource }
         plainProduction().changes.forEach { change ->
-            val modifiers = modifiersByResource[change.resourceClass] ?: emptyList()
-            val modifiedAmount = modifiers.fold(change.change) { acc, modifier ->
-                // TODO no, don't chain modifiers BUT let them all operator on the same base value, sum(calc diffs)
-                modifier.modifyAmount(user, acc)
-            }
-            add(ResourceChange(change.resourceClass, modifiedAmount))
+            val bonuses = bonusesByResource[change.resourceClass] ?: emptyList()
+            val totalBonus = bonuses.sumOf { it.productionBonus(user).number }.`%`
+            val baseProduction = change.change
+            val finalAmount = baseProduction.timesFloor(1.0 + totalBonus.number)
+            add(ResourceChange(change.resourceClass, finalAmount))
         }
     }
 
     private fun plainProduction() = ResourceChanges(
         user.all.filterIsInstance<ProducesResource>().map { producer ->
-            val resource = user.findResource(producer.producingResourceClass)
             ResourceChange(
-                resource = resource,
+                resource = user.findResource(producer.producingResourceClass),
                 changeAmount = producer.totalOrSimpleProduceResourceAmount,
             )
-        },
+        }
     )
 }
 
-interface GlobalResourceProductionModifier {
+/** Global, as in koin declared beans, and NOT an entity stored in user.all. */
+interface GlobalResourceProductionBonus {
     val handlingResource: KClass<out Resource>
-    fun modifyAmount(user: User, source: Zz): Zz
+    /** @return can be negative as well */
+    fun productionBonus(user: User): Percent
 }
 
-class SeasonalFoodProductionModifier(
-    private val turn: CurrentTurn,
-) : GlobalResourceProductionModifier {
+class SeasonalFoodProductionBonus(private val turn: CurrentTurn) : GlobalResourceProductionBonus {
     override val handlingResource = Food::class
-
-    override fun modifyAmount(user: User, source: Zz) =
-        source.timesFloor(turn.current.season.foodProductionModifier)
+    override fun productionBonus(user: User) = turn.current.season.foodProductionBonus
 }

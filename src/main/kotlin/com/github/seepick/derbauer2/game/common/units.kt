@@ -37,7 +37,9 @@ data class Zz(
     fun toDouble() = value.toDouble()
 
     infix fun timesCeil(mulitiplier: Double): Zz = ceil(this.toDouble() * mulitiplier).toLong().zz
+    infix fun timesCeil(percent: Percent): Zz = timesCeil(percent.number)
     infix fun timesFloor(mulitiplier: Double): Zz = floor(this.toDouble() * mulitiplier).toLong().zz
+    infix fun timesFloor(percent: Percent): Zz = timesFloor(percent.number)
     infix fun divCeil(mulitiplier: Double): Zz = ceil(this.toDouble() / mulitiplier).toLong().zz
     infix fun divFloor(mulitiplier: Double): Zz = floor(this.toDouble() / mulitiplier).toLong().zz
 
@@ -52,7 +54,6 @@ data class Zz(
     operator fun times(other: Zz) = Zz(value * other.value)
     operator fun times(other: Long) = Zz(value * other)
     operator fun times(other: Int) = Zz(value * other)
-    operator fun times(other: Percent) = Zz((value.toDouble() * other.number).toLong())
 
     override operator fun compareTo(other: Zz) = value.compareTo(other.value)
     operator fun compareTo(other: Long) = value.compareTo(other)
@@ -158,9 +159,10 @@ val Int.`%`: Percent get() = Percent(this.toDouble() / 100.0)
 
 @JvmInline
 value class Percent(val number: Double) {
-    operator fun compareTo(other: Percent) = this.number.compareTo(other.number)
     operator fun compareTo(other: Double) = this.number.compareTo(other)
-    operator fun plus(other: Percent) = Percent(this.number + other.number)
+    operator fun compareTo(other: Percent) = compareTo(other.number)
+    operator fun plus(other: Double) = Percent(this.number + other)
+    operator fun plus(other: Percent) = plus(other.number)
 
     /**
      * How many of this is needed to get 'amount' back after % has been applied.

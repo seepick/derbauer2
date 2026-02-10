@@ -1,11 +1,10 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.Texts
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food
-import com.github.seepick.derbauer2.game.resource.GlobalResourceProductionModifier
+import com.github.seepick.derbauer2.game.resource.GlobalResourceProductionBonus
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges
@@ -15,13 +14,11 @@ import com.github.seepick.derbauer2.game.stat.PreStatModifier
 import com.github.seepick.derbauer2.game.stat.StatKClass
 
 /**
- * CAVE: Register Refs in [DefaultTechRefRegistry]
+ * CAVE: Register Refs in [DefaultTechRefRegistry]!
  */
-
-class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier {
+class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionBonus {
     override val handlingResource = Food::class
-    override fun modifyAmount(user: User, source: Zz) =
-        source * Mechanics.techAgricultureFoodProductionMultiplier
+    override fun productionBonus(user: User) = Mechanics.techAgricultureFoodProductionBonus
 
     override fun deepCopy() = this
 
@@ -40,11 +37,9 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionModifier
     }
 }
 
-class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionModifier {
+class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionBonus {
     override val handlingResource = Food::class
-    override fun modifyAmount(user: User, source: Zz) =
-        source * Mechanics.techIrrigationFoodProductionMultiplier
-
+    override fun productionBonus(user: User) = Mechanics.techIrrigationFoodProductionBonus
     override fun deepCopy() = this
 
     object Data : TechData {

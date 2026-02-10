@@ -44,11 +44,11 @@ data class ResourceChange(
 }
 
 
+@Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
 @ConsistentCopyVisibility
 data class ResourceChanges private constructor(
     val changes: List<ResourceChange>,
-) {
-    val size = changes.size
+) : List<ResourceChange> by changes {
 
     init {
         changes.requireUniqueBy("Must not contain multiple changes for the same resource!") {
@@ -77,7 +77,6 @@ data class ResourceChanges private constructor(
             "${it.change.toSymboledString()}${it.resourceClass.emojiOrSimpleName}"
         }
     })"
-
 
     companion object {
         val empty = buildResourceChanges { }

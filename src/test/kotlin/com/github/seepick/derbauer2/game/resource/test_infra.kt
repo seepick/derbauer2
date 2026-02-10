@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.common.Percent
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.zz
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import io.kotest.matchers.collections.shouldBeEmpty
@@ -53,39 +53,26 @@ data class FakeStorage<SR : StorableResource>(
     override fun deepCopy() = copy()
 }
 
-inline fun <reified SR : StorableResource> User.givenFakeStorage(amount: Z) =
-    FakeStorage(
-        storableResourceClass = SR::class,
-        storageAmount = amount
-    ).also { add(it, disableCheck = true) }
-
-
-interface ResourceProductionModifierEntity : Entity, GlobalResourceProductionModifier
+inline fun <reified SR : StorableResource> User.givenFakeStorage(amount: Z) = FakeStorage(
+    storableResourceClass = SR::class, storageAmount = amount
+).also { add(it, disableCheck = true) }
 
 // need concrete classes (no abstract/lambda) to identify in User.enable/find
 
-class ResourceProductionMultiplierStub(handlingResource: KClass<out Resource>, multiplier: Double) :
-    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+class ResourceProductionBonusEntityStub(handlingResource: KClass<out Resource>, bonus: Percent) :
+    AbstractResourceProductionBonusEntity(handlingResource, bonus)
 
-class ResourceProductionMultiplierStub1(handlingResource: KClass<out Resource>, multiplier: Double) :
-    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+class ResourceProductionBonusEntityStub1(handlingResource: KClass<out Resource>, bonus: Percent) :
+    AbstractResourceProductionBonusEntity(handlingResource, bonus)
 
-class ResourceProductionMultiplierStub2(handlingResource: KClass<out Resource>, multiplier: Double) :
-    AbstractResourceProductionMultiplierStub(handlingResource, multiplier)
+class ResourceProductionBonusEntityStub2(handlingResource: KClass<out Resource>, bonus: Percent) :
+    AbstractResourceProductionBonusEntity(handlingResource, bonus)
 
-abstract class AbstractResourceProductionMultiplierStub(
-    handlingResource: KClass<out Resource>,
-    multiplier: Double
-) : AbstractResourceProductionModifierStub(
-    handlingResource = handlingResource,
-    modifier = { source -> (source.value.toDouble() * multiplier).toLong().zz },
-)
-
-abstract class AbstractResourceProductionModifierStub(
+abstract class AbstractResourceProductionBonusEntity(
     override val handlingResource: KClass<out Resource>,
-    private val modifier: User.(Zz) -> Zz,
-) : ResourceProductionModifierEntity {
+    private val bonus: Percent,
+) : Entity, GlobalResourceProductionBonus {
     override val labelSingular: String get() = this::class.simpleName!!
-    override fun modifyAmount(user: User, source: Zz) = user.modifier(source)
+    override fun productionBonus(user: User) = bonus
     override fun deepCopy() = this
 }
