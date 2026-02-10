@@ -1,6 +1,6 @@
 # Tech Ideas
 
-* refactor Entity :HasLabel (not :HasLabels). only Ownable have :HasLabels.
+* kotlin poet to generate resource declarations
 * refactor HappeningDescriptor; so can&build is enforced by design (not runtime require check)
 * macos app signing
 * Use @OptIn annotation for "secret API"
@@ -45,6 +45,7 @@ Low:
 
 ## UI
 
+* ad text engine, be able to enter numbers (also freetext maybe?)
 * replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
     * events/interactions make sounds (happening, etc...) for better feedback
 * make magnituded number from "1k" to "1.2k"
