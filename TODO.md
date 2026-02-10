@@ -9,7 +9,6 @@
     * of tech (logical); right now "irrigation" puts itself on top (weird)
 * IT: detekt file max lines
 * IT: refactor HasLabels, HasEmoji... shizzle; see: Entity
-* IT: koin test missing bean
 
 ## Backlog
 

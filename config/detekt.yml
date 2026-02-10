@@ -50,47 +50,39 @@ output-reports:
     - 'MdOutputReport'
   # - 'SarifOutputReport'
 
-comments:
-  active: true
-  AbsentOrWrongFileLicense:
+
+formatting:
+  ParameterListWrapping:
     active: false
-  CommentOverPrivateFunction:
+  ArgumentListWrapping:
     active: false
-  CommentOverPrivateProperty:
+  Filename:
     active: false
-  DeprecatedBlockTag:
-    active: false
-  EndOfSentenceFormat:
-    active: false
-    endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
-  KDocReferencesNonPublicProperty:
-    active: false
-  OutdatedDocumentation:
-    active: false
-  UndocumentedPublicClass:
-    active: false
-  UndocumentedPublicFunction:
-    active: false
-  UndocumentedPublicProperty:
-    active: false
+
+
+coroutines:
+  active: false
+
+# COMPLEXITY
+# ======================================================================
 
 complexity:
   active: true
   CognitiveComplexMethod:
     active: true
-    threshold: 15
+    threshold: 12
   ComplexCondition:
     active: true
-    threshold: 4
+    threshold: 3
   ComplexInterface:
     active: true
-    threshold: 10
+    threshold: 8
     includeStaticDeclarations: true
     includePrivateDeclarations: true
     ignoreOverloaded: false
   CyclomaticComplexMethod:
     active: true
-    threshold: 15
+    threshold: 12
     ignoreSingleWhenExpression: false
     ignoreSimpleWhenEntries: false
     ignoreNestingFunctions: false
@@ -109,10 +101,10 @@ complexity:
     ignoredLabels: [ ]
   LargeClass:
     active: true
-    threshold: 400
+    threshold: 80
   LongMethod:
     active: true
-    threshold: 50
+    threshold: 10
   LongParameterList:
     active: true
     functionThreshold: 5
@@ -122,14 +114,12 @@ complexity:
     ignoreAnnotatedParameter: [ ]
   MethodOverloading:
     active: true
-    threshold: 5
+    threshold: 4
   NamedArguments:
     active: false
-    threshold: 3
-    ignoreArgumentsMatchingNames: false
   NestedBlockDepth:
     active: true
-    threshold: 4
+    threshold: 3
   NestedScopeFunctions:
     active: true
     threshold: 2
@@ -143,50 +133,31 @@ complexity:
     active: false
   StringLiteralDuplication:
     active: false
-    excludes: [ '**/test/**','**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    excludes: [ '**/test/**' ]
     threshold: 3
     ignoreAnnotation: true
     excludeStringsWithLessThan5Characters: true
     ignoreStringsRegex: '$^'
   TooManyFunctions:
     active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    thresholdInFiles: 11
-    thresholdInClasses: 11
-    thresholdInInterfaces: 11
-    thresholdInObjects: 11
-    thresholdInEnums: 11
+    excludes: [ '**/test/**' ]
+    thresholdInFiles: 8
+    thresholdInClasses: 5
+    thresholdInInterfaces: 5
+    thresholdInObjects: 5
+    thresholdInEnums: 4
     ignoreDeprecated: false
     ignorePrivate: false
     ignoreOverridden: false
     ignoreAnnotatedFunctions: [ ]
 
-coroutines:
-  active: true
-  GlobalCoroutineUsage:
-    active: false
-  InjectDispatcher:
-    active: true
-    dispatcherNames:
-      - 'IO'
-      - 'Default'
-      - 'Unconfined'
-  RedundantSuspendModifier:
-    active: true
-  SleepInsteadOfDelay:
-    active: true
-  SuspendFunSwallowedCancellation:
-    active: false
-  SuspendFunWithCoroutineScopeReceiver:
-    active: false
-  SuspendFunWithFlowReturnType:
-    active: true
+# EMPTY BLOCKS
+# ======================================================================
 
 empty-blocks:
   active: true
   EmptyCatchBlock:
     active: true
-    allowedExceptionNameRegex: '_|(ignore|expected).*'
   EmptyClassBlock:
     active: true
   EmptyDefaultConstructor:
@@ -201,7 +172,7 @@ empty-blocks:
     active: true
   EmptyFunctionBlock:
     active: true
-    ignoreOverridden: false
+    ignoreOverridden: true
   EmptyIfBlock:
     active: true
   EmptyInitBlock:
@@ -217,78 +188,8 @@ empty-blocks:
   EmptyWhileBlock:
     active: true
 
-exceptions:
-  active: true
-  ExceptionRaisedInUnexpectedLocation:
-    active: true
-    methodNames:
-      - 'equals'
-      - 'finalize'
-      - 'hashCode'
-      - 'toString'
-  InstanceOfCheckForException:
-    active: true
-    excludes: [ '**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/androidUnitTest/**', '**/androidInstrumentedTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  NotImplementedDeclaration:
-    active: false
-  ObjectExtendsThrowable:
-    active: false
-  PrintStackTrace:
-    active: true
-  RethrowCaughtException:
-    active: true
-  ReturnFromFinally:
-    active: true
-    ignoreLabeled: false
-  SwallowedException:
-    active: true
-    ignoredExceptionTypes:
-      - 'InterruptedException'
-      - 'MalformedURLException'
-      - 'NumberFormatException'
-      - 'ParseException'
-    allowedExceptionNameRegex: '_|(ignore|expected).*'
-  ThrowingExceptionFromFinally:
-    active: true
-  ThrowingExceptionInMain:
-    active: false
-  ThrowingExceptionsWithoutMessageOrCause:
-    active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-    exceptions:
-      - 'ArrayIndexOutOfBoundsException'
-      - 'Exception'
-      - 'IllegalArgumentException'
-      - 'IllegalMonitorStateException'
-      - 'IllegalStateException'
-      - 'IndexOutOfBoundsException'
-      - 'NullPointerException'
-      - 'RuntimeException'
-      - 'Throwable'
-  ThrowingNewInstanceOfSameException:
-    active: true
-  TooGenericExceptionCaught:
-    active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**' ]
-    exceptionNames:
-      - 'ArrayIndexOutOfBoundsException'
-      - 'Error'
-      - 'Exception'
-      - 'IllegalMonitorStateException'
-      - 'IllegalArgumentException'
-      - 'IndexOutOfBoundsException'
-      - 'NullPointerException'
-      - 'RuntimeException'
-      - 'Throwable'
-    allowedExceptionNameRegex: '_|(ignore|expected).*'
-  TooGenericExceptionThrown:
-    active: true
-    exceptionNames:
-      - 'Error'
-      - 'Exception'
-      - 'RuntimeException'
-      - 'Throwable'
-      - 'IllegalArgumentException'
+# NAMING
+# ======================================================================
 
 naming:
   active: true
@@ -369,23 +270,35 @@ naming:
     privateVariablePattern: '(_)?[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
 
-performance:
+# COMMENTS
+# ======================================================================
+
+comments:
   active: true
-  ArrayPrimitive:
-    active: true
-  CouldBeSequence:
-    active: true
-    threshold: 3
-  ForEachOnRange:
-    active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  SpreadOperator:
-    active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
-  UnnecessaryPartOfBinaryExpression:
-    active: true
-  UnnecessaryTemporaryInstantiation:
-    active: true
+  AbsentOrWrongFileLicense:
+    active: false
+  CommentOverPrivateFunction:
+    active: false
+  CommentOverPrivateProperty:
+    active: false
+  DeprecatedBlockTag:
+    active: false
+  EndOfSentenceFormat:
+    active: false
+    endOfSentenceFormat: '([.?!][ \t\n\r\f<])|([.?!:]$)'
+  KDocReferencesNonPublicProperty:
+    active: false
+  OutdatedDocumentation:
+    active: false
+  UndocumentedPublicClass:
+    active: false
+  UndocumentedPublicFunction:
+    active: false
+  UndocumentedPublicProperty:
+    active: false
+
+# BUGS
+# ======================================================================
 
 potential-bugs:
   active: true
@@ -454,7 +367,7 @@ potential-bugs:
     active: true
   LateinitUsage:
     active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    excludes: [ '**/test/**' ]
     ignoreOnClassesPattern: ''
   MapGetWithNotNullAssertionOperator:
     active: true
@@ -481,7 +394,7 @@ potential-bugs:
     active: true
   UnsafeCallOnNullableType:
     active: true
-    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    excludes: [ '**/test/**' ]
   UnsafeCast:
     active: true
   UnusedUnaryOperator:
@@ -490,6 +403,9 @@ potential-bugs:
     active: true
   WrongEqualsTypeParameter:
     active: true
+
+# STYLE
+# ======================================================================
 
 style:
   active: true
@@ -772,10 +688,98 @@ style:
     excludeImports:
       - 'java.util.*'
 
-formatting:
-  ParameterListWrapping:
+# EXCEPTIONS
+# ======================================================================
+exceptions:
+  active: true
+  ExceptionRaisedInUnexpectedLocation:
+    active: true
+    methodNames:
+      - 'equals'
+      - 'finalize'
+      - 'hashCode'
+      - 'toString'
+  InstanceOfCheckForException:
+    active: true
+    excludes: [ '**/test/**' ]
+  NotImplementedDeclaration:
     active: false
-  ArgumentListWrapping:
+  ObjectExtendsThrowable:
     active: false
-  Filename:
+  PrintStackTrace:
+    active: true
+  RethrowCaughtException:
+    active: true
+  ReturnFromFinally:
+    active: true
+    ignoreLabeled: false
+  SwallowedException:
+    active: true
+    ignoredExceptionTypes:
+      - 'InterruptedException'
+      - 'MalformedURLException'
+      - 'NumberFormatException'
+      - 'ParseException'
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+  ThrowingExceptionFromFinally:
+    active: true
+  ThrowingExceptionInMain:
     active: false
+  ThrowingExceptionsWithoutMessageOrCause:
+    active: true
+    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**' ]
+    exceptions:
+      - 'ArrayIndexOutOfBoundsException'
+      - 'Exception'
+      - 'IllegalArgumentException'
+      - 'IllegalMonitorStateException'
+      - 'IllegalStateException'
+      - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
+      - 'RuntimeException'
+      - 'Throwable'
+  ThrowingNewInstanceOfSameException:
+    active: true
+  TooGenericExceptionCaught:
+    active: true
+    excludes: [ '**/test/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**' ]
+    exceptionNames:
+      - 'ArrayIndexOutOfBoundsException'
+      - 'Error'
+      - 'Exception'
+      - 'IllegalMonitorStateException'
+      - 'IllegalArgumentException'
+      - 'IndexOutOfBoundsException'
+      - 'NullPointerException'
+      - 'RuntimeException'
+      - 'Throwable'
+    allowedExceptionNameRegex: '_|(ignore|expected).*'
+  TooGenericExceptionThrown:
+    active: true
+    exceptionNames:
+      - 'Error'
+      - 'Exception'
+      - 'RuntimeException'
+      - 'Throwable'
+      - 'IllegalArgumentException'
+
+# PERFORMANCE
+# ======================================================================
+
+performance:
+  active: true
+  ArrayPrimitive:
+    active: true
+  CouldBeSequence:
+    active: true
+    threshold: 3
+  ForEachOnRange:
+    active: true
+    excludes: [ '**/test/**' ]
+  SpreadOperator:
+    active: true
+    excludes: [ '**/test/**' ]
+  UnnecessaryPartOfBinaryExpression:
+    active: true
+  UnnecessaryTemporaryInstantiation:
+    active: true

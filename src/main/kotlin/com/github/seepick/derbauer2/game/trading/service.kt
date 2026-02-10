@@ -29,7 +29,7 @@ class TradingService(
     fun trade(option: TradeCompoundRequest) =
         trade(option.toSingleRequests())
 
-    fun trade(requests: List<TradeSingleRequest>): TxResult {
+    fun trade(requests: List<TradeSingleRequest>): TxResult { // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
         log.info { "${Emoji.`trade 💸`} trading for: $requests" }
         return user.execTx(requests.map { it.toTxOwnable() })
             .ifIsSuccess {
@@ -37,12 +37,13 @@ class TradingService(
             }
     }
 
-    fun buildOptions() = TradeCompoundRequests(buildList {
-        addAll(buildFoodOptions())
-        if (user.hasFeature(TradeLandFeature::class)) {
-            addAll(buildLandOptions())
-        }
-    })
+    fun buildOptions() =
+        TradeCompoundRequests(buildList {
+            addAll(buildFoodOptions())
+            if (user.hasFeature(TradeLandFeature::class)) {
+                addAll(buildLandOptions())
+            }
+        })
 
     private fun buildFoodOptions(): List<TradeCompoundRequest> {
         val foodTradeAmount = if (user.hasFeature(FoodMerchantFeature::class))
