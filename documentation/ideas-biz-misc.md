@@ -1,5 +1,6 @@
 # Misc Business Ideas
 
+* use "theme color changing" functionality to indicate epoches/ages; a major shift; maybe emojis/ascii/texts/... too?
 * ! find derbauer2 original commodore game; look through inspirations
 * new functionality "special actions", like organzing festival (+x happiness)
 * increase designators (title, city) based on "some criteria"

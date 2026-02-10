@@ -4,7 +4,7 @@ import com.github.seepick.derbauer2.game.core.Warning
 import com.github.seepick.derbauer2.game.core.WarningBus
 import com.github.seepick.derbauer2.game.transaction.TxResult
 
-/** Glue-code between view (UI/Beeper) and logic (InteractionResult). */
+/** Glue-code between view (UI/Beeper) and logic (TxResult) via WarningBus. */
 class TxResultHandler(
     private val warningBus: WarningBus,
 ) {

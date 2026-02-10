@@ -88,9 +88,11 @@ class TradePromptBuilder(
         target: Pair<KClass<out Resource>, Z>,
         vararg counters: Pair<KClass<out Resource>, Z>,
     ) = SelectOption(
-        label = buildLabel(operation, target, counters), onSelected = {
+        label = buildLabel(operation, target, counters),
+        onSelected = {
             resultHandler.handle(tradingService.trade(buildTradeRequests(operation, target, counters)))
-        })
+        }
+    )
 
     private fun buildLabel(
         operation: TradeOperation,

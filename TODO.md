@@ -17,3 +17,5 @@
 * BZ: ad HappinessDeathPostModifier: look into history, if previous turns also deaths; if so, increase more (with max!)
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * IT: make tech enables Feature
+* IT: registry hack: write test which scans classpath and compares with actual registered ones
+* IT: ad TradePromptBuilder: outsource construction of "logical view on" trading options into TradingService...

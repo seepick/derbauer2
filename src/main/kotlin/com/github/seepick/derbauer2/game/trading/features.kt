@@ -75,6 +75,7 @@ class FoodMerchantFeature(descriptor: Ref = Ref) : Feature(descriptor) {
                 + "You shall be rewarded by even moooooar cheesy, faty, yummy food trading! 💰 🤑 💰",
     ) {
         override fun check(user: User, reports: Reports) =
+            // FIXME check if within one round >=X times food traded && only if that happened >=Y times
             reports.filterAllActionInstanceOf<ResourcesTradedAction>()
                 .sumOf { action ->
                     action.requests.count { trade ->

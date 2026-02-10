@@ -19,6 +19,7 @@ class ProducesResourceTurnStep(val user: User) {
         plainProduction().changes.forEach { change ->
             val modifiers = modifiersByResource[change.resourceClass] ?: emptyList()
             val modifiedAmount = modifiers.fold(change.change) { acc, modifier ->
+                // TODO no, don't chain modifiers BUT let them all operator on the same base value, sum(calc diffs)
                 modifier.modifyAmount(user, acc)
             }
             add(ResourceChange(change.resourceClass, modifiedAmount))
