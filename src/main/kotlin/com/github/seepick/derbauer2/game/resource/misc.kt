@@ -11,6 +11,8 @@ import com.github.seepick.derbauer2.game.stat.Happiness
 import com.github.seepick.derbauer2.game.stat.findStat
 import com.github.seepick.derbauer2.game.stat.hasStat
 import com.github.seepick.derbauer2.game.view.GameRenderer
+import com.github.seepick.derbauer2.game.view.ViewOrder
+import java.util.concurrent.atomic.AtomicInteger
 import kotlin.reflect.KClass
 
 interface ResourceReference {
@@ -41,3 +43,15 @@ val Emoji.Companion.`land 🌍` get() = landEmoji
 
 private val citizenEmoji = "🙎🏻‍♂️".emoji
 val Emoji.Companion.`citizen 🙎🏻‍♂️` get() = citizenEmoji
+
+val ViewOrder.Companion.Resource get() = ResourceOrder
+
+object ResourceOrder {
+    private val counter = AtomicInteger()
+
+    val Gold = counter.incrementAndGet()
+    val Food = counter.incrementAndGet()
+    val Citizen = counter.incrementAndGet()
+    val Land = counter.incrementAndGet()
+    val Knowledge = counter.incrementAndGet()
+}

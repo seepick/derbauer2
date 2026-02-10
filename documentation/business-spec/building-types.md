@@ -37,7 +37,7 @@ Examples:
 
 Examples:
 
-* Farm
+* Field/Farm
     * +food prod
 * Granary
     * +food cap, +rat protection

@@ -32,7 +32,7 @@ object Mechanics {
     // buildings
     val startingTents = 4.z
     val startingGranaries = 1.z
-    val startingFarms = 1.z
+    val startingFields = 1.z
 
     // BUILDINGS
     // ========================================================================
@@ -41,9 +41,9 @@ object Mechanics {
     val tentLandUse = 1.z
     val tentStoresCitizen = 10
 
-    val farmCostsGold = 120.z
-    val farmProduceFood = 3.z
-    val farmLandUse = 4.z
+    val fieldCostsGold = 120.z
+    val fieldProduceFood = 3.z
+    val fieldLandUse = 4.z
 
     val granaryCostsGold = 60.z
     val granaryCapacity = 80.z

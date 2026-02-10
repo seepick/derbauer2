@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.building.Farm
+import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.z
@@ -24,13 +24,13 @@ class FoodEatProduceDslTest : DslTest, FunSpec() {
         test("Given almost full When food production and eating Then combined calculation") {
             val citizenCount = Mechanics.citizenEatAmount.neededToGetTo(1) // 10 citizens will eat 1 food
             val tentCount = 10.z // could check for tent-citizen-storage to compute tent count dynamically...
-            val farmCount = 1.z
+            val fieldCount = 1.z
             val granaryCount = 1.z
             Given {
                 setOwned<Gold>(0.z)
                 setOwned<Land>(0.z)
                 val food = setOwned<Food>(0.z)
-                setOwned<Farm>(farmCount)
+                setOwned<Field>(fieldCount)
                 setOwned<Tent>(tentCount)
                 setOwned<Granary>(granaryCount)
                 setOwned<Land>(user.totalLandUse)

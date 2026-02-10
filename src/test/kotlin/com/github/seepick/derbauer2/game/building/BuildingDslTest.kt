@@ -44,22 +44,22 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                     shouldOwn<Gold>(1.z) // untouched
                 }
             }
-            it("Given almost not enough land When build exceeding farm Then building fails") {
-                val insufficientLand = Mechanics.farmLandUse - 1.z
-                val sufficientGold = Mechanics.farmCostsGold
+            it("Given almost not enough land When build exceeding field Then building fails") {
+                val insufficientLand = Mechanics.fieldLandUse - 1.z
+                val sufficientGold = Mechanics.fieldCostsGold
                 Given {
                     setOwned<Gold>(sufficientGold)
                     setOwned<Land>(insufficientLand)
-                    setOwned<Farm>(0.z)
+                    setOwned<Field>(0.z)
                 } When {
                     selectBuild {
-                        build<Farm>()
+                        build<Field>()
                     }
                 } Then {
                     shouldHaveRaisedWarningOfType(WarningType.LAND_OVERUSE)
                     shouldOwn<Gold>(sufficientGold) // untouched
                     shouldOwn<Land>(insufficientLand) // untouched
-                    shouldOwn<Farm>(0.z) // untouched
+                    shouldOwn<Field>(0.z) // untouched
                 }
             }
         }

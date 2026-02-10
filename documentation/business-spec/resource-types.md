@@ -39,7 +39,7 @@
 ## Food
 
 * eaten by citizens
-* produced by farms
+* produced by fields/farms
 * capacity via storage buildings (granary)
 * IDEA: more food types: meat, fish, apples
 

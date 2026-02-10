@@ -12,6 +12,7 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.game.view.SecondaryBackButton
 import com.github.seepick.derbauer2.game.view.TxResultHandler
+import com.github.seepick.derbauer2.game.view.ViewOrder
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
@@ -19,6 +20,7 @@ import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
 import com.github.seepick.derbauer2.textengine.textmap.multiLine
+import java.util.concurrent.atomic.AtomicInteger
 
 @Suppress("LongParameterList") // it's ok ;)
 class TechPage(
@@ -71,3 +73,13 @@ private fun TechRef.toSelectOption(
         }), onSelected = {
         resultHandler.handle(techService.researchTech(this))
     })
+
+val ViewOrder.Companion.Tech get() = TechOrder
+
+object TechOrder {
+    private val counter = AtomicInteger()
+
+    val Agriculture = counter.incrementAndGet()
+    val Irrigation = counter.incrementAndGet()
+    val Capitalism = counter.incrementAndGet()
+}

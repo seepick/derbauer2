@@ -33,10 +33,10 @@ class BuildingUiTest : ComposeUiTest {
     }
 
     @Test
-    fun `When build many farms Then fail`() = uiTest { ctx ->
+    fun `When build many fields Then fail`() = uiTest { ctx ->
         pressKey(gameText.keyForSelectOption("build"))
         repeat(3) {
-            pressKey(gameText.keyForSelectOption("farm"))
+            pressKey(gameText.keyForSelectOption("field"))
         }
 
         ui.mainClock.advanceTimeBy(500L)

@@ -35,7 +35,7 @@ class AgricultureTech : Tech, TechData by Data, GlobalResourceProductionBonus {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = AgricultureTech::class
-        override val viewOrder = ViewOrder.TechOrder.Agriculture
+        override val viewOrder = ViewOrder.Tech.Agriculture
     }
 }
 
@@ -56,7 +56,7 @@ class IrrigationTech : Tech, TechData by Data, GlobalResourceProductionBonus {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = IrrigationTech::class
-        override val viewOrder = ViewOrder.TechOrder.Irrigation
+        override val viewOrder = ViewOrder.Tech.Irrigation
     }
 
 }
@@ -84,6 +84,6 @@ class CapitalismTech : Tech, TechData by Data, PreStatModifier {
 
     object Ref : AbstractTechRef(data = Data) {
         override val techClass = CapitalismTech::class
-        override val viewOrder = ViewOrder.TechOrder.Capitalism
+        override val viewOrder = ViewOrder.Tech.Capitalism
     }
 }

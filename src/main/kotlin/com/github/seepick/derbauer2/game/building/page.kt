@@ -11,12 +11,14 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import com.github.seepick.derbauer2.game.view.PromptGamePage
 import com.github.seepick.derbauer2.game.view.SecondaryBackButton
 import com.github.seepick.derbauer2.game.view.TxResultHandler
+import com.github.seepick.derbauer2.game.view.ViewOrder
 import com.github.seepick.derbauer2.textengine.CurrentPage
 import com.github.seepick.derbauer2.textengine.prompt.EmptyPagePromptProvider
 import com.github.seepick.derbauer2.textengine.prompt.OptionLabel
 import com.github.seepick.derbauer2.textengine.prompt.Options
 import com.github.seepick.derbauer2.textengine.prompt.SelectOption
 import com.github.seepick.derbauer2.textengine.prompt.SelectPrompt
+import java.util.concurrent.atomic.AtomicInteger
 
 @Suppress("LongParameterList") // it's okay ;)
 class BuildingPage(
@@ -31,7 +33,7 @@ class BuildingPage(
             EmptyPagePromptProvider("Not a single thing to build, pah ☹️")
         } else {
             SelectPrompt(
-                options = Options.Tabled(user.buildings.map { building ->
+                options = Options.Tabled(user.buildings.sortedBy { it.viewOrder }.map { building ->
                     SelectOption(
                         label = OptionLabel.Table(
                             listOf(
@@ -59,3 +61,15 @@ class BuildingPage(
     ), contentRenderer = { textmap ->
         textmap.line(Texts.buildPage)
     })
+
+val ViewOrder.Companion.Building get() = BuildingOrder
+
+object BuildingOrder {
+    private val counter = AtomicInteger()
+
+    val Tent = counter.incrementAndGet()
+    val Field = counter.incrementAndGet()
+    val Granary = counter.incrementAndGet()
+    val Theater = counter.incrementAndGet()
+    val School = counter.incrementAndGet()
+}

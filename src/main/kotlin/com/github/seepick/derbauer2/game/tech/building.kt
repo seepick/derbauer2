@@ -8,10 +8,12 @@ import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
 import com.github.seepick.derbauer2.game.resource.Knowledge
 import com.github.seepick.derbauer2.game.resource.ProducesResource
+import com.github.seepick.derbauer2.game.view.ViewOrder
 
-class School : Building, ProducesResource, HasLabels by Data {
-    object Data : HasLabels {
+class School : Building, ProducesResource, HasLabels by Data, ViewOrder by Data {
+    object Data : HasLabels, ViewOrder {
         override val labelSingular = "School"
+        override val viewOrder = ViewOrder.Building.School
     }
 
     override var _setOwnedInternal: Z = 0.z

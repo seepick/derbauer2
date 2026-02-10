@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.building.Farm
+import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
@@ -26,12 +26,12 @@ class LandExtensionsTest : DescribeSpec({
         }
         it("Given two buildings and enough land Then both occupy all") {
             val tent = Tent()
-            val farm = Farm()
-            user.addResource(Land(), tent.landUse + farm.landUse)
+            val field = Field()
+            user.addResource(Land(), tent.landUse + field.landUse)
             user.addBuilding(tent, 1.z)
-            user.addBuilding(farm, 1.z)
+            user.addBuilding(field, 1.z)
 
-            user.totalLandUse shouldBe tent.landUse + farm.landUse
+            user.totalLandUse shouldBe tent.landUse + field.landUse
             user.landAvailable shouldBeEqual 0.z
         }
     }

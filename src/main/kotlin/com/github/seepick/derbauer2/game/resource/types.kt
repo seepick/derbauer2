@@ -19,7 +19,7 @@ class Citizen : StorableResource, HasLabels by Data, HasEmoji by Data, ViewOrder
     object Data : HasLabels, HasEmoji, ViewOrder {
         override val labelSingular = "Citizen"
         override val emoji = Emoji.`citizen 🙎🏻‍♂️`
-        override val viewOrder = ViewOrder.ResourceOrder.Citizen
+        override val viewOrder = ViewOrder.Resource.Citizen
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -32,7 +32,7 @@ class Gold : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
         override val labelSingular = "Gold"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`gold 💰`
-        override val viewOrder = ViewOrder.ResourceOrder.Gold
+        override val viewOrder = ViewOrder.Resource.Gold
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -45,7 +45,7 @@ class Food : StorableResource, HasLabels by Data, HasEmoji by Data, ViewOrder by
         override val labelSingular = "Food"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`food 🍖`
-        override val viewOrder = ViewOrder.ResourceOrder.Food
+        override val viewOrder = ViewOrder.Resource.Food
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -58,7 +58,7 @@ class Land : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Data {
         override val labelSingular = "Land"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`land 🌍`
-        override val viewOrder = ViewOrder.ResourceOrder.Land
+        override val viewOrder = ViewOrder.Resource.Land
     }
 
     override var _setOwnedInternal: Z = 0.z
@@ -71,7 +71,7 @@ class Knowledge : Resource, HasLabels by Data, HasEmoji by Data, ViewOrder by Da
         override val labelSingular = "Knowledge"
         override val labelPlural = labelSingular
         override val emoji = Emoji.`knowledge 🧪`
-        override val viewOrder = ViewOrder.ResourceOrder.Knowledge
+        override val viewOrder = ViewOrder.Resource.Knowledge
     }
 
     override var _setOwnedInternal: Z = 0.z

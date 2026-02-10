@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.Building
-import com.github.seepick.derbauer2.game.building.Farm
+import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.Zz
@@ -49,6 +49,6 @@ private fun createInitAssets(): List<Pair<Asset, Zz>> = listOf(
     Pair(Tent(), Mechanics.startingTents.zz),
     Pair(Citizen(), Mechanics.startingCitizens.zz),
     Pair(Granary(), Mechanics.startingGranaries.zz),
-    Pair(Farm(), Mechanics.startingFarms.zz),
+    Pair(Field(), Mechanics.startingFields.zz),
     Pair(Food(), Mechanics.startingFood.zz)
 )

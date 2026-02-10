@@ -7,10 +7,12 @@ import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.simpleNameEmojied
+import com.github.seepick.derbauer2.game.view.ViewOrder
 
-class Theater : Building, PreStatModifier, HasLabels by Data {
-    object Data : HasLabels {
+class Theater : Building, PreStatModifier, HasLabels by Data, ViewOrder by Data {
+    object Data : HasLabels, ViewOrder {
         override val labelSingular = "Theater"
+        override val viewOrder = ViewOrder.Building.Theater
     }
 
     override var _setOwnedInternal: Z = 0.z

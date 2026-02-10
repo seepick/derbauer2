@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game
 
-import com.github.seepick.derbauer2.game.building.Farm
+import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -19,11 +19,11 @@ import kotlin.math.ceil
 class GameDslTest : DslTest, StringSpec() {
     init {
         installDslExtension()
-        "Given many 🙎🏻‍♂️ and no 🍖 but 1 farm When next turn Then some starve ☠️ despite 1 farm" {
-            // 10% eat; farm +3 food; 31 citizens -> 1 starves
+        "Given many 🙎🏻‍♂️ and no 🍖 but 1 field When next turn Then some starve ☠️ despite 1 field" {
+            // 10% eat; field +3 food; 31 citizens -> 1 starves
             val givenCitizen = 31.z
             val givenFood = 0.z
-            val givenFarm = 1.z
+            val givenFields = 1.z
             val expectedCitizen = givenCitizen - 1.z
             val expectedFood = 0.z
             Given(initAssets = true) {
@@ -31,7 +31,7 @@ class GameDslTest : DslTest, StringSpec() {
                 setOwned<Tent>(ceil(givenCitizen.value.toDouble() / Mechanics.tentStoresCitizen.toDouble()).z)
                 setOwned<Citizen>(givenCitizen)
                 setOwned<Food>(givenFood)
-                setOwned<Farm>(givenFarm)
+                setOwned<Field>(givenFields)
             } When {
                 nextTurnToReport()
             } Then {

@@ -15,9 +15,9 @@
 * IDEA: concept of heroes
 * IDEA: give free stuff/money to army; increase morale => better performance
 
-### Examples
+### Army Types
 
-* "angry farmer": cheap, weak; when being attacked and no more army left; if all die -> game over
+* "angry farmer": weakest (see info below)
 * soldier: basic unit (barracks)
 * knight: +att, +att against wildlings (stable)
 * archer: +def (archery)
@@ -27,7 +27,6 @@
 * wizard
 * arch mage
 * scout: is a (non-army) military unit; to see when the next attack is approaching
-* AngryFarmer: if run out of armies, people will fight
 
 ## Warfare
 
@@ -67,5 +66,6 @@
 * lose:
     * armies, obviously
     * citizens will fight ("angry farmer"), if no more armies left
+        * if all die -> game over
     * resources and even buildings (destroyed); watch out: if lose land, not overuse capacity
 * game over if no more citizens

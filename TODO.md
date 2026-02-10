@@ -4,7 +4,6 @@
 
 ## 1.3.0
 
-* rename farm -> field
 * BZ: interactive happening; being asked Y/N; randomness of the outcome (success; damage; intensity)
 * UX: remember window position
 * UX: disable being able trading 0
