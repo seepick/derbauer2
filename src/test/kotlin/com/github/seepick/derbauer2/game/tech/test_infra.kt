@@ -30,14 +30,13 @@ fun newTechItem(
     override val requirements = requirements
     override val costs = costs
     override val techClass = techClass
+    override val viewOrder = 99
 
-    override fun buildTech(): Tech {
-        return object : Tech {
-            override val label = label
-            override val description = "description"
-            override val requirements = requirements
-            override val costs = costs
-            override fun deepCopy() = this
-        }
+    override fun buildTech() = object : Tech {
+        override val label = label
+        override val description = "description"
+        override val requirements = requirements
+        override val costs = costs
+        override fun deepCopy() = this
     }
 }

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
 import com.github.seepick.derbauer2.game.building.Farm
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
@@ -16,22 +16,22 @@ class LandExtensionsTest : DescribeSpec({
     }
 
     describe("land use") {
-        it("Given a house and enough land Then house occupies all") {
-            val house = House()
-            user.addResource(Land(), house.landUse)
-            user.addBuilding(house, 1.z)
+        it("Given a tent and enough land Then tent occupies all") {
+            val tent = Tent()
+            user.addResource(Land(), tent.landUse)
+            user.addBuilding(tent, 1.z)
 
-            user.totalLandUse shouldBe house.landUse
+            user.totalLandUse shouldBe tent.landUse
             user.landAvailable shouldBeEqual 0.z
         }
         it("Given two buildings and enough land Then both occupy all") {
-            val house = House()
+            val tent = Tent()
             val farm = Farm()
-            user.addResource(Land(), house.landUse + farm.landUse)
-            user.addBuilding(house, 1.z)
+            user.addResource(Land(), tent.landUse + farm.landUse)
+            user.addBuilding(tent, 1.z)
             user.addBuilding(farm, 1.z)
 
-            user.totalLandUse shouldBe house.landUse + farm.landUse
+            user.totalLandUse shouldBe tent.landUse + farm.landUse
             user.landAvailable shouldBeEqual 0.z
         }
     }

@@ -25,7 +25,7 @@ interface DslContext {
         textmap.clear()
         page.invalidate()
         page.render(textmap)
-        log.info { "Page ${page::class.simpleName}: ${textmap.toFullString()}" }
+        log.info { "Page ${page::class.simpleName}:\n${textmap.toFullString()}" }
     }
 }
 

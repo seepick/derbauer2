@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.building.Farm
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -28,7 +28,7 @@ class GameDslTest : DslTest, StringSpec() {
             val expectedFood = 0.z
             Given(initAssets = true) {
                 setOwned<Land>(1000.z)
-                setOwned<House>(ceil(givenCitizen.value.toDouble() / Mechanics.houseStoreCitizen.toDouble()).z)
+                setOwned<Tent>(ceil(givenCitizen.value.toDouble() / Mechanics.tentStoresCitizen.toDouble()).z)
                 setOwned<Citizen>(givenCitizen)
                 setOwned<Food>(givenFood)
                 setOwned<Farm>(givenFarm)

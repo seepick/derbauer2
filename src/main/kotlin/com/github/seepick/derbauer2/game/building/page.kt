@@ -5,7 +5,6 @@ import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.resource.Land
-import com.github.seepick.derbauer2.game.resource.findResource
 import com.github.seepick.derbauer2.game.view.BackButton
 import com.github.seepick.derbauer2.game.view.GameRenderer
 import com.github.seepick.derbauer2.game.view.HomePage
@@ -38,8 +37,8 @@ class BuildingPage(
                             listOf(
                                 "Build ${building.labelSingular}",
                                 // once more generic, use the Resource.ViewOrder to sort properly
-                                "${user.findResource<Gold>().emojiSpaceOrEmpty}${building.costsGold}",
-                                "${user.findResource<Land>().emojiSpaceOrEmpty}${building.landUse}",
+                                "${Gold.Data.emojiSpaceOrEmpty}${building.costsGold}",
+                                "${Land.Data.emojiSpaceOrEmpty}${building.landUse}",
                                 "(${building.owned})",
                             )
                         ),

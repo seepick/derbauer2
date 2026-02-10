@@ -1,7 +1,7 @@
 # Citizen
 
 * synonyms: population, people, peasants, villagers; workers
-* yet another resource, "stored" in houses
+* yet another resource, "stored" in tents&co
 * effects:
     * consume food per turn
         * starve (people die) if no food available

@@ -26,19 +26,19 @@ interface BuildingReference {
     val buildingClass: KClass<out Building>
 }
 
-class House : Building, StoresResource, HasLabels by Data {
+class Tent : Building, StoresResource, HasLabels by Data {
     object Data : HasLabels {
-        override val labelSingular = "House"
+        override val labelSingular = "Tent"
     }
 
     override var _setOwnedInternal: Z = 0.z
-    override val costsGold = Mechanics.houseCostsGold
-    override val landUse = Mechanics.houseLandUse
+    override val costsGold = Mechanics.tentCostsGold
+    override val landUse = Mechanics.tentLandUse
     override val storableResourceClass = Citizen::class
-    override val storageAmount = Mechanics.houseStoreCitizen.z
+    override val storageAmount = Mechanics.tentStoresCitizen.z
 
-    override fun deepCopy() = House().also { it._setOwnedInternal = owned }
-    override fun toString() = "House(owned=$owned)"
+    override fun deepCopy() = Tent().also { it._setOwnedInternal = owned }
+    override fun toString() = "Tent(owned=$owned)"
 }
 
 class Farm : Building, ProducesResource, HasLabels by Data {

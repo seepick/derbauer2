@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.double11
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -25,7 +25,7 @@ class CapitalismDslTest : DslTest, StringSpec() {
             Given {
                 setOwned<Citizen>(citizenOwned.z)
                 setStatD11<Happiness>(initialHappiness)
-                setOwned<House>(ceil(citizenOwned.toDouble() / Mechanics.houseStoreCitizen).toLong().z)
+                setOwned<Tent>(ceil(citizenOwned.toDouble() / Mechanics.tentStoresCitizen).toLong().z)
                 user.add(CapitalismTech())
             } When {
                 nextTurn()

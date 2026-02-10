@@ -19,8 +19,8 @@ very basic possibilities, food is "the thing"
 
 * initial:
     * gold, food, land, citizen
-    * house, farm
-    * goldbag happening
+    * tent, field
+        * goldbag happening
 * run out of food
     * trade food (when -for longer- storage almost full)
     * granary
@@ -35,7 +35,7 @@ very basic possibilities, food is "the thing"
 gold is "the thing"; boost economy
 
 * ... more happenings possible
-* farm upgrade
+* house/farm upgrade
 * romanticism: fugger2 rebirth concept; find wife, give birth, reincarnation (only if religion available and researched)
 * can enter free amount for trading (instead of fixed given)
 * lots of buildings

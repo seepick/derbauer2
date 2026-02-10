@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.resource.Citizen
@@ -23,11 +23,11 @@ class TaxDslTest : DslTest, StringSpec() {
             // ensure sufficient housing + birth
             val citizenCountPlusBabies = citizenCount + citizenCount * Mechanics.citizenBirthRate
             Given {
-                val houseCount = ceil(citizenCountPlusBabies.value.toDouble() / Mechanics.houseStoreCitizen).toInt()
-                val landCount = houseCount * Mechanics.houseLandUse.value
+                val tentCount = ceil(citizenCountPlusBabies.value.toDouble() / Mechanics.tentStoresCitizen).toInt()
+                val landCount = tentCount * Mechanics.tentLandUse.value
                 setOwned<Gold>(givenGold)
                 setOwned<Land>(landCount.z)
-                setOwned<House>(houseCount.z)
+                setOwned<Tent>(tentCount.z)
                 setOwned<Citizen>(citizenCount)
             } When {
                 nextTurnToReport()

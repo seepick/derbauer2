@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import io.kotest.core.spec.style.DescribeSpec
@@ -28,7 +29,7 @@ class ResourceChangeTest : DescribeSpec({
 
             buildResourceChanges {
                 add(Gold::class, 2.z)
-            }.toFormatted() shouldBeEqual "${Gold.Data.emojiOrNull} 2"
+            }.toFormatted() shouldBeEqual "${Emoji.`gold 💰`} 2"
         }
         test("Given two resources Then both rendered") {
             add(Gold())
@@ -37,7 +38,7 @@ class ResourceChangeTest : DescribeSpec({
             buildResourceChanges {
                 add(Gold::class, 2.z)
                 add(Food::class, 3.z)
-            }.toFormatted() shouldBeEqual "${Gold.Data.emojiOrNull} 2, ${Food.Data.emojiOrNull} 3"
+            }.toFormatted() shouldBeEqual "${Emoji.`gold 💰`} 2, ${Emoji.`food 🍖`} 3"
         }
     }
 })

@@ -4,9 +4,8 @@
 
 ## 1.3.0
 
-* IT: registry hack: write test which scans classpath and compares with actual registered ones
+* rename farm -> field
 * BZ: interactive happening; being asked Y/N; randomness of the outcome (success; damage; intensity)
-* rename "house" to "tent"
 * UX: remember window position
 * UX: disable being able trading 0
 * IT: delete Feature.Discriminator

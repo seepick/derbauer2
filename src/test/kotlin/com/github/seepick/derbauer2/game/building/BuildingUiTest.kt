@@ -1,8 +1,9 @@
 package com.github.seepick.derbauer2.game.building
 
 import androidx.compose.ui.test.junit4.createComposeRule
+import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.WarningType
-import com.github.seepick.derbauer2.game.resource.Gold
+import com.github.seepick.derbauer2.game.resource.`gold 💰`
 import com.github.seepick.derbauer2.game.testInfra.pageParser.keyForSelectOption
 import com.github.seepick.derbauer2.game.testInfra.pageParser.readSingleResource
 import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeUiTest
@@ -21,14 +22,14 @@ class BuildingUiTest : ComposeUiTest {
     override val ui = createComposeRule()
 
     @Test
-    fun `When build house Then change assets`() = uiTest {
-        val initialGold = gameText.readSingleResource(Gold.Data.emojiOrNull).owned
+    fun `When build tent Then change assets`() = uiTest {
+        val initialGold = gameText.readSingleResource(Emoji.`gold 💰`).owned
 
         pressKey(gameText.keyForSelectOption("build"))
-        pressKey(gameText.keyForSelectOption("house"))
+        pressKey(gameText.keyForSelectOption("tent"))
 
         ui.mainClock.advanceTimeBy(500L)
-        gameText.readSingleResource(Gold.Data.emojiOrNull).owned shouldBeLessThan initialGold
+        gameText.readSingleResource(Emoji.`gold 💰`).owned shouldBeLessThan initialGold
     }
 
     @Test

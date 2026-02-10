@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.transaction
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.common.zz
@@ -44,9 +44,9 @@ class TransactionTest : DescribeSpec({
 
         it("Given zero land When build Then fail") {
             user.add(Land())
-            user.add(House())
+            user.add(Tent())
 
-            user.execTx(TxOwnable(House::class, 1.zz))
+            user.execTx(TxOwnable(Tent::class, 1.zz))
                 .shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
         it("Given no storage When adding resource Then fail") {

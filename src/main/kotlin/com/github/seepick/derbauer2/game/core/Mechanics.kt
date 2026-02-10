@@ -30,16 +30,16 @@ object Mechanics {
     val startingFood = 30.z
     val startingCitizens = 10.z
     // buildings
-    val startingHouses = 4.z
+    val startingTents = 4.z
     val startingGranaries = 1.z
     val startingFarms = 1.z
 
     // BUILDINGS
     // ========================================================================
 
-    val houseCostsGold = 40.z
-    val houseLandUse = 1.z
-    val houseStoreCitizen = 10
+    val tentCostsGold = 40.z
+    val tentLandUse = 1.z
+    val tentStoresCitizen = 10
 
     val farmCostsGold = 120.z
     val farmProduceFood = 3.z

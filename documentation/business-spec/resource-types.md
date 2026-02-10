@@ -5,7 +5,7 @@
 
 ## People
 
-* needs storage (houses), thus have capacity
+* needs storage (tents&co), thus have capacity
 * if over limit, then lose gradually
 * affected by state happiness: do something "nice" for people
 * produce gold via tax

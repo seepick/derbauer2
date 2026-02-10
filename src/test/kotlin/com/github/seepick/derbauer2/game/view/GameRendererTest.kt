@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.view
 
 import com.github.seepick.derbauer2.game.building.Granary
-import com.github.seepick.derbauer2.game.building.House
+import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
@@ -25,7 +25,7 @@ class GameRendererTest : PageTest, StringSpec({
         renderGamePage({ ctx ->
             ctx.user.addResource(Gold(), 999.z)
             ctx.user.addResource(Land(), 30.z)
-            ctx.user.addBuilding(House(), 1.z)
+            ctx.user.addBuilding(Tent(), 1.z)
             ctx.user.addResource(Citizen(), 1.z)
             ctx.user.addBuilding(Granary(), 1.z)
             ctx.user.addResource(Food(), 3.z)
@@ -38,7 +38,7 @@ class GameRendererTest : PageTest, StringSpec({
             )
         }) {
             fullPage shouldBeEqual """
-                💰 999 | 🍖 3 / 80 | 🌍 3 / 30 | 🙎🏻‍♂️ 1 / 10                                                                🌸  W1 Y1
+                💰️ 999 | 🍖 3 / 80 | 🌍 3 / 30 | 🙎🏻‍♂️ 1 / 10                                                                🌸  W1 Y1
                 ==============================================================================================================
                                                                                                                               
                 pageContent                                                                                                   

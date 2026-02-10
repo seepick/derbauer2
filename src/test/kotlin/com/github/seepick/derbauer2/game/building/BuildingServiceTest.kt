@@ -31,36 +31,36 @@ class BuildingServiceTest : DescribeSpec({
     }
 
     describe("general") {
-        fun User.givenSufficientResourcesForHouse(): House {
-            val house = House()
+        fun User.givenSufficientResourcesForTent(): Tent {
+            val tent = Tent()
             add(Gold())
             add(Land())
-            add(house)
+            add(tent)
             execTx(
-                TxOwnable(Gold::class, house.costsGold.zz),
-                TxOwnable(Land::class, house.landUse.zz),
+                TxOwnable(Gold::class, tent.costsGold.zz),
+                TxOwnable(Land::class, tent.landUse.zz),
             )
-            return house
+            return tent
         }
 
         it("Given enough money and land Then succeed and dispatch action") {
-            val house = user.givenSufficientResourcesForHouse()
+            val tent = user.givenSufficientResourcesForTent()
             every { actionBus.dispatch(any()) } just Runs
 
-            buildingService.build(house::class).shouldBeSuccess()
-            verify { actionBus.dispatch(eq(BuildingBuiltAction(house::class))) }
+            buildingService.build(tent::class).shouldBeSuccess()
+            verify { actionBus.dispatch(eq(BuildingBuiltAction(tent::class))) }
         }
         it("Given not enough money Then fail") {
-            val house = user.givenSufficientResourcesForHouse()
-            user.findResource(Gold::class).ownedForTest = house.costsGold - 1
+            val tent = user.givenSufficientResourcesForTent()
+            user.findResource(Gold::class).ownedForTest = tent.costsGold - 1
 
-            buildingService.build(house::class).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
+            buildingService.build(tent::class).shouldBeInstanceOf<TxResult.Fail.InsufficientResources>()
         }
         it("Given not enough land Then fail") {
-            val house = user.givenSufficientResourcesForHouse()
+            val tent = user.givenSufficientResourcesForTent()
             user.findResource(Land::class).ownedForTest = 0.z
 
-            buildingService.build(house::class).shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
+            buildingService.build(tent::class).shouldBeInstanceOf<TxResult.Fail.LandOveruse>()
         }
     }
 })

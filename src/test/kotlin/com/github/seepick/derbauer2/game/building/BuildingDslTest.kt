@@ -16,31 +16,31 @@ class BuildingDslTest : DslTest, DescribeSpec() {
     init {
         installDslExtension()
         describe("When build simple building") {
-            it("Given sufficient gold Then owned houses increases And action dispatched") {
+            it("Given sufficient gold Then owned tents increases And action dispatched") {
                 Given {
-                    setOwned<House>(0.z)
-                    setOwned<Gold>(Mechanics.houseCostsGold)
+                    setOwned<Tent>(0.z)
+                    setOwned<Gold>(Mechanics.tentCostsGold)
                     // without Land, engine doesn't check for it (sweet side-effect of dynamics ;)
                 } When {
                     selectBuild {
-                        build(House::class)
+                        build(Tent::class)
                     }
                 } Then {
-                    shouldOwn<House>(1.z)
-                    shouldActionDispatched(BuildingBuiltAction(House::class))
+                    shouldOwn<Tent>(1.z)
+                    shouldActionDispatched(BuildingBuiltAction(Tent::class))
                 }
             }
             it("Given insufficient gold Then building fails") {
                 Given {
-                    setOwned<House>(0.z)
+                    setOwned<Tent>(0.z)
                     setOwned<Gold>(1.z)
                 } When {
                     selectBuild {
-                        build<House>()
+                        build<Tent>()
                     }
                 } Then {
                     shouldHaveRaisedWarningOfType(WarningType.INSUFFICIENT_RESOURCES)
-                    shouldOwn<House>(0.z) // untouched
+                    shouldOwn<Tent>(0.z) // untouched
                     shouldOwn<Gold>(1.z) // untouched
                 }
             }

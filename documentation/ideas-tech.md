@@ -29,6 +29,7 @@ Low:
 * introduce buildSrc (try again ;) version toml buildSrc shizzle...
 * provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 * version check plugin manes: compose macos 1.9.0 gets through and warned about; disable check
+* classpath scan to counter registry hack; write test; scan and compare with actual registered ones
 
 ## Test
 

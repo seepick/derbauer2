@@ -100,6 +100,7 @@ private object SelfData : TechData {
 private object SelfReferenceRef : TechRef, TechData by SelfData {
     override val techClass = TestTech::class
     override fun buildTech() = SelfTech()
+    override val viewOrder = 100
 }
 
 private class SelfTech : Tech, TechData by SelfData {
@@ -116,6 +117,7 @@ private object Cycle1Data : TechData {
 private object Cycle1Ref : TechRef, TechData by Cycle1Data {
     override val techClass = TestTech1::class
     override fun buildTech() = Cycle1Tech()
+    override val viewOrder = 10
 }
 
 private class Cycle1Tech : Tech, TechData by Cycle1Data {
@@ -132,6 +134,7 @@ private object Cycle2Data : TechData {
 private object Cycle2Ref : TechRef, TechData by Cycle2Data {
     override val techClass = TestTech2::class
     override fun buildTech() = Cycle2Tech()
+    override val viewOrder = 20
 }
 
 private class Cycle2Tech : Tech, TechData by Cycle2Data {

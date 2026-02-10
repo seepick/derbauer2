@@ -16,15 +16,15 @@ class BuildingPageTest : PageTest, StringSpec({
 
     "Given some Then check content" {
         renderGamePage({ ctx ->
-            ctx.user.add(House())
+            ctx.user.add(Tent())
             ctx.user.add(Farm())
             ctx.buildBuildingsPage()
         }) {
             contentString shouldBeEqual """
                 ${Texts.buildPage}
                 
-                [1] Build House 💰 40  🌍 1 (0)
-                [2] Build Farm  💰 120 🌍 4 (0)
+                [1] Build Tent 💰️ 40  🌍 1 (0)
+                [2] Build Farm 💰️ 120 🌍 4 (0)
                 """.trimIndent()
         }
     }
