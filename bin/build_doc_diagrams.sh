@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ensure CWD is project root
-CWD=`pwd`
+CWD=$(pwd)
 ROOT="${CWD%/bin}"
 cd "${ROOT}" || exit 1
 source "./bin/_includes.sh"

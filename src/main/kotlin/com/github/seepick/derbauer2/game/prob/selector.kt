@@ -11,7 +11,7 @@ data class ProbSelectorHandle<T>(
 
 @JvmInline
 value class ProbSelectorKey(val name: String) {
-    override fun toString() = "ProbSelectorKey[name]"
+    override fun toString() = "ProbSelectorKey[$name]"
 
     companion object
 }

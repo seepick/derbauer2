@@ -28,6 +28,7 @@ object DerBauer2 {
 }
 
 private val appEmoji = "🏰".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
 val Emoji.Companion.`derbauer2 🏰` get() = appEmoji
 
 fun startApp(

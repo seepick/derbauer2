@@ -28,7 +28,7 @@ Manage a kingdom: citizens, resources, trade, build structures, research/technol
 ### Important Files for Agents
 
 * [Coding Standards](/documentation/tech-spec/coding-standards.md)` - When writing any code, adhere to those.
-* [Software Architecture](/documentation/tech-spec/project-architecture.md) - High level architecture overview.
+* [Software Architecture](/documentation/tech-spec/software-architecture.md) - High level architecture overview.
 * [Gradle Dependencies](/gradle/libs.versions.toml) - Change dependencies if needed.
 
 ## Critical Patterns & Constraints
