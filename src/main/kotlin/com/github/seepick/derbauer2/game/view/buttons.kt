@@ -33,6 +33,7 @@ fun SecondaryBackButton(
     onExecute = onExecute,
 )
 
+@Suppress("LongParameterList")
 class Button(
     override val key: KeyPressed.Command,
     override val label: String,

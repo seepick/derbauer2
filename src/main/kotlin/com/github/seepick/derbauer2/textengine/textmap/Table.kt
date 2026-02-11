@@ -57,7 +57,7 @@ class LineWritingTableGenerator(private val lineWriter: (String) -> Unit) : Tabl
     private fun renderTableRow(
         row: List<String>,
         cols: List<TableCol>,
-        colWidths: IntArray
+        colWidths: IntArray,
     ): List<String> = colWidths.indices.map { colIndex ->
         val cell = row.getOrNull(colIndex) ?: ""
         val cellWidth = cell.countGraphemes()

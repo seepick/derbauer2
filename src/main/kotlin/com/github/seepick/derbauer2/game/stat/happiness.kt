@@ -82,7 +82,8 @@ class HappinessFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "Happiness",
         asciiArt = AsciiArt.smiley,
-        multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: They can feel ${Emoji.`happiness 🥳`}",
+        multilineDescription = "Your regular Homo Sapiens became Homo Irrationalis: " +
+                "They can feel ${Emoji.`happiness 🥳`}",
         checkIt = { user, _ ->
             user.hasEntity(Citizen::class) &&
                     user.citizen >= Mechanics.featureHappinessCitizenThresholdGreater

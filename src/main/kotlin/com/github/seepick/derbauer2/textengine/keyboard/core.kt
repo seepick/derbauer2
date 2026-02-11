@@ -5,6 +5,7 @@ fun interface KeyListener {
 }
 
 sealed interface KeyPressed {
+
     data class Symbol(val char: PrintChar) : KeyPressed
     sealed class Command(val label: String) : KeyPressed {
         override fun toString() = "${this::class.simpleName}"
@@ -18,6 +19,9 @@ sealed interface KeyPressed {
         // via extension functions
     }
 }
+
+fun KeyPressed.getIntOrNull(): Int? =
+    ((this as? KeyPressed.Symbol)?.char as? PrintChar.Numeric)?.int
 
 sealed class PrintChar(val char: Char) {
     override fun toString() = "${this::class.simpleName}($char)"

@@ -39,10 +39,11 @@ abstract class UserTitleRef(
     checkIt = checkIt,
     buildIt = buildIt,
 ), Feature {
+    override val ref = this
+
     override fun mutate(user: User) {
         user.userTitle = enumValue
     }
 
     override fun deepCopy() = this
-    override val ref = this
 }

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.textengine.prompt
 
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
-import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
+import com.github.seepick.derbauer2.textengine.keyboard.getIntOrNull
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -20,47 +20,17 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
     override val inputIndicator = "1-${options.size}"
 
     override fun onKeyPressed(key: KeyPressed) =
-        if (key is KeyPressed.Symbol && key.char is PrintChar.Numeric && key.char.char in '1'..options.size.toString()
-                .first()
-        ) {
-            val option = options.items[key.char.int - 1]
+        key.getIntOrNull()?.let { pressedInt ->
+            val option = options.items[pressedInt - 1]
             log.debug { "🔢 Selected: $option" }
             option.onSelected()
             true
-        } else {
-            false
-        }
+        } ?: false
 
     override fun render(textmap: Textmap) {
         when (options) {
-            is Options.Singled<out OptionLabel.Single> -> {
-                options.items.mapIndexed { idx, opt ->
-                    opt.label as OptionLabel.Single
-                    textmap.line("[${idx + 1}] ${opt.label.value}")
-                }
-            }
-
-            is Options.Tabled -> {
-                textmap.customTable(
-                    cols = buildList {
-                        val rowsBefore = 1
-                        add(TransformingTableCol { rowIdx, _, _ ->
-                            "[${rowIdx + 1}]"
-                        })
-                        addAll((0..<(options.items.maxOf { it.label.columns.size })).map {
-                            TransformingTableCol { _, colIdx, opt ->
-                                val colIdxAdjusted = colIdx - rowsBefore
-                                if (colIdxAdjusted > (opt.label.columns.size - 1)) {
-                                    ""
-                                } else {
-                                    opt.label.columns[colIdxAdjusted]
-                                }
-                            }
-                        })
-                    },
-                    rowItems = options.items,
-                )
-            }
+            is OptionsSingle -> textmap.linesFor(options)
+            is OptionsTabled -> textmap.linesForTabled(options)
         }
     }
 
@@ -68,6 +38,32 @@ class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
         operator fun <S : OptionLabel.Single> invoke(items: List<SelectOption<S>>) =
             SelectPrompt(Options.Singled(items))
     }
+}
+
+private fun Textmap.linesFor(options: OptionsSingle) = options.items.mapIndexed { idx, opt ->
+    line("[${idx + 1}] ${opt.label.value}")
+}
+
+private fun Textmap.linesForTabled(options: OptionsTabled) {
+    customTable(
+        cols = buildList {
+            val rowsBefore = 1
+            add(TransformingTableCol { rowIdx, _, _ ->
+                "[${rowIdx + 1}]"
+            })
+            addAll((0..<(options.items.maxOf { it.label.columns.size })).map {
+                TransformingTableCol { _, colIdx, opt ->
+                    val colIdxAdjusted = colIdx - rowsBefore
+                    if (colIdxAdjusted > (opt.label.columns.size - 1)) {
+                        ""
+                    } else {
+                        opt.label.columns[colIdxAdjusted]
+                    }
+                }
+            })
+        },
+        rowItems = options.items,
+    )
 }
 
 sealed class Options<LABEL : OptionLabel>(val items: List<SelectOption<out LABEL>>) {
@@ -116,9 +112,12 @@ sealed interface OptionLabel {
     data class Table(val columns: List<String>) : OptionLabel
 }
 
-typealias StaticLabel = OptionLabel.Single.Dynamic
+typealias StaticLabel = OptionLabel.Single.Static
 typealias DynamicLabel = OptionLabel.Single.Dynamic
 typealias TableLabel = OptionLabel.Table
+
+typealias OptionsSingle = Options.Singled<out OptionLabel.Single>
+typealias OptionsTabled = Options.Tabled
 
 typealias SingleSelectPrompt = SelectPrompt<OptionLabel.Single, Options<OptionLabel.Single>>
 typealias StaticSelectPrompt = SelectPrompt<OptionLabel.Single.Static, Options<OptionLabel.Single.Static>>

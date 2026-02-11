@@ -161,7 +161,7 @@ private fun RunOnceWithKoin(
 private const val TOOLBAR_ANIMATION_DURATION = 200
 
 @Composable
-@Suppress("CognitiveComplexMethod")
+@Suppress("CognitiveComplexMethod", "LongMethod")
 private fun rememberMainWindowState(
     page: Page,
     onTick: () -> Unit,

@@ -2,16 +2,17 @@
 
 ## 1.3.0
 
-* BZ: make poor philospher interactive; being asked Y/N
-    * -gold +happiness, basically special trade into stats with consequences
-    * !!! requires refactoring of happening rendering and multi-view-page thing...
-* IT: refactor UserTitleLordFeature, make it an `EnumFeature`
-    * check by type AND enum value: `user.hasEnumFeature<UserTitleFeature>(UserTitle.Lord)`
-    * the enum value is a mutable field in the feature entity (a "shared reference" to user.title)
-        * maybe reusable `CurrentXxx` wrapper?
+* BZ: refactor UserTitleLordFeature,
+    * make reporting via a simple `News` at end of chain (not a feature!)
+    * the logic underneath is something new; defining thresholds
+        * computing how "high level in enum", and dispatch (newly built) news if change detected
+* UI: use compose viewmodel
 
 ## Backlog
 
+* BZ: make poor philospher interactive; being asked Y/N
+    * -gold +happiness, basically special trade into stats with consequences
+    * !!! requires refactoring of happening rendering and multi-view-page thing...
 * BZ: description for each building (maybe dynamic effect construction; if is ProduceResource/Storage then ...)
 * BZ: PoorPhilosopherHappening needs refactoring
 * BZ: keep track of user age (independent of turn); initialize with 15 years; become Lord by roughly 20
@@ -29,7 +30,6 @@
 * IT: refactor happenings/features (and tech?!) into unified "News" concept
 * IT: ad TradePromptBuilder: outsource construction of "logical view on" trading options into TradingService...
 * BZ: get ideas/names/concepts from other games; age empire, anno, civ, settlers, fugger, ...
-* UI: use compose viewmodel
 * minorIT: refactor deterministic order of Tech; use tree to do it properly (not manually registry)
 * IT: custom type SingleLine and MultiLine
 * BZ: finish user title (now only Lord); also city title (depend on citizen); maybe stats

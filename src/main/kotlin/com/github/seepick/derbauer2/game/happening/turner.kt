@@ -21,55 +21,58 @@ val ProbSelectorKey.Companion.happeningChoice get() = ProbSelectorKey("happening
 class HappeningTurner(
     private val user: User,
     private val probs: Probs,
-    private val repo: HappeningRefRegistry,
+    private val happenings: HappeningRefRegistry,
     private val currentTurn: CurrentTurn,
 ) : ProbInitializer {
 
     private val log = logger {}
+    private val happeningTurnCalculator = GrowthProbCalculator(
+        startValue = 0.`%`,
+        growthRate = Mechanics.happeningGrowthRate,
+    )
 
     init {
-        require(repo.all.isNotEmpty()) { "At least one happening descriptor must be registered." }
+        require(happenings.all.isNotEmpty()) { "At least one happening ref must be registered." }
     }
 
     /** Delayed post-ctor initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
     override fun initProb() {
         log.debug { "Registering probabilities." }
-        repo.all.forEach {
+        happenings.all.forEach {
+            // delegate to children
             it.initProb(probs, user, currentTurn)
         }
         probs.setProvider(
-            ProbProviderKey.happeningTurner,
-            GrowthProbCalculator(
-                startValue = 0.`%`,
-                growthRate = Mechanics.happeningGrowthRate,
-            )
-        ) {
-            log.debug { "New happening going to happen..." }
-            val isNegative = probs.provisionOrNull(ProbProviderKey.happeningIsNegative) != null
-
-            val canDescriptors = repo.all.filter { it.canHappen(user, probs) }
-            val filteredCanDescriptors = canDescriptors.filter {
-                if (isNegative) {
-                    it.nature == HappeningNature.Negative
-                } else {
-                    it.nature != HappeningNature.Negative
-                } && it.willHappen(user, probs)
-            }
-            val ensuredDescriptors = filteredCanDescriptors.ifEmpty { canDescriptors }
-            val descriptor = probs.selectItem(ProbSelectorKey.happeningChoice, ensuredDescriptors)
-            descriptor.buildHappening(user)
-        }
-
+            key = ProbProviderKey.happeningTurner,
+            calculator = happeningTurnCalculator,
+            provider = ::provideHappening,
+        )
         probs.setProvider(
-            ProbProviderKey.happeningIsNegative,
-            PercentageProbCalculator(
-                threshold = Mechanics.happeningIsNegativeChance
-            )
-        ) { true }
-
-        probs.setSelector<HappeningRef>(ProbSelectorKey.happeningChoice, RandomProbSelector())
+            key = ProbProviderKey.happeningIsNegative,
+            calculator = PercentageProbCalculator(Mechanics.happeningIsNegativeChance),
+            provider = { true },
+        )
+        probs.setSelector<HappeningRef>(
+            key = ProbSelectorKey.happeningChoice,
+            selector = RandomProbSelector(),
+        )
     }
 
     fun maybeHappening(): Happening? =
         probs.provisionOrNull(ProbProviderKey.happeningTurner)
+
+    private fun provideHappening(): Happening {
+        val canHappenHappenings = happenings.all.filter { it.canHappen(user, probs) }
+        val filterIsNegative = probs.provisionOrNull(ProbProviderKey.happeningIsNegative) != null
+        val willHappenHappenings = canHappenHappenings.filter {
+            if (filterIsNegative) {
+                it.nature == HappeningNature.Negative
+            } else {
+                it.nature != HappeningNature.Negative
+            } && it.willHappen(user, probs)
+        }
+        val someHappenings = willHappenHappenings.ifEmpty { canHappenHappenings }
+        val ref = probs.selectItem(ProbSelectorKey.happeningChoice, someHappenings)
+        return ref.buildHappening(user)
+    }
 }

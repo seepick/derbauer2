@@ -12,6 +12,7 @@ fun Textmap.asciiart(asciiArt: AsciiArt) {
  */
 @JvmInline
 value class AsciiArt(val value: String) {
+    @Suppress("LargeClass")
     companion object {
         val coin = AsciiArt(
             """

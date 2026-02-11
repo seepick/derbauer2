@@ -17,7 +17,7 @@ import org.koin.compose.koinInject
 
 private val log = logger {}
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "LongMethod")
 @Composable
 fun MusicButton(autoPlayMusic: Boolean, stateRepo: TextengineStateRepository) {
     val shuffler = koinInject<ListShuffler>()

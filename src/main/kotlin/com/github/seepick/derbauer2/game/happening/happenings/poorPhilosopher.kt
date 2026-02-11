@@ -42,7 +42,7 @@ data class PoorPhilosopherHappening(
     object Ref : HappeningRef {
         override val nature = HappeningNature.Positive
         private val goldGiving = 20.z
-        private val happinessGaining = 0.2
+        private const val HAPPINESS_GAINING = 0.2
 
         override fun canHappen(user: User, probs: Probs) =
             user.hasEntity(Gold::class) &&
@@ -50,7 +50,7 @@ data class PoorPhilosopherHappening(
                     user.hasEntity(Happiness::class)
 
         override fun buildHappening(user: User) = PoorPhilosopherHappening(
-            goldGiving, happinessGaining, user, this
+            goldGiving, HAPPINESS_GAINING, user, this
         )
     }
 }

@@ -24,6 +24,7 @@ abstract class FeatureImpl(
     override fun toString() = "${this::class.simpleName}($label)"
 }
 
+@Suppress("LongParameterList")
 abstract class FeatureRef(
     final override val label: String,
     final override val asciiArt: AsciiArt,

@@ -35,6 +35,9 @@ class MusicPlayer(
     }
 
     fun stop() {
+        if (stopped.get()) {
+            return
+        }
         log.info { "stop" }
         stopped.set(true)
         playerRef.getAndSet(null)?.close() // attempts to stop playback

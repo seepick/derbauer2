@@ -7,7 +7,10 @@ private val log = logger {}
 
 fun attachMacosQuitHandler(onExit: () -> Unit) {
     if (System.getProperty("os.name") != "Mac OS X") {
-        log.debug { "Not attaching quit handler (only supported under MacOS but running '${System.getProperty("os.name")}')" }
+        log.debug {
+            "Not attaching quit handler " +
+                    "(only supported under MacOS but running '${System.getProperty("os.name")}')"
+        }
         return
     }
 

@@ -28,7 +28,7 @@ class HappeningDslTest : DslTest, StringSpec() {
         "Given FoundGold is happening Then increased happiness and 💰" {
             Given {
                 setOwned<Gold>(0.z)
-                registerHappeningDescriptors(FoundGoldHappening.Ref)
+                registerHappeningRef(FoundGoldHappening.Ref)
                 probs.fixateConstantValueProvider(ProbProviderKey.happeningTurner, true)
                 probs.fixateConstantValueProvider(ProbProviderKey.happeningIsNegative, false)
                 probs.fixateAlwaysFirstSelector(ProbSelectorKey.happeningChoice)
@@ -47,7 +47,7 @@ class HappeningDslTest : DslTest, StringSpec() {
             Given {
                 setOwned<Gold>(0.z)
                 setStatD11<Happiness>(initialHappiness)
-                registerHappeningDescriptors(HappeningRefStub(HappeningNature.Positive, canHappen = true))
+                registerHappeningRef(HappeningRefStub(HappeningNature.Positive, canHappen = true))
                 probs.fixateConstantValueProvider(ProbProviderKey.happeningTurner, true)
                 println("111: ${user.happiness}")
                 probs.fixateConstantValueProvider(ProbProviderKey.happeningIsNegative, false)

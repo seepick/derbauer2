@@ -20,16 +20,16 @@ class HappeningTurnerTest : StringSpec({
         happening = mockk()
     }
 
-    fun turner(descriptors: List<HappeningRef>) = HappeningTurner(
+    fun turner(refs: List<HappeningRef>) = HappeningTurner(
         user = User(),
         probs = probs,
-        repo = HappeningRefRegistryStub(descriptors),
+        happenings = HappeningRefRegistryStub(refs),
         currentTurn = mockk(),
     ).apply {
         initProb()
     }
 
-    "When instantiate with empty descriptors repo Then throw" {
+    "When instantiate with empty refs repo Then throw" {
         shouldThrow<IllegalArgumentException> { turner(emptyList()) }
     }
     "Given not happening Then null" {
@@ -39,7 +39,7 @@ class HappeningTurnerTest : StringSpec({
         turner.maybeHappening().shouldBeNull()
     }
     "Single registered doesnt want to But have to if nothing else found" {
-        val happeningDescriptor = HappeningRefStub(
+        val happeningRef = HappeningRefStub(
             nature = HappeningNature.Negative,
             canHappen = true,
             willHappen = false,
@@ -47,7 +47,7 @@ class HappeningTurnerTest : StringSpec({
         )
         probs.fixateProvider(ProbProviderKey.happeningTurner, ConstantTrueProbCalculator)
         probs.fixateProvider(ProbProviderKey.happeningIsNegative, ConstantTrueProbCalculator)
-        val turner = turner(listOf(happeningDescriptor))
+        val turner = turner(listOf(happeningRef))
 
         turner.maybeHappening() shouldBeSameInstanceAs happening
     }

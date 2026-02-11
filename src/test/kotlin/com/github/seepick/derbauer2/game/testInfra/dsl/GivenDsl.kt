@@ -47,9 +47,9 @@ fun Given(
 @TestDsl
 class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
-    fun registerHappeningDescriptors(vararg descriptors: HappeningRef) {
+    fun registerHappeningRef(vararg refs: HappeningRef) {
         koin.declareMock<HappeningRefRegistry> {
-            every { all } answers { descriptors.toList() }
+            every { all } answers { refs.toList() }
         }
     }
 

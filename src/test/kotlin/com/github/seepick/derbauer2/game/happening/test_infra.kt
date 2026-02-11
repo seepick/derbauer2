@@ -10,9 +10,7 @@ import io.kotest.property.arbitrary.enum
 import io.kotest.property.arbitrary.next
 import io.mockk.mockk
 
-class HappeningRefRegistryStub(descriptors: List<HappeningRef>) : HappeningRefRegistry {
-    override val all = descriptors
-}
+class HappeningRefRegistryStub(override val all: List<HappeningRef>) : HappeningRefRegistry
 
 fun HappeningRef.Companion.any() = HappeningRefStub()
 

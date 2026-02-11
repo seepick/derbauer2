@@ -1,7 +1,7 @@
 # Tech Ideas
 
 * kotlin poet to generate resource declarations
-* refactor HappeningDescriptor; so can&build is enforced by design (not runtime require check)
+* refactor HappeningRef; so can&build is enforced by design (not runtime require check)
 * macos app signing
 * Use @OptIn annotation for "secret API"
 * use ULong within Z
