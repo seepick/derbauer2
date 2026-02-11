@@ -5,6 +5,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import com.github.seepick.derbauer2.game.testInfra.uitest.ComposeUiTest
 import com.github.seepick.derbauer2.game.testInfra.uitest.uiTest
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.string.shouldContainIgnoringCase
 import org.junit.Rule
 import org.junit.Test
@@ -21,5 +22,15 @@ class TurnUiTest : ComposeUiTest {
 
         ui.waitForIdle()
         gameText.contentString shouldContainIgnoringCase "T U R N   R E P O R T"
+        gameText.infoRight shouldBeEqual "s"
+    }
+
+    @Test
+    fun `When skip next turn Then turn info bar changed`() = uiTest {
+        require(gameText.infoRight == "Turn 1")
+        pressKey(Key.Enter) // report page
+        pressKey(Key.Enter) // home page
+
+        gameText.infoRight shouldBeEqual "Turn 2"
     }
 }

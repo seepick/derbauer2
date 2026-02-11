@@ -23,11 +23,11 @@ private val pageEmoji = "📄".emoji
 val Emoji.Companion.`page 📄` get() = pageEmoji
 
 class CurrentPage(
-    pageClass: KClass<out Page>
+    pageClass: KClass<out Page>,
 ) {
     private val log = logger {}
 
-    var pageClass: KClass<out Page> = pageClass
+    var current: KClass<out Page> = pageClass
         set(value) {
             log.info { "${Emoji.`page 📄`} ======> setting PAGE to: ${value.simpleName}" }
             field = value

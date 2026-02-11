@@ -28,7 +28,7 @@ class ReportPage(
     button = ContinueButton {
         happeningMultiView.process(reports.last().happenings) {
             featureMultiView.process(reports.last().featurePages) {
-                current.pageClass = HomePage::class
+                current.current = HomePage::class
             }
         }
     },

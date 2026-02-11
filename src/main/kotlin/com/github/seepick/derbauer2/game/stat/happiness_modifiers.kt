@@ -27,7 +27,7 @@ class HappinessSeasonPreModifier(
         if (statClass != Happiness::class) {
             return null
         }
-        return turn.season.happinessChanger
+        return turn.current.season.happinessChanger
     }
 
     override fun toString() = "${this::class.simpleName}"

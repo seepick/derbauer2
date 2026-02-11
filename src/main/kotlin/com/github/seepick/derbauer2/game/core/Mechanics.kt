@@ -76,8 +76,8 @@ object Mechanics {
     val featureTradeLandThresholdLandAvailableLesser = 3.z
     val featureTechCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 3.z
     val featureHappinessCitizenThresholdGreater = if (DEV) 0.z else startingCitizens * 6.z
-    val featureFoodMerchantThresholdFoodTradesAmount = if (DEV) 3 else 5
-    val featureFoodMerchantThresholdFoodTradesAmountTimes = if (DEV) 1 else 3 // happened 3x, that traded 5+ food
+    val featureFoodMerchantThresholdFoodTradesAmount = if (DEV) 3 else 10
+    val featureFoodMerchantThresholdFoodTradesAmountTimes = if (DEV) 1 else 5 // happened 5x, that traded 10+ food
     val featureSeasonUnlockTurn = if (DEV) 3 else 53
 
     // TECHNOLOGY

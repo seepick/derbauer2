@@ -107,5 +107,9 @@ data class TurnReport(
     val featurePages: List<FeatureSubPage>,
     val actions: List<Action>,
 ) {
+    init {
+        println("FOOOOO: $turn")
+    }
+
     companion object // for extension functions
 }

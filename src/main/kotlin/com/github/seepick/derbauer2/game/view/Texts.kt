@@ -25,7 +25,7 @@ object Texts {
             Gold.Data.emojiAndLabelFor(goldGiving)
         } and increase thereby the ${Happiness.Data.emojiAndLabel} 🙇🏻 🙏🏻"
 
-    val techPageEmpty = "Your mind is empty...\nGo ahead and read some books first."
+    val techPageEmpty = "... your mind is empty...\nGo ahead and read some books first 📚"
     val techItemAgriculture = "more food, more happy 🌽"
     val techItemIrrigation = "use little canals to make more mjam-mjam 🍗"
     val techItemCapitalism = "make the poor poorer, and yourself richer 🤑"

@@ -8,7 +8,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 private const val WEEKS_PER_YEAR = 52
 private const val WEEKS_PER_SEASON = WEEKS_PER_YEAR / 4 // 13
 
-interface CurrentTurn : Turn {
+interface CurrentTurn {
     val current: Turn
     fun next(): Turn
 
@@ -17,7 +17,7 @@ interface CurrentTurn : Turn {
 
 class CurrentTurnImpl(
     override var current: Turn = Turn(),
-) : CurrentTurn, Turn by current {
+) : CurrentTurn {
 
     private val log = logger {}
     override fun next() =
@@ -27,6 +27,7 @@ class CurrentTurnImpl(
         }
 }
 
+@Suppress("ComplexInterface") // ok, a data holder
 interface Turn : Comparable<Turn> {
     val number: Int
     val week: Int

@@ -55,10 +55,10 @@ class BuildingPage(
         }
     }, buttons = listOf(
         BackButton {
-            currentPage.pageClass = HomePage::class
+            currentPage.current = HomePage::class
         },
         SecondaryBackButton {
-            currentPage.pageClass = HomePage::class
+            currentPage.current = HomePage::class
         },
     ), contentRenderer = { textmap ->
         textmap.line(Texts.buildPage)

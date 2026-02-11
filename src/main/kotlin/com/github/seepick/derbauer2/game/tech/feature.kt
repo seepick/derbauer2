@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity
@@ -19,7 +20,7 @@ class TechnologyFeature(ref: Ref = Ref) : FeatureImpl(ref) {
     object Ref : FeatureRef(
         label = "Technology",
         asciiArt = AsciiArt.book,
-        multilineDescription = "Welcome to the age of enlightenment!\n" +
+        multilineDescription = "Welcome to the age of enlightenment ${Emoji.`tech 🔬`}\n" +
                 "You can now research new technologies to advance your civilization.",
         checkIt = { user, _ ->
             user.hasEntity(Citizen::class) &&

@@ -51,8 +51,8 @@ class TechPage(
         }
     },
     buttons = listOf(
-        BackButton { currentPage.pageClass = HomePage::class },
-        SecondaryBackButton { currentPage.pageClass = HomePage::class },
+        BackButton { currentPage.current = HomePage::class },
+        SecondaryBackButton { currentPage.current = HomePage::class },
     ),
     gameRenderer = gameRenderer,
 )

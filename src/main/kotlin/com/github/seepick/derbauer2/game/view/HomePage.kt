@@ -29,7 +29,7 @@ class HomePage(
     buttons = listOf(
         ContinueButton("Next Turn") {
             turner.execTurnAndAddReport()
-            currentPage.pageClass = if (user.isGameOver()) GameOverPage::class else ReportPage::class
+            currentPage.current = if (user.isGameOver()) GameOverPage::class else ReportPage::class
         }
     ),
     gameRenderer = gameRenderer,
@@ -38,15 +38,15 @@ class HomePage(
             options = Options.Singled(buildList {
                 if (user.hasFeature<TradeFeature>()) {
                     add(SelectOption("Trade ${Emoji.`trade 💸`}") {
-                        currentPage.pageClass = TradePage::class
+                        currentPage.current = TradePage::class
                     })
                 }
                 add(SelectOption("Build ${Emoji.`build 🛠️`}") {
-                    currentPage.pageClass = BuildingPage::class
+                    currentPage.current = BuildingPage::class
                 })
                 if (user.hasFeature<TechnologyFeature>()) {
                     add(SelectOption("Research ${Emoji.`tech 🔬`}") {
-                        currentPage.pageClass = TechPage::class
+                        currentPage.current = TechPage::class
                     })
                 }
             })

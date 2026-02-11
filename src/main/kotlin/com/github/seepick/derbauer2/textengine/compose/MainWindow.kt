@@ -92,7 +92,7 @@ fun MainWindow(
     var tick by remember { mutableLongStateOf(1L) }
     tick.toString()
     val currentPage = koinInject<CurrentPage>()
-    val page = getKoin().get<Page>(clazz = currentPage.pageClass) // this is the right way to do it, not via koinInject
+    val page = getKoin().get<Page>(clazz = currentPage.current) // this is the right way to do it, not via koinInject
     val textmap = koinInject<Textmap>()
     log.trace { "UI render tick #$tick" } // enforce recomposition on tick change
     val (toolbarWidth, toolbarOffset, toolbarAlpha, mainBoxModifier) = rememberMainWindowState(

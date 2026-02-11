@@ -17,7 +17,7 @@ interface DslContext {
 
     val koin: KoinTest
     val user: User get() = koin.get()
-    val page: Page get() = koin.get(koin.get<CurrentPage>().pageClass)
+    val page: Page get() = koin.get(koin.get<CurrentPage>().current)
     val turn: Int get() = koin.get<CurrentTurn>().current.number
 
     fun logPage() {

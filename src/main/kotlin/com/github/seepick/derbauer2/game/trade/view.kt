@@ -26,10 +26,10 @@ class TradePage(
 ) : PromptGamePage(
     buttons = listOf(
         BackButton {
-            currentPage.pageClass = HomePage::class
+            currentPage.current = HomePage::class
         },
         SecondaryBackButton {
-            currentPage.pageClass = HomePage::class
+            currentPage.current = HomePage::class
         },
     ),
     gameRenderer = gameRenderer,

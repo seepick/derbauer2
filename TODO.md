@@ -19,6 +19,7 @@
 
 ## Backlog
 
+* UI: make toolbar height dynamic fitting content (not full height)
 * IT: classpath scan to counter registry hack; write test; scan and compare with actual registered ones
 * BZ: make poor philospher interactive; being asked Y/N
     * -gold +happiness, basically special trade into stats with consequences

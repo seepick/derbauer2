@@ -8,21 +8,21 @@ import com.github.seepick.derbauer2.game.view.HomePage
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.string.shouldContain
 
-class TurnInfoBarPageTest : PageTest, DescribeSpec({
+class InfoBarPageTest : PageTest, DescribeSpec({
 
-    fun GamePageContext.buildPage() =
+    fun GamePageContext.buildAnyGamePage() =
         HomePage(turner, currentPage, gameRenderer, user)
 
     describe("Turn info bar") {
         it("Given no season feature Then render turn") {
-            renderGamePage(GamePageContext::buildPage) {
+            renderGamePage(GamePageContext::buildAnyGamePage) {
                 infoRight shouldContain "Turn 1"
             }
         }
         it("Given season feature Then render season details") {
             renderGamePage({ ctx ->
                 ctx.user.addFeature(SeasonFeature())
-                ctx.buildPage()
+                ctx.buildAnyGamePage()
             }) {
                 infoRight shouldContain "🌸  W1 Y1"
             }
