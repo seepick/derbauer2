@@ -2,6 +2,7 @@
 
 * Run app in development mode: `-Dderbauer2.devMode=true` (basically cheat mode)
 * Run `com.github.seepick.derbauer2.DerBauer2DevApp` in `src/test/kotlin` for full development control
+* If macOs quit handler AWT logic causes issues, add JVM arg: `-Dderbauer2.disableMacOsQuitHandler`
 
 ## How To Release
 

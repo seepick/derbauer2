@@ -1,5 +1,6 @@
 # Tech Ideas
 
+* refactor happenings/features (and tech?!) into unified "News" concept
 * kotlin poet to generate resource declarations
 * refactor HappeningRef; so can&build is enforced by design (not runtime require check)
 * macos app signing
@@ -29,7 +30,6 @@ Low:
 * introduce buildSrc (try again ;) version toml buildSrc shizzle...
 * provide a `UserReadOnly` interface (for reduced visibility/more stability through immutability)
 * version check plugin manes: compose macos 1.9.0 gets through and warned about; disable check
-* classpath scan to counter registry hack; write test; scan and compare with actual registered ones
 
 ## Test
 

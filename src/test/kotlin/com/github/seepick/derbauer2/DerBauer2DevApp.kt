@@ -1,6 +1,7 @@
 package com.github.seepick.derbauer2
 
 import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.game.core.DerBauer2SysProp
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.feature.addFeature
 import com.github.seepick.derbauer2.game.resource.Gold
@@ -13,7 +14,7 @@ import com.github.seepick.derbauer2.game.trade.TradeLandFeature
 
 object DerBauer2DevApp {
     init {
-        System.setProperty("derbauer2.devMode", "true")
+        System.setProperty(DerBauer2SysProp.DEV_MODE.key, "true")
     }
 
     @JvmStatic

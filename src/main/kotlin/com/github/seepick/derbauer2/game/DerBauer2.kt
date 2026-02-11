@@ -1,8 +1,9 @@
 package com.github.seepick.derbauer2.game
 
 import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.AppProperties
+import com.github.seepick.derbauer2.game.core.DerBauer2SysProp
+import com.github.seepick.derbauer2.game.view.`derbauer2 🏰`
 import com.github.seepick.derbauer2.textengine.compose.showMainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.core.Koin
@@ -10,7 +11,7 @@ import kotlin.reflect.KClass
 
 object DerBauer2 {
     private val log = logger {}
-    val isDevMode = System.getProperty("derbauer2.devMode") != null
+    val isDevMode = System.getProperty(DerBauer2SysProp.DEV_MODE.key) != null
 
     init {
         log.info { "DerBauer2 devMode=${isDevMode}" }
@@ -26,10 +27,6 @@ object DerBauer2 {
         )
     }
 }
-
-private val appEmoji = "🏰".emoji
-@Suppress("ObjectPropertyName", "NonAsciiCharacters")
-val Emoji.Companion.`derbauer2 🏰` get() = appEmoji
 
 fun startApp(
     isDevMode: Boolean,
@@ -49,4 +46,3 @@ fun startApp(
         },
     )
 }
-

@@ -1,6 +1,8 @@
 # Feature
 
 * synonyms: condition, option, possibility, modifier
+* something that allows for a new user interaction (building, army, ...)
+    * it's NOT for mutation of the system without user benefit; e.g. changes of user/city title not!
 * about / essence:
     * internal "switches" to allow user new possibilities/interactions
     * similar to tech, but they are passive; or... is tech enabling a feature?!

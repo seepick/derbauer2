@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.common.emoji
 import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.HasLabels
 
@@ -27,3 +28,7 @@ fun <T> T.emojiAndLabelFor(unsignedAmount: Z) where T : HasLabels, T : HasEmoji 
 
 fun <T> T.emojiAndLabelFor(signedAmount: Zz) where T : HasLabels, T : HasEmoji =
     "$emojiSpaceOrEmpty${labelFor(signedAmount)}"
+
+private val appEmoji = "🏰".emoji
+@Suppress("ObjectPropertyName", "NonAsciiCharacters")
+val Emoji.Companion.`derbauer2 🏰` get() = appEmoji

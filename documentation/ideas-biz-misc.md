@@ -1,5 +1,9 @@
 # Misc Business Ideas
 
+* ? happiness stat only enabled if researched?
+* ad HappinessDeathPostModifier: look into history, if previous turns also deaths; if so, increase more (with max!)
+* minor: refactor deterministic order of Tech; use tree to do it properly (not manually registry)
+* happening with random outcome (success; damage; intensity); gambling...
 * army has atk/def/hp; "high level scenario probability tasks/tech"???
 * happening festival: Y/N (+happy, -food)
 * building warehouse stores multiple resource types (food + construction resources (wood, stone, metal))

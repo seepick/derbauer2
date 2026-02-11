@@ -1,6 +1,7 @@
 # Technology
 
 * just a conventional tech-tree, enabling permanent [features](feature.md); aka "research"
+* main effects are enabling new entities and upgrading existing ones (increased values)
 * attributes:
     * costs: (mostly) knowledge, gold, ... maybe other resources too?
         * prerequisites: other technology, buildings (military strength, resources?), ...

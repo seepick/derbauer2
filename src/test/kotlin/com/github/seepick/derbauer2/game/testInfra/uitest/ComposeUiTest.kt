@@ -10,11 +10,13 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performKeyPress
+import com.github.seepick.derbauer2.game.core.DerBauer2SysProp
 import com.github.seepick.derbauer2.game.testInfra.pageParser.GamePageParser
 import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.keyboard.PrintChar
 import com.github.seepick.derbauer2.textengine.keyboard.asComposeKey
 import io.github.oshai.kotlinlogging.KLogger
+import org.junit.Before
 import org.junit.experimental.categories.Category
 
 interface UiTestCategory
@@ -35,6 +37,12 @@ interface ComposeUiTest {
             val textList = node.config.getOrNull(SemanticsProperties.Text)
             return textList?.joinToString(separator = "") { it.toString() } ?: error("No text found!")
         }
+
+    @Before
+    fun disalbeMacosQuitHandlerDuringTests() {
+        // would otherwise require for each test exec to add JVM arg for AWT export...
+        System.setProperty(DerBauer2SysProp.DISABLE_MACOS_QUIT_HANDLER.key, "true")
+    }
 
     @OptIn(InternalComposeUiApi::class)
     fun pressKey(key: Key) {
