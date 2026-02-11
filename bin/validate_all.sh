@@ -12,6 +12,10 @@ echoH1 "🔬  Validating Local State"
 ./bin/build_doc_diagrams.sh || exit 1
 
 echo "👷🏻‍♂️ Run Gradle and Tests"
-./gradlew detekt test uiTest check jacocoTestCoverageVerification -PenableUiTests -PfailOnDetektIssue || exit 1
+./gradlew \
+  detekt -PfailOnDetektIssue check \
+  test uiTest jacocoTestCoverageVerification -PenableUiTests \
+  dependencyUpdates -PfailOnDependencyUpdates \
+  || exit 1
 
 echoSuccess "Validating Local State"

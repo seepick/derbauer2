@@ -7,6 +7,7 @@ val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf
 val debugTests = project.findProperty("debugTests") != null
 val enableUiTests = project.findProperty("enableUiTests") != null
 val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
+val failOnDependencyUpdates = project.findProperty("failOnDependencyUpdates") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
 val mainClassFqn = "com.github.seepick.derbauer2.game.DerBauer2"
@@ -185,6 +186,17 @@ tasks.withType<DependencyUpdatesTask> {
     rejectVersionIf {
         rejectPatterns.any {
             it.matches(candidate.version)
+        }
+    }
+    if (failOnDependencyUpdates) {
+        doLast {
+            val report = File("build/dependencyUpdates/report.txt").readText()
+            if (report.contains("The following dependencies have later milestone versions:")) {
+                println("Outdated dependencies found! Failing the build because of `failOnDependencyUpdates=true`.")
+                println()
+                println(report)
+                throw GradleException("Outdated dependencies found! Run `./gradlew dependencyUpdates` for details.")
+            }
         }
     }
 }

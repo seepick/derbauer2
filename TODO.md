@@ -3,6 +3,7 @@
 * 3x old games reverse engineer -> then cleanup every MD file -> then create epoch milestone project plan
 * create diagram: domain concepts; vertical ordering; e.g. happening inside turner => reflect in code packages
     * enhance existing turn step and types
+* cleanup tasks/todos/ideas... package 3-6 next versions; 60% biz, 30% tech, 10% design ==> FOCUS! progress game logic
 
 ## 1.3.0
 
@@ -14,11 +15,11 @@
     * 🖋 description for each building (maybe dynamic effect construction; if is ProduceResource/Storage then ...)
 
 ```
-▶️ cleanup architecture
-▶️ dependencie updates
-▶️ validate_all.sh
+▶️ refactor code
+▶️ update dependencies
+▶️ run `validate_all.sh`
 ▶️ resolve sonarqube issues
-▶️ RELEASE build
+▶️▶️▶️ GitHub Release
 ```
 
 ## Backlog
@@ -43,4 +44,3 @@
 * 🖋 get ideas/names/concepts from other games; age empire, anno, civ, settlers, fugger, ...
 * 🖋 finish user title (now only Lord); also city title (depend on citizen); maybe stats
 * 🖋 happenings base values are dynamically calculated (all time max; then low-med-high "packages")
-
