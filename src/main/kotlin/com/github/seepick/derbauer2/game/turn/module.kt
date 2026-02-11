@@ -18,7 +18,7 @@ fun turnModule() = module {
             reports = get(),
         )
     }
-    singleOf(::CurrentTurnImpl) bind CurrentTurn::class
+    single { CurrentTurnImpl() } bind CurrentTurn::class
     singleOf(::ProduceCitzenCompositeResourceTurnStep)
     singleOf(::ProduceCitzenCompositeResourceTurnStep)
     singleOf(::ReportsImpl) bind Reports::class

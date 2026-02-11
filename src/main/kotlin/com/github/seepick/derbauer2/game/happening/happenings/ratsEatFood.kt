@@ -47,7 +47,7 @@ data class RatsEatFoodHappening(
 
         override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
             probs.setThresholder(ProbThresholderKey.ratsWillHappenForSeason) {
-                turn.current.season.ratsWillEatFoodProb
+                turn.season.ratsWillEatFoodProb
             }
         }
 

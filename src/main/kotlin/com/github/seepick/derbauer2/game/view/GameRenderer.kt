@@ -62,9 +62,9 @@ class GameRenderer(
 
     private fun renderTurnInfo() =
         if (user.hasFeature<SeasonFeature>()) {
-            turn.current.toSeasonedString()
+            turn.toSeasonedString()
         } else {
-            "Turn ${turn.current.number}"
+            "Turn ${turn.number}"
         }
 }
 

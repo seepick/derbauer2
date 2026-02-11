@@ -57,7 +57,7 @@ class Turner(
     }
 
     private fun buildAndExecReport() = TurnReport(
-        turn = turn.current,
+        turn = turn.current, // CAVE: not `turn` (changing current reference), but copy stable/imutable value!
         resourceChanges = resSteps
             .sortedBy { it.order }
             .map { execResourceStep(it) }

@@ -27,7 +27,13 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
             }
             field = value
         }
-    // var epoche/age Title
+    var epochitle = EpochTitle.initial
+        set(value) {
+            if (field != value) {
+                log.info { "Setting epoch title to: $value" }
+            }
+            field = value
+        }
 
     private val allMutable = mutableListOf<Entity>()
     val all = ListX(allMutable)

@@ -45,5 +45,5 @@ interface GlobalResourceProductionBonus {
 
 class SeasonalFoodProductionBonus(private val turn: CurrentTurn) : GlobalResourceProductionBonus {
     override val handlingResource = Food::class
-    override fun productionBonus(user: User) = turn.current.season.foodProductionBonus
+    override fun productionBonus(user: User) = turn.season.foodProductionBonus
 }

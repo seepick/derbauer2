@@ -16,7 +16,7 @@
 * GENERAL // keep MEDIEVAL theme, oldschool; no weird names like "capitalism", didn't exist back then
 * player death/rebirth concept (like in fugger2)
     * start with being 16 years (tell a story); once reache higher age, increase probability to die
-* use "theme color changing" functionality to indicate epoches/ages; a major shift; maybe emojis/ascii/texts/... too?
+* use "theme color changing" functionality to indicate epochs; a major shift; maybe emojis/ascii/texts/... too?
 * ! find derbauer2 original commodore game; look through inspirations
 * new functionality "special actions", like organzing festival (+x happiness)
 * increase designators (title, city) based on "some criteria"

@@ -2,6 +2,9 @@
 
 Other similar games:
 
+* Victorian Idle
+    * website: https://alexdb.itch.io/victorian-idle
+    * idle build game, industrial revolution; nice names/graphics/buildup
 * Warsim
     * very big, nice game (5 USD, win only)
     * Website: https://huw2k8.itch.io/warsim
@@ -17,6 +20,8 @@ Other similar games:
     * https://github.com/skypanther/Hamurabi/blob/master/Resources/common/hamurabi.js#L62
 * villager kings
     * https://xamer.itch.io/villager-kings
+* civ clicker
+    * https://civclicker.sourceforge.net/civclicker/civclicker.html
 
 ## More like traditional round-based strategy games
 

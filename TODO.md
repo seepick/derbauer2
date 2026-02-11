@@ -4,7 +4,11 @@
 
 * BZ: make poor philospher interactive; being asked Y/N
     * -gold +happiness, basically special trade into stats with consequences
-    * IT: requires refactoring of happening rendering and multi-view-page thing...
+    * !!! requires refactoring of happening rendering and multi-view-page thing...
+* IT: refactor UserTitleLordFeature, make it an `EnumFeature`
+    * check by type AND enum value: `user.hasEnumFeature<UserTitleFeature>(UserTitle.Lord)`
+    * the enum value is a mutable field in the feature entity (a "shared reference" to user.title)
+        * maybe reusable `CurrentXxx` wrapper?
 
 ## Backlog
 

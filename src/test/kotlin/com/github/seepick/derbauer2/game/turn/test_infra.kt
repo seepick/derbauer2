@@ -58,8 +58,7 @@ fun Arb.Companion.turnReport() = arbitrary {
 operator fun CurrentTurn.Companion.invoke(season: Season) = CurrentTurn(season.anyValidTurnNumber)
 operator fun CurrentTurn.Companion.invoke(number: Int) = CurrentTurnStub(Turn(number))
 
-class CurrentTurnStub(initialTurn: Turn) : CurrentTurn {
-    override var current: Turn = initialTurn
+class CurrentTurnStub(override var current: Turn) : CurrentTurn, Turn by current {
     override fun next() = current.increment().also { current = it }
 }
 

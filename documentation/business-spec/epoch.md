@@ -44,7 +44,7 @@ gold is "the thing"; boost economy
 * construction resources: wood; lumberjack, forrester
 * finance (a.k.a. capitalism); banking, change taxes, take credit, invest; (variable numbers/rates)
 
-### Conquering Age
+### Conquer Age
 
 * land is "the thing" (running out of it, got super expensive)
     * push user to attack enemies in order to get land

@@ -26,7 +26,7 @@
     * especially some "XP" like tracker (idea with Interaction concept), how often done certain things
 * Effects:
     * IDEA: maybe useful for highscore?
-    * as it indicates progress, epoches can rely on it (?)
+    * as it indicates progress, epochs can rely on it (?)
 
 ## Happiness
 
