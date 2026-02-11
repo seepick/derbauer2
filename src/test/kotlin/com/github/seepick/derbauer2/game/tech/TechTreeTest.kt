@@ -1,5 +1,6 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.common.ClasspathScanIgnore
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import io.kotest.assertions.throwables.shouldThrow
@@ -90,53 +91,56 @@ class TechTreeTest : DescribeSpec({
     }
 })
 
-private object SelfData : TechData {
+object SelfData : TechData {
     override val label = "SelfData"
     override val description = ""
     override val requirements = setOf<TechData>(SelfData)
     override val costs = ResourceChanges.empty
 }
 
-private object SelfReferenceRef : TechRef, TechData by SelfData {
+@ClasspathScanIgnore
+object SelfReferenceRef : TechRef, TechData by SelfData {
     override val techClass = TestTech::class
     override val viewOrder = 100
     override fun buildTech() = SelfTech()
 }
 
-private class SelfTech : Tech, TechData by SelfData {
+class SelfTech : Tech, TechData by SelfData {
     override fun deepCopy() = this
 }
 
-private object Cycle1Data : TechData {
+object Cycle1Data : TechData {
     override val label = "Cycle1"
     override val description = ""
     override val requirements = setOf<TechData>(Cycle2Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle1Ref : TechRef, TechData by Cycle1Data {
+@ClasspathScanIgnore
+object Cycle1Ref : TechRef, TechData by Cycle1Data {
     override val techClass = TestTech1::class
     override val viewOrder = 10
     override fun buildTech() = Cycle1Tech()
 }
 
-private class Cycle1Tech : Tech, TechData by Cycle1Data {
+class Cycle1Tech : Tech, TechData by Cycle1Data {
     override fun deepCopy() = this
 }
 
-private object Cycle2Data : TechData {
+object Cycle2Data : TechData {
     override val label = "Cycle2"
     override val description = ""
     override val requirements = setOf<TechData>(Cycle1Data)
     override val costs = ResourceChanges.empty
 }
 
-private object Cycle2Ref : TechRef, TechData by Cycle2Data {
+@ClasspathScanIgnore
+object Cycle2Ref : TechRef, TechData by Cycle2Data {
     override val techClass = TestTech2::class
     override val viewOrder = 20
     override fun buildTech() = Cycle2Tech()
 }
 
-private class Cycle2Tech : Tech, TechData by Cycle2Data {
+class Cycle2Tech : Tech, TechData by Cycle2Data {
     override fun deepCopy() = this
 }

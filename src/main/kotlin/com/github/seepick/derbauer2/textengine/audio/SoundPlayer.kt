@@ -5,7 +5,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import javazoom.jl.player.Player
 import java.util.concurrent.atomic.AtomicInteger
 
-// TODO use classpath scan to pick them all up, and verify path exists
 class SoundFile(path: String) : ClasspathFile(path) {
     companion object // for extensions
 }

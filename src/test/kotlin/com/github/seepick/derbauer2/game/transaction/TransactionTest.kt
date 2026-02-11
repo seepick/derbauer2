@@ -20,7 +20,7 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 class TransactionTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = User(DefaultTxValidatorRegistry.validators)
+        user = User(ClasspathScanTxValidatorRegistry.getAll())
     }
 
     describe("When changing resource and storage") {

@@ -49,6 +49,13 @@ fun Double.toFormatted(): String {
 }
 
 open class ClasspathFile(val path: String) {
+    init {
+        require(path.startsWith("/")) { "ClasspathFile path must start with '/': $path" }
+        require(ClasspathFile::class.java.getResource(path) != null) {
+            "Classpath file not found at: $path"
+        }
+    }
+
     fun readBytes(): ByteArray =
         ClasspathFile::class.java.getResourceAsStream(path)?.readAllBytes()
             ?: error("Classpath file not found at: $path")

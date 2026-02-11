@@ -1,5 +1,6 @@
 [versions]
 ben-manes = "0.53.0"
+classgraph = "4.8.179"
 compose = "1.10.1"
 detekt = "1.23.8"
 jacoco = "0.8.14"
@@ -23,6 +24,7 @@ kotlin = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 
 [libraries]
+classgraph = { module = "io.github.classgraph:classgraph", version.ref = "classgraph" }
 compose-junit4 = { module = "org.jetbrains.compose.ui:ui-test-junit4", version.ref = "compose" }
 detektFormatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
 jlayer = { module = "javazoom:jlayer", version.ref = "jlayer" }
@@ -43,3 +45,5 @@ mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 [bundles]
 kotest = ["kotest-assertionsCore", "kotest-extensionsKoin", "kotest-property", "kotest-runnerJunit5"]
 uiTests = ["compose-junit4", "junit-v4", "junit-vintageEngine"]
+logging = ["logging-kotlin", "logging-logback"]
+koin = ["koin-compose", "koin-composeViewmodel"]

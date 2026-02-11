@@ -50,26 +50,24 @@ class GivenDsl(override val koin: KoinTest) : KoinTest by koin, DslContext {
 
     fun registerHappeningRef(vararg refs: HappeningRef) {
         koin.declareMock<HappeningRefRegistry> {
-            every { all } answers { refs.toList() }
+            every { getAll() } returns refs.toList()
         }
     }
 
-    inline fun <reified A : Asset> setOwned(amount: Z = 0.z): A =
-        user.all.findOrAdd<A>().also {
-            it.ownedForTest = amount
-        }
+    inline fun <reified A : Asset> setOwned(amount: Z = 0.z): A = user.all.findOrAdd<A>().also {
+        it.ownedForTest = amount
+    }
 
     inline fun <reified S : Stat<StrictDouble.MinusOneToOne>> setStatD11(number: StrictDouble.MinusOneToOne): S =
         user.all.findOrAdd<S>().apply {
             changeTo(number)
         }
 
-    inline fun <reified E : Entity> ListX<in E>.findOrAdd(): E =
-        findOrNull<E>() ?: newEntity()
+    inline fun <reified E : Entity> ListX<in E>.findOrAdd(): E = findOrNull<E>() ?: newEntity()
 
     inline fun <reified E : Entity> newEntity(): E {
-        val primaryConstructor = E::class.primaryConstructor
-            ?: error("Unable to get primary ctor for: ${E::class.qualifiedName}")
+        val primaryConstructor =
+            E::class.primaryConstructor ?: error("Unable to get primary ctor for: ${E::class.qualifiedName}")
         val entity = try {
             primaryConstructor.callBy(emptyMap()) // call() doesn't support default params, thus.
         } catch (e: Exception) {

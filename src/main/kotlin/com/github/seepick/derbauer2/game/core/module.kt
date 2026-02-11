@@ -9,7 +9,7 @@ import org.koin.dsl.module
 import kotlin.reflect.KClass
 
 fun coreModule(prefStorageFqn: KClass<*>) = module {
-    single { User(txValidators = get<TxValidatorRegistry>().validators) }
+    single { User(txValidators = get<TxValidatorRegistry>().getAll()) }
     single { WarningBus(listeners = getKoinBeansByType<WarningListener>()) }
 
     // textengine requirements

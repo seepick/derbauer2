@@ -32,13 +32,13 @@ class HappeningTurner(
     )
 
     init {
-        require(happenings.all.isNotEmpty()) { "At least one happening ref must be registered." }
+        require(happenings.getAll().isNotEmpty()) { "At least one happening ref must be registered." }
     }
 
     /** Delayed post-ctor initializer; can't do it in init, due to Koin startup complexity and interface lookoup. */
     override fun initProb() {
         log.debug { "Registering probabilities." }
-        happenings.all.forEach {
+        happenings.getAll().forEach {
             // delegate to children
             it.initProb(probs, user, currentTurn)
         }
@@ -62,7 +62,7 @@ class HappeningTurner(
         probs.provisionOrNull(ProbProviderKey.happeningTurner)
 
     private fun provideHappening(): Happening {
-        val canHappenHappenings = happenings.all.filter { it.canHappen(user, probs) }
+        val canHappenHappenings = happenings.getAll().filter { it.canHappen(user, probs) }
         val filterIsNegative = probs.provisionOrNull(ProbProviderKey.happeningIsNegative) != null
         val willHappenHappenings = canHappenHappenings.filter {
             if (filterIsNegative) {

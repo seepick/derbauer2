@@ -5,7 +5,7 @@ import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
+import com.github.seepick.derbauer2.game.transaction.ClasspathScanTxValidatorRegistry
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
@@ -14,7 +14,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class StorageExtensionsTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = User(DefaultTxValidatorRegistry.validators)
+        user = User(ClasspathScanTxValidatorRegistry.getAll())
     }
 
     describe("totalStorageFor") {

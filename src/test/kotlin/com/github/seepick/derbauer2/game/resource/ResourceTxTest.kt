@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
+import com.github.seepick.derbauer2.game.transaction.ClasspathScanTxValidatorRegistry
 import com.github.seepick.derbauer2.game.transaction.execTx
 import com.github.seepick.derbauer2.game.transaction.shouldBeFail
 import com.github.seepick.derbauer2.game.transaction.shouldBeSuccess
@@ -16,7 +16,7 @@ import io.kotest.matchers.equals.shouldBeEqual
 class ResourceTxTest : DescribeSpec({
     lateinit var user: User
     beforeTest {
-        user = User(DefaultTxValidatorRegistry.validators)
+        user = User(ClasspathScanTxValidatorRegistry.getAll())
     }
     describe("simple non-storageable") {
         it("When add Then added") {

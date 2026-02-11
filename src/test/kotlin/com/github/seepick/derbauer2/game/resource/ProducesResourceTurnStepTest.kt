@@ -8,7 +8,7 @@ import com.github.seepick.derbauer2.game.building.addBuilding
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.testInfra.zz
-import com.github.seepick.derbauer2.game.transaction.DefaultTxValidatorRegistry
+import com.github.seepick.derbauer2.game.transaction.ClasspathScanTxValidatorRegistry
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldBeSingleton
 import io.kotest.matchers.comparables.shouldBeGreaterThan
@@ -27,7 +27,7 @@ class ProducesResourceTurnStepTest : DescribeSpec({
     fun `user with 0 🍖, 1 granary, 1 field`(
         test: SetupContext.() -> Unit,
     ) {
-        val user = User(DefaultTxValidatorRegistry.validators)
+        val user = User(ClasspathScanTxValidatorRegistry.getAll())
         val food = user.add(Food())
         val field = user.addBuilding(Field(), 1.z)
         val granary = user.addBuilding(Granary(), 1.z)

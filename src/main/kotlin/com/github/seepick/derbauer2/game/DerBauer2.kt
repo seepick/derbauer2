@@ -46,3 +46,7 @@ fun startApp(
         },
     )
 }
+
+object Derbauer2Root {
+    val packageName: String = Derbauer2Root::class.java.`package`.name
+}

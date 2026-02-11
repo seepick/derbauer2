@@ -5,7 +5,7 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
-val enableUiTests = true//project.findProperty("enableUiTests") != null
+val enableUiTests = project.findProperty("enableUiTests") != null
 val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
 
 val uiTestCategoryFqn = "com.github.seepick.derbauer2.game.testInfra.uitest.UiTestCategory"
@@ -32,16 +32,15 @@ repositories {
 dependencies {
     implementation(libs.kotlin.reflect)
     implementation(compose.desktop.currentOs)
-    implementation(libs.koin.compose)
-    implementation(libs.koin.composeViewmodel)
-    implementation(libs.jlayer) // audio player
-    implementation(libs.logging.kotlin)
-    implementation(libs.logging.logback)
+    implementation(libs.bundles.koin)
+    implementation(libs.jlayer) // play audio
+    implementation(libs.classgraph) // scan classpath
+    implementation(libs.bundles.logging)
     detektPlugins(libs.detektFormatting)
     testImplementation(libs.bundles.kotest)
-    testImplementation(libs.mockk)
-    testImplementation(libs.koin.test)
     testImplementation(libs.bundles.uiTests)
+    testImplementation(libs.koin.test)
+    testImplementation(libs.mockk)
 }
 
 kotlin {
@@ -99,6 +98,7 @@ tasks.withType<Test>().configureEach {
 }
 
 if (enableUiTests) {
+    @Suppress("unused") // name is of relevance!
     val uiTest by tasks.registering(Test::class) {
         logger.lifecycle("🎨 Registering UI test task ✅")
         description = "Run Compose UI Tests with JUnit4"
