@@ -32,8 +32,8 @@ class FeatureViewPage(
 ) : NotificationPage(
     title = "Feature Unlocked",
     emoji = { Emoji.`page 📄` },
-    contentRenderer = { multiView.currentUnseen().render(it) },
-    asciiArt = { multiView.currentUnseen().asciiArt },
+    contentRenderer = { multiView.currentUnseen.render(it) },
+    asciiArt = { multiView.currentUnseen.asciiArt },
     button = ContinueButton { multiView.continueNextOrFinish() })
 
 data class FeatureSubPage(private val feature: Feature) : MultiViewSubPage {

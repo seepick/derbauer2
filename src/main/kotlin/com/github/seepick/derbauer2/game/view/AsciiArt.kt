@@ -103,6 +103,14 @@ value class AsciiArt(val value: String) {
                         |
         """.trimIndent()
         )
+        val manHat = AsciiArt(
+            """
+                 ____
+               _(____)_
+        ___ooO_(_o__o_)_Ooo___
+       """.trimIndent()
+        )
+
         val gameOver = AsciiArt(
             """
                   ____

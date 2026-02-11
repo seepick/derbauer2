@@ -2,10 +2,14 @@
 
 ## 1.3.0
 
-* BZ: interactive happening; being asked Y/N; randomness of the outcome (success; damage; intensity)
+* BZ: make poor philospher interactive; being asked Y/N
+    * -gold +happiness, basically special trade into stats with consequences
+    * IT: requires refactoring of happening rendering and multi-view-page thing...
 
 ## Backlog
 
+* BZ: description for each building (maybe dynamic effect construction; if is ProduceResource/Storage then ...)
+* BZ: PoorPhilosopherHappening needs refactoring
 * BZ: keep track of user age (independent of turn); initialize with 15 years; become Lord by roughly 20
 * UX: replace beeper with playing proper sound (cache short sound snippets); reuse sound player for ActionBus
     * events/interactions make sounds (happening, etc...) for better feedback
@@ -25,3 +29,5 @@
 * minorIT: refactor deterministic order of Tech; use tree to do it properly (not manually registry)
 * IT: custom type SingleLine and MultiLine
 * BZ: finish user title (now only Lord); also city title (depend on citizen); maybe stats
+* BZ: happenings base values are dynamically calculated (all time max; then low-med-high "packages")
+* BZ: happening with random outcome (success; damage; intensity); gambling...

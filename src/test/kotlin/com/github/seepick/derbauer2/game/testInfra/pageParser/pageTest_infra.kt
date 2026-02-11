@@ -15,12 +15,12 @@ import com.github.seepick.derbauer2.textengine.compose.MainWin
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.mockk.mockk
 
-fun renderGamePage(buildPage: (GamePageContext) -> Page, pageTestCode: GamePageParser.() -> Unit) {
+fun renderGamePage(buildPage: (GamePageContext) -> Page, pageTestCode: GamePageParser.(GamePageContext) -> Unit) {
     val ctx = GamePageContext()
     val page = buildPage(ctx)
     page.render(ctx.textmap)
     val parser = GamePageParser(ctx.textmap.toFullString())
-    parser.pageTestCode()
+    parser.pageTestCode(ctx)
 }
 
 class GamePageContext {

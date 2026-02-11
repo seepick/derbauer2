@@ -172,6 +172,7 @@ val Double.doubleAny: DoubleAny get() = DoubleAny(this)
 val Double.double01: Double01 get() = Double01(this)
 val Double.double11: Double11 get() = Double11(this)
 val Double.doublePos: DoublePos get() = DoublePos(this)
+fun Double.coerceDouble11() = Double11(this.coerceIn(-1.0, 1.0))
 
 typealias DoubleAny = StrictDouble.Anything
 typealias Double01 = StrictDouble.ZeroToOne

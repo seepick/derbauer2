@@ -38,7 +38,7 @@ class HappeningDslTest : DslTest, StringSpec() {
                 }
             } Then {
                 val page = page.shouldBeInstanceOf<HappeningPage>()
-                val view = page.multiView.currentUnseen().shouldBeInstanceOf<FoundGoldHappening>()
+                val view = page.multiView.currentUnseen.shouldBeInstanceOf<FoundGoldHappening>()
                 user.gold shouldBeEqual view.goldFound
             }
         }

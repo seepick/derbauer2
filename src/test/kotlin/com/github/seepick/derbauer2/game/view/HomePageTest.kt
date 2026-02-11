@@ -14,9 +14,9 @@ class HomePageTest : PageTest, StringSpec({
     "Given init assets Then render home page content" {
         renderGamePage({ it.buildHomePage() }) {
             contentString shouldBeEqual """
-                You are home... 🏠
-                What shall we do next, Sir?
-
+                You feel cozy in your ${it.user.cityTitle.label}... 🏠
+                What shall we do next, ${it.user.userTitle.label}?
+                
                 [1] Build 🛠️
                 """.trimIndent()
         }

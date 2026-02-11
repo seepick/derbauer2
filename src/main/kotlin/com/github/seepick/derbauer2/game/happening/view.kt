@@ -15,9 +15,9 @@ class HappeningPage(
     val multiView: HappeningMultiView,
 ) : NotificationPage(
     title = "Happening",
-    emoji = { multiView.currentUnseen().nature.emoji },
-    asciiArt = { multiView.currentUnseen().asciiArt },
-    contentRenderer = { multiView.currentUnseen().render(it) },
+    emoji = { multiView.currentUnseen.nature.emoji },
+    asciiArt = { multiView.currentUnseen.asciiArt },
+    contentRenderer = { multiView.currentUnseen.render(it) },
     button = ContinueButton { multiView.continueNextOrFinish() })
 
 class HappeningMultiView(user: User, currentPage: CurrentPage) : MultiView<Happening>(

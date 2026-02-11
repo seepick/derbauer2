@@ -70,4 +70,4 @@
     * lower tax rate
     * war/peace (army presence)
 * Effects:
-    * any good/bad rand outcome; e.g. end turn **happening**
+    * any good/bad rand outcome; e.g. end turn **happening** (giving free food to poor philosopher)

@@ -3,6 +3,7 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.common.Z
 import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.HasLabels
 
 interface HasEmoji {
@@ -11,6 +12,9 @@ interface HasEmoji {
 
 val Any.emojiOrNull: Emoji? get() = (this as? HasEmoji)?.emoji
 val Any.emojiSpaceOrEmpty: String get() = emojiOrNull?.let { "$it " } ?: ""
+
+val <T> T.emojiAndLabel: String where T : HasLabel, T : HasEmoji
+    get() = "$emojiSpaceOrEmpty$label"
 
 val <T> T.emojiAndLabelSingular: String where T : HasLabels, T : HasEmoji
     get() = "$emojiSpaceOrEmpty$labelSingular"

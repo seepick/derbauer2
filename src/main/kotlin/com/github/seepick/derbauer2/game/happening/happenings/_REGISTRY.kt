@@ -14,6 +14,7 @@ object DefaultHappeningRefRegistry : HappeningRefRegistry {
         FoundGoldHappening.Ref,
         RatsEatFoodHappening.Ref,
         RottenFoodHappening.Ref,
+        PoorPhilosopherHappening.Ref,
         // ...
         // ..
         // .
