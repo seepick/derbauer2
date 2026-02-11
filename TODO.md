@@ -23,6 +23,7 @@
 
 ## Backlog
 
+* 🤖 when interact toolbar, then dozens "MainWindow - UI render tick #1" logs... suppress them
 * 🖋 new season dependent happening
 * 🤖 ad Building: change `costsGold` to a more generic `costs` that can include multiple resources
 * 🤖 custom type SingleLine and MultiLine

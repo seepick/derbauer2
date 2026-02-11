@@ -5,16 +5,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class AudioViewModel(
     private val soundService: SoundPlayService,
+    stateRepo: TextengineStateRepository,
 ) : ViewModel() {
 
     private val log = logger {}
 
-    // TODO load initial value from prefs
-    var isSoundEnabled: Boolean by mutableStateOf(true)
+    var isSoundEnabled: Boolean by mutableStateOf(stateRepo.isSoundEnabled())
         private set
 
     val soundButtonTooltip: String by derivedStateOf {

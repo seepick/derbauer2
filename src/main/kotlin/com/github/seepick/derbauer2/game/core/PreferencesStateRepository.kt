@@ -18,17 +18,14 @@ class PreferencesStateRepository(
         log.debug { "Initializing java prefs at: ${prefs.absolutePath()}" }
     }
 
-    override fun getMusicPlaying(): Boolean? =
-        if (prefs.keys().toSet().contains(KEY_IS_PLAYING)) {
-            prefs.getBoolean(KEY_IS_PLAYING, IGNORE_DEFAULT_BOOLEAN)
-        } else {
-            null
-        }
+    override fun isMusicPlaying() = prefs.getBoolean(KEY_IS_PLAYING, DEFAULT_MUSIC_PLAYING)
+    override fun setMusicPlaying(musicPlaying: Boolean) {
+        putBoolean(KEY_IS_PLAYING, musicPlaying)
+    }
 
-    override fun setMusicPlaying(isPlaying: Boolean) {
-        log.debug { "Saving music playing state: $isPlaying" }
-        prefs.putBoolean(KEY_IS_PLAYING, isPlaying)
-        prefs.flush()
+    override fun isSoundEnabled() = prefs.getBoolean(KEY_SOUND_ENABLED, DEFAULT_SOUND_ENABLED)
+    override fun setSoundEnabled(soundEnabled: Boolean) {
+        putBoolean(KEY_SOUND_ENABLED, soundEnabled)
     }
 
     override fun getWindowPosition(): WinPos? =
@@ -44,10 +41,25 @@ class PreferencesStateRepository(
         prefs.flush()
     }
 
+    private fun putBoolean(key: String, value: Boolean) {
+        log.debug { "Set $key: $value" }
+        prefs.putBoolean(key, value)
+        prefs.flush()
+    }
+
+//    private fun getBooleanOrNull(key: String): Boolean? =
+//        if (prefs.keys().toSet().contains(key)) {
+//            prefs.getBoolean(key, IGNORE_DEFAULT_BOOLEAN)
+//        } else {
+//            null
+//        }
+
     companion object {
         private const val KEY_WIN_POS = "window.position"
         private const val KEY_IS_PLAYING = "music.isPlaying"
-        private const val IGNORE_DEFAULT_BOOLEAN = false
+        private const val KEY_SOUND_ENABLED = "sound.isEnabled"
+        private const val DEFAULT_SOUND_ENABLED = true
+        private const val DEFAULT_MUSIC_PLAYING = false
 
         fun loadPreferences(prefStatePath: KClass<*>): Preferences =
             Preferences.userRoot().node(

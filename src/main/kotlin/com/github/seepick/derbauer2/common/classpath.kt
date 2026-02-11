@@ -16,12 +16,11 @@ class ClasspathScanner(packageName: String) {
 
     fun <T : Any> scanObjectsImplementing(
         interfaceClass: KClass<T>,
-        ignoreAnnotation: KClass<out Annotation> = ClasspathScanIgnore::class,
-    ): List<T> = scanResult.getClassesImplementing(interfaceClass.java.name).mapNotNull {
-        if (it.hasAnnotation(ignoreAnnotation.java.name)) {
+    ): List<T> = scanResult.getClassesImplementing(interfaceClass.qualifiedName).mapNotNull {
+        if (it.hasAnnotation(ClasspathScanIgnore::class.qualifiedName)) {
             log.debug {
                 "Scan ignoring ${interfaceClass.simpleName}: " +
-                        "${it.name} (has ${ignoreAnnotation.simpleName} annotation)"
+                        "${it.name} (has ${ClasspathScanIgnore::class.simpleName} annotation)"
             }
             null
         } else if (!it.isObject) {

@@ -27,6 +27,7 @@ import org.koin.compose.koinInject
 
 private val log = logger {}
 
+
 @Suppress("FunctionName")
 @Composable
 fun Toolbar(
@@ -35,7 +36,7 @@ fun Toolbar(
     bgAlpha: Float,
 ) {
     val stateRepo = koinInject<TextengineStateRepository>()
-    val storedMusicPlayState = remember { stateRepo.getMusicPlaying() }
+    val storedMusicPlayState = remember { stateRepo.isMusicPlaying() }
     log.trace { "Receiveing toolbar.xOffset: $xOffset" }
     Box(modifier = Modifier.fillMaxSize()) {
         Box(
@@ -53,7 +54,7 @@ fun Toolbar(
                     .padding(0.dp, 8.dp),
             ) {
                 MusicButton(
-                    autoPlayMusic = storedMusicPlayState ?: false,
+                    autoPlayMusic = storedMusicPlayState,
                     stateRepo = stateRepo,
                 )
                 SoundToggleButton()

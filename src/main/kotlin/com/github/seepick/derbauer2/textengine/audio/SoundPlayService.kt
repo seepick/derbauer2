@@ -3,17 +3,23 @@ package com.github.seepick.derbauer2.textengine.audio
 import com.github.seepick.derbauer2.game.building.BuildingBuiltAction
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.ActionBusListener
+import com.github.seepick.derbauer2.game.core.PreferencesStateRepository
 import com.github.seepick.derbauer2.game.tech.TechResearchedAction
 import com.github.seepick.derbauer2.game.trade.ResourcesTradedAction
 
 class SoundPlayService(
     private val realPlayer: SoundPlayer,
+    private val stateRepo: PreferencesStateRepository,
 ) : ActionBusListener, SoundPlayer {
 
-    private var currentPlayer = realPlayer
+    private var currentPlayer: SoundPlayer
 
-    // FIXME at startup, read and set from java prefs (memory)
+    init {
+        currentPlayer = if (stateRepo.isSoundEnabled()) realPlayer else NoopSoundPlayer
+    }
+
     fun enable(isEnabled: Boolean) {
+        stateRepo.setSoundEnabled(isEnabled)
         currentPlayer = if (isEnabled) realPlayer else NoopSoundPlayer
     }
 
