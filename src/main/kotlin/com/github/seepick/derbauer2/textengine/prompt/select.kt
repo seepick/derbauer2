@@ -1,47 +1,39 @@
 package com.github.seepick.derbauer2.textengine.prompt
 
-import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed
-import com.github.seepick.derbauer2.textengine.keyboard.getIntOrNull
+import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import com.github.seepick.derbauer2.textengine.textmap.TransformingTableCol
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 class SelectPrompt<LABEL : OptionLabel, OPTIONS : Options<LABEL>>(
     val options: OPTIONS,
-) : Prompt {
-    private val log = logger {}
+) : Prompt, KeyListener by options {
 
     init {
-        @Suppress("MagicNumber") require(options.size in 1..9) {
+        @Suppress("MagicNumber")
+        require(options.size in 1..9) {
             "Select prompt must have between 1 and 9 options, but has ${options.size}: $options"
         }
     }
 
     override val inputIndicator = "1-${options.size}"
 
-    override fun onKeyPressed(key: KeyPressed) =
-        key.getIntOrNull()?.let { pressedInt ->
-            val option = options.items[pressedInt - 1]
-            log.debug { "🔢 Selected: $option" }
-            option.onSelected()
-            true
-        } ?: false
-
     override fun render(textmap: Textmap) {
         when (options) {
-            is OptionsSingle -> textmap.linesFor(options)
+            is OptionsSingle -> textmap.linesForSingle(options)
             is OptionsTabled -> textmap.linesForTabled(options)
         }
     }
 
     companion object {
-        operator fun <S : OptionLabel.Single> invoke(items: List<SelectOption<S>>) =
+        operator fun <S : SingleLabel> invoke(items: List<SelectOption<S>>) =
             SelectPrompt(Options.Singled(items))
     }
 }
 
-private fun Textmap.linesFor(options: OptionsSingle) = options.items.mapIndexed { idx, opt ->
-    line("[${idx + 1}] ${opt.label.value}")
+private fun Textmap.linesForSingle(options: OptionsSingle) {
+    options.items.mapIndexed { idx, opt ->
+        line("[${idx + 1}] ${opt.label.value}")
+    }
 }
 
 private fun Textmap.linesForTabled(options: OptionsTabled) {
@@ -65,60 +57,3 @@ private fun Textmap.linesForTabled(options: OptionsTabled) {
         rowItems = options.items,
     )
 }
-
-sealed class Options<LABEL : OptionLabel>(val items: List<SelectOption<out LABEL>>) {
-
-    val size = items.size
-
-    class Singled<SIMPLE : OptionLabel.Single>(
-        items: List<SelectOption<out SIMPLE>>,
-    ) : Options<SIMPLE>(items)
-
-    class Tabled(
-        items: List<SelectOption<OptionLabel.Table>>,
-    ) : Options<OptionLabel.Table>(items)
-
-    companion object {
-        operator fun <S : OptionLabel.Single> invoke(items: List<SelectOption<S>>) = Singled(items)
-    }
-}
-
-data class SelectOption<LABEL : OptionLabel>(
-    val label: LABEL,
-    val onSelected: () -> Unit,
-) {
-    override fun toString() = "SelectOption(label=${label})"
-
-    companion object {
-        operator fun invoke(label: String, onSelected: () -> Unit): SelectOption<OptionLabel.Single.Static> =
-            SelectOption(OptionLabel.Single.Static(label), onSelected)
-    }
-}
-
-sealed interface OptionLabel {
-    sealed interface Single : OptionLabel {
-        val value
-            get(): String = when (this) {
-                is Static -> staticLabel
-                is Dynamic -> provide()
-            }
-
-        data class Static(val staticLabel: String) : Single
-        class Dynamic(val provide: () -> String) : Single {
-            override fun toString() = "${this::class.simpleName}(label=${provide()})"
-        }
-    }
-
-    data class Table(val columns: List<String>) : OptionLabel
-}
-
-typealias StaticLabel = OptionLabel.Single.Static
-typealias DynamicLabel = OptionLabel.Single.Dynamic
-typealias TableLabel = OptionLabel.Table
-
-typealias OptionsSingle = Options.Singled<out OptionLabel.Single>
-typealias OptionsTabled = Options.Tabled
-
-typealias SingleSelectPrompt = SelectPrompt<OptionLabel.Single, Options<OptionLabel.Single>>
-typealias StaticSelectPrompt = SelectPrompt<OptionLabel.Single.Static, Options<OptionLabel.Single.Static>>
-typealias DynamicSelectPrompt = SelectPrompt<OptionLabel.Single.Dynamic, Options<OptionLabel.Single.Dynamic>>

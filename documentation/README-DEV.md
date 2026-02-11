@@ -14,9 +14,10 @@
 
 ## Gradle Commands
 
-* `./gradlew run` - run the compose app locally
-* `./gradlew dependencyUpdates` - check for newer versions (dependeabot is also configured)
+* `./gradlew run` - run the compose app
 * `./gradlew detekt` - static code analysis
+* `./gradlew dependencyUpdates` - check for newer versions (dependeabot is also configured)
+* `./gradlew --refresh-dependencies` - for troubleshooting
 
 ## GitHub Workflows
 
