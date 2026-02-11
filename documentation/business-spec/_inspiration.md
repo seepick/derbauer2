@@ -5,6 +5,7 @@ Other similar games:
 * Victorian Idle
     * website: https://alexdb.itch.io/victorian-idle
     * idle build game, industrial revolution; nice names/graphics/buildup
+    * see: [notes](_inspiration-victorian-idle.md)
 * Warsim
     * very big, nice game (5 USD, win only)
     * Website: https://huw2k8.itch.io/warsim
