@@ -1,8 +1,6 @@
-# ./gradlew --refresh-dependencies
-
 [versions]
 ben-manes = "0.53.0"
-compose = "1.10.0"
+compose = "1.10.1"
 detekt = "1.23.8"
 jacoco = "0.8.14"
 jlayer = "1.0.1"
@@ -12,7 +10,7 @@ koin = "4.1.1"
 kotest = "6.1.3"
 kotlin = "2.3.10"
 kotlinLogging = "7.0.14"
-logback = "1.5.28"
+logback = "1.5.29"
 mockk = "1.14.9"
 sonarqube = "7.2.2.6593"
 
