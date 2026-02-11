@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.Double11
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.coerceDouble11
-import com.github.seepick.derbauer2.game.common.emoji
-import com.github.seepick.derbauer2.game.common.rangeOfMin1To1
-import com.github.seepick.derbauer2.game.common.toFormatted
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.emoji.emoji
+import com.github.seepick.derbauer2.common.rangeOfMin1To1
+import com.github.seepick.derbauer2.common.toFormatted
+import com.github.seepick.derbauer2.common.unit.Double11
+import com.github.seepick.derbauer2.common.unit.coerceDouble11
 import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User

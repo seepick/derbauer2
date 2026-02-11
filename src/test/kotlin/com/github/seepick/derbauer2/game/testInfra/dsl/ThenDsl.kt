@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.testInfra.dsl
 
-import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.common.unit.Z
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.Asset

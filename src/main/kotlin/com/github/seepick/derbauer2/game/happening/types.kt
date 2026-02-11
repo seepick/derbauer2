@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.emoji.emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.turn.CurrentTurn

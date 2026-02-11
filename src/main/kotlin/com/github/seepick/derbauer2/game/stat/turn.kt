@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.StrictDouble
+import com.github.seepick.derbauer2.common.unit.StrictDouble
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.GlobalTurnStep

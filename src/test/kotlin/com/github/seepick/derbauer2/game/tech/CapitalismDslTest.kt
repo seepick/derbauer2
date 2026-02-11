@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.tech
 
+import com.github.seepick.derbauer2.common.unit.double11
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.building.Tent
-import com.github.seepick.derbauer2.game.common.double11
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.resource.Citizen
 import com.github.seepick.derbauer2.game.stat.Happiness

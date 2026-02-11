@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.game.core.Warning
 import com.github.seepick.derbauer2.game.core.`warning ⚠️`
 import com.github.seepick.derbauer2.game.resource.Citizen

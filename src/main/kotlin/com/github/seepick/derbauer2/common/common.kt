@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
 import java.util.Locale
 import kotlin.contracts.ExperimentalContracts
@@ -46,4 +46,10 @@ fun Double.toFormatted(): String {
     val absValue = abs(this)
     val decimals = if (absValue == 0.0) 2 else max(2, -floor(log10(absValue)).toInt() + 1)
     return String.format(Locale.ENGLISH, "%.${decimals}f", this)
+}
+
+open class ClasspathFile(val path: String) {
+    fun readBytes(): ByteArray =
+        ClasspathFile::class.java.getResourceAsStream(path)?.readAllBytes()
+            ?: error("Classpath file not found at: $path")
 }

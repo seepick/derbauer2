@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.addBuilding
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.prob.ProbThresholderKey
 import com.github.seepick.derbauer2.game.prob.Probs

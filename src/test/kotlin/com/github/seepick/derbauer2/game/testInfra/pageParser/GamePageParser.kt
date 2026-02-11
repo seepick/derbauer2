@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.testInfra.pageParser
 
-import com.github.seepick.derbauer2.textengine.compose.MainWin
+import com.github.seepick.derbauer2.textengine.mainWindow.MainWin
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.equals.shouldBeEqual
 

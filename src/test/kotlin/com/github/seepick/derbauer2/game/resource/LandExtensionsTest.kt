@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.resource
 
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Tent
 import com.github.seepick.derbauer2.game.building.addBuilding
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.core.User
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

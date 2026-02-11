@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.keyboard.KeyListener
 import com.github.seepick.derbauer2.textengine.keyboard.KeyPressed

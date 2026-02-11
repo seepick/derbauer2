@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.testInfra.dsl
 
-import com.github.seepick.derbauer2.game.common.ListX
-import com.github.seepick.derbauer2.game.common.StrictDouble
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.common.ListX
+import com.github.seepick.derbauer2.common.unit.StrictDouble
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.happening.HappeningRef
@@ -13,9 +13,11 @@ import com.github.seepick.derbauer2.game.prob.disableAllProbs
 import com.github.seepick.derbauer2.game.stat.Stat
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
-import com.github.seepick.derbauer2.textengine.audio.Beeper
+import com.github.seepick.derbauer2.textengine.audio.SoundPlayer
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
+import io.mockk.Runs
 import io.mockk.every
+import io.mockk.just
 import org.koin.test.KoinTest
 import org.koin.test.mock.declareMock
 import kotlin.reflect.KClass
@@ -30,10 +32,9 @@ fun Given(
     disableAllProbs: Boolean = true,
     code: GivenDsl.() -> Unit,
 ): GivenDsl {
-    koin.declareMock<Beeper> {
-        every { beep(any()) } answers {
-            log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
-        }
+    koin.declareMock<SoundPlayer> {
+        every { play(any()) } just Runs
+//            log.debug { "TEST beep for reason=[${arg<String>(0)}]" }
     }
     koin.getKoin().initGame(initAssets = initAssets)
 

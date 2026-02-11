@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
 import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import kotlin.reflect.KClass

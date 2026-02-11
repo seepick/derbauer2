@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.core
 
-import com.github.seepick.derbauer2.game.common.getKoinBeansByType
+import com.github.seepick.derbauer2.common.getKoinBeansByType
 import com.github.seepick.derbauer2.game.transaction.TxValidatorRegistry
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
 import org.koin.core.module.dsl.singleOf

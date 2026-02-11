@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.StrictDouble
-import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.common.unit.StrictDouble
+import com.github.seepick.derbauer2.common.unit.Zz
 
 @Suppress("ClassOrdering")
 class ProbsStub : Probs {

@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game
 
+import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.game.building.Building
 import com.github.seepick.derbauer2.game.building.Field
 import com.github.seepick.derbauer2.game.building.Granary
 import com.github.seepick.derbauer2.game.building.Tent
-import com.github.seepick.derbauer2.game.common.Zz
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.TxOwnable

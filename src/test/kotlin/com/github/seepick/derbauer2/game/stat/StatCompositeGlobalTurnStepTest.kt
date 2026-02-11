@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.double11
+import com.github.seepick.derbauer2.common.unit.double11
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.turn.turnReport
 import io.kotest.core.spec.style.StringSpec

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.core.Asset
 import com.github.seepick.derbauer2.game.core.HasLabels
 import com.github.seepick.derbauer2.game.core.Mechanics
@@ -37,7 +37,7 @@ class Tent : Building, StoresResource, HasLabels by Data, ViewOrder by Data {
     override val landUse = Mechanics.tentLandUse
     override val storableResourceClass = Citizen::class
     override val storageAmount = Mechanics.tentStoresCitizen.z
-
+    override val label = labelSingular
     override fun deepCopy() = Tent().also { it._setOwnedInternal = owned }
     override fun toString() = "Tent(owned=$owned)"
 }
@@ -53,7 +53,7 @@ class Field : Building, ProducesResource, HasLabels by Data, ViewOrder by Data {
     override val landUse = Mechanics.fieldLandUse
     override val producingResourceClass = Food::class
     override val produceResourceAmount = Mechanics.fieldProduceFood
-
+    override val label = labelSingular
     override fun deepCopy() = Field().also { it._setOwnedInternal = owned }
     override fun toString() = "Field(owned=$owned)"
 }
@@ -70,7 +70,7 @@ class Granary : Building, StoresResource, HasLabels by Data, ViewOrder by Data {
     override val landUse = Mechanics.granaryLanduse
     override val storableResourceClass = Food::class
     override val storageAmount = Mechanics.granaryCapacity
-
+    override val label = labelSingular
     override fun deepCopy() = Granary().also { it._setOwnedInternal = owned }
     override fun toString() = "Granary(owned=$owned)"
 }

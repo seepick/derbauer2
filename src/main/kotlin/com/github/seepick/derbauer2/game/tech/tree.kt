@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.tech
 
-import com.github.seepick.derbauer2.game.common.printTree
-import com.github.seepick.derbauer2.game.common.validCycleFree
+import com.github.seepick.derbauer2.common.printTree
+import com.github.seepick.derbauer2.common.validCycleFree
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.requireAllZeroOrPositive
 

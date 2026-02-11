@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Percent
-import com.github.seepick.derbauer2.game.common.compareTo
+import com.github.seepick.derbauer2.common.unit.`%`
+import com.github.seepick.derbauer2.common.unit.Percent
+import com.github.seepick.derbauer2.common.unit.compareTo
 import kotlin.random.Random
 
 fun interface ProbCalculator {

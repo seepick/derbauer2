@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.stat
 
-import com.github.seepick.derbauer2.game.common.StrictDouble
+import com.github.seepick.derbauer2.common.unit.StrictDouble
 import com.github.seepick.derbauer2.game.core.Entity
 import kotlin.reflect.KClass
 

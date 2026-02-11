@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.Percent
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.Percent
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.zz
 import java.util.Random
 import kotlin.math.roundToLong
 

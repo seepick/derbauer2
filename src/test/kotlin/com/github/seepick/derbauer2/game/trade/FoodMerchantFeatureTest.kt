@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.trade
 
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.resource.Food

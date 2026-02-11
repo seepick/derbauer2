@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game
 
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.game.core.AppProperties
 import com.github.seepick.derbauer2.game.core.DerBauer2SysProp
 import com.github.seepick.derbauer2.game.view.`derbauer2 🏰`
-import com.github.seepick.derbauer2.textengine.compose.showMainWindow
+import com.github.seepick.derbauer2.textengine.mainWindow.showMainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.core.Koin
 import kotlin.reflect.KClass

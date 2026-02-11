@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.textengine.textmap
 
-import com.github.seepick.derbauer2.game.common.countGraphemes
-import com.github.seepick.derbauer2.game.common.extractGraphemes
+import com.github.seepick.derbauer2.common.emoji.countGraphemes
+import com.github.seepick.derbauer2.common.emoji.extractGraphemes
 
 class Textmap(
     private val cols: Int,

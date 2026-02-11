@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import com.github.seepick.derbauer2.game.resource.ResourceChanges
 import com.github.seepick.derbauer2.game.resource.buildResourceChanges

@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
 import org.koin.core.annotation.KoinInternalApi
 import org.koin.core.definition.Kind

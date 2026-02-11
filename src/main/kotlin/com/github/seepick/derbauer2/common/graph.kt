@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
 @AiGenerated
 fun <T> validCycleFree(all: List<T>, adjacency: Map<T, List<T>>) {

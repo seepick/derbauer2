@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.testInfra.pageParser
 
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
 
 data class InfoLine(
     val cappedResources: List<CappedResourceInfo>,

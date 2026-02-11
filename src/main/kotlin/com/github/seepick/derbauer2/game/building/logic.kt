@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.ActionBus
 import com.github.seepick.derbauer2.game.core.TxOwnable

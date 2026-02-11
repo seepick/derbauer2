@@ -1,11 +1,11 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.double11
-import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.`%`
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.double11
+import com.github.seepick.derbauer2.common.unit.z
+import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.prob.PassThroughDiffuser

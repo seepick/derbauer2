@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Percent
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.common.unit.Percent
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.game.core.Entity
 import com.github.seepick.derbauer2.game.core.User
 import io.kotest.matchers.collections.shouldBeEmpty

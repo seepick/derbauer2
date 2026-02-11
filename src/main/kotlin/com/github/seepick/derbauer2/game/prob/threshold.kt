@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.StrictDouble
+import com.github.seepick.derbauer2.common.unit.StrictDouble
 import kotlin.random.Random
 
 @JvmInline

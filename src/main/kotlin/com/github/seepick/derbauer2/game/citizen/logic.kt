@@ -1,10 +1,10 @@
 package com.github.seepick.derbauer2.game.citizen
 
-import com.github.seepick.derbauer2.game.common.Percent
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.Percent
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.z
+import com.github.seepick.derbauer2.common.unit.zz
 
 object StarveCompute {
 

@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.transaction
 
-import com.github.seepick.derbauer2.game.common.NegativeZException
+import com.github.seepick.derbauer2.common.unit.NegativeZException
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core._applyOwnableTx
 import io.github.oshai.kotlinlogging.KotlinLogging.logger

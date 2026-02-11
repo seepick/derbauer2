@@ -1,10 +1,10 @@
 @file:Suppress("UnusedImports") // detekt can't detect context imports usage -haha, fail :D
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.requireUniqueBy
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.requireUniqueBy
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.view.emojiOrSimpleName
 import com.github.seepick.derbauer2.game.view.emojiSpaceOrEmpty

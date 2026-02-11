@@ -1,4 +1,11 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
+
+import com.github.seepick.derbauer2.common.unit.Double01
+import com.github.seepick.derbauer2.common.unit.Double11
+import com.github.seepick.derbauer2.common.unit.DoubleAny
+import com.github.seepick.derbauer2.common.unit.DoublePos
+import com.github.seepick.derbauer2.common.unit.StrictDouble
+import com.github.seepick.derbauer2.common.unit.double11
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified SD : StrictDouble, T> rangeOf(

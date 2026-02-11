@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec

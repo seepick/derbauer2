@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.happening.happenings
 
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.core.TxOwnable
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.hasEntity

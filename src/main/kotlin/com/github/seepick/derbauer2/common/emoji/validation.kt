@@ -1,8 +1,9 @@
 @file:AiGenerated
 @file:Suppress("MagicNumber")
 
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common.emoji
 
+import com.github.seepick.derbauer2.common.AiGenerated
 import java.text.BreakIterator
 
 fun String.requireIsSingleEmoji() {

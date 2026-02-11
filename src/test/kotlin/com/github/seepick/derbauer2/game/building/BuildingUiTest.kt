@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.building
 
 import androidx.compose.ui.test.junit4.createComposeRule
-import com.github.seepick.derbauer2.game.common.Emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.`gold 💰`
 import com.github.seepick.derbauer2.game.testInfra.pageParser.keyForSelectOption

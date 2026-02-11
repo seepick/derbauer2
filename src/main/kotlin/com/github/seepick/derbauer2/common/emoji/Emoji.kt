@@ -1,6 +1,6 @@
 @file:Suppress("MagicNumber")
 
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common.emoji
 
 @JvmInline
 value class Emoji(val string: String) {

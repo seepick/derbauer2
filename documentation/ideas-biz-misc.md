@@ -1,5 +1,6 @@
 # Misc Business Ideas
 
+* 🎨 change bg music based on event (news, new title/epoch; disaster happening like plague)
 * ? happiness stat only enabled if researched?
 * ad HappinessDeathPostModifier: look into history, if previous turns also deaths; if so, increase more (with max!)
 * minor: refactor deterministic order of Tech; use tree to do it properly (not manually registry)

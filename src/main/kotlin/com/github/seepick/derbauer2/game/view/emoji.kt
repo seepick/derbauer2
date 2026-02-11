@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.view
 
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.Z
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.emoji.emoji
+import com.github.seepick.derbauer2.common.unit.Z
+import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.game.core.HasLabel
 import com.github.seepick.derbauer2.game.core.HasLabels
 

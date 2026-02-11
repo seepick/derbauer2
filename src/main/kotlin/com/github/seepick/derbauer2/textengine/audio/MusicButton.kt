@@ -9,9 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.Color
 import com.github.seepick.derbauer2.game.prob.ListShuffler
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
+import com.github.seepick.derbauer2.textengine.compose.Tooltip
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.koinInject
 
@@ -19,7 +19,11 @@ private val log = logger {}
 
 @Suppress("FunctionName", "LongMethod")
 @Composable
-fun MusicButton(autoPlayMusic: Boolean, stateRepo: TextengineStateRepository) {
+fun MusicButton(
+    autoPlayMusic: Boolean,
+    stateRepo: TextengineStateRepository,
+//    viewModel: AudioViewModel = koinViewModel(),
+) {
     val shuffler = koinInject<ListShuffler>()
     val player = remember {
         MusicPlayer(shuffler = shuffler)
@@ -33,18 +37,20 @@ fun MusicButton(autoPlayMusic: Boolean, stateRepo: TextengineStateRepository) {
             stateRepo.setMusicPlaying(true)
         }
     }
-    IconButton(onClick = {
-        if (isPlaying) {
-            player.stop()
-            isPlaying = false
-            stateRepo.setMusicPlaying(false)
-        } else {
-            player.play()
-            isPlaying = true
-            stateRepo.setMusicPlaying(true)
+    Tooltip(if (isPlaying) "Stop Music" else "Play Music") {
+        IconButton(onClick = {
+            if (isPlaying) {
+                player.stop()
+                isPlaying = false
+                stateRepo.setMusicPlaying(false)
+            } else {
+                player.play()
+                isPlaying = true
+                stateRepo.setMusicPlaying(true)
+            }
+        }) {
+            Text(if (isPlaying) "🔊" else "🔇")
         }
-    }) {
-        Text(if (isPlaying) "⏸️" else "▶️", color = Color.White)
     }
     DisposableEffect(Unit) {
         onDispose {

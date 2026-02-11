@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.trade
 
-import com.github.seepick.derbauer2.game.common.Zz
+import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.game.resource.Resource
 import kotlin.reflect.KClass
 

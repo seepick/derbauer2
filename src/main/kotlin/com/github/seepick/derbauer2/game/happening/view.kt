@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.happening
 
-import com.github.seepick.derbauer2.game.common.toFormatted
+import com.github.seepick.derbauer2.common.toFormatted
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.happinessImpact
 import com.github.seepick.derbauer2.game.stat.Happiness

@@ -5,9 +5,9 @@ import com.github.seepick.derbauer2.game.core.WarningListener
 import com.github.seepick.derbauer2.game.gameModule
 import com.github.seepick.derbauer2.game.initGame
 import com.github.seepick.derbauer2.game.view.textengineModule
-import com.github.seepick.derbauer2.textengine.audio.Beeper
-import com.github.seepick.derbauer2.textengine.audio.IgnoringBeeper
-import com.github.seepick.derbauer2.textengine.compose.MainWindow
+import com.github.seepick.derbauer2.textengine.audio.NoopSoundPlayer
+import com.github.seepick.derbauer2.textengine.audio.SoundPlayer
+import com.github.seepick.derbauer2.textengine.mainWindow.MainWindow
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import org.koin.compose.KoinApplication
 import org.koin.dsl.bind
@@ -18,7 +18,7 @@ import java.awt.Window
 private val log = logger {}
 
 fun uiTestModule(listener: WarningListener) = module {
-    single { IgnoringBeeper } bind Beeper::class
+    single { NoopSoundPlayer } bind SoundPlayer::class
     single { listener }
 }
 

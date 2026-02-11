@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.common.AiGenerated
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.common.AiGenerated
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.emoji.emoji
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
 private const val WEEKS_PER_YEAR = 52

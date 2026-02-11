@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.textengine.textmap
 
-import com.github.seepick.derbauer2.game.common.countGraphemes
+import com.github.seepick.derbauer2.common.emoji.countGraphemes
 
 interface TableGenerator {
     fun <T> transformingTable(

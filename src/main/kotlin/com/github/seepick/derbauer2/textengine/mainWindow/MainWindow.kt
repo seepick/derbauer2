@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.textengine.compose
+package com.github.seepick.derbauer2.textengine.mainWindow
 
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -23,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.awt.ComposeWindow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalDensity
@@ -37,11 +36,10 @@ import androidx.compose.ui.window.rememberWindowState
 import com.github.seepick.derbauer2.game.view.attachMacosQuitHandler
 import com.github.seepick.derbauer2.game.view.textengineModule
 import com.github.seepick.derbauer2.textengine.CurrentPage
+import com.github.seepick.derbauer2.textengine.Derbauer2Theme
 import com.github.seepick.derbauer2.textengine.Page
 import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.TextengineStateRepository
-import com.github.seepick.derbauer2.textengine.bgColor
-import com.github.seepick.derbauer2.textengine.fgColor
 import com.github.seepick.derbauer2.textengine.keyboard.toKeyPressed
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
@@ -167,11 +165,11 @@ private fun rememberMainWindowState(
     onTick: () -> Unit,
 ): MainWindowState {
     val density = LocalDensity.current
-    val toolbarWidth = 40.dp
-    val cursorLeftThreshold = with(density) { toolbarWidth.toPx() }
+
+    val cursorLeftThreshold = with(density) { MainWin.toolbarWidth.toPx() }
     var isCursorNearLeft by remember { mutableStateOf(false) }
     val toolbarOffset by animateDpAsState(
-        targetValue = if (isCursorNearLeft) 0.dp else (-42).dp,
+        targetValue = if (isCursorNearLeft) 0.dp else -MainWin.toolbarWidth,
         animationSpec = tween(durationMillis = TOOLBAR_ANIMATION_DURATION),
     )
     val toolbarAlpha by animateFloatAsState(
@@ -181,9 +179,9 @@ private fun rememberMainWindowState(
     val modifier = Modifier
         .fillMaxSize()
         .testTag(TestTags.mainBox)
-        .border(MainWin.outerBorder, Color.fgColor)
+        .border(MainWin.outerBorder, Derbauer2Theme.fgColor)
         .padding(MainWin.outerBorder)
-        .background(Color.bgColor)
+        .background(Derbauer2Theme.bgColor)
         .padding(MainWin.innerMargin)
         .onPreviewKeyEvent { e ->
             val key = e.toKeyPressed() ?: return@onPreviewKeyEvent false
@@ -209,7 +207,7 @@ private fun rememberMainWindowState(
         }
 
     return MainWindowState(
-        toolbarWidth = toolbarWidth,
+        toolbarWidth = MainWin.toolbarWidth,
         toolbarOffset = toolbarOffset,
         toolbarAlpha = toolbarAlpha,
         mainBoxModifier = modifier,

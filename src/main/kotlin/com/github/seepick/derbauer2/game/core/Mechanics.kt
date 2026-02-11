@@ -2,14 +2,14 @@
 
 package com.github.seepick.derbauer2.game.core
 
+import com.github.seepick.derbauer2.common.unit.`%`
+import com.github.seepick.derbauer2.common.unit.Double01
+import com.github.seepick.derbauer2.common.unit.Double11
+import com.github.seepick.derbauer2.common.unit.Percent
+import com.github.seepick.derbauer2.common.unit.double01
+import com.github.seepick.derbauer2.common.unit.k
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.DerBauer2
-import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Double01
-import com.github.seepick.derbauer2.game.common.Double11
-import com.github.seepick.derbauer2.game.common.Percent
-import com.github.seepick.derbauer2.game.common.double01
-import com.github.seepick.derbauer2.game.common.k
-import com.github.seepick.derbauer2.game.common.z
 import com.github.seepick.derbauer2.game.happening.HappeningNature
 import com.github.seepick.derbauer2.game.turn.Season
 import com.github.seepick.derbauer2.game.turn.Turn
@@ -27,7 +27,7 @@ object Mechanics {
 
     // resources
     val startingGold = if (DEV) 1.k else 400.z
-    val startingLand = 20.z
+    val startingLand = if (DEV) 100.z else 20.z
     val startingFood = 30.z
     val startingCitizens = 10.z
     // buildings

@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.ListX
-import com.github.seepick.derbauer2.game.common.Z
+import com.github.seepick.derbauer2.common.ListX
+import com.github.seepick.derbauer2.common.unit.Z
 import com.github.seepick.derbauer2.game.core.User
 import kotlin.reflect.KClass
 

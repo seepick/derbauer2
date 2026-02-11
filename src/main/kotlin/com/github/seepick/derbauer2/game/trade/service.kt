@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.trade
 
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.core.ActionBus
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.TxOwnable

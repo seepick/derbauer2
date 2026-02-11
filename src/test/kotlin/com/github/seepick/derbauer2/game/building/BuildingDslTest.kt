@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.building
 
-import com.github.seepick.derbauer2.game.common.z
+import com.github.seepick.derbauer2.common.unit.z
 import com.github.seepick.derbauer2.game.core.Mechanics
 import com.github.seepick.derbauer2.game.core.WarningType
 import com.github.seepick.derbauer2.game.resource.Gold

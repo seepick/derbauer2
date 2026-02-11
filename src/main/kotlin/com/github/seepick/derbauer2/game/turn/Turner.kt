@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.turn
 
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.Action
 import com.github.seepick.derbauer2.game.core.ActionsCollector
 import com.github.seepick.derbauer2.game.core.User

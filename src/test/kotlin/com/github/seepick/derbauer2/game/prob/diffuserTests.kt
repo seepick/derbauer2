@@ -1,9 +1,9 @@
 package com.github.seepick.derbauer2.game.prob
 
-import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Zz
-import com.github.seepick.derbauer2.game.common.z
-import com.github.seepick.derbauer2.game.common.zz
+import com.github.seepick.derbauer2.common.unit.`%`
+import com.github.seepick.derbauer2.common.unit.Zz
+import com.github.seepick.derbauer2.common.unit.z
+import com.github.seepick.derbauer2.common.unit.zz
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldBeSingleton

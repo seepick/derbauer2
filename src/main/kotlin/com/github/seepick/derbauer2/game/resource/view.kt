@@ -2,8 +2,8 @@
 
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.Emoji
-import com.github.seepick.derbauer2.game.common.emoji
+import com.github.seepick.derbauer2.common.emoji.Emoji
+import com.github.seepick.derbauer2.common.emoji.emoji
 import com.github.seepick.derbauer2.game.view.ViewOrder
 import java.util.concurrent.atomic.AtomicInteger
 

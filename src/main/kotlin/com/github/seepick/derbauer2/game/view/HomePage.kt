@@ -1,8 +1,8 @@
 package com.github.seepick.derbauer2.game.view
 
+import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.game.building.BuildingPage
 import com.github.seepick.derbauer2.game.building.`build 🛠️`
-import com.github.seepick.derbauer2.game.common.Emoji
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.isGameOver
 import com.github.seepick.derbauer2.game.feature.hasFeature

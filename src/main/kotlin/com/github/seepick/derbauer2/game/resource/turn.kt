@@ -1,7 +1,7 @@
 package com.github.seepick.derbauer2.game.resource
 
-import com.github.seepick.derbauer2.game.common.`%`
-import com.github.seepick.derbauer2.game.common.Percent
+import com.github.seepick.derbauer2.common.unit.`%`
+import com.github.seepick.derbauer2.common.unit.Percent
 import com.github.seepick.derbauer2.game.core.User
 import com.github.seepick.derbauer2.game.core.foodProductionBonus
 import com.github.seepick.derbauer2.game.turn.CurrentTurn

@@ -1,6 +1,8 @@
 @file:Suppress("MagicNumber")
 
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common.emoji
+
+import com.github.seepick.derbauer2.common.AiGenerated
 
 fun String.countGraphemes(): Int = extractGraphemes().size
 

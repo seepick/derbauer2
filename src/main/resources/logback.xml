@@ -7,7 +7,7 @@
     </appender>
 
     <!-- TRACE/ALL will show lots of transaction logs -->
-    <logger name="com.github.seepick.derbauer2" level="DEBUG"/>
+    <logger name="com.github.seepick.derbauer2" level="TRACE"/>
 
     <root level="WARN">
         <appender-ref ref="CONSOLE"/>

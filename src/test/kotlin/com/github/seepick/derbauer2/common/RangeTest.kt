@@ -1,5 +1,8 @@
-package com.github.seepick.derbauer2.game.common
+package com.github.seepick.derbauer2.common
 
+import com.github.seepick.derbauer2.common.unit.Double11
+import com.github.seepick.derbauer2.common.unit.DoubleAny
+import com.github.seepick.derbauer2.common.unit.doubleAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.equals.shouldBeEqual

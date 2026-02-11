@@ -1,4 +1,4 @@
-package com.github.seepick.derbauer2.textengine.compose
+package com.github.seepick.derbauer2.textengine.mainWindow
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,9 +12,9 @@ import androidx.compose.ui.semantics.text
 import androidx.compose.ui.text.AnnotatedString
 import com.github.seepick.derbauer2.textengine.TestTags
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
-import io.github.oshai.kotlinlogging.KotlinLogging
+import io.github.oshai.kotlinlogging.KotlinLogging.logger
 
-private val log = KotlinLogging.logger {}
+private val log = logger {}
 
 @Suppress("FunctionName")
 @Composable
