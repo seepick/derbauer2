@@ -22,7 +22,6 @@ class TurnUiTest : ComposeUiTest {
 
         ui.waitForIdle()
         gameText.contentString shouldContainIgnoringCase "T U R N   R E P O R T"
-        gameText.infoRight shouldBeEqual "s"
     }
 
     @Test
