@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.core
 
-enum class EpochTitle(
+enum class EpochProgress(
     override val label: String,
 ) : HasLabel {
     // keep order!

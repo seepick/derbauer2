@@ -31,7 +31,7 @@ data class PoorPhilosopherHappening(
     override val asciiArt = AsciiArt.manHat
 
     override fun render(textmap: Textmap) {
-        textmap.multiLine(Texts.poorPhilosopherHappening(user.cityTitle, goldGiving))
+        textmap.multiLine(Texts.poorPhilosopherHappening(user.cityProgress, goldGiving))
     }
 
     override fun execute(user: User) {

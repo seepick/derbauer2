@@ -9,7 +9,9 @@
     - later on, gold
     - later later on, land as buildings require lots of land
     - push user to get more involved in military actions (as trading is highly expensive)
-* IDEA: for each, a different color theme used by rendering engine (ascii arts different? emojis?)
+* use a different theme for each epoch
+    * color changes (bg/fg)
+    * maybe ascii arts/emojis/texts?
 
 ## Timeline
 

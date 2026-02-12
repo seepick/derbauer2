@@ -33,7 +33,7 @@ class HappinessSeasonPreModifier(
     override fun toString() = "${this::class.simpleName}"
 }
 
-class HappinessDeathPostModifier : PostStatModifier {
+class HappinessDeathPenaltyPostModifier : PostStatModifier {
     override fun calcModifierOrNull(report: TurnReport, user: User, statClass: StatKClass): Double? {
         if (statClass != Happiness::class || !user.hasEntity(Citizen::class)) {
             return null

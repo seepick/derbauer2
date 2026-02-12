@@ -93,4 +93,6 @@ class ProducesResourceTurnStepTest : DescribeSpec({
             }
         }
     }
+    // TEST Given two distinct buildings producing same resource Then sum
+    // TEST Given resource producing entity, but not ownable (not building but a feature or similar) Then also produce
 })

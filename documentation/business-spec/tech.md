@@ -7,12 +7,14 @@
         * prerequisites: other technology, buildings (military strength, resources?), ...
             * type: singular | leveled (reserchable multiple times, increasing costs; maybe infinitely like factorio?)
 * PS: no need for concept of "upgrades", tech-tree will do it together with Features concept
+* TODO: refactor deterministic order of Tech; use tree to do it properly (not manually registry)
 
 ## Effects
 
 * new possibities/features
-    * new buildings/features/actions (type == singular)
-    * menu items (new things to do), buildings, happenings, resources, ...
+    * adds to game engine/functionality/action...
+        * new buildings/features/actions (type == singular)
+        * menu items (new things to do), buildings, happenings, resources, ...
 * economy:
     * resource production/capacity (effectiveness/efficiency of buildings; type == leveled)
     * lower build/maintanance costs (type == leveled)
@@ -34,7 +36,9 @@
     * Irrigation
     * Food Preservation: +storage capacity
 * Religion
+    * Reincarnation: after death, if child available, continue playing; see [life](life.md)
 * Capitalism: advanced trading
 * Warfare: enables military
 * Medicine: improve health stat; fewer diseases
 * Education: increase knowledge production
+* 

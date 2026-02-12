@@ -6,26 +6,31 @@
 
 ## Army Management
 
-* use to word "hire" instead of build/buy
-* build army units (soldiers, knights)
-* costs: gold, people; upcome gold/people/food over time
-    * can't be reverted back (?)
-* buildings to unlock different unit types (barracks, stable, archery, siege workshop); also act as storage
-* have attack/defense values at least (hp? against citizens/army/city?)
+* hire army units (instead of build/buy)
+* properties;
+    * costs: gold, people
+    * upcome gold/people/food over time (can't be reverted back)
+    * fight props:
+        * attack (against citizens/army/city?)
+        * defense
+        * hp
+        * (NO: attack type; melee, ranged, siege, magic; would be too much to balance)
+* enabled by:
+    * buildings to unlock different unit types (barracks, stable, archery, siege workshop); also act as storage
 * IDEA: concept of heroes
 * IDEA: give free stuff/money to army; increase morale => better performance
 
-### Army Types
+### Army Units
 
 * "angry farmer": weakest (see info below)
 * soldier: basic unit (barracks)
-* knight: +att, +att against wildlings (stable)
+* defender -> phalanx: high def
+* warrior -> knight: +att, +att against wildlings (stable)
 * archer: +def (archery)
-* catapult: +att against empire
+* catapult: +att against empires/non-barbarian NPCs
 * ram: +att only against buildings/empire, not units
 * trap builder: +def, 0 att!
-* wizard
-* arch mage
+* wizard -> arch mage
 * scout: is a (non-army) military unit; to see when the next attack is approaching
 
 ## Warfare
@@ -34,10 +39,10 @@
     * the time always stays "roughly" the same, but the speed of the ticker changes depending on army size
     * IDEA: has a fade-out at the end, to make it more dramatic
 * weakened for some turns, after military interaction
-* IDEAs:
+* (maybe not) IDEAs:
+    * espionage to reveal enemies' stats
     * attack types (melee, ranged, siege, magic)
     * dedicated military resources (metal, horses, ...)
-    * espionage to reveal enemies' stats
     * ?weapon types? (sword, axe, spear, ...)
 
 ### Attack

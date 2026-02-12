@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.game.turn.Reports
 import com.github.seepick.derbauer2.game.view.AsciiArt
 
 @Suppress("MagicNumber")
-enum class UserTitle(
+enum class UserProgress(
     val label: String,
 ) {
     // keep order!
@@ -22,14 +22,14 @@ enum class UserTitle(
 
 class UserTitleLordFeature : Feature by Ref {
     object Ref : UserTitleRef(
-        enumValue = UserTitle.Lord,
+        enumValue = UserProgress.Lord,
         checkIt = { _, reports -> reports.last().turn >= Mechanics.featureLordAge },
         buildIt = { UserTitleLordFeature() }
     )
 }
 
 abstract class UserTitleRef(
-    val enumValue: UserTitle,
+    val enumValue: UserProgress,
     checkIt: (user: User, reports: Reports) -> Boolean,
     buildIt: () -> Feature,
 ) : FeatureRef(
@@ -42,7 +42,7 @@ abstract class UserTitleRef(
     override val ref = this
 
     override fun mutate(user: User) {
-        user.userTitle = enumValue
+        user.userProgress = enumValue
     }
 
     override fun deepCopy() = this

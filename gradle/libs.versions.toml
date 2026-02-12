@@ -1,6 +1,6 @@
 [versions]
 ben-manes = "0.53.0"
-classgraph = "4.8.179"
+classgraph = "4.8.184"
 compose = "1.10.1"
 detekt = "1.23.8"
 jacoco = "0.8.14"

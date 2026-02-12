@@ -12,6 +12,7 @@
     * yes, at least they can be reduced: think of a negative happening (natural disaster) or foreign army attacks!
     * if building is destroyed, need to rearrange the loss
         * possible features go away; capacity reduced (surplus resources lost; needs explicit recalculation)
+* TODO 🤖 change `costsGold` to a more generic `costs` that can include multiple resources
 
 ## Effects
 

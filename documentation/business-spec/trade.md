@@ -5,6 +5,7 @@
 * only limited amount of resources to buy
     * each turn refreshes gradually to given max
     * max is determined by...?
+* market adjustment: when selling too much, price drops; recovers over time to baseline
 
 # Tradable stuff
 

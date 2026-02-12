@@ -2,7 +2,8 @@
 
 ## Economical
 
-* gold bag/treasure: +gold
+* gold bag/treasure found: +gold
+    * consider history, gold amount (max, current, avg over last x-turns), etc.
 * rats eaten
     * -food; amount depends on amount of stored food/capacity?
     * IDEA: change likelyhood if ...
@@ -34,7 +35,9 @@
         * e.g. tells a secret: get free upgrade
 * migration
     * group of people arrives/flees: +/-people
-    * immigrants: if happiness (and karma) is high, free people move in
+    * immigrants: free people move in
+        * if citizen usage < 80%
+        * if happiness (and karma) is high
 * marriage / birth
     * if dies (because of age) option to continue by day 1 but with same state
 

@@ -3,7 +3,7 @@ package com.github.seepick.derbauer2.game.view
 import com.github.seepick.derbauer2.common.emoji.Emoji
 import com.github.seepick.derbauer2.common.unit.Z
 import com.github.seepick.derbauer2.game.building.`build 🛠️`
-import com.github.seepick.derbauer2.game.core.CityTitle
+import com.github.seepick.derbauer2.game.core.CityProgress
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.stat.Happiness
 import com.github.seepick.derbauer2.game.tech.`tech 🔬`
@@ -19,8 +19,8 @@ object Texts {
         "What is your philosopher heart desiring next? ${Emoji.`tech 🔬`}\n\n" +
                 "Your genius wisdom expands $emojiAndOwned units of knowledge."
 
-    fun poorPhilosopherHappening(cityTitle: CityTitle, goldGiving: Z) =
-        "The old, poor philosopher from your ${cityTitle.label} approaches you, begging for some money 👴🏻 🏛️\n" +
+    fun poorPhilosopherHappening(cityProgress: CityProgress, goldGiving: Z) =
+        "The old, poor philosopher from your ${cityProgress.label} approaches you, begging for some money 👴🏻 🏛️\n" +
                 "\n" + "You give him some $goldGiving ${
             Gold.Data.emojiAndLabelFor(goldGiving)
         } and increase thereby the ${Happiness.Data.emojiAndLabel} 🙇🏻 🙏🏻"

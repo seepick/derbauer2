@@ -4,6 +4,12 @@
 * order relevance... TBD!
 * each turn is a day (week?) to introduce concept of season; display how many years played
 
+## TODOs
+
+* 🤖 refactor: unify happenings/features (and tech?!) into unified "News" concept
+    * just a sequence of pages (maintain order though)
+* 🤖 ad TurnReport.featurePages:List<FeatureSubPage> ... execute before, and only add Feature (instead of page)
+
 ## Turn Content
 
 * end-turn report

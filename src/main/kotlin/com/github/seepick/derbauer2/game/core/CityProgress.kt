@@ -1,6 +1,6 @@
 package com.github.seepick.derbauer2.game.core
 
-enum class CityTitle(
+enum class CityProgress(
     override val label: String,
 ) : HasLabel {
     // keep order!

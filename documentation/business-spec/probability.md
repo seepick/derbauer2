@@ -11,6 +11,7 @@
     * "normal distribution": gaussian
     * time-dependent: keep memory of past executions
         * e.g. for cooldowns: number of tries since last success increases probability
+* TODO: probability (happening) **cool-down** mechanism to avoid same thing too often
 
 ## Implementation
 

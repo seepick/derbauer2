@@ -8,7 +8,7 @@ Areas:
 * tech: schoo, university, alchemy
 * special: feature enabler; e.g.: castle (for throne room)
 
-## Civic
+## Civic/Social
 
 * increase happiness/karma
 * the more people, the more social buildings required
@@ -20,12 +20,13 @@ Examples:
     * higher versions provide more "stuff" (states like happiness/karma)
         * higher levels enabled based on citizens count
         * higher levels provide more protection from negative happenings
-* Church
+* Church -> Cathedral
     * +happiness/karma
-        * +luck (as praising the lord helps)
+    * +luck (as praising the lord helps)
 * Pub
     * +happiness/karma
 * Workshop
+* park -> theater -> colosseum
 * Town Hall/Center
 
 ## Economy/Resources
@@ -37,7 +38,7 @@ Examples:
 
 Examples:
 
-* Field/Farm
+* field -> farm -> plantation
     * +food prod
 * Granary
     * +food cap, +rat protection
@@ -46,6 +47,9 @@ Examples:
     * resistince to happenings
 * Mine
     * +gold prod, +people upcome (needs people to work)
+* warehouse
+    * stores multiple resource types (food + construction resources)
+* market -> trading post -> stock exchange
 
 ### Trading
 
@@ -80,8 +84,7 @@ Examples:
 
 Examples:
 
-* School
-* University
+* school -> university -> academy -> research institute
 * Library
 * Alchemy
 

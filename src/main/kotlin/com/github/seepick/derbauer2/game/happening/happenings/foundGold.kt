@@ -13,7 +13,6 @@ import com.github.seepick.derbauer2.game.prob.Probs
 import com.github.seepick.derbauer2.game.resource.Gold
 import com.github.seepick.derbauer2.game.transaction.errorOnFail
 import com.github.seepick.derbauer2.game.transaction.execTx
-import com.github.seepick.derbauer2.game.turn.CurrentTurn
 import com.github.seepick.derbauer2.game.view.AsciiArt
 import com.github.seepick.derbauer2.game.view.emojiAndLabelFor
 import com.github.seepick.derbauer2.textengine.textmap.Textmap
@@ -40,14 +39,8 @@ data class FoundGoldHappening(
     object Ref : HappeningRef {
         override val nature = HappeningNature.Positive
         override fun canHappen(user: User, probs: Probs) = user.hasEntity(Gold::class)
-
         override fun willHappen(user: User, probs: Probs) = true
-
-        override fun buildHappening(user: User): FoundGoldHappening = FoundGoldHappening(goldFound = 100.z, this)
-
-        override fun initProb(probs: Probs, user: User, turn: CurrentTurn) {
-            // not using probs
-        }
+        override fun buildHappening(user: User) = FoundGoldHappening(goldFound = 100.z, this)
     }
 }
 

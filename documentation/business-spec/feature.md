@@ -12,6 +12,11 @@
         * buildings, military (army/action), actions, happenings, trade (new) resources
         * also: achievements (if x feature is enabled, achievement y can be earned)
     * changes the modifiers (probability calculation)
+* ad Turner enabling logic: could do it way more sophisticated
+    * this would logically correct, BUT: way more complex (worth the effort?); also maybe too much UI/UX wise?!
+    * TX-exec one, could later allow another to check==true
+        * thus: do rounds of applying, until no feature returns check==true anymore
+        * e.g.: TradingFeature enables TradeLandFeature; should BOTH appear in same turn report
 
 # Trigger
 
@@ -20,3 +25,8 @@
 * Depends on:
     * availability of entities: people, building, achievement
     * history! how often something happened so far
+
+## Types
+
+* Trading
+    * check logic: look for turns played (and/or money owned?)

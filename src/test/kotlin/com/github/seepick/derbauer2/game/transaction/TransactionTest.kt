@@ -32,7 +32,6 @@ class TransactionTest : DescribeSpec({
                 it.contains("Land")
             }
         }
-
         it("Given zero gold When remove gold Then fail") {
             user.add(Gold())
 
@@ -41,7 +40,6 @@ class TransactionTest : DescribeSpec({
                     it.lowercase().contains("negative")
                 }
         }
-
         it("Given zero land When build Then fail") {
             user.add(Land())
             user.add(Tent())

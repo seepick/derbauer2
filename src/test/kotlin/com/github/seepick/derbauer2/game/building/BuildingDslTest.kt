@@ -30,6 +30,7 @@ class BuildingDslTest : DslTest, DescribeSpec() {
                     shouldActionDispatched(BuildingBuiltAction(Tent::class))
                 }
             }
+            // TEST Given sufficient gold+land Then successful
             it("Given insufficient gold Then building fails") {
                 Given {
                     setOwned<Tent>(0.z)

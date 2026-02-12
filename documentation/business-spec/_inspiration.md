@@ -2,10 +2,12 @@
 
 Other similar games:
 
+## Browser Game
+
 * Victorian Idle
-    * website: https://alexdb.itch.io/victorian-idle
-    * idle build game, industrial revolution; nice names/graphics/buildup
-    * see: [notes](_inspiration-victorian-idle.md)
+    * website: https://prod.victorian-idle.com
+        * idle build game, industrial revolution; nice names/graphics/buildup
+    * see: [Viktorian Idle Notes](_inspiration-victorian-idle.md)
 * Warsim
     * very big, nice game (5 USD, win only)
     * Website: https://huw2k8.itch.io/warsim
@@ -24,7 +26,7 @@ Other similar games:
 * civ clicker
     * https://civclicker.sourceforge.net/civclicker/civclicker.html
 
-## More like traditional round-based strategy games
+## Classics
 
 * Civilisation!
     * something for the eye, build shiny castle, expand grow (village view)
@@ -33,6 +35,9 @@ Other similar games:
     * sterbe rate von player steigt mit steigendem alter drastisch
     * auf wieviele jahre beschraenken? wie hunde-jahre
         * 7 zb... also nach 10 jahren ist todeswahrscheinlichkeit schon sehr hoch
+* Age of Empire
+* Anno
+* Settlers
 
 ## Commodore 64
 
@@ -42,7 +47,7 @@ Other similar games:
     * https://www.commodoregames.net/Commodore64/Kingdom-15721.html
     * super minimalistic; blue bg color; german
 
-## collections
+## Collections
 
 * https://github.com/search?q=text+strategy+game
 * https://www.ifarchive.org/indexes/if-archiveXgames.html

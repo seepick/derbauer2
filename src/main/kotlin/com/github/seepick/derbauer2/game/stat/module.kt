@@ -10,7 +10,7 @@ fun statModule() = module {
 
     singleOf(::HappinessCitizenPreModifier)
     singleOf(::HappinessSeasonPreModifier)
-    singleOf(::HappinessDeathPostModifier)
+    singleOf(::HappinessDeathPenaltyPostModifier)
 
     single { GlobalPreStatModifierRepoImpl(modifiers = getKoinBeansByType()) } bind GlobalPreStatModifierRepo::class
     single { GlobalPostStatModifierRepoImpl(modifiers = getKoinBeansByType()) } bind GlobalPostStatModifierRepo::class

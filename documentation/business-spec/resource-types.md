@@ -1,7 +1,9 @@
 # Resource Types
 
-* Simple: Gold, Food, Wood, Stone, Knowledge, ...
+* Simple: Gold, Food, Knowledge, ...
 * Complex: Land, People, ...
+* Construction: Wood, Stone, Iron, Metal
+    * used for: advanced buildings, (certain) armies, ammunition(?), ...
 
 ## People
 
@@ -35,6 +37,7 @@
 * used for buildings
 * conquer via military; get waaay more, but have to get+maintain army
 * IDEA: exploration (scouts), discover land (or loot)
+* NO: Land is of type "OccupiableResource"; more generic; reusable for other potential future resources
 
 ## Food
 
@@ -43,10 +46,10 @@
 * capacity via storage buildings (granary)
 * IDEA: more food types: meat, fish, apples
 
-## Construction Resources
+## Wood
 
-* used for: advanced buildings, (certain) armies, ammunition, ...
-* types: wood, stone, iron, ...
+* a building resource
+* regrowing trees depends on land owned; forrester building for bonus
 
 ## Knowledge
 

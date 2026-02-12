@@ -13,21 +13,21 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     private val log = logger {}
 
-    var userTitle = UserTitle.initial
+    var userProgress = UserProgress.initial
         set(value) {
             if (field != value) {
                 log.info { "Setting user title to: $value" }
             }
             field = value
         }
-    var cityTitle = CityTitle.initial
+    var cityProgress = CityProgress.initial
         set(value) {
             if (field != value) {
                 log.info { "Setting city title to: $value" }
             }
             field = value
         }
-    var epochitle = EpochTitle.initial
+    var epochProgress = EpochProgress.initial
         set(value) {
             if (field != value) {
                 log.info { "Setting epoch title to: $value" }
@@ -66,8 +66,9 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
 
     override fun deepCopy(): User = User(txValidators).also { copy ->
         log.trace { "Creating deep copy." }
-        copy.userTitle = userTitle
-        copy.cityTitle = cityTitle
+        copy.userProgress = userProgress
+        copy.cityProgress = cityProgress
+        copy.epochProgress = epochProgress
         all.forEach { entity ->
             // we are going to enable entities.owned > 0 (to bypass tx-validation, as we are just right in it ;)
             copy.add(entity.deepCopy(), disableCheck = true)
@@ -81,7 +82,8 @@ class User(val txValidators: List<TxValidator>) : DeepCopyable<User> {
     }
 
     override fun hashCode(): Int = allMutable.hashCode()
-    override fun toString() = "User(all=${all.delegate.map { it.toString() }})"
+    override fun toString() =
+        "User($userProgress, $cityProgress, $epochProgress, all=${all.delegate.map { it.toString() }})"
 }
 
 fun User.hasEntities(vararg entityClasses: KClass<out Entity>) = entityClasses.all { hasEntity(it) }

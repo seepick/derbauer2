@@ -1,4 +1,41 @@
+# Business Ideas / Todos
+
+* reverse engineer DerBauer1
+
 # Business Ideas by Concept
+
+## Religion
+
+* own main stat: Faith
+* atheism, monotheism, polytheism; mixed allowed
+* effects: happiness, production, military, ...
+
+## Policy/Law
+
+* tax (gambling, banking, land, military)
+    * +gold prod; -happiness/people prod
+    * feature enabled when ... upgrade "politics" + building "tax office"
+* Policy: change laws
+
+## Finance/Banking
+
+* allows finanicial actions (borrow/invest money, ...)
+* allows to adjust tax rate (gold/happiness tradeoff); in combination with policy/law
+
+## Diplomacy
+
+* mit verschiedene voelker, relationship metrik
+* actions: buy/sell troops, handeln/schenken/verlangen, buendnis, ...
+* other nations: info about resources, army, ....
+    - diplomacy, spy, war
+    - trade agreement, send gift, hire troops, alliance
+    - happening: get free stuff from other; get requested to donate/help/escort (borrow miliatry units)
+
+## Activities
+
+* one-time activities ("special actions")
+    * military political, ... social event, like a festival (+x happiness)
+    * costs resources, changes stats (basically special trade like some happenings); can last multiple turns
 
 ## History
 
@@ -47,14 +84,17 @@ Triggered by:
 * ui-interation ;) e.g. having entered the build menu x-times
 * ... differentiate between: by type VS global
 
-## Start Game
+## Start Game Sequence
 
-* Start game sequence
-    * show game title screen: nice ASCII art, welcome text, credits, version, date
-    * choose: gender, name, race
-    * select difficulty
-    * intro sequence: prolog with explanatory text
-    * tutorial, basic UI and controls explained
+* show game title screen: nice ASCII art, welcome text, credits, version, date
+* choose: gender, name, race
+* select difficulty
+* intro sequence: prolog with explanatory text
+* tutorial, basic UI and controls explained
 * komplexe charaktere wahl (rasse, nation/fraktion, geschlecht, ...)
     - mittelalter theme beibehalten: galier, roemer, griechen, egypter
     - effects: military, forschung, trade, production, prices, ...
+
+## Automation
+
+* hire manager delegate, which will for example: auto trade sell food if capacity at 80%

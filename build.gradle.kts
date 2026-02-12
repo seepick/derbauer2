@@ -3,7 +3,7 @@ import org.apache.tools.ant.filters.ReplaceTokens
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
-val appVersion: String = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
+val appVersion = (project.findProperty("appVersion") as? String)?.takeIf { it.isNotBlank() } ?: "9.9.9"
 val debugTests = project.findProperty("debugTests") != null
 val enableUiTests = project.findProperty("enableUiTests") != null
 val failOnDetektIssue = project.findProperty("failOnDetektIssue") != null
@@ -54,13 +54,17 @@ kotlin {
 compose.desktop {
     application {
         mainClass = mainClassFqn
-        jvmArgs += listOf("-Xmx512M", "--add-exports", "java.desktop/com.apple.eawt=ALL-UNNAMED")
+        jvmArgs += listOf(
+            "-Xmx512M",
+            "--add-exports=java.desktop/com.apple.eawt=ALL-UNNAMED", // required to attach macos quit handler
+        )
+
         nativeDistributions {
             packageName = "DerBauer2"
             packageVersion = appVersion
             vendor = "DerBauer"
             copyright = "2000-whatever it's yours"
-            modules("java.naming")
+            includeAllModules = true // size doesn't matter
             targetFormats(TargetFormat.Dmg, TargetFormat.Exe, TargetFormat.Deb)
             macOS {
                 appStore = false
@@ -141,7 +145,11 @@ tasks.test {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test)
+    if (enableUiTests) {
+        dependsOn(tasks.test, project.tasks["uiTest"])
+    } else {
+        dependsOn(tasks.test)
+    }
     reports {
         xml.required = true // will be used by sonarqube
     }
@@ -173,10 +181,13 @@ sonar {
         property("sonar.organization", "seepick")
         property("sonar.projectKey", "seepick_derbauer2")
         property("sonar.host.url", "https://sonarcloud.io")
-        property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
         property("sonar.exclusions", "docs/index.html")
+        property("sonar.kotlin.detekt.reportPaths", "build/reports/detekt/detekt.xml")
+        property("sonar.coverage.jacoco.xmlReportPaths", "build/reports/jacoco/test/jacocoTestReport.xml")
     }
 }
+project.tasks["sonar"].dependsOn += project.tasks["jacocoTestReport"]
+project.tasks["sonar"].dependsOn += project.tasks["detekt"]
 
 tasks.withType<DependencyUpdatesTask> {
     val rejectPatterns = listOf(

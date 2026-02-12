@@ -31,6 +31,7 @@
 ## Happiness
 
 * about: people are in good/bad mood; "public opinion"
+* stat only enabled if researched? or citizen threshold?
 * Affected by:
     * food availability
     * warfare/peace
@@ -39,6 +40,8 @@
 * Effects:
     * productivity of workers (building production)
     * reproduction/tax rate
+* TODO ad HappinessDeathPenaltyPostModifier:
+    * look into history, if previous turns also deaths; if so, increase more (with max!)
 
 ## Wealth
 

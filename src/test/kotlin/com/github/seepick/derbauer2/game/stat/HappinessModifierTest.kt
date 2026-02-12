@@ -39,7 +39,7 @@ class HappinessModifierTest : StringSpec({
             val report = TurnReport.empty().copy(
                 resourceChanges = buildResourceChanges { add(Citizen::class, (-1).zz) })
 
-            val modification = HappinessDeathPostModifier().calcModifierOrNull(report, user, Happiness::class)
+            val modification = HappinessDeathPenaltyPostModifier().calcModifierOrNull(report, user, Happiness::class)
 
             modification.shouldNotBeNull().shouldBeNegative()
         }

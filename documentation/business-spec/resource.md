@@ -20,4 +20,9 @@
     - military (build units/weapons)
     - luxury (people happiness)
         - some resources used in several areas, e.g. iron for building big buildings and forging weapons
-* IDEA: material resources (wood, stone, iron, ...), regard when build buildings
+
+## Ideas
+
+* material resources (wood, stone, iron, ...), regard when build buildings
+* Supply Chain and Logistics (factorio)
+    * buildings consume to produce other (higher) resources; respect ratio
