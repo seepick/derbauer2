@@ -1,11 +1,18 @@
 # Todo
 
-* 3x old games reverse engineer -> then cleanup every MD file -> then create epoch milestone project plan
-* create DIAGRAM
+* fugger2 get names from sources (handbook, wiki, websites)
+* reverse engineer DerBauer1
+
+* incorporate inspirations into business-spec (mark files on top with `✅ INCORPORATED ✅`)
+* reflect on what do i like about games A) in general B) use specific examples to help thoughts
+* then cleanup every MD file
+
+* create DIAGRAMs
     * domain concepts; vertical ordering; e.g. happening inside turner => reflect in code packages
     * epochs; roadmap, timeline; with milestones, features, ...
         * enhance existing turn step and types
 * let AI generate doc, based on code (before that, align documents with package structure)
+* create epoch milestone project plan
 
 # Versions
 
@@ -23,16 +30,15 @@
 
 ## Pre Release Steps
 
-1. refactor code
+1. **refactor** code
 2. run: `./bin/validate_all.sh`
-3. resolve sonarqube issues
+3. resolve **sonarqube** issues
 4. smoke tests: `./bin/run_distributable.sh`
-
-**GitHub Release**
+5. execute github [auto-release](https://github.com/seepick/derbauer2/actions/workflows/release.yml)
 
 ## 1.4.0
 
-1. 🖋
+1. 🖋 display each tech what it enables (dynamically calculated)
 2. 🖋
 3. 🖋
 4. 🖋
@@ -70,3 +76,7 @@
 
 * 🤖 macos signed app (suppress security warning)
 * 🤖 verify runs smoothly on win/linux as well
+
+# Unsorted
+
+...

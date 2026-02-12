@@ -6,11 +6,12 @@
 
 # User Motivation
 
-* discover/enable new features (build, army, actions, minigames,...)
+* discover/enable new things (features, buildings, tech, military, actions, minigames,...)
     * how about achievements? maybe highscore?
 * start small, grow big
     * the UI is almost empty at first; gradually introduce new game features/mechanics/menus/etc.
     * sparkle curiosity to interact with the game, and earn new "things" as a reward
+* it's relaxed, no rush (pressure from attackers); difficult to game over
 
 # USP
 

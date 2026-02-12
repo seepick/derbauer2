@@ -13,8 +13,9 @@
 ## Turn Content
 
 * end-turn report
-    * show which resources were produced, consumed, net gain/loss
     * only endresult/high-level; not too detailed (where it comes from, etc.)
+    * show which resources were produced, consumed, net gain/loss
+    * citizen birth/death; upcome costs (buildings, miliatry, ...)
 * achievements
     * based on: history (=experience), resources/buildings/armies
 * happening; see [happening](happening.md) for details

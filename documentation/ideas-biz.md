@@ -1,14 +1,17 @@
-# Business Ideas / Todos
+# Business Ideas
 
-* reverse engineer DerBauer1
-
-# Business Ideas by Concept
-
-## Religion
-
-* own main stat: Faith
-* atheism, monotheism, polytheism; mixed allowed
-* effects: happiness, production, military, ...
+* when running out of money
+    * assassination probability up
+    * production lowers, stats low (happiness)
+* Automation
+    * hire manager delegate, which will for example: auto trade sell food if capacity at 80%
+* Religion
+    * own main stat: Faith
+    * atheism, monotheism, polytheism; mixed allowed
+    * effects: happiness, production, military, ...
+* Finance/Banking
+    * allows finanicial actions (borrow/invest money, ...)
+    * allows to adjust tax rate (gold/happiness tradeoff); in combination with policy/law
 
 ## Policy/Law
 
@@ -16,11 +19,6 @@
     * +gold prod; -happiness/people prod
     * feature enabled when ... upgrade "politics" + building "tax office"
 * Policy: change laws
-
-## Finance/Banking
-
-* allows finanicial actions (borrow/invest money, ...)
-* allows to adjust tax rate (gold/happiness tradeoff); in combination with policy/law
 
 ## Diplomacy
 
@@ -31,27 +29,6 @@
     - trade agreement, send gift, hire troops, alliance
     - happening: get free stuff from other; get requested to donate/help/escort (borrow miliatry units)
 
-## Activities
-
-* one-time activities ("special actions")
-    * military political, ... social event, like a festival (+x happiness)
-    * costs resources, changes stats (basically special trade like some happenings); can last multiple turns
-
-## History
-
-* store statistical data of misc **Action**s/events (any kind of user-interaction/transaction)
-    * like in an event-driven system, dispatch messages in a permament store/queue
-    * needs to be that dynamic, as of the decopuled nature of the application's architecture
-* calculations can analyze afterwards to gain insight over-time about user behavior
-* used to check for conditions for achievements/features
-* E.g.:
-    * trade: per item, buy/sell, amount, total gold spent/earned (on something specific)
-    * military: attacks won/lost
-    * build: amount buildings, ratio of type of buildings (more military/economical/social)
-    * happening: amount, by type
-    * personal perferences: certain building/unit type often used
-    * maybe even UI interaction (e.g. entered menu x times)
-
 ## Skill
 
 * based on information of what things user did in past, can calculate "experience points"
@@ -60,29 +37,6 @@
         * e.g. trade a lot -> better prices
     * unlock features, gain achievements
 * e.g. global military expertize: each time attack, it increases and leads to improved global att/def
-
-## Achievement
-
-* about / essence:
-    * a progression based happening
-    * some kind of "XP reward"
-    * similar to feature/tech maybe
-    * relies on historical data
-* get free stuff with it (otherwise just a meaningless cosmetic)
-    * gold/food/land/buildings (if sufficient storage/land available)
-
-Triggered by:
-
-* resources: total produced/owned
-* buildings: total build/owned
-* trades: buy/sell amount, money spent/earned
-    * e.g. when traded x-times, then get reward as in achievement being the ~"capitalism guru"
-* military armies: total hired/owned
-* attacks: attack VS raid, won/lost/total
-* happenings: good vs bad
-* days (each week, month, year), give special reward
-* ui-interation ;) e.g. having entered the build menu x-times
-* ... differentiate between: by type VS global
 
 ## Start Game Sequence
 
@@ -94,7 +48,3 @@ Triggered by:
 * komplexe charaktere wahl (rasse, nation/fraktion, geschlecht, ...)
     - mittelalter theme beibehalten: galier, roemer, griechen, egypter
     - effects: military, forschung, trade, production, prices, ...
-
-## Automation
-
-* hire manager delegate, which will for example: auto trade sell food if capacity at 80%

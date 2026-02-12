@@ -1,7 +1,8 @@
-# General Notes
+# Victorian Idle
 
 * PLAY: https://prod.victorian-idle.com
 * game: idle city builder, resource managament, supply chain (production line)
+* industrial revolution; nice names/graphics/buildup; simple UI
 * everything depends on citizen count and needs
     * with new levels, new needs (buildings or resources)
     * forced to build new buildings (have "saturation"/coverage) to get to items to resolve new needs
@@ -70,7 +71,8 @@ lvl2 / workers
 
 lvl3 / craftsmen
 =========
-
+...
 
 lvl4 / level
 =========
+...

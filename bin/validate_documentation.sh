@@ -9,6 +9,7 @@ source "./bin/_includes.sh"
 # check `documentation/*.md` if any more than max lines
 SOURCE_DIR="./documentation"
 MAX_LINES=100
+SUPPRESSION="@SUPPRESS_MAX_LINES"
 
 exceeding=0
 checked=0
@@ -20,8 +21,9 @@ echoParam "📈  Max lines" $MAX_LINES
 
 find $SOURCE_DIR -type f -name '*.md' > "$tmp"
 while IFS= read -r file || [ -n "$file" ]; do
-  lines=$(wc -l < "$file" | tr -d ' ')
   checked=$((checked + 1))
+  if head -n 1 "$file" | grep -Fq "$SUPPRESSION"; then continue; fi
+  lines=$(wc -l < "$file" | tr -d ' ')
   if [ "$lines" -gt "$MAX_LINES" ]; then
     printf '❌  Too long file: %s --> %s lines exceeds max of %s\n' "$file" "$lines" "$MAX_LINES"
     exceeding=$((exceeding + 1))
@@ -33,6 +35,9 @@ echo ""
 echo "Script done: $exceeding out of $checked files are invalid"
 if [ "$exceeding" -eq 0 ]; then
   echoSuccess "Validating documentation files"
+else
+  echo ""
+  echo "ℹ️ Hint: Start the MD file with \"<!-- $SUPPRESSION -->\" to skip the max lines check"
 fi
 
 exit $exceeding

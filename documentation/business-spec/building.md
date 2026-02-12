@@ -14,6 +14,25 @@
         * possible features go away; capacity reduced (surplus resources lost; needs explicit recalculation)
 * TODO 🤖 change `costsGold` to a more generic `costs` that can include multiple resources
 
+## Type Areas
+
+* civic: increase happiness/karma
+    * increase happiness/karma
+    * the more people, the more social buildings required
+* economy: affects resources (prod/cap)
+    * food cap/prod
+    * people cap/prod (reproduction rate, immigrants)
+    * gold prod
+    * trade benefits
+* military: strengthen armies and increase cap
+    * unit cap/hire (=buy)
+    * enable hire (new types)
+* tech: school, university, alchemy
+    * gain more research points; faster tech progression
+    * unlock certain features with it
+* special: feature enabler; e.g.: castle (for throne room)
+    * these are one-time enablers of special features/actions/happenings
+
 ## Effects
 
 * resources efficiency

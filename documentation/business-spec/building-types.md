@@ -1,19 +1,6 @@
 # Building Types
 
-Areas:
-
-* civic: increase happiness/karma
-* economy: affects resources (prod/cap)
-* military: strengthen armies and increase cap
-* tech: schoo, university, alchemy
-* special: feature enabler; e.g.: castle (for throne room)
-
 ## Civic/Social
-
-* increase happiness/karma
-* the more people, the more social buildings required
-
-Examples:
 
 * Tent -> House -> Villa -> Mansion (nobility quarters)
     * +citizen cap
@@ -30,13 +17,6 @@ Examples:
 * Town Hall/Center
 
 ## Economy/Resources
-
-* food cap/prod
-* people cap/prod (reproduction rate, immigrants)
-* gold prod
-* trade benefits
-
-Examples:
 
 * field -> farm -> plantation
     * +food prod
@@ -59,11 +39,6 @@ Examples:
 
 ## Military
 
-* unit cap/hire (=buy)
-* enable hire (new types)
-
-Examples:
-
 * Barracks
     * +army cap, -army buy mod, +att/def mod
 * Archery
@@ -79,23 +54,12 @@ Examples:
 
 ## Research/Tech (feature/action)
 
-* gain more research points; faster tech progression
-* unlock certain features with it
-
-Examples:
-
 * school -> university -> academy -> research institute
 * Library
 * Alchemy
 
 ## Special
 
-* these are one-time enablers of special features/actions/happenings
-
-Examples:
-
-* World Wonder Buildings
-    * think of civilization wonders; e.g. Pyramids, Hanging Gardens, ...
 * Monument
 * Castle
     * the ultimate building in this game

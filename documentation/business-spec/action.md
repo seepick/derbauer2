@@ -14,41 +14,17 @@
     * long lasting effects (see happening as well)
     * (how is it different from enable feature/tech?)
 
-# Examples
+## History
 
-* throne room
-    * interact with visitors about their issues; decisions to be made (interactive UI)
-    * requirement: special building "castle"
-        * the more castles, the more visitors each turn probability (?)
-* mini game
-    * blackjack 17/4 card game
-    * solve riddle (only be asked once each)
-* lottery ticket
-    * costs gold, might get (lots of) gold
-    * depends on karma
-* spy
-    * figure out strength of enemy (determine which time best to attack)
-* sabotage enemy
-    * weaken enemy
-    * lower probability getting attacked (as enemy units destroyed) for X turns
-* steal
-    * get resources, lower karma, might fail
-* organize a feast
-    * "temporary feature" by giving people free stuff
-        * happiness, reproduction rate and karma up
-            * costs money, food
-            * can decide how big the feast should be (enums)
-            * lasts for several rounds
-* scout exploration
-    * send troops
-    * might get something back delayed
-    * simply lose troops without any outcome
-    * attract enemies
-* find wife
-    * husband asks to explore/send troops to look for his wife
-* visit bank
-    * take loan
-    * deposit money (earn interest)
-    * enhance trade: buy/sell price, enable to trade land/buildings
-* change tax rate
-    * reduce happiness, increase income
+* store statistical data of misc **Action**s/events (any kind of user-interaction/transaction)
+    * like in an event-driven system, dispatch messages in a permament store/queue
+    * needs to be that dynamic, as of the decopuled nature of the application's architecture
+* calculations can analyze afterwards to gain insight over-time about user behavior
+* used to check for conditions for achievements/features
+* E.g.:
+    * trade: per item, buy/sell, amount, total gold spent/earned (on something specific)
+    * military: attacks won/lost
+    * build: amount buildings, ratio of type of buildings (more military/economical/social)
+    * happening: amount, by type
+    * personal perferences: certain building/unit type often used
+    * maybe even UI interaction (e.g. entered menu x times)
