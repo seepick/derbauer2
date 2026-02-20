@@ -28,7 +28,7 @@ import org.koin.compose.koinInject
 private val log = logger {}
 
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "LongMethod")
 @Composable
 fun Toolbar(
     width: Dp,

@@ -23,8 +23,8 @@ class BuildingPageTest : PageTest, StringSpec({
             contentString shouldBeEqual """
                 ${Texts.buildPage}
                 
-                [1] Build Tent  💰️ 40  🌍 1 (0)
-                [2] Build Field 💰️ 120 🌍 4 (0)
+                [1] Build Tent  💰️ 40  🌍 1 (0) /+10 🙎🏻‍♂️
+                [2] Build Field 💰️ 120 🌍 4 (0) +3/ 🍖
                 """.trimIndent()
         }
     }

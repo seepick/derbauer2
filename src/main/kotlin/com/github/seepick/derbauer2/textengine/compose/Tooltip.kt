@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.github.seepick.derbauer2.textengine.Derbauer2Theme
 
-@Suppress("FunctionName")
+@Suppress("FunctionName", "LongMethod", "MagicNumber")
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun Tooltip(

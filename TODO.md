@@ -1,5 +1,7 @@
 # Todo
 
+## Todo Requirements
+
 * fugger2 get names from sources (handbook, wiki, websites)
 * reverse engineer DerBauer1
 
@@ -13,6 +15,14 @@
         * enhance existing turn step and types
 * let AI generate doc, based on code (before that, align documents with package structure)
 * create epoch milestone project plan
+
+## Howto Release
+
+1. **refactor** code
+2. run: `./bin/validate_all.sh`
+3. resolve **sonarqube** issues
+4. smoke tests: `./bin/run_distributable.sh`
+5. execute github [auto-release](https://github.com/seepick/derbauer2/actions/workflows/release.yml)
 
 # Versions
 
@@ -28,55 +38,11 @@
 * 🤖 Use @OptIn annotation for "secret API"
 * 🤖 version check plugin manes: compose macos 1.9.0 gets through and warned about; disable check
 
-## Pre Release Steps
+## Unsorted
 
-1. **refactor** code
-2. run: `./bin/validate_all.sh`
-3. resolve **sonarqube** issues
-4. smoke tests: `./bin/run_distributable.sh`
-5. execute github [auto-release](https://github.com/seepick/derbauer2/actions/workflows/release.yml)
-
-## 1.4.0
-
-1. 🖋 display each tech what it enables (dynamically calculated)
-2. 🖋
-3. 🖋
-4. 🖋
-5. 🤖
-6. 🤖
-7. 🎨
-8. [ ] 
-9. [ ] 
-
-## 1.5.0
-
-1. 🖋
-2. 🖋
-3. 🖋
-4. 🖋
-5. 🤖
-6. 🤖
-7. 🎨
-8. [ ] 
-9. [ ] 
-
-## 1.6.0
-
-1. 🖋
-2. 🖋
-3. 🖋
-4. 🖋
-5. 🤖
-6. 🤖
-7. 🎨
-8. [ ] 
-9. [ ] 
-
-## 2.0.0
-
+* 🖋 display each tech what it enables (dynamically calculated)
+* 🤖 ad classpath scanning: ignore all from src/test/kotlin (instead relying on annotation)
+* 🤖 ad KClass<*>.emojiHack: a design mistake, that: to get the emoji of a given resource, need `user` reference
+    * to get the real instance, instead of fiddling around with kotlin KClass shizzle...
 * 🤖 macos signed app (suppress security warning)
 * 🤖 verify runs smoothly on win/linux as well
-
-# Unsorted
-
-* 🤖 ad classpath scanning: ignore all from src/test/kotlin (instead relying on annotation)

@@ -20,7 +20,7 @@ fun Entity.toEffects(): List<Effect> = buildList {
     if (entity is StoresResource) {
         add(StoresResourceEffect(entity))
     }
-    // TODO stat modifiers (theater)
+    // stat modifiers (theater)
 }
 
 fun List<Effect>.toFormattedString(): String = joinToString(", ") { effect ->
@@ -31,7 +31,8 @@ class ProducesResourceEffect<X>(val delegate: X) :
     ProducesResource by delegate, Effect, Entity by delegate
         where X : ProducesResource, X : Entity {
     override fun toFormattedString() =
-        "${delegate.produceResourceAmount.toPrefixedString()}${RESOURCE_INFO_OWNED_SEPARATOR} ${producingResourceClass.emojiHack}"
+        "${delegate.produceResourceAmount.toPrefixedString()}${RESOURCE_INFO_OWNED_SEPARATOR} " +
+                "${producingResourceClass.emojiHack}"
 }
 
 class StoresResourceEffect<X>(val delegate: X) :
@@ -43,8 +44,6 @@ class StoresResourceEffect<X>(val delegate: X) :
     override fun deepCopy() = this
 }
 
-// TODO nope... it's a design mistake, that: to get the emoji of a given resource, need `user` reference
-// to get the real instance, instead of fiddling around with kotlin KClass shizzle...
 val KClass<*>.emojiHack
     get() =
         emojiHavingOrNull ?: emojiMappedOrNull ?: error(

@@ -14,7 +14,6 @@ import com.github.seepick.derbauer2.game.stat.Stat
 import com.github.seepick.derbauer2.game.testInfra.ownedForTest
 import com.github.seepick.derbauer2.game.view.WhenHomePageDsl
 import com.github.seepick.derbauer2.textengine.audio.SoundPlayer
-import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import io.mockk.Runs
 import io.mockk.every
 import io.mockk.just
@@ -22,8 +21,6 @@ import org.koin.test.KoinTest
 import org.koin.test.mock.declareMock
 import kotlin.reflect.KClass
 import kotlin.reflect.full.primaryConstructor
-
-private val log = logger {}
 
 @Suppress("TestFunctionName")
 context(koin: KoinTest)
