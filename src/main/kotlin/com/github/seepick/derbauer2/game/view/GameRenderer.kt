@@ -25,7 +25,7 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubclassOf
 
 private const val RESOURCE_INFO_SEPARATOR = "|"
-private const val RESOURCE_INFO_OWNED_SEPARATOR = "/"
+const val RESOURCE_INFO_OWNED_SEPARATOR = "/"
 
 class GameRenderer(
     private val user: User,

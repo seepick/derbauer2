@@ -40,9 +40,6 @@ data class ResourcesTradedAction(val requests: List<TradeSingleRequest>) : Actio
     companion object // for extensions
 }
 
-@Suppress("JavaDefaultMethodsNotOverriddenByDelegation")
-data class TradeCompoundRequests(val options: List<TradeCompoundRequest>) : List<TradeCompoundRequest> by options
-
 data class TradeAmount(
     val resoureClass: KClass<out Resource>,
     val amount: Z,

@@ -77,9 +77,10 @@ General notes:
 * civ clicker
     * https://civclicker.sourceforge.net/civclicker/civclicker.html
 
-* text based upgrade game:
+* text based upgrade game (simple UI):
     * https://adarkroom.doublespeakgames.com/
     * https://www.decisionproblem.com/paperclips/index2.html
+    * https://kittensgame.com/web/#
 
 ## Collections
 

@@ -50,7 +50,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       - name: Create GitHub Release
         id: create_release
-        uses: actions/create-release@latest
+        uses: actions/create-release@latest # TODO deprecated, use softprops/action-gh-release@v2 instead
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:

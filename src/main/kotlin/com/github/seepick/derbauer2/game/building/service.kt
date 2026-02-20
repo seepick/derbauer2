@@ -17,6 +17,8 @@ import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import io.github.oshai.kotlinlogging.KotlinLogging.logger
 import kotlin.reflect.KClass
 
+data class BuildOption(val building: Building)
+
 class BuildingService(
     private val user: User,
     private val actionBus: ActionBus,
@@ -31,6 +33,11 @@ class BuildingService(
         ).ifIsSuccess {
             actionBus.dispatch(BuildingBuiltAction(buildingClass))
         }
+    }
+
+    fun buildOptions(): List<BuildOption> = user.buildings.map { building ->
+        // filter for feature...
+        BuildOption(building) // enhance with UI specific data...
     }
 }
 

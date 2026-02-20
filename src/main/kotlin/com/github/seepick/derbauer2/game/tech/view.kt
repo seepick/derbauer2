@@ -36,7 +36,7 @@ class TechPage(
     contentRenderer = { textmap ->
         textmap.multiLine(Texts.techPage(user.findResource<Knowledge>().emojiAndOwned))
     },
-    promptBuilder = {
+    promptProvider = {
         val techs = techTree.filterResearchableItems()
         if (techs.isEmpty()) {
             EmptyPagePromptProvider(Texts.techPageEmpty)

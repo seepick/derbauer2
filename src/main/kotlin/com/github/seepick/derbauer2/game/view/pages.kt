@@ -23,15 +23,15 @@ abstract class SimpleGamePage(
 
 abstract class PromptGamePage(
     private val gameRenderer: GameRenderer,
-    private val promptBuilder: PromptProvider,
+    private val promptProvider: PromptProvider,
     private val buttons: List<Button>,
     private val contentRenderer: (Textmap) -> Unit,
 ) : Page {
 
-    var prompt = promptBuilder.buildPrompt()
+    var prompt = promptProvider.providePrompt()
 
     override fun invalidate() {
-        prompt = promptBuilder.buildPrompt()
+        prompt = promptProvider.providePrompt()
     }
 
     override fun render(textmap: Textmap) {

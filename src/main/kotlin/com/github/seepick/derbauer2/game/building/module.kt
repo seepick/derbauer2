@@ -6,4 +6,5 @@ import org.koin.dsl.module
 fun buildingModule() = module {
     singleOf(::BuildingPage)
     singleOf(::BuildingService)
+    singleOf(::BuildPromptProvider)
 }

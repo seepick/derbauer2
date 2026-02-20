@@ -39,12 +39,12 @@ class TradeService(
         }
     }
 
-    fun buildOptions() = TradeCompoundRequests(buildList {
+    fun buildOptions(): List<TradeCompoundRequest> = buildList {
         addAll(buildFoodOptions())
         if (user.hasFeature(TradeLandFeature::class)) {
             addAll(buildLandOptions())
         }
-    })
+    }
 
     private fun buildFoodOptions(): List<TradeCompoundRequest> {
         val foodTradeAmount = if (user.hasFeature(FoodMerchantFeature::class)) {

@@ -12,7 +12,7 @@ import io.kotest.matchers.string.shouldContainIgnoringCase
 class BuildingPageTest : PageTest, StringSpec({
 
     fun GamePageContext.buildBuildingsPage() =
-        BuildingPage(user, currentPage, gameRenderer, resultHandler, buildingService)
+        BuildingPage(currentPage, gameRenderer, BuildPromptProvider(resultHandler, user, buildingService))
 
     "Given some Then check content" {
         renderGamePage({ ctx ->

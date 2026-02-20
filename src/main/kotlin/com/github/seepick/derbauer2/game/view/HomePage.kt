@@ -33,7 +33,7 @@ class HomePage(
         }
     ),
     gameRenderer = gameRenderer,
-    promptBuilder = {
+    promptProvider = {
         SelectPrompt(
             options = Options.Singled(buildList {
                 if (user.hasFeature<TradeFeature>()) {

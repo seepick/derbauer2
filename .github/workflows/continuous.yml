@@ -1,10 +1,9 @@
 name: Continuous Integration
 on:
   push:
-    branches:
-      - '*'
+    branches: [ "**" ]
 jobs:
-  exec-ci:
+  continuous:
     name: Execute CI Pipeline
     runs-on: ubuntu-latest
     steps:

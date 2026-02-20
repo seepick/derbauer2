@@ -91,7 +91,7 @@ class TechTreeTest : DescribeSpec({
     }
 })
 
-object SelfData : TechData {
+private object SelfData : TechData {
     override val label = "SelfData"
     override val description = ""
     override val requirements = setOf<TechData>(SelfData)
@@ -99,17 +99,17 @@ object SelfData : TechData {
 }
 
 @ClasspathScanIgnore
-object SelfReferenceRef : TechRef, TechData by SelfData {
+private object SelfReferenceRef : TechRef, TechData by SelfData {
     override val techClass = TestTech::class
     override val viewOrder = 100
     override fun buildTech() = SelfTech()
 }
 
-class SelfTech : Tech, TechData by SelfData {
+private class SelfTech : Tech, TechData by SelfData {
     override fun deepCopy() = this
 }
 
-object Cycle1Data : TechData {
+private object Cycle1Data : TechData {
     override val label = "Cycle1"
     override val description = ""
     override val requirements = setOf<TechData>(Cycle2Data)
@@ -117,17 +117,17 @@ object Cycle1Data : TechData {
 }
 
 @ClasspathScanIgnore
-object Cycle1Ref : TechRef, TechData by Cycle1Data {
+private object Cycle1Ref : TechRef, TechData by Cycle1Data {
     override val techClass = TestTech1::class
     override val viewOrder = 10
     override fun buildTech() = Cycle1Tech()
 }
 
-class Cycle1Tech : Tech, TechData by Cycle1Data {
+private class Cycle1Tech : Tech, TechData by Cycle1Data {
     override fun deepCopy() = this
 }
 
-object Cycle2Data : TechData {
+private object Cycle2Data : TechData {
     override val label = "Cycle2"
     override val description = ""
     override val requirements = setOf<TechData>(Cycle1Data)
@@ -135,12 +135,12 @@ object Cycle2Data : TechData {
 }
 
 @ClasspathScanIgnore
-object Cycle2Ref : TechRef, TechData by Cycle2Data {
+private object Cycle2Ref : TechRef, TechData by Cycle2Data {
     override val techClass = TestTech2::class
     override val viewOrder = 20
     override fun buildTech() = Cycle2Tech()
 }
 
-class Cycle2Tech : Tech, TechData by Cycle2Data {
+private class Cycle2Tech : Tech, TechData by Cycle2Data {
     override fun deepCopy() = this
 }

@@ -11,8 +11,12 @@ interface HasEmoji {
     val emoji: Emoji
 }
 
-val Any.emojiOrNull: Emoji? get() = (this as? HasEmoji)?.emoji
-val Any.emojiSpaceOrEmpty: String get() = emojiOrNull?.let { "$it " } ?: ""
+val Any.emojiHavingOrNull: Emoji?
+    get() = (this as? HasEmoji)?.emoji
+val Any.emojiHavingOrThrow: Emoji
+    get() = emojiHavingOrNull ?: error("Missing emoji for ${this::class.qualifiedName}")
+
+val Any.emojiSpaceOrEmpty: String get() = emojiHavingOrNull?.let { "$it " } ?: ""
 
 val <T> T.emojiAndLabel: String where T : HasLabel, T : HasEmoji
     get() = "$emojiSpaceOrEmpty$label"

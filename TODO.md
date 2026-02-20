@@ -79,4 +79,4 @@
 
 # Unsorted
 
-...
+* 🤖 ad classpath scanning: ignore all from src/test/kotlin (instead relying on annotation)

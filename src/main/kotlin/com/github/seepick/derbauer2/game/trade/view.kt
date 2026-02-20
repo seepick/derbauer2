@@ -33,7 +33,7 @@ class TradePage(
         },
     ),
     gameRenderer = gameRenderer,
-    promptBuilder = tradePromptBuilder,
+    promptProvider = tradePromptBuilder,
     contentRenderer = { textmap ->
         textmap.line(Texts.tradePage)
     }
@@ -45,12 +45,9 @@ class TradePromptBuilder(
     private val tradeService: TradeService,
 ) : PromptProvider {
 
-    override fun buildPrompt() =
-        tradeService.buildOptions().toSingleSelectPrompt()
-
-    private fun TradeCompoundRequests.toSingleSelectPrompt() = SelectPrompt(
+    override fun providePrompt() = SelectPrompt(
         options = Options.Singled(
-            items = options
+            items = tradeService.buildOptions()
                 .sortedByViewOrder(user)
                 .map { option ->
                     SelectOption(
@@ -77,7 +74,7 @@ class TradePromptBuilder(
         }
 }
 
-fun List<TradeCompoundRequest>.sortedByViewOrder(user: User): List<TradeCompoundRequest> =
+private fun List<TradeCompoundRequest>.sortedByViewOrder(user: User): List<TradeCompoundRequest> =
     sortedBy { user.findResource(it.target.resoureClass).viewOrder }
 
 private val tradeEmoji = "💸".emoji

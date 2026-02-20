@@ -11,7 +11,7 @@ interface Prompt : KeyListener, Renderer {
 }
 
 fun interface PromptProvider {
-    fun buildPrompt(): Prompt
+    fun providePrompt(): Prompt
 }
 
 class EmptyPagePromptProvider(private val emptyMultiLineMessage: String) : Prompt {

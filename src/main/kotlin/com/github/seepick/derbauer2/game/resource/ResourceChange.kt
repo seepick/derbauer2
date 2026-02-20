@@ -6,7 +6,7 @@ import com.github.seepick.derbauer2.common.unit.Z
 import com.github.seepick.derbauer2.common.unit.Zz
 import com.github.seepick.derbauer2.common.unit.zz
 import com.github.seepick.derbauer2.game.core.User
-import com.github.seepick.derbauer2.game.view.emojiOrSimpleName
+import com.github.seepick.derbauer2.game.view.emojiMappedOrSimpleName
 import com.github.seepick.derbauer2.game.view.emojiSpaceOrEmpty
 import com.github.seepick.derbauer2.game.view.simpleNameEmojied
 import kotlin.reflect.KClass
@@ -75,7 +75,7 @@ data class ResourceChanges private constructor(
 
     fun toShortString() = "${this::class.simpleName}(${
         changes.joinToString("/") {
-            "${it.amount.toSymboledString()}${it.resourceClass.emojiOrSimpleName}"
+            "${it.amount.toSymboledString()}${it.resourceClass.emojiMappedOrSimpleName}"
         }
     })"
 
